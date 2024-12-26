@@ -1,7 +1,7 @@
 // https://github.com/highlightjs/highlightjs-terraform/blob/master/terraform.js
 import { HLJSApi } from 'highlight.js';
 
-export default function (hljs: HLJSApi) {
+export default function(hljs: HLJSApi) {
     const KWS = [
         'resource',
         'variable',
@@ -10,23 +10,22 @@ export default function (hljs: HLJSApi) {
         'locals',
         'module',
         'data',
-        'terraform|10',
+        'terraform',
         'for',
         'in',
-        'if',
+        'if'
     ];
 
     const LITERAL = ['true', 'false', 'null'];
 
     const KEYWORDS = {
         keyword: KWS,
-        literal: LITERAL,
+        literal: LITERAL
     };
 
     const NUMBERS = {
         scope: 'number',
-        begin: /\b\d+(\.\d+)?/,
-        relevance: 0,
+        begin: /\b\d+(\.\d+)?/
     };
 
     const STRINGS = {
@@ -37,50 +36,54 @@ export default function (hljs: HLJSApi) {
             {
                 scope: 'variable',
                 begin: /\${/,
-                end: /}/,
-                relevance: 9,
-            },
-        ],
-    };
-
-    const PARAMETER = {
-        scope: 'variable',
-        match: /\n\s*[a-zA-Z0-9_]+\s*(?==)/,
-    };
-
-    const BLOCK_PARAMETER = {
-        scope: 'keyword',
-        match: /\n\s*[a-zA-Z0-9_]+\s*(?={)/,
+                end: /}/
+            }
+        ]
     };
 
     const FUNCTION = {
         scope: 'title.function',
-        match: /[a-zA-Z0-9_]+(?=\()/,
+        match: /[a-zA-Z0-9_]+(?=\()/
+    };
+
+    const ATTRIBUTE = {
+        scope: 'attr',
+        match: /[a-zA-Z0-9_]+\s*(?==)/
+    };
+
+    const BLOCK_ATTRIBUTE = {
+        scope: 'keyword',
+        match: /[a-zA-Z0-9_]+\s*(?={)/
+    };
+
+    const PARAMETER = {
+        scope: 'params',
+        begin: /(?<==\s)(?!true\b|false\b|null\b)(\[.*?]|[\w.]+)/
     };
 
     const LEFT_BRACE = {
         scope: 'punctuation',
-        match: /\{/,
+        match: /\{/
     };
 
     const RIGHT_BRACE = {
         scope: 'punctuation',
-        match: /}/,
+        match: /}/
     };
 
     const LEFT_BRACKET = {
         scope: 'punctuation',
-        match: /\[/,
+        match: /\[/
     };
 
     const RIGHT_BRACKET = {
         scope: 'punctuation',
-        match: /]/,
+        match: /]/
     };
 
     const EQUALS = {
         scope: 'operator',
-        match: /=/,
+        match: /=/
     };
 
     return {
@@ -91,14 +94,15 @@ export default function (hljs: HLJSApi) {
             hljs.COMMENT(/#/, /$/),
             NUMBERS,
             STRINGS,
-            PARAMETER,
-            BLOCK_PARAMETER,
             FUNCTION,
+            ATTRIBUTE,
+            BLOCK_ATTRIBUTE,
+            PARAMETER,
             EQUALS,
             LEFT_BRACE,
             RIGHT_BRACE,
             LEFT_BRACKET,
-            RIGHT_BRACKET,
-        ],
+            RIGHT_BRACKET
+        ]
     };
 }
