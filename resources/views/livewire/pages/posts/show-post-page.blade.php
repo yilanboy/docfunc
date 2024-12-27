@@ -17,6 +17,7 @@
   @vite('resources/ts/highlight.ts')
   {{-- code block copy button --}}
   @vite('resources/ts/code-block-helper.ts')
+  @vite('resources/ts/image-block-helper.ts')
   {{-- post read pregress bar --}}
   @vite('resources/ts/progress-bar.ts')
   {{-- scroll --}}
@@ -38,6 +39,7 @@
         window.setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
         window.hljs.highlightAll();
         window.codeBlockHelper(this.$refs.postBody);
+        window.imageBlockHelper(this.$refs.postBody);
         window.processYoutubeOembeds();
         window.processTwitterOembeds(this.$refs.postBody);
         window.setupProgressBar(this.$refs.postCard, this.$refs.progressBar);
