@@ -111,7 +111,13 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         preTag.classList.add('code-block-helper-added', 'group', 'relative');
 
-        const code = preTag.getElementsByTagName('code')[0];
+        const codes = preTag.getElementsByTagName('code');
+
+        if (codes.length === 0) {
+            continue;
+        }
+
+        const code: HTMLElement = codes[0];
 
         // start to create copy button...
         const copyButton: HTMLButtonElement = createCopyCodeButton(

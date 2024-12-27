@@ -73,7 +73,13 @@ window.imageBlockHelper = function (element: HTMLElement): void {
             'relative',
         );
 
-        const image = figureTag.getElementsByTagName('img')[0];
+        const images = figureTag.getElementsByTagName('img');
+
+        if (images.length === 0) {
+            continue;
+        }
+
+        const image: HTMLImageElement = images[0];
 
         image.removeAttribute('height');
         image.removeAttribute('width');
