@@ -81,9 +81,6 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
         const image: HTMLImageElement = images[0];
 
-        image.removeAttribute('height');
-        image.removeAttribute('width');
-
         const expandImageButton = createExpandImageButton(image.outerHTML);
 
         figureTag.appendChild(expandImageButton);
