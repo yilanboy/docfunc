@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 use Random\RandomException;
 
@@ -27,7 +28,11 @@ class UploadImageController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'upload' => ['required', File::image()->max(1024)],
+            'upload' => [
+                'required',
+                File::image()->max(1024),
+                Rule::dimensions()->maxWidth(1200)->maxHeight(1200),
+            ],
         ]);
 
         if ($validator->fails()) {

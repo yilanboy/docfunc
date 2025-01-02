@@ -108,7 +108,7 @@ class Post extends Model implements Feedable
         // [{"id":"2","value":"C#"},{"id":"5","value":"Dart"}]
         return new Attribute(
             get: fn($value) => $this->tags
-                ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+                ->map(fn(Tag $tag) => ['id' => $tag->id, 'value' => $tag->name])
                 ->toJson()
         );
     }

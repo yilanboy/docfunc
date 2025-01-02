@@ -55,6 +55,7 @@ ClassicEditor.builtinPlugins = [
     Heading,
     Image,
     ImageCaption,
+    ImageResize,
     ImageStyle,
     ImageToolbar,
     ImageUpload,
@@ -73,7 +74,6 @@ ClassicEditor.builtinPlugins = [
     IndentBlock,
     Code,
     Alignment,
-    ImageResize,
     CodeBlock,
     Underline,
     Strikethrough,
@@ -145,7 +145,24 @@ ClassicEditor.defaultConfig = {
         addTargetToExternalLinks: true,
     },
     image: {
-        toolbar: ['toggleImageCaption', 'imageTextAlternative'],
+        resizeOptions: [
+            {
+                name: 'resizeImage:original',
+                value: null,
+                icon: 'original',
+            },
+            {
+                name: 'resizeImage:50',
+                value: '50',
+                icon: 'medium',
+            },
+            {
+                name: 'resizeImage:75',
+                value: '75',
+                icon: 'large',
+            },
+        ],
+        toolbar: ['toggleImageCaption', 'imageTextAlternative', 'resizeImage'],
     },
     table: {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
