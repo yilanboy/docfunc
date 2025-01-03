@@ -39,6 +39,7 @@
 @script
   <script>
     Alpine.data('editPostPage', () => ({
+      showPage: false,
       csrfToken: @js(csrf_token()),
       imageUploadUrl: @js(route('images.store')),
       tagsListUrl: @js(route('api.tags')),
@@ -97,6 +98,8 @@
         }, {
           once: true
         });
+
+        this.showPage = true;
       }
     }));
   </script>
@@ -107,6 +110,8 @@
   <div
     class="container mx-auto"
     x-data="editPostPage"
+    x-cloak
+    x-show="showPage"
   >
     <div class="flex items-stretch justify-center space-x-4">
       <div class="hidden xl:block xl:w-1/5"></div>
