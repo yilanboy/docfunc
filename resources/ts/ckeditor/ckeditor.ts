@@ -171,6 +171,7 @@ ClassicEditor.defaultConfig = {
         languages: [
             { language: 'text', label: 'Plain text' }, // The default language.
             { language: 'bash', label: 'Bash' },
+            { language: 'blade', label: 'Blade' },
             { language: 'c', label: 'C' },
             { language: 'cs', label: 'C#' },
             { language: 'cpp', label: 'C++' },
