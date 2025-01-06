@@ -191,6 +191,7 @@ ClassicEditor.defaultConfig = {
             { language: 'ruby', label: 'Ruby' },
             { language: 'rust', label: 'Rust' },
             { language: 'shell', label: 'Shell' },
+            { language: 'svelte', label: 'Svelte' },
             { language: 'sql', label: 'SQL' },
             { language: 'swift', label: 'Swift' },
             { language: 'toml', label: 'TOML' },
