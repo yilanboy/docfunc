@@ -10,20 +10,20 @@ export default function (hljs: HLJSApi) {
 
             // output with HTML escaping
             {
-                scope: 'template-variable',
-                subLanguage: 'php',
                 begin: /\{\{/,
+                beginScope: 'template-tag',
                 end: /}}/,
-                excludeEnd: false,
+                endScope: 'template-tag',
+                subLanguage: 'php',
             },
 
             // output with no HTML escaping
             {
-                scope: 'template-variable',
-                subLanguage: 'php',
                 begin: /\{!!/,
+                beginScope: 'template-tag',
                 end: /!!}/,
-                excludeEnd: false,
+                endScope: 'template-tag',
+                subLanguage: 'php',
             },
 
             // directly inserted PHP code
