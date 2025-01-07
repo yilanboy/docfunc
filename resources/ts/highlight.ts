@@ -1,4 +1,5 @@
 import hljs from 'highlight.js/lib/core';
+import text from 'highlight.js/lib/languages/plaintext';
 import bash from 'highlight.js/lib/languages/bash';
 import blade from './highlight-blade.js';
 import c from 'highlight.js/lib/languages/c';
@@ -33,6 +34,7 @@ declare global {
     }
 }
 
+hljs.registerLanguage('text', text);
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('blade', blade);
 hljs.registerLanguage('c', c);
