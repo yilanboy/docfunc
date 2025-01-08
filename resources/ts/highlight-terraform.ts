@@ -2,33 +2,59 @@
 import { HLJSApi } from 'highlight.js';
 
 export default function (hljs: HLJSApi) {
-    const KWS = [
-        'resource',
-        'variable',
-        'provider',
-        'output',
-        'locals',
-        'module',
-        'data',
-        'terraform',
-        'backend',
-        'for',
-        'in',
-        'if',
-    ];
-
-    const LITERAL = ['true', 'false', 'null'];
-
     const KEYWORDS = {
-        keyword: KWS,
-        literal: LITERAL,
+        keyword: [
+            'resource',
+            'variable',
+            'provider',
+            'output',
+            'locals',
+            'module',
+            'data',
+            'terraform',
+            'backend',
+            'for',
+            'in',
+            'if',
+            'run',
+        ],
+        literal: ['true', 'false', 'null'],
+        // remove the situation like data.aws_instance.main
+        $pattern: /[a-zA-Z]+(?!\.)/,
     };
 
+    // the ':' in Conditional Expressions
+    // condition ? true_val : false_val
+    const QUESTION_MARK_IN_EXPRESSION = {
+        scope: 'keyword',
+        match: /\?/,
+    };
+
+    // the ':' in Conditional Expressions
+    // condition ? true_val : false_val
+    const COLON_IN_EXPRESSION = {
+        scope: 'keyword',
+        match: /:/,
+    };
+
+    const ARROW_EXPRESSION = {
+        scope: 'keyword',
+        match: /=>/,
+    };
+
+    const OPERATORS = {
+        scope: 'operator',
+        match: /[><+\-*\/]|==|<=|>=|!=/,
+    };
+
+    // 1 or 1.2
     const NUMBERS = {
         scope: 'number',
-        begin: /\b\d+(\.\d+)?/,
+        match: /\b\d+(\.\d+)?\b/,
     };
 
+    // "string"
+    // "string and ${variable}"
     const STRINGS = {
         scope: 'string',
         begin: /"/,
@@ -36,30 +62,28 @@ export default function (hljs: HLJSApi) {
         contains: [
             {
                 scope: 'subst',
-                begin: /\${/,
+                begin: /\$\{/,
                 end: /}/,
             },
         ],
     };
 
+    // somethingLikeThis(
     const FUNCTION = {
         scope: 'title.function',
         match: /[a-zA-Z0-9_]+(?=\()/,
     };
 
+    // somethingLikeThis =
     const ATTRIBUTE = {
         scope: 'attr',
-        match: /[a-zA-Z0-9_]+\s*(?==)/,
+        match: /\s[a-zA-Z0-9_]+\s*(?==)/,
     };
 
+    // somethingLikeThis {
     const BLOCK_ATTRIBUTE = {
         scope: 'keyword',
-        match: /[a-zA-Z0-9_]+\s*(?={)/,
-    };
-
-    const PARAMETER = {
-        scope: 'params',
-        begin: /(?<==\s)(?!true\b|false\b|null\b)(\[.*?]|[\w.]+)/,
+        match: /[a-zA-Z0-9_]+\s(?={)/,
     };
 
     const LEFT_BRACE = {
@@ -82,24 +106,21 @@ export default function (hljs: HLJSApi) {
         match: /]/,
     };
 
-    const EQUALS = {
-        scope: 'operator',
-        match: /=/,
-    };
-
     return {
         case_insensitive: false,
-        aliases: ['tf', 'hcl'],
+        aliases: ['tf', 'hcl', 'terraform', 'opentofu'],
         keywords: KEYWORDS,
         contains: [
             hljs.COMMENT(/#/, /$/),
+            QUESTION_MARK_IN_EXPRESSION,
+            COLON_IN_EXPRESSION,
+            ARROW_EXPRESSION,
+            OPERATORS,
             NUMBERS,
             STRINGS,
             FUNCTION,
             ATTRIBUTE,
             BLOCK_ATTRIBUTE,
-            PARAMETER,
-            EQUALS,
             LEFT_BRACE,
             RIGHT_BRACE,
             LEFT_BRACKET,
