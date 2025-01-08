@@ -24,7 +24,7 @@ import shell from 'highlight.js/lib/languages/shell';
 import svelte from 'highlight.svelte';
 import sql from 'highlight.js/lib/languages/sql';
 import swift from 'highlight.js/lib/languages/swift';
-import terraform from './highlight-terraform.js';
+import hcl from 'highlight-hcl';
 import typescript from 'highlight.js/lib/languages/typescript';
 import yaml from 'highlight.js/lib/languages/yaml';
 
@@ -59,7 +59,7 @@ hljs.registerLanguage('shell', shell);
 hljs.registerLanguage('svelte', svelte);
 hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('swift', swift);
-hljs.registerLanguage('terraform', terraform);
+hljs.registerLanguage('hcl', hcl);
 hljs.registerLanguage('toml', ini);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('xml', xml);
