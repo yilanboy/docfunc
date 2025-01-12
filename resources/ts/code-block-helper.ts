@@ -8,7 +8,6 @@ declare global {
 
 // use Tailwind CSS class names
 const BASE_BUTTON_CLASS_NAME: string[] = [
-    'absolute',
     'size-8',
     'flex',
     'justify-center',
@@ -50,7 +49,7 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     // create copy button
     const copyButton: HTMLButtonElement = document.createElement('button');
     // set button position
-    copyButton.classList.add('top-2', 'right-2', ...BASE_BUTTON_CLASS_NAME);
+    copyButton.classList.add(...BASE_BUTTON_CLASS_NAME);
     copyButton.innerHTML = CLIPBOARD_ICON_SVG;
 
     // when copy button is clicked, copy code to clipboard
@@ -77,11 +76,7 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
 function createExpandCodeButton(preOuterHtml: string): HTMLButtonElement {
     const expandCodeButton: HTMLButtonElement =
         document.createElement('button');
-    expandCodeButton.classList.add(
-        'top-2',
-        'right-12',
-        ...BASE_BUTTON_CLASS_NAME,
-    );
+    expandCodeButton.classList.add(...BASE_BUTTON_CLASS_NAME);
     expandCodeButton.innerHTML = ARROWS_ANGLE_EXPAND_ICON_SVG;
 
     const modal = new Modal({
@@ -111,6 +106,17 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         preTag.classList.add('code-block-helper-added', 'group', 'relative');
 
+        const codeHelperGroup: HTMLDivElement = document.createElement('div');
+        codeHelperGroup.classList.add(
+            'absolute',
+            'top-2',
+            'right-2',
+            'flex',
+            'gap-2',
+        );
+
+        preTag.appendChild(codeHelperGroup);
+
         const codes = preTag.getElementsByTagName('code');
 
         if (codes.length === 0) {
@@ -127,8 +133,8 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         const expandCodeButton = createExpandCodeButton(preTag.outerHTML);
 
         // append these button in pre tag
-        preTag.appendChild(copyButton);
-        preTag.appendChild(expandCodeButton);
+        codeHelperGroup.appendChild(copyButton);
+        codeHelperGroup.appendChild(expandCodeButton);
 
         // remove these new element that create in this script,
         // when user want to navigate to next page...
@@ -137,6 +143,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
             () => {
                 copyButton.remove();
                 expandCodeButton.remove();
+                codeHelperGroup.remove();
                 preTag.classList.remove(
                     'code-block-helper-added',
                     'group',
