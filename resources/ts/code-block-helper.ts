@@ -79,10 +79,7 @@ function createExpandCodeButton(preOuterHtml: string): HTMLButtonElement {
     expandCodeButton.classList.add(...BASE_BUTTON_CLASS_NAME);
     expandCodeButton.innerHTML = ARROWS_ANGLE_EXPAND_ICON_SVG;
 
-    const modal = new Modal({
-        innerHtml: preOuterHtml,
-        customClassName: ['font-jetbrains-mono', 'text-xl'],
-    });
+    const modal = new Modal({ innerHtml: preOuterHtml });
 
     expandCodeButton.addEventListener(
         'click',
@@ -106,6 +103,23 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         preTag.classList.add('code-block-helper-added', 'group', 'relative');
 
+        const codes = preTag.getElementsByTagName('code');
+
+        if (codes.length === 0) {
+            continue;
+        }
+
+        const code: HTMLElement = codes[0];
+
+        code.classList.add('font-jetbrains-mono', 'text-xl', 'font-semibold');
+
+        // start to create copy button...
+        const copyButton: HTMLButtonElement = createCopyCodeButton(
+            code.innerText,
+        );
+
+        const expandCodeButton = createExpandCodeButton(preTag.outerHTML);
+
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(
             'absolute',
@@ -116,21 +130,6 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         );
 
         preTag.appendChild(codeHelperGroup);
-
-        const codes = preTag.getElementsByTagName('code');
-
-        if (codes.length === 0) {
-            continue;
-        }
-
-        const code: HTMLElement = codes[0];
-
-        // start to create copy button...
-        const copyButton: HTMLButtonElement = createCopyCodeButton(
-            code.innerText,
-        );
-
-        const expandCodeButton = createExpandCodeButton(preTag.outerHTML);
 
         // append these button in pre tag
         codeHelperGroup.appendChild(copyButton);
@@ -144,11 +143,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
                 copyButton.remove();
                 expandCodeButton.remove();
                 codeHelperGroup.remove();
-                preTag.classList.remove(
-                    'code-block-helper-added',
-                    'group',
-                    'relative',
-                );
+                preTag.classList.remove('code-block-helper-added');
             },
             { once: true },
         );
