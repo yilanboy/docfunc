@@ -263,7 +263,7 @@
           >
             <x-icon.sun class="w-5 text-amber-400 hover:text-amber-500 dark:hidden" />
 
-            <x-icon.moon-stars class="hidden w-5 text-[#f6f1d5] hover:text-[#ddd8bf] dark:inline" />
+            <x-icon.moon-stars class="hidden w-5 text-[#f6f1d5] hover:text-[#ddd8bf] dark:block" />
           </button>
 
           @guest
