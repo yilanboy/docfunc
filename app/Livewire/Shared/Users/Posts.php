@@ -22,9 +22,9 @@ class Posts extends Component
     /**
      * Get the post list of the user. this list will be grouped by year.
      * The first year will be the latest year
-     * format: [2021 => [Post, Post, ...], 2020 => [Post, Post, ...], ...]
+     * format: ['2021' => [Post, Post, ...], '2020' => [Post, Post, ...], ...]
      *
-     * @return array<int, array<int, Post>> $postsGroupByYear
+     * @return array<string, list<Post>> $postsGroupByYear
      */
     #[Computed]
     public function postsGroupByYear(): array
@@ -42,7 +42,7 @@ class Posts extends Component
         $postsGroupByYear = [];
 
         foreach ($posts as $post) {
-            $year = intval($post->created_at->format('Y'));
+            $year = $post->created_at->format('Y');
 
             if (! isset($postsGroupByYear[$year])) {
                 $postsGroupByYear[$year] = [];
@@ -57,7 +57,7 @@ class Posts extends Component
     public function mount(): void
     {
         if (! array_key_exists($this->currentPostsYear, $this->postsGroupByYear)) {
-            $this->currentPostsYear = (string) array_key_first($this->postsGroupByYear);
+            $this->currentPostsYear = array_key_first($this->postsGroupByYear) ?? '';
         }
     }
 
