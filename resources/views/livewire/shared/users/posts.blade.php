@@ -36,9 +36,9 @@
         >
         </button>
 
-        <div
-          class="absolute right-0 top-1 z-50 mt-12 w-40 rounded-md bg-gray-50 p-1 text-lg ring-1 ring-black/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-600/20"
-          x-cloak
+        <x-dropdown.menu
+          class="absolute right-0 top-12 z-10"
+          x-cloak=""
           x-show="dropdownIsOpen"
           x-on:click.away="closeDropdown"
           x-transition:enter="ease-out duration-200"
@@ -46,17 +46,15 @@
           x-transition:enter-end="translate-y-0"
         >
           @foreach (array_keys($this->postsGroupByYear) as $year)
-            <button
-              class="group relative flex w-full cursor-default select-none items-center justify-between rounded px-2 py-1.5 outline-none hover:bg-gray-200 dark:ring-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-50"
+            <x-dropdown.button
               data-year="{{ $year }}"
-              type="button"
               x-on:click="switchPostsByYear"
               wire:key="switch-to-{{ $year }}-posts"
             >
               <span>{{ $year }}</span>
-            </button>
+            </x-dropdown.button>
           @endforeach
-        </div>
+        </x-dropdown.menu>
       </div>
 
       @foreach ($this->postsGroupByYear as $year => $posts)

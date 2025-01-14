@@ -159,50 +159,36 @@
           </div>
 
           {{-- profile menu --}}
-          <div
-            class="absolute right-0 top-16 mt-2 w-48 rounded-md bg-gray-50 p-2 ring-1 ring-black/20 dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-400/40"
-            x-cloak
+          <x-dropdown.menu
+            class="absolute right-0 top-16"
+            x-cloak=""
             x-show="profileMenuIsOpen"
             x-on:click.outside="closeProfileMenu"
-            x-transition.origin.top.right
+            x-transition.origin.top.right=""
           >
-            <a
-              class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-              href="{{ route('posts.create') }}"
-              wire:navigate
-            >
+            <x-dropdown.link href="{{ route('posts.create') }}">
               <x-icon.pencil class="w-4" />
               <span class="ml-2">新增文章</span>
-            </a>
+            </x-dropdown.link>
 
-            <a
-              class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-              href="{{ route('users.show', ['id' => auth()->id()]) }}"
-              wire:navigate
-            >
+            <x-dropdown.link href="{{ route('users.show', ['id' => auth()->id()]) }}">
               <x-icon.info-circle class="w-4" />
               <span class="ml-2">個人資訊</span>
-            </a>
+            </x-dropdown.link>
 
-            <a
-              class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-              href="{{ route('users.edit', ['id' => auth()->id()]) }}"
-              wire:navigate
-            >
+            <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
               <x-icon.person-circle class="w-4" />
               <span class="ml-2">會員中心</span>
-            </a>
+            </x-dropdown.link>
 
-            <button
-              class="flex w-full items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-              type="button"
+            <x-dropdown.button
               wire:confirm="你確定要登出嗎？"
               wire:click="logout"
             >
               <x-icon.box-arrow-left class="w-4" />
               <span class="ml-2">登出</span>
-            </button>
-          </div>
+            </x-dropdown.button>
+          </x-dropdown.menu>
         </div>
       @endauth
     </div>
@@ -299,8 +285,7 @@
 
               @if (auth()->user()->unreadNotifications->count() > 0)
                 <span class="absolute right-2 top-2 -mr-1 -mt-1 flex h-3 w-3">
-                  <span
-                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                   <span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
                 </span>
               @endif
@@ -328,62 +313,36 @@
               </div>
 
               {{-- profile menu --}}
-              <div
-                class="absolute right-0 top-12 mt-2 w-48 rounded-md bg-gray-50 p-2 text-gray-700 ring-1 ring-black/20 dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-400/40"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-                tabindex="-1"
-                x-cloak
+              <x-dropdown.menu
+                class="absolute right-0 top-12"
+                x-cloak=""
                 x-show="profileMenuIsOpen"
                 x-on:click.outside="closeProfileMenu"
-                x-transition.origin.top.right
+                x-transition.origin.top.right=""
               >
-                <a
-                  class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  href="{{ route('posts.create') }}"
-                  role="menuitem"
-                  tabindex="-1"
-                  wire:navigate
-                >
+                <x-dropdown.link href="{{ route('posts.create') }}">
                   <x-icon.pencil class="w-4" />
                   <span class="ml-2">新增文章</span>
-                </a>
+                </x-dropdown.link>
 
-                <a
-                  class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  href="{{ route('users.show', ['id' => auth()->id()]) }}"
-                  role="menuitem"
-                  tabindex="-1"
-                  wire:navigate
-                >
+                <x-dropdown.link href="{{ route('users.show', ['id' => auth()->id()]) }}">
                   <x-icon.info-circle class="w-4" />
                   <span class="ml-2">個人資訊</span>
-                </a>
+                </x-dropdown.link>
 
-                <a
-                  class="flex items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  href="{{ route('users.edit', ['id' => auth()->id()]) }}"
-                  role="menuitem"
-                  tabindex="-1"
-                  wire:navigate
-                >
+                <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
                   <x-icon.person-circle class="w-4" />
                   <span class="ml-2">會員中心</span>
-                </a>
+                </x-dropdown.link>
 
-                <button
-                  class="flex w-full items-center rounded-md px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  type="button"
-                  role="menuitem"
-                  tabindex="-1"
+                <x-dropdown.button
                   wire:confirm="你確定要登出嗎？"
                   wire:click="logout"
                 >
                   <x-icon.box-arrow-left class="w-4" />
                   <span class="ml-2">登出</span>
-                </button>
-              </div>
+                </x-dropdown.button>
+              </x-dropdown.menu>
             </div>
           @endauth
         </div>
