@@ -4,7 +4,7 @@
     <div class="mx-auto grid max-w-3xl grid-cols-3 gap-6 px-2 lg:px-0 xl:max-w-5xl">
       <div class="col-span-3 xl:col-span-2">
         {{-- 文章列表 --}}
-        <livewire:shared.posts.posts
+        <livewire:shared.posts.post-list
           :currentUrl="url()->current()"
           :categoryId="$category->id ?? 0"
           :categoryName="$category->name ?? ''"
