@@ -13,42 +13,35 @@
 
         <form wire:submit="store">
           {{-- 信箱 --}}
-          <div>
-            <x-floating-label-input
-              name="email"
-              type="text"
-              :id="'email'"
-              :placeholder="'電子信箱'"
-              required
-              readonly
-              wire:model="email"
-            />
-          </div>
+          <x-floating-label-input
+            id="email"
+            type="text"
+            placeholder="電子信箱"
+            required
+            readonly
+            wire:model="email"
+          />
 
           {{-- 密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="password"
-              type="password"
-              :id="'password'"
-              :placeholder="'新密碼'"
-              required
-              autofocus
-              wire:model="password"
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="password"
+            type="password"
+            placeholder="新密碼"
+            required
+            autofocus
+            wire:model="password"
+          />
 
           {{-- 確認密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="password_confirmation"
-              type="password"
-              :id="'password_confirmation'"
-              :placeholder="'確認新密碼'"
-              required
-              wire:model="password_confirmation"
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="password_confirmation"
+            type="password"
+            placeholder="確認新密碼"
+            required
+            wire:model="password_confirmation"
+          />
 
           <div class="mt-6 flex items-center justify-end">
             <x-button>

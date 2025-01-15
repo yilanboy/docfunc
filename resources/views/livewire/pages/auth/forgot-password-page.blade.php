@@ -32,17 +32,15 @@
         <form wire:submit="store">
 
           {{-- 信箱 --}}
-          <div>
-            <x-floating-label-input
-              name="email"
-              type="text"
-              :id="'email'"
-              :placeholder="'電子信箱'"
-              required
-              autofocus
-              wire:model="email"
-            />
-          </div>
+          <x-floating-label-input
+            name="email"
+            type="text"
+            :id="'email'"
+            :placeholder="'電子信箱'"
+            required
+            autofocus
+            wire:model="email"
+          />
 
           <div class="mt-6 flex items-center justify-end">
             <x-button>

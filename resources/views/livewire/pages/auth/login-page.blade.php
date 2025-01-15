@@ -59,29 +59,26 @@
           wire:submit="store"
         >
           {{-- 信箱 --}}
-          <div>
-            <x-floating-label-input
-              type="text"
-              :id="'email'"
-              :placeholder="'電子信箱'"
-              wire:model="email"
-              required
-              autofocus
-            />
-          </div>
+          <x-floating-label-input
+            id="email"
+            type="text"
+            placeholder="電子信箱"
+            wire:model="email"
+            required
+            autofocus
+          />
 
           {{-- 密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              type="password"
-              :id="'password'"
-              :placeholder="'密碼'"
-              wire:model="password"
-              required
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="password"
+            type="password"
+            placeholder="密碼"
+            wire:model="password"
+            required
+          />
 
-          <div class="mt-6 flex justify-between">
+          <div class="mt-12 flex justify-between">
             {{-- 記住我 --}}
             <label
               class="inline-flex items-center"

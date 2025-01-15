@@ -7,7 +7,7 @@
         return this.submitIsEnabled === false;
       },
       informationOnSubmitButton() {
-        return this.submitIsEnabled ? '註冊' : '驗證中'
+        return this.submitIsEnabled ? '註冊' : '驗證中';
       },
       init() {
         turnstile.ready(() => {
@@ -54,55 +54,46 @@
           wire:submit="store"
         >
           {{-- 會員名稱 --}}
-          <div>
-            <x-floating-label-input
-              name="name"
-              type="text"
-              value="{{ old('name') }}"
-              :id="'name'"
-              :placeholder="'會員名稱 (只能使用英文、數字、_ 或是 -)'"
-              required
-              autofocus
-              wire:model="name"
-            />
-          </div>
+          <x-floating-label-input
+            id="name"
+            type="text"
+            value="{{ old('name') }}"
+            placeholder="會員名稱 (只能使用英文、數字、_ 或是 -)"
+            required
+            autofocus
+            wire:model="name"
+          />
 
           {{-- 信箱 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="email"
-              type="text"
-              value="{{ old('email') }}"
-              :id="'email'"
-              :placeholder="'電子信箱'"
-              required
-              wire:model="email"
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="email"
+            type="text"
+            value="{{ old('email') }}"
+            placeholder="電子信箱"
+            required
+            wire:model="email"
+          />
 
           {{-- 密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="password"
-              type="password"
-              :id="'password'"
-              :placeholder="'密碼'"
-              required
-              wire:model="password"
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="password"
+            type="password"
+            placeholder="密碼"
+            required
+            wire:model="password"
+          />
 
           {{-- 確認密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="password_confirmation"
-              type="password"
-              :id="'password_confirmation'"
-              :placeholder="'確認密碼'"
-              required
-              wire:model="password_confirmation"
-            />
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="password_confirmation"
+            type="password"
+            placeholder="確認密碼"
+            required
+            wire:model="password_confirmation"
+          />
 
           <div
             class="hidden"

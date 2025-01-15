@@ -12,40 +12,33 @@
           wire:submit="update({{ $user->id }})"
         >
           {{-- 舊密碼 --}}
-          <div>
-            <x-floating-label-input
-              name="current_password"
-              type="password"
-              :id="'current_password'"
-              :placeholder="'舊密碼'"
-              wire:model="current_password"
-              required
-            ></x-floating-label-input>
-          </div>
+          <x-floating-label-input
+            id="current_password"
+            type="password"
+            placeholder="舊密碼"
+            wire:model="current_password"
+            required
+          />
 
           {{-- 新密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="new_password"
-              type="password"
-              :id="'new_password'"
-              :placeholder="'新密碼'"
-              wire:model="new_password"
-              required
-            ></x-floating-label-input>
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="new_password"
+            type="password"
+            placeholder="新密碼"
+            wire:model="new_password"
+            required
+          />
 
           {{-- 確認新密碼 --}}
-          <div class="mt-6">
-            <x-floating-label-input
-              name="new_password_confirmation"
-              type="password"
-              :id="'new_password_confirmation'"
-              :placeholder="'確認新密碼'"
-              wire:model="new_password_confirmation"
-              required
-            ></x-floating-label-input>
-          </div>
+          <x-floating-label-input
+            class="mt-6"
+            id="new_password_confirmation"
+            type="password"
+            placeholder="確認新密碼"
+            wire:model="new_password_confirmation"
+            required
+          />
 
           <div class="mt-6 flex items-center justify-end">
             {{-- 儲存按鈕 --}}
