@@ -1,5 +1,5 @@
 {{-- user edit side men --}}
-<x-card class="flex w-full flex-col items-center justify-center md:mr-6 md:w-60 xl:w-80 dark:text-gray-50">
+<x-card class="flex w-full flex-col items-center justify-center md:w-60 xl:w-80 dark:text-gray-50">
   <div class="flex w-full flex-col space-y-1">
     @php
       $inEditUserPage = request()->routeIs('users.edit');

@@ -1,11 +1,13 @@
 <x-layouts.layout-main>
   <div class="container mx-auto flex-1">
-    <div class="flex flex-col items-start justify-center px-4 md:flex-row xl:px-0">
+    <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
       <x-member-centre.side-menu />
 
-      <x-card class="mt-6 flex w-full flex-col justify-center space-y-6 md:mt-0 md:w-[700px]">
-        <h1 class="w-full text-center text-2xl dark:text-gray-50">刪除帳號</h1>
-        <hr class="my-4 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+      <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
+        <div class="space-y-4">
+          <h1 class="w-full text-center text-2xl dark:text-gray-50">刪除帳號</h1>
+          <hr class="h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+        </div>
 
         {{-- 說明 --}}
         <div class="flex flex-col items-start justify-center">
