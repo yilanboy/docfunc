@@ -57,8 +57,7 @@
   </div>
 
   <x-card class="col-span-6 md:col-span-4 dark:text-gray-50">
-    <h3 class="w-full text-2xl">個人簡介</h3>
-
+    <h2 class="w-full text-2xl">個人簡介</h2>
     <hr class="my-4 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
 
     @if ($user->introduction)
@@ -69,8 +68,7 @@
   </x-card>
 
   <x-card class="col-span-6 dark:text-gray-50">
-    <h3 class="w-full text-2xl">各類文章統計</h3>
-
+    <h2 class="w-full text-2xl">各類文章統計</h2>
     <hr class="my-4 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
 
     <div class="grid grid-cols-12 gap-2">

@@ -4,6 +4,9 @@
       <x-member-centre.side-menu />
 
       <x-card class="mt-6 flex w-full flex-col justify-center space-y-6 md:mt-0 md:w-[700px]">
+        <h1 class="w-full text-center text-2xl dark:text-gray-50">編輯個人資料</h1>
+        <hr class="my-4 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+
         <div class="flex flex-col items-center justify-center">
           {{-- 大頭貼照片 --}}
           <div>
@@ -15,14 +18,14 @@
           </div>
 
           <div class="mt-4 flex dark:text-gray-50">
-            <span class="mr-2">會員大頭貼由</span>
+            <span class="mr-2">個人圖像由</span>
             <a
               class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
               href="https://zh-tw.gravatar.com/"
               target="_blank"
               rel="nofollow noopener noreferrer"
             >Gravatar</a>
-            <span class="ml-2">技術提供</span>
+            <span class="ml-2">提供</span>
           </div>
         </div>
 

@@ -4,6 +4,9 @@
       <x-member-centre.side-menu />
 
       <x-card class="mt-6 flex w-full flex-col justify-center space-y-6 md:mt-0 md:w-[700px]">
+        <h1 class="w-full text-center text-2xl dark:text-gray-50">刪除帳號</h1>
+        <hr class="my-4 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+
         {{-- 說明 --}}
         <div class="flex flex-col items-start justify-center">
           <span class="dark:text-gray-50">很遺憾您要離開...</span>
