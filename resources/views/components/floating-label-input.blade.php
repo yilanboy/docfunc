@@ -1,6 +1,6 @@
 <div {{ $attributes->filter(fn(string $value, string $key) => $key === 'class')->merge(['class' => 'relative']) }}>
   <input
-    class="dark:focus:border-lividus-500 peer h-16 w-full rounded-lg border-2 border-gray-300 bg-transparent p-4 text-gray-900 placeholder-transparent transition duration-150 ease-in focus:border-emerald-500 focus:outline-none disabled:border-slate-200 disabled:text-slate-500 dark:border-gray-400 dark:text-gray-50 dark:disabled:border-slate-500 dark:disabled:text-slate-400"
+    class="dark:focus:border-lividus-500 peer w-full rounded-lg border-2 border-gray-300 bg-transparent p-4 text-gray-900 placeholder-transparent transition duration-150 ease-in focus:border-emerald-500 focus:outline-none disabled:border-slate-200 disabled:text-slate-500 dark:border-gray-400 dark:text-gray-50 dark:disabled:border-slate-500 dark:disabled:text-slate-400"
     {{ $attributes->filter(fn(string $value, string $key) => $key !== 'class') }}
   >
 

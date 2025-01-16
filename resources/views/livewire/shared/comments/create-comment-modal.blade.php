@@ -125,7 +125,7 @@
       ></div>
 
       <form
-        class="space-y-5"
+        class="space-y-6"
         x-on:submit.prevent="submitForm"
       >
         @if ($previewIsEnabled)
@@ -141,29 +141,18 @@
             </div>
           </div>
         @else
-          <div>
-            <label for="create-comment-textarea"></label>
+          <x-auth-validation-errors :errors="$errors" />
 
-            <textarea
-              class="form-textarea font-jetbrains-mono w-full resize-none rounded-md border border-gray-300 text-lg focus:border-indigo-300 focus:ring focus:ring-indigo-200/50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 dark:placeholder-gray-50"
-              name="body"
-              x-ref="createCommentTextarea"
-              {{-- change tab into 4 spaces --}}
-              x-on:keydown.tab.prevent="tabToFourSpaces"
-              x-model="body"
-              rows="12"
-              placeholder="寫下你的留言吧！**支援 Markdown**"
-              required
-            ></textarea>
-
-            @error('form.body')
-              <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
-            @enderror
-
-            @error('captchaToken')
-              <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
-            @enderror
-          </div>
+          <x-floating-label-textarea
+            id="create-comment-body"
+            x-ref="createCommentTextarea"
+            {{-- change tab into 4 spaces --}}
+            x-on:keydown.tab.prevent="tabToFourSpaces"
+            x-model="body"
+            rows="12"
+            placeholder="寫下你的留言吧！**支援 Markdown**"
+            required
+          />
         @endif
 
         <div
@@ -174,7 +163,7 @@
 
         <div class="flex items-center justify-between space-x-3">
           <x-toggle-switch
-            :id="'create-comment-modal-preview'"
+            id="create-comment-modal-preview"
             wire:model.live="previewIsEnabled"
             x-bind:disabled="bodyIsEmpty"
           >

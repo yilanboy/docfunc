@@ -1,13 +1,10 @@
-@props(['id'])
-
 <label
   class="flex cursor-pointer select-none items-center space-x-4"
-  for="{{ $id }}"
+  for="{{ $attributes->get('id') }}"
 >
   <div class="relative flex">
     <input
       class="peer sr-only"
-      id="{{ $id }}"
       type="checkbox"
       {{ $attributes }}
     />

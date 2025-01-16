@@ -38,7 +38,7 @@
             /* blockquote border */
         prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
             /* blockquote */
-        prose-blockquote:border-none prose-blockquote:rounded-xl prose-blockquote:text-slate-600 prose-blockquote:bg-emerald-100/80 dark:prose-blockquote:text-slate-400 dark:prose-blockquote:bg-lividus-800/50 prose-blockquote:py-2 prose-blockquote:px-4 !important;
+        prose-blockquote:border-none prose-blockquote:rounded-xl prose-blockquote:text-emerald-500 prose-blockquote:bg-emerald-300/20 dark:prose-blockquote:text-lividus-400 dark:prose-blockquote:bg-lividus-800/50 prose-blockquote:py-2 prose-blockquote:px-4 !important;
     }
 
     /* ckeditor5-font/theme/fontsize.css */
