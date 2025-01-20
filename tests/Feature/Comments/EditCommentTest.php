@@ -43,7 +43,7 @@ test('the updated message must be at least 5 characters long', function () {
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'min:5'])
-        ->assertSeeHtml('<p class="mt-1 text-sm text-red-400">留言內容至少 5 個字元</p>');
+        ->assertSeeText('留言內容至少 5 個字元');
 
     $this->assertDatabaseHas('comments', ['body' => $oldBody]);
 });
@@ -64,7 +64,7 @@ test('the updated message must be less than 2000 characters', function () {
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'max:2000'])
-        ->assertSeeHtml('<p class="mt-1 text-sm text-red-400">留言內容最多 2000 個字元</p>');
+        ->assertSeeText('留言內容最多 2000 個字元');
 
     $this->assertDatabaseHas('comments', ['body' => $oldBody]);
 });

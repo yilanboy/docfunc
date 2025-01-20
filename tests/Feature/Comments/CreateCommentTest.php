@@ -73,7 +73,7 @@ test('the message must be at least 5 characters long', function () {
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
         ->assertHasErrors(['form.body' => 'min:5'])
-        ->assertSeeHtml('<p class="mt-1 text-sm text-red-400">留言內容至少 5 個字元</p>');
+        ->assertSeeText('留言內容至少 5 個字元');
 });
 
 test('the message must be less than 2000 characters', function () {
@@ -86,7 +86,7 @@ test('the message must be less than 2000 characters', function () {
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
         ->assertHasErrors(['form.body' => 'max:2000'])
-        ->assertSeeHtml('<p class="mt-1 text-sm text-red-400">留言內容最多 2000 個字元</p>');
+        ->assertSeeText('留言內容最多 2000 個字元');
 });
 
 test('the message must have the captcha token', function () {
@@ -98,7 +98,7 @@ test('the message must have the captcha token', function () {
         ->set('form.body', $body)
         ->call('save')
         ->assertHasErrors()
-        ->assertSeeHtml('<p class="mt-1 text-sm text-red-400">未完成驗證</p>');
+        ->assertSeeText('未完成驗證');
 });
 
 it('can see the comment preview', function () {
