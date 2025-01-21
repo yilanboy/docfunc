@@ -20,7 +20,7 @@
         prose-a:no-underline hover:prose-a:underline prose-a:text-emerald-600 hover:prose-a:text-emerald-700
         dark:prose-a:text-lividus-400 dark:hover:prose-a:text-lividus-300
             /* lists */
-        prose-li:marker:text-gray-500 dark:prose-li:marker:text-gray-400
+        prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
             /* figure */
         prose-figure:table prose-figure:mx-auto
             /* image */
