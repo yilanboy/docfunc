@@ -17,8 +17,8 @@
         prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
         prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
             /* links */
-        prose-a:no-underline hover:prose-a:underline prose-a:text-emerald-800 hover:prose-a:text-emerald-900
-        dark:prose-a:text-lividus-200 dark:hover:prose-a:text-lividus-100
+        prose-a:no-underline hover:prose-a:underline prose-a:text-emerald-700 hover:prose-a:text-emerald-800
+        dark:prose-a:text-lividus-300 dark:hover:prose-a:text-lividus-200
             /* lists */
         prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
             /* figure */
