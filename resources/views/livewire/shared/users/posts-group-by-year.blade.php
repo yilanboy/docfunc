@@ -2,7 +2,7 @@
   {{-- posts list --}}
   @foreach ($posts as $post)
     <div
-      class="group flex flex-col justify-between rounded px-2 py-2 transition duration-100 hover:bg-gray-100 dark:hover:bg-gray-700 md:flex-row"
+      class="group flex flex-col justify-between rounded-sm px-2 py-2 transition duration-100 hover:bg-gray-100 dark:hover:bg-gray-700 md:flex-row"
       {{-- in this list, these post attribue will be change in the loop, so we have to track them down --}}
       wire:key="{{ $post->id . $post->is_private . $post->deleted_at }}"
     >

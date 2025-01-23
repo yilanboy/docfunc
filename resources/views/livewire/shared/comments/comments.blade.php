@@ -62,7 +62,7 @@
           </div>
 
           <div
-            class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-50 shadow-lg ring-1 ring-black/5 focus:outline-none dark:bg-gray-800 dark:ring-white/20"
+            class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-50 shadow-lg ring-1 ring-black/5 focus:outline-hidden dark:bg-gray-800 dark:ring-white/20"
             x-show="orderDropdownIsOpen"
             x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="transform opacity-0 scale-95"
@@ -79,7 +79,7 @@
                   type="button"
                   @class([
                       'flex w-full justify-start px-4 py-2',
-                      'bg-gray-200 text-gray-900 outline-none dark:bg-gray-600 dark:text-gray-50' =>
+                      'bg-gray-200 text-gray-900 outline-hidden dark:bg-gray-600 dark:text-gray-50' =>
                           $order === $commentOrder,
                       'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' =>
                           $order !== $commentOrder,

@@ -31,7 +31,7 @@ function createPostOutlineLinks(
             <a
                 href="#${heading.id}"
                 id="${heading.id}-link"
-                class="mb-1 flex rounded p-1 text-sm text-gray-500 transition duration-150 hover:bg-gray-300 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                class="mb-1 flex rounded-sm p-1 text-sm text-gray-500 transition duration-150 hover:bg-gray-300 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
             >
                 <span class="flex items-center justify-center">⏵</span>
                 <span class="ml-2">${heading.textContent}</span>

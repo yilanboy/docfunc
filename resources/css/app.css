@@ -1,52 +1,99 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer components {
-    .group-gradient-underline-grow {
-        @apply bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in group-hover:bg-[length:100%_3px];
+@source "../../vendor/livewire/livewire/src/Features/SupportPagination/views/*.blade.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.ts";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* color */
+    --color-lividus-50: #e4ecf5;
+    --color-lividus-100: #cddeee;
+    --color-lividus-200: #abc7e3;
+    --color-lividus-300: #88b0d7;
+    --color-lividus-400: #6699cc;
+    --color-lividus-500: #4482c1;
+    --color-lividus-600: #366ba1;
+    --color-lividus-700: #2a547e;
+    --color-lividus-800: #1d3d5b;
+    --color-lividus-900: #111e38;
+
+    /* font family */
+    --font-noto-sans: "Noto Sans TC", "Roboto";
+    --font-jetbrains-mono: "JetBrains Mono", "Noto Sans TC";
+
+    /* animate */
+    --animate-fade-in: fade-in 0.5s ease-in-out;
+    --animate-grow-width: grow-width 1s forwards;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .gradient-underline-grow {
-        @apply bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in hover:bg-[length:100%_3px];
+    @keyframes grow-width {
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
     }
+}
 
-    .rich-text {
-        @apply prose text-lg max-w-none prose-slate dark:prose-invert leading-8
-            /* headings */
-        prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
-        prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
-            /* links */
-        prose-a:no-underline hover:prose-a:underline prose-a:text-emerald-700 hover:prose-a:text-emerald-800
-        dark:prose-a:text-lividus-300 dark:hover:prose-a:text-lividus-200
-            /* lists */
-        prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
-            /* figure */
-        prose-figure:table prose-figure:mx-auto
-            /* image */
-        prose-img:w-full prose-img:rounded-xl
-            /* figcaption */
-        prose-figcaption:table-caption prose-figcaption:[caption-side:bottom] prose-figcaption:break-words
-        prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-slate-200
-        dark:prose-figcaption:bg-slate-700 dark:prose-figcaption:text-slate-100
-            /* horizontal line */
-        prose-hr:my-3 prose-hr:h-1 prose-hr:border-none prose-hr:bg-slate-300 dark:prose-hr:bg-slate-500
-            /* code */
-        prose-code:before:content-none prose-code:after:content-none prose-code:font-jetbrains-mono prose-code:font-medium
-            /* pre */
-        prose-pre:p-4 prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
-            /* blockquote border */
-        prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
-            /* blockquote */
-        prose-blockquote:border-none prose-blockquote:rounded-xl prose-blockquote:text-emerald-500 prose-blockquote:bg-emerald-300/20 dark:prose-blockquote:text-lividus-400 dark:prose-blockquote:bg-lividus-800/50 prose-blockquote:py-2 prose-blockquote:px-4 !important;
-    }
+@config "../../tailwind.config.js";
+
+@utility group-gradient-underline-grow {
+    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in group-hover:bg-[length:100%_3px];
+}
+
+@utility gradient-underline-grow {
+    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in hover:bg-[length:100%_3px];
+}
+
+@utility rich-text {
+    @apply prose! text-lg! max-w-none! prose-slate! dark:prose-invert! leading-8!
+
+    prose-headings:font-medium! prose-headings:text-emerald-600! dark:prose-headings:text-lividus-500!
+    prose-h2:border-b-2! prose-h2:border-slate-300! dark:prose-h2:border-slate-500! prose-h2:my-4! prose-h2:py-4! prose-h2:border-solid!
+
+    prose-a:no-underline! prose-a:hover:underline! prose-a:text-emerald-700! prose-a:hover:text-emerald-800!
+    dark:prose-a:text-lividus-300! dark:prose-a:hover:text-lividus-200!
+
+    prose-li:marker:text-emerald-500! dark:prose-li:marker:text-lividus-400!
+
+    prose-figure:table! prose-figure:mx-auto!
+
+    prose-img:w-full! prose-img:rounded-xl!
+
+    prose-figcaption:table-caption! prose-figcaption:[caption-side:bottom]! prose-figcaption:break-words!
+    prose-figcaption:rounded-lg! prose-figcaption:p-1.5! prose-figcaption:text-center! prose-figcaption:bg-slate-200!
+    dark:prose-figcaption:bg-slate-700! dark:prose-figcaption:text-slate-100!
+
+    prose-hr:my-3! prose-hr:h-1! prose-hr:border-none! prose-hr:bg-slate-300! dark:prose-hr:bg-slate-500!
+
+    prose-code:before:content-none! prose-code:after:content-none! prose-code:font-jetbrains-mono! prose-code:font-medium!
+
+    prose-pre:p-4! prose-pre:text-[#abb2bf]! prose-pre:bg-neutral-800! prose-pre:rounded-xl! prose-pre:text-lg! dark:prose-pre:bg-neutral-900! prose-pre:border-none!
+
+    prose-blockquote:relative! prose-blockquote:before:absolute! prose-blockquote:before:w-1.5! prose-blockquote:before:h-full! prose-blockquote:before:rounded-sm! prose-blockquote:before:top-0! prose-blockquote:before:-left-4! prose-blockquote:before:bg-emerald-300! dark:prose-blockquote:before:bg-lividus-700! prose-blockquote:before:contain-none! prose-blockquote:ml-4!
+
+    prose-blockquote:border-none! prose-blockquote:rounded-xl! prose-blockquote:text-emerald-500! prose-blockquote:bg-emerald-300/20! dark:prose-blockquote:text-lividus-400! dark:prose-blockquote:bg-lividus-800/50! prose-blockquote:py-2! prose-blockquote:px-4!;
 
     /* ckeditor5-font/theme/fontsize.css */
-    .rich-text .text-tiny {
+    & .text-tiny {
         @apply text-xs;
     }
 
-    .rich-text .text-big {
+    & .text-big {
         @apply text-2xl;
     }
 }

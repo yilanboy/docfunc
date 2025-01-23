@@ -29,7 +29,7 @@
     <x-card class="relative w-full text-lg">
       <div class="relative mb-6 flex justify-end">
         <button
-          class="inline-flex w-full items-center justify-center rounded-md border bg-gray-50 px-4 py-2 text-lg font-medium transition-colors hover:bg-neutral-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 active:bg-white disabled:pointer-events-none disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-600 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800 dark:active:bg-gray-600"
+          class="focus:outline-hidden inline-flex w-full items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-lg font-medium transition-colors hover:bg-neutral-100 focus:bg-white focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 active:bg-white disabled:pointer-events-none disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-600 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800 dark:active:bg-gray-600"
           type="button"
           x-on:click="toggleDropdown"
           x-text="showCurrentYearText"
@@ -59,7 +59,7 @@
 
       @foreach ($this->postsGroupByYear as $year => $posts)
         <div
-          class="rounded-md border bg-gray-50 duration-200 dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-md border border-gray-200 bg-gray-50 duration-200 dark:border-gray-700 dark:bg-gray-800"
           data-year="{{ $year }}"
           x-cloak
           x-show="showPostsByYear"

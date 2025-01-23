@@ -20,7 +20,7 @@
   {{-- 介紹 --}}
   <x-card class="group dark:text-gray-50">
     <p
-      class="w-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 bg-clip-text text-center font-jetbrains-mono text-xl font-semibold text-transparent dark:border-white dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500">
+      class="w-full bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 bg-clip-text text-center font-jetbrains-mono text-xl font-semibold text-transparent dark:border-white dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500">
       echo 'Hello World';
     </p>
 
@@ -32,7 +32,7 @@
 
     <div class="mt-8 flex items-center justify-center">
       <a
-        class="group relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-emerald-500 px-4 py-2 [transform:translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:h-8 before:w-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-[0] before:rounded-full before:bg-lividus-600 before:opacity-0 before:transition before:duration-700 before:ease-in-out hover:before:scale-[10] hover:before:opacity-100 dark:bg-lividus-600 dark:before:bg-emerald-500"
+        class="group relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-emerald-500 px-4 py-2 [transform:translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:h-8 before:w-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-0 before:rounded-full before:bg-lividus-600 before:opacity-0 before:transition before:duration-700 before:ease-in-out hover:before:scale-10 hover:before:opacity-100 dark:bg-lividus-600 dark:before:bg-emerald-500"
         href="{{ route('posts.create') }}"
         wire:navigate
       >
@@ -91,7 +91,7 @@
   @endif
 
   <a
-    class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-zinc-500 px-4 py-2 tracking-widest text-gray-50 ring-zinc-300 transition duration-150 ease-in-out hover:bg-zinc-600 focus:border-zinc-700 focus:outline-none focus:ring active:bg-zinc-700 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500"
+    class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-zinc-500 px-4 py-2 tracking-widest text-gray-50 ring-zinc-300 transition duration-150 ease-in-out hover:bg-zinc-600 focus:border-zinc-700 focus:outline-hidden focus:ring-3 active:bg-zinc-700 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500"
     href="{{ route('feeds.main') }}"
     x-on:click.prevent="copyWebFeedUrl"
     target="_blank"

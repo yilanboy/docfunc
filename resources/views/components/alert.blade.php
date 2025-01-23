@@ -62,7 +62,7 @@
 >
   <div class="p-10">
     <div
-      class="flex items-center rounded px-4 py-3 text-lg text-white"
+      class="flex items-center rounded-sm px-4 py-3 text-lg text-white"
       role="alert"
       :class="alertBackgroundColor"
     >

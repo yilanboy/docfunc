@@ -30,7 +30,7 @@
 <search x-data="search">
   {{-- 搜尋按鈕 --}}
   <button
-    class="group hidden items-center justify-between gap-2 rounded-lg bg-gray-200 p-2 text-sm text-gray-500 xl:flex dark:bg-gray-600 dark:text-gray-400"
+    class="group hidden items-center justify-between gap-2 rounded-lg bg-gray-200 p-2 text-sm text-gray-500 dark:bg-gray-600 dark:text-gray-400 xl:flex"
     type="button"
     aria-label="Search"
     x-on:click="openSearchBar"
@@ -43,7 +43,7 @@
     <span class="transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50">搜尋</span>
 
     <kbd
-      class="inline-flex items-center rounded bg-gray-300 px-2 py-1 font-sans dark:bg-gray-500 dark:text-gray-200"
+      class="font-noto-sans inline-flex items-center rounded-sm bg-gray-300 px-2 py-1 dark:bg-gray-500 dark:text-gray-200"
       x-ref="searchShortcut"
       wire:ignore
     ></kbd>
@@ -62,7 +62,7 @@
 
       {{-- modal --}}
       <div
-        class="fixed inset-0 bg-gray-500/75 backdrop-blur transition-opacity"
+        class="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity"
         x-show="searchBarIsOpen"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -95,7 +95,7 @@
                 for="searchBox"
               >搜尋</label>
               <input
-                class="w-full rounded-xl border border-gray-400 bg-gray-50 px-10 py-2 text-xl placeholder-gray-400 outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200/50 dark:bg-gray-800 dark:text-gray-50 dark:placeholder-white"
+                class="outline-hidden focus:ring-3 w-full rounded-xl border border-gray-400 bg-gray-50 px-10 py-2 text-xl placeholder-gray-400 focus:border-indigo-300 focus:ring-indigo-200/50 dark:bg-gray-800 dark:text-gray-50 dark:placeholder-white"
                 id="searchBox"
                 type="text"
                 x-ref="searchBar"

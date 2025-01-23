@@ -16,7 +16,7 @@
         </div>
 
         <div
-          class="relative ml-4 flex items-center rounded-md border-none bg-red-300/20 px-4 py-2 text-red-500 before:absolute before:-left-4 before:top-0 before:h-full before:w-1.5 before:rounded before:bg-red-500 before:contain-none dark:text-red-400 dark:before:bg-red-400"
+          class="relative ml-4 flex items-center rounded-md border-none bg-red-300/20 px-4 py-2 text-red-500 before:absolute before:-left-4 before:top-0 before:h-full before:w-1.5 before:rounded-sm before:bg-red-500 before:contain-none dark:text-red-400 dark:before:bg-red-400"
         >
           <x-icon.exclamation-triangle class="w-5" />
           <span class="ml-2">請注意！您撰寫的文章與留言都會一起刪除，而且無法恢復！</span>
@@ -25,7 +25,7 @@
         {{-- 寄出刪除帳號信件 --}}
         <div class="w-full">
           <button
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 uppercase tracking-widest text-gray-50 ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 focus:outline-none focus:ring active:bg-red-900 disabled:opacity-25"
+            class="focus:outline-hidden focus:ring-3 inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 uppercase tracking-widest text-gray-50 ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 active:bg-red-900 disabled:opacity-25"
             type="button"
             wire:confirm="您確定要寄出刪除帳號信件嗎？"
             wire:click="sendDestroyEmail({{ $user->id }})"

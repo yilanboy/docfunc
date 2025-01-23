@@ -39,7 +39,7 @@
 >
   @forelse ($comments as $comment)
     <x-dashed-card
-      class="group relative max-h-64 cursor-pointer overflow-hidden after:absolute after:inset-x-0 after:bottom-0 after:h-1/2 after:bg-gradient-to-b after:from-transparent after:to-gray-100 dark:after:to-gray-800"
+      class="group relative max-h-64 cursor-pointer overflow-hidden after:absolute after:inset-x-0 after:bottom-0 after:h-1/2 after:bg-linear-to-b after:from-transparent after:to-gray-100 dark:after:to-gray-800"
       wire:key="comment-{{ $comment->id }}"
     >
       <a

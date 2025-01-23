@@ -35,7 +35,7 @@
   x-data="userInfoCards"
 >
   <div
-    class="col-span-6 rounded-2xl bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 p-1 md:col-span-2 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500"
+    class="col-span-6 rounded-2xl bg-linear-to-br from-green-500 via-emerald-500 to-teal-500 p-1 md:col-span-2 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500"
   >
     <div class="flex flex-col items-center justify-between rounded-xl bg-gray-50 p-5 dark:bg-gray-800">
       {{-- 大頭貼 --}}
@@ -86,7 +86,7 @@
 
           <div style="width: {{ $barWidth }}%">
             <div
-              class="animate-grow-width h-4 rounded-sm bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 transition-all duration-300 dark:border-white dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500"
+              class="animate-grow-width h-4 rounded-xs bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 transition-all duration-300 dark:border-white dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500"
             >
             </div>
           </div>

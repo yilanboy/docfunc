@@ -85,7 +85,7 @@
               for="remember-me"
             >
               <input
-                class="form-checkbox dark:text-lividus-500 dark:focus:border-lividus-700 dark:focus:ring-lividus-800/50 rounded border-gray-300 text-emerald-400 focus:border-emerald-300 focus:ring focus:ring-emerald-200/50"
+                class="form-checkbox dark:text-lividus-500 dark:focus:border-lividus-700 dark:focus:ring-lividus-800/50 rounded-sm border-gray-300 text-emerald-400 focus:border-emerald-300 focus:ring-3 focus:ring-emerald-200/50"
                 id="remember-me"
                 name="remember"
                 type="checkbox"

@@ -87,12 +87,12 @@
     x-cloak
   >
     <div
-      class="dark:bg-lividus-600/90 relative rounded bg-emerald-500/90 px-2 py-1 text-white"
+      class="dark:bg-lividus-600/90 relative rounded-sm bg-emerald-500/90 px-2 py-1 text-white"
       x-show="tooltipVisible"
       x-transition
     >
       <p
-        class="block flex-shrink-0 whitespace-nowrap text-sm"
+        class="block shrink-0 whitespace-nowrap text-sm"
         x-text="tooltipText"
       ></p>
       <div

@@ -65,7 +65,7 @@
       >
 
       <button
-        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-sm"
+        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-xs"
         type="button"
         x-on:click="removePreviewUrl"
       >
@@ -89,7 +89,7 @@
       >
 
       <button
-        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-sm"
+        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-xs"
         type="button"
         x-on:click="clearImage"
       >
@@ -109,7 +109,7 @@
       x-ref="uploadBlock"
     >
       <input
-        class="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+        class="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-hidden"
         type="file"
         wire:model.live="{{ $imageModelName }}"
         x-on:dragenter="changeBlockStyleWhenDragEnter"
@@ -130,7 +130,7 @@
       x-cloak
       x-show="isUploading"
     >
-      <div class="mb-4 flex h-4 overflow-hidden rounded bg-emerald-200 text-xs dark:bg-indigo-200">
+      <div class="mb-4 flex h-4 overflow-hidden rounded-sm bg-emerald-200 text-xs dark:bg-indigo-200">
         <div
           class="flex flex-col justify-center whitespace-nowrap bg-emerald-500 text-center text-white dark:bg-indigo-500"
           x-bind:style="`width:${progress}%`"
