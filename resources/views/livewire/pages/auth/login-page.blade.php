@@ -78,21 +78,15 @@
             required
           />
 
-          <div class="mt-12 flex justify-between">
-            {{-- 記住我 --}}
-            <label
-              class="inline-flex items-center"
-              for="remember-me"
+          <div class="mt-12 flex items-center justify-between">
+
+            <x-checkbox
+              id="remember"
+              name="remember"
+              wire:model="remember"
             >
-              <input
-                class="form-checkbox dark:text-lividus-500 dark:focus:border-lividus-700 dark:focus:ring-lividus-800/50 rounded-sm border-gray-300 text-emerald-400 focus:border-emerald-300 focus:ring-3 focus:ring-emerald-200/50"
-                id="remember-me"
-                name="remember"
-                type="checkbox"
-                wire:model="remember"
-              >
-              <span class="ml-2 text-sm text-gray-600 dark:text-gray-50">{{ __('Remember me') }}</span>
-            </label>
+              記住我
+            </x-checkbox>
 
             <div
               class="hidden"

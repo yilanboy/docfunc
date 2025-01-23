@@ -142,60 +142,46 @@
 
                 {{-- post classfication --}}
                 <div class="col-span-2 md:col-span-1">
-                  <label
-                    class="hidden"
-                    for="category_id"
-                  >分類</label>
-
-                  <select
-                    class="focus:ring-3 form-select h-12 w-full rounded-md border border-gray-300 text-lg focus:border-indigo-300 focus:ring-indigo-200/50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50"
+                  <x-select
                     id="category_id"
                     name="category_id"
-                    wire:model="form.category_id"
+                    wire:model.change="form.category_id"
                     required
                   >
+                    @slot('label')
+                      分類
+                    @endslot
+
                     @foreach ($categories as $category)
                       <option value="{{ $category->id }}">
                         {{ $category->name }}
                       </option>
                     @endforeach
-                  </select>
+                  </x-select>
                 </div>
 
                 {{-- post private setting --}}
                 <div class="col-span-2 flex items-center md:col-span-1">
-                  <label
-                    class="inline-flex items-center"
-                    for="is-private"
+                  <x-checkbox
+                    id="is-private"
+                    name="is-private"
+                    wire:model.change="form.is_private"
                   >
-                    <input
-                      class="dark:text-lividus-500 dark:focus:border-lividus-700 dark:focus:ring-lividus-800 focus:ring-3 form-checkbox h-6 w-6 rounded-sm border-gray-300 text-emerald-400 focus:border-emerald-300 focus:ring-emerald-200/50 dark:border-gray-600"
-                      id="is-private"
-                      name="is-private"
-                      type="checkbox"
-                      wire:model="form.is_private"
-                    >
-                    <span class="ml-2 text-lg text-gray-600 dark:text-gray-50">文章不公開</span>
-                  </label>
+                    文章不公開
+                  </x-checkbox>
                 </div>
 
                 {{-- post title --}}
                 <div class="col-span-2">
-                  <label
-                    class="hidden"
-                    for="title"
-                  >文章標題</label>
-
-                  <input
-                    class="focus:ring-3 form-input h-12 w-full rounded-md border border-gray-300 text-lg focus:border-indigo-300 focus:ring-indigo-200/50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 dark:placeholder-gray-50"
+                  <x-input
                     id="title"
                     name="title"
                     type="text"
-                    wire:model="form.title"
+                    wire:model.live.debounce.500ms="form.title"
                     placeholder="文章標題"
                     required
                     autofocus
-                  >
+                  />
                 </div>
 
                 {{-- post tags --}}
