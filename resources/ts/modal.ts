@@ -99,7 +99,9 @@ export class Modal {
 
         const modalPanel = document.getElementById(MODAL_PANEL_ID);
 
-        if (!backgroundBackdrop || !modalPanel) {
+        const closeButton = document.getElementById(CLOSE_MODAL_BUTTON_ID);
+
+        if (!backgroundBackdrop || !modalPanel || !closeButton) {
             return;
         }
 
@@ -110,9 +112,10 @@ export class Modal {
             backgroundBackdrop.classList.add(
                 ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME,
             );
-
             modalPanel.classList.remove(...HIDE_MODAL_PANEL_CLASS_NAME);
             modalPanel.classList.add(...SHOW_MODAL_PANEL_CLASS_NAME);
+            closeButton.classList.remove('opacity-0');
+            closeButton.classList.add('opacity-100');
         }, 100);
 
         // Add event listeners for closing if needed
@@ -151,7 +154,9 @@ export class Modal {
 
         const modalPanel = document.getElementById(MODAL_PANEL_ID);
 
-        if (!backgroundBackdrop || !modalPanel) {
+        const closeButton = document.getElementById(CLOSE_MODAL_BUTTON_ID);
+
+        if (!backgroundBackdrop || !modalPanel || !closeButton) {
             return;
         }
 
@@ -161,9 +166,10 @@ export class Modal {
         backgroundBackdrop.classList.add(
             ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME,
         );
-
         modalPanel.classList.remove(...SHOW_MODAL_PANEL_CLASS_NAME);
         modalPanel.classList.add(...HIDE_MODAL_PANEL_CLASS_NAME);
+        closeButton.classList.remove('opacity-100');
+        closeButton.classList.add('opacity-0');
 
         setTimeout(() => {
             document.body.removeChild(this.element);
