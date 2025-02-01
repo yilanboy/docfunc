@@ -5,19 +5,6 @@
 >
 
 <head>
-  {{-- Set theme --}}
-  <script>
-    if (
-      localStorage.mode === 'light' ||
-      (!('mode' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: light)').matches)
-    ) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  </script>
-
   {{-- prettier-ignore-start --}}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +40,18 @@
 </head>
 
 <body class="font-noto-sans overscroll-y-none bg-gray-200 text-lg text-gray-900 antialiased dark:bg-gray-900">
+  {{-- Set theme --}}
+  <script>
+    if (
+      localStorage.mode === 'light' ||
+      (!('mode' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: light)').matches)
+    ) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 
   {{ $slot }}
 
