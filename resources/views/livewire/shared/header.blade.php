@@ -84,7 +84,7 @@
 
       {{-- light / dark mode toggle --}}
       <button
-        class="group relative flex size-12 items-center justify-center overflow-hidden"
+        class="group relative flex size-12 cursor-pointer items-center justify-center overflow-hidden"
         type="button"
         aria-label="Toggle Dark Mode"
         x-on:click="switchTheme"
@@ -143,7 +143,7 @@
           {{-- headshot --}}
           <div>
             <button
-              class="flex rounded-full bg-gray-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
+              class="focus:outline-hidden flex cursor-pointer rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
               id="desktop-user-menu-button"
               type="button"
               x-on:click="toggleProfileMenu"
@@ -295,7 +295,7 @@
               {{-- headshot --}}
               <div>
                 <button
-                  class="flex rounded-full bg-gray-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
+                  class="focus:outline-hidden flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
                   id="mobile-user-menu-button"
                   type="button"
                   aria-expanded="false"

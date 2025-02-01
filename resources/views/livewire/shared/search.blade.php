@@ -30,7 +30,7 @@
 <search x-data="search">
   {{-- 搜尋按鈕 --}}
   <button
-    class="group hidden items-center justify-between gap-2 rounded-lg bg-gray-200 p-2 text-sm text-gray-500 dark:bg-gray-600 dark:text-gray-400 xl:flex"
+    class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-gray-200 p-2 text-sm text-gray-500 xl:flex dark:bg-gray-600 dark:text-gray-400"
     type="button"
     aria-label="Search"
     x-on:click="openSearchBar"
