@@ -8,10 +8,10 @@
       switchTheme() {
         if (this.html.classList.contains('dark')) {
           this.html.classList.remove('dark');
-          localStorage.setItem('mode', 'light');
+          localStorage.setItem('theme', 'light');
         } else {
           this.html.classList.add('dark');
-          localStorage.setItem('mode', 'dark');
+          localStorage.setItem('theme', 'dark');
         }
       },
       toggleDropdownMenu() {

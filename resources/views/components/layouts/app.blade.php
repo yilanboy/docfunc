@@ -43,9 +43,8 @@
   {{-- Set theme --}}
   <script>
     if (
-      localStorage.mode === 'light' ||
-      (!('mode' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: light)').matches)
+      localStorage.theme === 'light' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)
     ) {
       document.documentElement.classList.remove('dark');
     } else {
