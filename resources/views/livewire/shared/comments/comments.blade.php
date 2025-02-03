@@ -1,25 +1,25 @@
 @script
-<script>
-  Alpine.data('comments', () => ({
-    orderDropdownIsOpen: false,
-    openOrderDropdown() {
-      this.orderDropdownIsOpen = true;
-    },
-    closeOrderDropdown() {
-      this.orderDropdownIsOpen = false;
-    },
-    changeOrder() {
-      this.$wire.changeOrder(this.$el.dataset.order);
-      this.orderDropdownIsOpen = false;
-    },
-    openCreateCommentModal() {
-      this.$dispatch('open-create-comment-modal', {
-        parentId: null,
-        replyTo: null
-      });
-    }
-  }));
-</script>
+  <script>
+    Alpine.data('comments', () => ({
+      orderDropdownIsOpen: false,
+      openOrderDropdown() {
+        this.orderDropdownIsOpen = true;
+      },
+      closeOrderDropdown() {
+        this.orderDropdownIsOpen = false;
+      },
+      changeOrder() {
+        this.$wire.changeOrder(this.$el.dataset.order);
+        this.orderDropdownIsOpen = false;
+      },
+      openCreateCommentModal() {
+        this.$dispatch('open-create-comment-modal', {
+          parentId: null,
+          replyTo: null
+        });
+      }
+    }));
+  </script>
 @endscript
 
 @php
@@ -62,7 +62,7 @@
           </div>
 
           <div
-            class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-50 shadow-lg ring-1 ring-black/5 focus:outline-hidden dark:bg-gray-800 dark:ring-white/20"
+            class="focus:outline-hidden absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-50 shadow-lg ring-1 ring-black/5 dark:bg-gray-800 dark:ring-white/20"
             x-show="orderDropdownIsOpen"
             x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="transform opacity-0 scale-95"
@@ -94,7 +94,7 @@
       </div>
 
       <button
-        class="group relative overflow-hidden rounded-xl bg-emerald-500 px-6 py-2 [transform:translateZ(0)] before:absolute before:bottom-0 before:left-0 before:h-full before:w-full before:origin-[100%_100%] before:scale-x-0 before:bg-lividus-600 before:transition before:duration-500 before:ease-in-out hover:before:origin-[0_0] hover:before:scale-x-100 dark:bg-lividus-600 dark:before:bg-emerald-500"
+        class="before:bg-lividus-600 dark:bg-lividus-600 group relative cursor-pointer overflow-hidden rounded-xl bg-emerald-500 px-6 py-2 [transform:translateZ(0)] before:absolute before:bottom-0 before:left-0 before:h-full before:w-full before:origin-[100%_100%] before:scale-x-0 before:transition before:duration-500 before:ease-in-out hover:before:origin-[0_0] hover:before:scale-x-100 dark:before:bg-emerald-500"
         type="button"
         {{-- the comment group name should be full name --}}
         x-on:click="openCreateCommentModal"

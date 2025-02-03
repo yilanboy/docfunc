@@ -5,7 +5,7 @@
     :tooltip-position="'right'"
   >
     <a
-      class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+      class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
       href="{{ route('posts.index') }}"
       role="button"
       wire:navigate
@@ -21,7 +21,7 @@
     :tooltip-position="'right'"
   >
     <button
-      class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+      class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
       data-sharer="facebook"
       data-hashtag="{{ config('app.name') }}"
       data-url="{{ request()->fullUrl() }}"
@@ -39,7 +39,7 @@
     :tooltip-position="'right'"
   >
     <button
-      class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+      class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
       data-sharer="x"
       data-title="{{ $postTitle }}"
       data-hashtags="{{ config('app.name') }}"
@@ -58,7 +58,7 @@
     :tooltip-position="'right'"
   >
     <button
-      class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+      class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
       data-clipboard="{{ urldecode(request()->fullUrl()) }}"
       type="button"
     >
@@ -77,7 +77,7 @@
       :tooltip-position="'right'"
     >
       <a
-        class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+        class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
         href="{{ route('posts.edit', ['id' => $postId]) }}"
         role="button"
         wire:navigate
@@ -94,7 +94,7 @@
       :tooltip-position="'right'"
     >
       <button
-        class="group flex h-14 w-14 items-center justify-center text-gray-500 dark:text-gray-400"
+        class="group flex h-14 w-14 cursor-pointer items-center justify-center text-gray-500 dark:text-gray-400"
         type="button"
         title="刪除文章"
         wire:confirm="你確定要刪除文章嗎？（7 天之內可以還原）"
