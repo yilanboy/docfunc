@@ -103,7 +103,7 @@
     {{-- close modal button --}}
     <div class="absolute right-5 top-5">
       <button
-        class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+        class="cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
         type="button"
         x-on:click="closeModal"
       >
@@ -128,6 +128,8 @@
         class="space-y-6"
         x-on:submit.prevent="submitForm"
       >
+        <x-auth-validation-errors :errors="$errors" />
+
         @if ($previewIsEnabled)
           <div class="space-y-2">
             <div class="space-x-4">
@@ -141,8 +143,6 @@
             </div>
           </div>
         @else
-          <x-auth-validation-errors :errors="$errors" />
-
           <x-floating-label-textarea
             id="create-comment-body"
             x-ref="createCommentTextarea"

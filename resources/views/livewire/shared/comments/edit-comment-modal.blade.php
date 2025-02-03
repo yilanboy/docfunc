@@ -72,14 +72,14 @@
 
   {{--  modal  --}}
   <div
-    class="mx-2 max-h-[36rem] w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-gray-50 p-5 transition-all md:max-w-2xl dark:bg-gray-800"
+    class="mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-gray-50 p-5 transition-all md:max-w-2xl dark:bg-gray-800"
     x-show="modalIsOpen"
     x-transition.origin.bottom.duration.300ms
   >
     {{-- close modal button --}}
     <div class="absolute right-5 top-5">
       <button
-        class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+        class="cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
         type="button"
         x-on:click="closeModal"
       >
@@ -97,6 +97,8 @@
         class="space-y-6"
         x-on:submit.prevent="submitForm"
       >
+        <x-auth-validation-errors :errors="$errors" />
+
         @if ($previewIsEnabled)
           <div class="space-y-2">
             <div class="space-x-4">
@@ -108,8 +110,6 @@
             </div>
           </div>
         @else
-          <x-auth-validation-errors :errors="$errors" />
-
           <x-floating-label-textarea
             id="edit-comment-body"
             x-ref="editCommentTextarea"
