@@ -7,12 +7,6 @@
 @assets
   {{-- highlight code block style --}}
   @vite('node_modules/highlight.js/styles/atom-one-dark.css')
-  <style>
-    .dark .hljs {
-      background: #171717;
-    }
-  </style>
-
   {{-- highlight code block --}}
   @vite('resources/ts/highlight.ts')
   {{-- code block copy button --}}

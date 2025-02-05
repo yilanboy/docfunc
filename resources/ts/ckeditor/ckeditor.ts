@@ -40,7 +40,7 @@ import {
 
 import coreTranslations from 'ckeditor5/translations/zh.js';
 
-import 'ckeditor5/ckeditor5.css';
+import 'ckeditor5/ckeditor5-editor.css';
 // Override the default styles.
 import './custom.css';
 

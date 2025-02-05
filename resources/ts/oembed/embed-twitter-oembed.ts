@@ -44,7 +44,7 @@ async function convertTwitterOembedToIframe(
 // 定義一個函式來檢查是否為 Twitter 連結
 // 目前 ckeditor 還是只支援 twitter.com 的連結，尚未支援 x.com
 function isTwitterUrl(url: string): boolean {
-    return /^https?:\/\/(www\.)?twitter\.com\/[^/]+\/status\/\d+/.test(url);
+    return /^https?:\/\/(www\.)?(twitter|x)\.com\/[^/]+\/status\/\d+/.test(url);
 }
 
 // source code :

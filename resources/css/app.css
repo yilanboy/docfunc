@@ -61,33 +61,33 @@
 }
 
 @utility rich-text {
-    @apply prose! text-lg! max-w-none! prose-slate! dark:prose-invert! leading-8!
+    @apply prose text-lg max-w-none prose-slate dark:prose-invert leading-8
         /*  heading  */
-    prose-headings:font-medium! prose-headings:text-emerald-600! dark:prose-headings:text-lividus-500!
-    prose-h2:border-b-2! prose-h2:border-slate-300! dark:prose-h2:border-slate-500! prose-h2:my-4! prose-h2:py-4! prose-h2:border-solid!
+    prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
+    prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
         /* link */
-    prose-a:no-underline! prose-a:hover:underline! prose-a:text-emerald-700! prose-a:hover:text-emerald-800!
-    dark:prose-a:text-lividus-300! dark:prose-a:hover:text-lividus-200!
+    prose-a:no-underline prose-a:hover:underline prose-a:text-emerald-700 prose-a:hover:text-emerald-800
+    dark:prose-a:text-lividus-300 dark:prose-a:hover:text-lividus-200
         /* list */
-    prose-li:marker:text-emerald-500! dark:prose-li:marker:text-lividus-400!
+    prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
         /* figure */
-    prose-figure:table! prose-figure:mx-auto!
+    prose-figure:table prose-figure:w-full prose-figure:mx-auto
         /* image */
-    prose-img:w-full! prose-img:rounded-xl!
+    prose-img:w-full prose-img:rounded-xl
         /* figcaption */
-    prose-figcaption:table-caption! prose-figcaption:[caption-side:bottom]! prose-figcaption:break-words!
-    prose-figcaption:rounded-lg! prose-figcaption:p-1.5! prose-figcaption:text-center! prose-figcaption:bg-slate-200!
-    dark:prose-figcaption:bg-slate-700! dark:prose-figcaption:text-slate-100!
+    prose-figcaption:table-caption prose-figcaption:[caption-side:bottom] prose-figcaption:break-words
+    prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-slate-200
+    dark:prose-figcaption:bg-slate-700 dark:prose-figcaption:text-slate-100
         /* hr */
-    prose-hr:my-3! prose-hr:h-1! prose-hr:border-none! prose-hr:bg-slate-300! dark:prose-hr:bg-slate-500!
+    prose-hr:my-3 prose-hr:h-1 prose-hr:border-none prose-hr:bg-slate-300 dark:prose-hr:bg-slate-500
         /* code */
-    prose-code:before:content-none! prose-code:after:content-none! prose-code:font-jetbrains-mono! prose-code:font-medium!
+    prose-code:before:content-none prose-code:after:content-none prose-code:font-jetbrains-mono prose-code:font-medium
         /* pre */
-    prose-pre:p-4! prose-pre:text-[#abb2bf]! prose-pre:bg-neutral-800! prose-pre:rounded-xl! prose-pre:text-lg! dark:prose-pre:bg-neutral-900! prose-pre:border-none!
+    prose-pre:p-4 prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
         /* blockquote before */
-    prose-blockquote:relative! prose-blockquote:before:absolute! prose-blockquote:before:w-1.5! prose-blockquote:before:h-full! prose-blockquote:before:rounded-sm! prose-blockquote:before:top-0! prose-blockquote:before:-left-4! prose-blockquote:before:bg-emerald-300! dark:prose-blockquote:before:bg-lividus-700! prose-blockquote:before:contain-none! prose-blockquote:ml-4!
+    prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded-sm prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
         /* blockquote */
-    prose-blockquote:border-none! prose-blockquote:rounded-xl! prose-blockquote:text-emerald-500! prose-blockquote:bg-emerald-300/20! dark:prose-blockquote:text-lividus-400! dark:prose-blockquote:bg-lividus-800/50! prose-blockquote:py-2! prose-blockquote:px-4!;
+    prose-blockquote:border-none prose-blockquote:rounded-xl prose-blockquote:text-emerald-500 prose-blockquote:bg-emerald-300/20 dark:prose-blockquote:text-lividus-400 dark:prose-blockquote:bg-lividus-800/50 prose-blockquote:py-2 prose-blockquote:px-4;
 
     /* ckeditor5-font/theme/fontsize.css */
     & .text-tiny {
@@ -118,6 +118,14 @@
     & blockquote p:last-of-type::after {
         content: '' !important;
     }
+
+    & pre code.hljs {
+        padding: 0 !important;
+    }
+}
+
+.dark .hljs {
+    background: #171717 !important;
 }
 
 /* Alpine.js */

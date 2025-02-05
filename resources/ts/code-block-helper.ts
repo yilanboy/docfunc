@@ -111,7 +111,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         const code: HTMLElement = codes[0];
 
-        code.classList.add('font-jetbrains-mono', 'text-xl', 'font-semibold');
+        code.classList.add('font-jetbrains-mono', 'text-lg', 'font-semibold');
 
         // start to create copy button...
         const copyButton: HTMLButtonElement = createCopyCodeButton(
