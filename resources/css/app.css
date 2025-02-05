@@ -163,7 +163,7 @@
 
 /* media embed */
 iframe,
-.twitter-tweet {
+div.twitter-tweet.twitter-tweet-rendered {
     margin-left: auto;
     margin-right: auto;
 }
