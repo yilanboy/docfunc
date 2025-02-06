@@ -80,7 +80,7 @@ export class Modal {
                 <button
                     id="${CLOSE_MODAL_BUTTON_ID}"
                     type="button"
-                    class="text-gray-200 transition duration-300 hover:text-gray-50"
+                    class="text-gray-200 transition duration-300 hover:text-gray-50 cursor-pointer"
                 >
                    ${X_CIRCLE_FILL_ICON_SVG}
                 </button>

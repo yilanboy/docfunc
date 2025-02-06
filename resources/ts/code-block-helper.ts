@@ -25,6 +25,7 @@ const BASE_BUTTON_CLASS_NAME: string[] = [
     'group-hover:opacity-100',
     'transition-all',
     'duration-200',
+    'cursor-pointer',
 ];
 
 const CHECK_ICON_SVG: string = `

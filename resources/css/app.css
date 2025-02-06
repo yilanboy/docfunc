@@ -124,8 +124,12 @@
     }
 }
 
+.hljs {
+    background: theme('colors.neutral.800') !important;
+}
+
 .dark .hljs {
-    background: #171717 !important;
+    background: theme('colors.neutral.900') !important;
 }
 
 /* Alpine.js */
