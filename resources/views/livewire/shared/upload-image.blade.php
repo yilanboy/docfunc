@@ -55,7 +55,7 @@
       >
 
       <button
-        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-xs"
+        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50"
         type="button"
         x-on:click="removePreviewUrl"
       >
@@ -79,7 +79,7 @@
       >
 
       <button
-        class="group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50 hover:backdrop-blur-xs"
+        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50"
         type="button"
         x-on:click="clearImage"
       >
@@ -99,7 +99,7 @@
       x-ref="uploadBlock"
     >
       <input
-        class="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-hidden"
+        class="outline-hidden absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0"
         type="file"
         wire:model.live="image"
         x-on:dragenter="changeBlockStyleWhenDragEnter"
