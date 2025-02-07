@@ -110,7 +110,7 @@
 
     --ck-color-widget-blurred-border: hsl(0, 0%, 87%);
     --ck-color-widget-hover-border: hsl(43, 100%, 68%);
-    --ck-color-widget-editable-focus-background: var(--ck-custom-white);
+    --ck-color-widget-editable-focus-background: oklch(0.372 0.044 257.287);
 
     /* -- Overrides the default colors used by the ckeditor5-link package. ---------------------- */
 
