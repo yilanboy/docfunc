@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use Dom\HTMLDocument;
-use HTMLPurifier;
-use HTMLPurifier_Config;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class ContentService
 {
@@ -29,47 +29,20 @@ class ContentService
     /**
      * 過濾 html 格式的文章內容，避免 XSS 攻擊
      */
-    public static function htmlPurifier(string $html): string
+    public static function sanitizeHtml(string $html): string
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $htmlSanitizer = new HtmlSanitizer(
+            new HtmlSanitizerConfig()
+                ->allowSafeElements()
+                ->allowAttribute('data-language', 'pre')
+                ->allowElement('code', ['class'])
+                ->allowElement('figure', ['class'])
+                ->allowElement('oembed', ['class', 'url'])
+                ->forceAttribute('a', 'rel', 'noopener noreferrer')
+                ->forceAttribute('a', 'target', '_blank')
+        );
 
-        $config->set('Core.Encoding', 'utf-8');
-        // 設置配置的名稱
-        $config->set('HTML.DefinitionID', 'content');
-
-        $config->set('Cache.SerializerPath', config('cache.stores.file.path'));
-
-        // 預設幫外部連結補上 target="_blank" 與 rel="noreferrer noopener"
-        $config->set('HTML.TargetBlank', true);
-        // 預設幫外部連結補上 rel="nofollow"
-        $config->set('HTML.Nofollow', true);
-
-        // 清除過濾規則的快取，正式上線時必須移除
-        if (! app()->isProduction()) {
-            $config->set('Cache.DefinitionImpl', null);
-        }
-
-        $def = $config->maybeGetRawHTMLDefinition();
-
-        if (! is_null($def)) {
-            // 圖片
-            $def->addElement('figure', 'Block', 'Flow', 'Common');
-            // 圖片底下的說明文字
-            $def->addElement('figcaption', 'Block', 'Flow', 'Common');
-            // 影片嵌入
-            $def->addElement(
-                'oembed', // 標籤名稱
-                'Block', // content set
-                'Flow', // allowed children
-                'Common', // attribute collection
-                ['url' => 'URI'] // 屬性
-            );
-        }
-
-        // 設定 XSS 過濾器
-        $purifier = new HTMLPurifier($config);
-
-        return $purifier->purify($html);
+        return $htmlSanitizer->sanitize($html);
     }
 
     /**

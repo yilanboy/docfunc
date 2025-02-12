@@ -23,7 +23,7 @@ it('can filter the dangerous HTML element', function () {
         </body>
     HTML;
 
-    expect($this->contentService->htmlPurifier($body))
+    expect($this->contentService->sanitizeHtml($body))
         ->not->toContain('<body onload="alert(\'this a xss attack\')">')
         ->not->toContain('<script>alert(\'this a xss attack\');</script>')
         ->not->toContain('<IMG SRC=j&#X41vascript:alert(\'test2\')>')
@@ -33,22 +33,28 @@ it('can filter the dangerous HTML element', function () {
 it('can keep the custom HTML elements we want', function () {
     $body = <<<'HTML'
         <body>
-            <a href="https://google.com" rel="nofollow noreferrer noopener" target="_blank">Google</a>
+            <pre data-language="Bash" spellcheck="false">
+                <code class="language-bash">mkdir highlight-blade</code>
+            </pre>
 
-            <figure class="image">
+            <a href="https://google.com">Google</a>
+
+            <figure class="media image-block-helper-added group relative">
                 <img src="image.jpg" alt="share">
                 <figcaption>Share Image</figcaption>
             </figure>
 
-            <oembed url="https://google.com"></oembed>
+            <oembed url="https://www.youtube.com/watch?v=rvln9U9w8ZI" class="oembed-processed"></oembed>
         </body>
     HTML;
 
-    expect($this->contentService->htmlPurifier($body))
-        ->toContain('<a href="https://google.com" rel="nofollow noreferrer noopener" target="_blank">Google</a>')
-        ->toContain('<figure class="image">')
+    expect($this->contentService->sanitizeHtml($body))
+        ->toContain('<pre data-language="Bash" spellcheck="false">')
+        ->toContain('<code class="language-bash">mkdir highlight-blade</code>')
+        ->toContain('<a href="https://google.com" rel="noopener noreferrer" target="_blank">Google</a>')
+        ->toContain('<figure class="media image-block-helper-added group relative">')
         ->toContain('<figcaption>Share Image</figcaption>')
-        ->toContain('<oembed url="https://google.com"></oembed>');
+        ->toContain('<oembed url="https://www.youtube.com/watch?v&#61;rvln9U9w8ZI" class="oembed-processed"></oembed>');
 });
 
 it('can find all images in the post body', function () {
