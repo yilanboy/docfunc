@@ -33,6 +33,8 @@ it('can filter the dangerous HTML element', function () {
 it('can keep the custom HTML elements we want', function () {
     $body = <<<'HTML'
         <body>
+            <span class="text-tiny">Could you keep it down, please?</span>
+
             <pre data-language="Bash" spellcheck="false">
                 <code class="language-bash">mkdir highlight-blade</code>
             </pre>
@@ -49,6 +51,7 @@ it('can keep the custom HTML elements we want', function () {
     HTML;
 
     expect($this->contentService->sanitizeHtml($body))
+        ->toContain('<span class="text-tiny">Could you keep it down, please?</span>')
         ->toContain('<pre data-language="Bash" spellcheck="false">')
         ->toContain('<code class="language-bash">mkdir highlight-blade</code>')
         ->toContain('<a href="https://google.com" rel="noopener noreferrer" target="_blank">Google</a>')

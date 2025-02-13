@@ -35,6 +35,7 @@ class ContentService
             new HtmlSanitizerConfig()
                 ->allowSafeElements()
                 ->allowAttribute('data-language', 'pre')
+                ->allowAttribute('class', 'span')
                 ->allowElement('code', ['class'])
                 ->allowElement('figure', ['class'])
                 ->allowElement('oembed', ['class', 'url'])
