@@ -10,26 +10,26 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Title('登入')]
 class LoginPage extends Component
 {
-    #[Validate(['required', 'string', 'email'])]
     public string $email = '';
 
-    #[Validate(['required', 'string'])]
     public string $password = '';
 
     public bool $remember = false;
 
-    #[Validate(['required', new Captcha])]
     public string $captchaToken = '';
 
     public function login(): void
     {
-        $this->validate();
+        $this->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+            'captchaToken' => ['required', new Captcha]
+        ]);
 
         $this->ensureIsNotRateLimited();
 
