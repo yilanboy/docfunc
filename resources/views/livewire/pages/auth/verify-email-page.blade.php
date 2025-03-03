@@ -34,7 +34,7 @@
 
           <x-button
             type="button"
-            wire:click="resendVerificationEmail"
+            wire:click="sendVerification"
           >
             {{ __('Resend Verification Email') }}
           </x-button>

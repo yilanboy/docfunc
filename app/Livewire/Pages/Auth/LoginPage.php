@@ -6,36 +6,31 @@ use App\Rules\Captcha;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
+#[Title('登入')]
 class LoginPage extends Component
 {
+    #[Validate(['required', 'string', 'email'])]
     public string $email = '';
 
+    #[Validate(['required', 'string'])]
     public string $password = '';
 
     public bool $remember = false;
 
+    #[Validate(['required', new Captcha])]
     public string $captchaToken = '';
 
-    protected function rules(): array
+    public function login(): void
     {
-        return [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'captchaToken' => ['required', new Captcha],
-        ];
-    }
+        $this->validate();
 
-    /**
-     * Attempt to authenticate the request's credentials.
-     */
-    private function authenticate(): void
-    {
         $this->ensureIsNotRateLimited();
 
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
@@ -47,12 +42,14 @@ class LoginPage extends Component
         }
 
         RateLimiter::clear($this->throttleKey());
+        Session::regenerate();
+
+        $this->dispatch('info-badge', status: 'success', message: '登入成功！');
+
+        $this->redirectIntended(route('root', absolute: false), navigate: true);
     }
 
-    /**
-     * Ensure the login request is not rate limited.
-     */
-    private function ensureIsNotRateLimited(): void
+    protected function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
@@ -63,40 +60,15 @@ class LoginPage extends Component
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'email' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
-    private function throttleKey(): string
+    protected function throttleKey(): string
     {
-        return Str::lower($this->email).'|'.request()->ip();
-    }
-
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function store(): void
-    {
-        $this->validate();
-
-        $this->authenticate();
-
-        session()->regenerate();
-
-        $this->dispatch('info-badge', status: 'success', message: '登入成功！');
-
-        $this->redirect('/', navigate: true);
-    }
-
-    #[Title('登入')]
-    public function render(): View
-    {
-        return view('livewire.pages.auth.login-page');
+        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
     }
 }

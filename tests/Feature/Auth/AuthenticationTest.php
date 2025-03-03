@@ -26,7 +26,7 @@ test('users can authenticate using the login screen', function () {
         ->set('email', $user->email)
         ->set('password', $password)
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('login')
         ->assertDispatched('info-badge', status: 'success', message: '登入成功！')
         ->assertRedirect('/');
 
@@ -40,7 +40,7 @@ test('email is required', function () {
         ->set('email', '')
         ->set('password', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('login')
         ->assertHasErrors(['email' => 'required']);
 });
 
@@ -51,7 +51,7 @@ test('password is required', function () {
         ->set('email', 'email@examle.com')
         ->set('password', '')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('login')
         ->assertHasErrors(['password' => 'required']);
 });
 
@@ -62,7 +62,7 @@ test('captcha token is required', function () {
         ->set('email', 'allen@example.com')
         ->set('password', 'Password101')
         ->set('captchaToken', '')
-        ->call('store')
+        ->call('login')
         ->assertHasErrors(['captchaToken' => 'required']);
 });
 
@@ -77,7 +77,7 @@ test('captcha challenge failed', function () {
         ->set('email', 'allen@example.com')
         ->set('password', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('login')
         ->assertHasErrors(['captchaToken']);
 });
 
@@ -86,7 +86,7 @@ test('email must be a valid email address', function () {
         ->set('email', 'wrongEmail')
         ->set('password', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('login')
         ->assertHasErrors(['email' => 'email']);
 });
 
@@ -99,7 +99,7 @@ test('users can not authenticate with invalid password', function () {
         ->set('email', $user->email)
         ->set('password', 'wrongPassword101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store');
+        ->call('login');
 
     $this->assertGuest();
 });

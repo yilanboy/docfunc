@@ -32,7 +32,7 @@ test('guest can register', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertRedirect('/verify-email');
 
     $this->assertAuthenticated();
@@ -50,7 +50,7 @@ test('name is required', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['name' => 'required']);
 });
 
@@ -66,7 +66,7 @@ test('name must be unique', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['name' => 'unique']);
 });
 
@@ -77,7 +77,7 @@ test('the number of characters in the name must be between 3 and 25.', function 
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['name' => 'between']);
 })->with([
     'ya',
@@ -92,7 +92,7 @@ test('name must be alphanumeric, \'-\' and \'_\'', function (string $name) {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['name' => 'regex']);
 })->with([
     'Allen@', 'Allen$', 'Allen#', 'Allen%', 'Allen^',
@@ -111,7 +111,7 @@ test('name input will be trimmed', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store');
+        ->call('register');
 
     $this->assertDatabaseHas('users', [
         'name' => 'Test User',
@@ -125,7 +125,7 @@ test('email is required', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['email' => 'required']);
 });
 
@@ -136,7 +136,7 @@ test('email must be valid', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['email' => 'email']);
 });
 
@@ -152,7 +152,7 @@ test('email must be unique', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['email' => 'unique']);
 });
 
@@ -163,7 +163,7 @@ test('password is required', function () {
         ->set('password', '')
         ->set('password_confirmation', 'Password101')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['password' => 'required']);
 });
 
@@ -174,7 +174,7 @@ test('password must be confirmed', function () {
         ->set('password', 'Password101')
         ->set('password_confirmation', 'Password102')
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors(['password' => 'confirmed']);
 });
 
@@ -185,7 +185,7 @@ test('password must be at least 8 characters, mixed case, numbers and letters', 
         ->set('password', $password)
         ->set('password_confirmation', $password)
         ->set('captchaToken', 'fake-captcha-response')
-        ->call('store')
+        ->call('register')
         ->assertHasErrors();
 })->with([
     'password', 'PASSWORD', 'Password', 'password101',

@@ -51,7 +51,7 @@
 
         <form
           id="register"
-          wire:submit="store"
+          wire:submit="register"
         >
           {{-- 會員名稱 --}}
           <x-floating-label-input

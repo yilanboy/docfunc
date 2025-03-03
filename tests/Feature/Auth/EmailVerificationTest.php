@@ -25,7 +25,7 @@ test('if user has already verified email, redirect user to previous page', funct
 
     $this->actingAs($user)
         ->get('/verify-email')
-        ->assertRedirect('/');
+        ->assertRedirectToRoute('root');
 });
 
 test('email can be verified', function () {
@@ -96,7 +96,7 @@ test('user can ask to resend verified email', function () {
     $this->actingAs($user);
 
     livewire(VerifyEmailPage::class)
-        ->call('resendVerificationEmail');
+        ->call('sendVerification');
 
     Event::assertNotDispatched(Verified::class);
 });

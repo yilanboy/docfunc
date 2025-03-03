@@ -2,30 +2,35 @@
 
 namespace App\Livewire\Pages\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('驗證電子郵件')]
 class VerifyEmailPage extends Component
 {
     public function mount(): void
     {
-        if (request()->user()->hasVerifiedEmail()) {
-            $this->redirect('/', navigate: true);
+        if (Auth::user()->hasVerifiedEmail()) {
+            $this->redirectIntended(default: route('root', absolute: false), navigate: true);
         }
     }
 
-    public function resendVerificationEmail(Request $request): void
+    /**
+     * Send an email verification notification to the user.
+     */
+    public function sendVerification(): void
     {
-        $request->user()->sendEmailVerificationNotification();
+        if (Auth::user()->hasVerifiedEmail()) {
+            $this->redirectIntended(default: route('root', absolute: false), navigate: true);
 
-        session()->flash('status', 'verification-link-sent');
-    }
+            return;
+        }
 
-    #[Title('驗證電子郵件')]
-    public function render(): View
-    {
-        return view('livewire.pages.auth.verify-email-page');
+        Auth::user()->sendEmailVerificationNotification();
+
+        Session::flash('status', 'verification-link-sent');
     }
 }

@@ -23,7 +23,7 @@ test('reset password link can be requested', function () {
 
     livewire(ForgotPasswordPage::class)
         ->set('email', $user->email)
-        ->call('store')
+        ->call('sendPasswordResetLink')
         ->assertHasNoErrors();
 
     Notification::assertSentTo($user, ResetPassword::class);
@@ -61,7 +61,7 @@ test('password can be reset with valid token', function () {
             ->test(ResetPasswordComponent::class, ['token' => $notification->token])
             ->set('password', 'Banana101!')
             ->set('password_confirmation', 'Banana101!')
-            ->call('store');
+            ->call('resetPassword');
 
         Event::assertDispatched(PasswordReset::class);
 

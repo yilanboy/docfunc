@@ -29,7 +29,7 @@
         {{-- 驗證錯誤訊息 --}}
         <x-auth-validation-errors :errors="$errors" />
 
-        <form wire:submit="store">
+        <form wire:submit="sendPasswordResetLink">
 
           {{-- 信箱 --}}
           <x-floating-label-input

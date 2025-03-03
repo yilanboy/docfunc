@@ -56,7 +56,7 @@
 
         <form
           id="login"
-          wire:submit="store"
+          wire:submit="login"
         >
           {{-- 信箱 --}}
           <x-floating-label-input
