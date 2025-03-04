@@ -8,17 +8,12 @@ use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
-class SideMenu extends Component
+class PostMobileMenu extends Component
 {
     use AuthorizesRequests;
 
     #[Locked]
-    public $postId;
-
-    public $postTitle;
-
-    #[Locked]
-    public $authorId;
+    public int $postId;
 
     public function destroy(Post $post): void
     {
@@ -28,20 +23,17 @@ class SideMenu extends Component
 
         $this->dispatch('info-badge', status: 'success', message: '成功刪除文章！');
 
-        $this->redirectRoute(
-            name: 'users.show',
-            parameters: [
+        $this->redirect(
+            route('users.show', [
                 'id' => auth()->id(),
                 'tab' => 'posts',
                 'current-posts-year' => $post->created_at->format('Y'),
-            ],
-            // @pest-mutate-ignore
-            navigate: true,
+            ])
         );
     }
 
     public function render(): View
     {
-        return view('livewire.shared.posts.side-menu');
+        return view('livewire.shared.posts.post-mobile-menu');
     }
 }

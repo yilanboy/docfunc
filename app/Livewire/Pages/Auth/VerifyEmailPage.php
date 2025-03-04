@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pages\Auth;
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Title;

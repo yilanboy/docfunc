@@ -245,7 +245,7 @@
         </div>
       </div>
 
-      <x-post-form.desktop-editor-side-menu :form-id="'edit-post'" />
+      <x-posts.editor-desktop-side-menu :form-id="'edit-post'" />
     </div>
   </div>
 </x-layouts.layout-main>

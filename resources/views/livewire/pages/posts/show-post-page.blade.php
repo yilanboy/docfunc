@@ -67,7 +67,7 @@
             >
               {{-- mobile menu --}}
               @if (auth()->id() === $post->user_id)
-                <livewire:shared.posts.mobile-menu :post-id="$post->id" />
+                <livewire:shared.posts.post-mobile-menu :post-id="$post->id" />
               @endif
 
               <article>
@@ -182,7 +182,7 @@
 
           <div class="hidden xl:block xl:w-1/5">
             {{-- desktop side menu --}}
-            <livewire:shared.posts.side-menu
+            <livewire:shared.posts.post-desktop-menu
               :post-id="$post->id"
               :post-title="$post->title"
               :author-id="$post->user_id"

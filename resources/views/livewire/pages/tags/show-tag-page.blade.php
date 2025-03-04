@@ -12,7 +12,7 @@
 
       <div class="hidden xl:col-span-1 xl:block">
         {{-- 文章列表側邊欄 --}}
-        <livewire:shared.posts.home-side-menu />
+        <livewire:shared.posts.home-sidebar />
       </div>
     </div>
   </div>

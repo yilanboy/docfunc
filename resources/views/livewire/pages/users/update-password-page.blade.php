@@ -1,7 +1,7 @@
 <x-layouts.layout-main>
   <div class="container mx-auto flex-1">
     <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
-      <x-member-centre.side-menu />
+      <x-users.member-center-side-menu />
 
       <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
         <div class="space-y-4">
