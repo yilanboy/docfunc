@@ -80,17 +80,17 @@
 
   {{-- Post List --}}
   @forelse($posts as $post)
-    <x-card class="group relative z-0 grid cursor-pointer grid-cols-1 gap-4 overflow-hidden">
+    <x-card class="group relative isolate grid cursor-pointer grid-cols-1 gap-4 overflow-hidden">
       {{-- Category icon in background --}}
       <div
-        class="dark:text-lividus-800 absolute -bottom-16 -right-4 size-56 rotate-12 text-emerald-200 transition-all duration-300 group-hover:-bottom-4 group-hover:-right-0"
+        class="dark:text-lividus-800 absolute -bottom-16 -right-4 z-0 size-56 rotate-12 text-emerald-200 transition-all duration-300 group-hover:-bottom-4 group-hover:-right-0"
       >
         {!! $post->category->icon !!}
       </div>
 
       {{-- Post card link --}}
       <a
-        class="absolute inset-0 z-20 block"
+        class="absolute inset-0 z-20"
         href="{{ $post->link_with_slug }}"
         title="{{ $post->title }}"
         wire:navigate
