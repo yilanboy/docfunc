@@ -1,4 +1,4 @@
-import debounce from './debounce';
+import debounce from './debounce.js';
 
 declare global {
     interface Window {

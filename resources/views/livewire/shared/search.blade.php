@@ -129,12 +129,14 @@
                     @foreach ($results as $result)
                       <li>
                         <a
-                          class="flex items-center rounded-md p-2 text-left hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-600"
+                          class="flex items-start rounded-md p-2 text-left hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-600"
                           href="{{ $result->link_with_slug }}"
                           wire:navigate
                         >
-                          <x-icon.caret-right class="w-4" />
-                          <span class="ml-2">{{ $result->title }}</span>
+                          <span class="mr-2 flex h-[1lh] items-center">
+                            <x-icon.caret-right class="w-4" />
+                          </span>
+                          {{ $result->title }}
                         </a>
                       </li>
                     @endforeach
