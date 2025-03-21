@@ -19,6 +19,24 @@
             }
           });
         });
+
+        // Availability of `window.PublicKeyCredential` means WebAuthn is usable.
+        // `isUserVerifyingPlatformAuthenticatorAvailable` means the feature detection is usable.
+        // `isConditionalMediationAvailable` means the feature detection is usable.
+        if (window.PublicKeyCredential &&
+          PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable &&
+          PublicKeyCredential.isConditionalMediationAvailable) {
+          // Check if user verifying platform authenticator is available.
+          Promise.all([
+            PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
+            PublicKeyCredential.isConditionalMediationAvailable()
+          ]).then(results => {
+            if (results.every(r => r === true)) {
+              // Display "Create a new passkey" button
+              console.log('support passkey');
+            }
+          });
+        }
       }
     }));
   </script>

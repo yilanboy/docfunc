@@ -10,8 +10,8 @@
   {{-- highlight code block --}}
   @vite('resources/ts/highlight.ts')
   {{-- code block copy button --}}
-  @vite('resources/ts/code-block-helper.ts')
-  @vite('resources/ts/image-block-helper.ts')
+  @vite('resources/ts/reader-helpers/code-block-helper.ts')
+  @vite('resources/ts/reader-helpers/image-block-helper.ts')
   {{-- post read pregress bar --}}
   @vite('resources/ts/progress-bar.ts')
   {{-- scroll --}}
