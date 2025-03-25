@@ -10,7 +10,7 @@ describe('user password', function () {
     test('non-logged-in users cannot access the update password page', function () {
         $user = User::factory()->create();
 
-        get(route('users.updatePassword', ['id' => $user->id]))
+        get(route('users.password', ['id' => $user->id]))
             ->assertStatus(302)
             ->assertRedirect(route('login'));
     });
@@ -20,7 +20,7 @@ describe('user password', function () {
 
         loginAsUser();
 
-        get(route('users.updatePassword', ['id' => $user->id]))
+        get(route('users.password', ['id' => $user->id]))
             ->assertStatus(403);
     });
 
@@ -29,7 +29,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        get(route('users.updatePassword', ['id' => $user->id]))
+        get(route('users.password', ['id' => $user->id]))
             ->assertSuccessful();
     });
 

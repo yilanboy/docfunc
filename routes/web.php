@@ -37,7 +37,7 @@ Route::middleware('auth')->prefix('/users')->group(function () {
         ->withoutMiddleware('auth');
 
     Route::get('/{id}/edit', EditUserPage::class)->name('users.edit');
-    Route::get('/{id}/change-password', UpdatePasswordPage::class)->name('users.updatePassword');
+    Route::get('/{id}/password', UpdatePasswordPage::class)->name('users.password');
     Route::get('/{id}/destroy', DestroyUserPage::class)->name('users.destroy');
 
     Route::get('/{user}/destroy-confirmation', DestroyUserController::class)
