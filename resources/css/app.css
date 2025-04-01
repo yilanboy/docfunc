@@ -83,7 +83,7 @@
         /* code */
     prose-code:before:content-none prose-code:after:content-none prose-code:font-jetbrains-mono prose-code:font-medium
         /* pre */
-    prose-pre:p-4 prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
+    prose-pre:p-0 prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
         /* blockquote before */
     prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded-sm prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
         /* blockquote */
@@ -120,7 +120,7 @@
     }
 
     & pre code.hljs {
-        padding: 0 !important;
+        overflow-x: auto !important;
     }
 }
 
@@ -130,6 +130,14 @@
 
 .dark .hljs {
     background: theme('colors.neutral.900') !important;
+}
+
+#edit-post pre {
+    padding: 1rem;
+}
+
+#create-post pre {
+    padding: 1rem;
 }
 
 /* Alpine.js */
