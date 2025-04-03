@@ -19,6 +19,7 @@ export default defineConfig({
                 'resources/ts/progress-bar.ts',
                 'resources/ts/scroll-to-anchor.ts',
                 'resources/ts/post-outline.ts',
+                'resources/ts/webauthn.ts',
                 // css
                 'resources/css/app.css',
                 'node_modules/@yaireo/tagify/dist/tagify.css',

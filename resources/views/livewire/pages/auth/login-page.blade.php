@@ -1,13 +1,30 @@
+@assets
+  @vite('resources/ts/webauthn.ts')
+@endassets
+
 @script
   <script>
     Alpine.data('login', () => ({
       submitIsEnabled: false,
       captchaSiteKey: @js(config('services.captcha.site_key')),
+      answer: null,
+      browserSupportsWebAuthn,
       submitIsDisabled() {
         return this.submitIsEnabled === false;
       },
       informationOnSubmitButton() {
         return this.submitIsEnabled ? '登入' : '驗證中';
+      },
+      async authenticateWithPasskey() {
+        const response = await fetch('/api/passkeys/authenticate');
+        const optionsJSON = await response.json();
+
+        this.answer = await startAuthentication({
+          optionsJSON
+        });
+        this.$wire.answer = JSON.stringify(this.answer);
+
+        this.$wire.loginWithPasskey()
       },
       init() {
         turnstile.ready(() => {
@@ -20,21 +37,10 @@
           });
         });
 
-        // Availability of `window.PublicKeyCredential` means WebAuthn is usable.
-        // `isUserVerifyingPlatformAuthenticatorAvailable` means the feature detection is usable.
-        // `isConditionalMediationAvailable` means the feature detection is usable.
-        if (window.PublicKeyCredential &&
-          PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable &&
-          PublicKeyCredential.isConditionalMediationAvailable) {
-          // Check if user verifying platform authenticator is available.
-          Promise.all([
-            PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
-            PublicKeyCredential.isConditionalMediationAvailable()
-          ]).then(results => {
-            if (results.every(r => r === true)) {
-              // Display "Create a new passkey" button
-              console.log('support passkey');
-            }
+        if (!this.browserSupportsWebAuthn()) {
+          this.$wire.dispatch('info-badge', {
+            status: 'danger',
+            message: '不支援 WebAuthn'
           });
         }
       }
@@ -96,8 +102,7 @@
             required
           />
 
-          <div class="mt-12 flex items-center justify-between">
-
+          <div class="mt-6 flex items-center justify-between">
             <x-checkbox
               id="remember"
               name="remember"
@@ -112,31 +117,53 @@
               x-ref="turnstileBlock"
             ></div>
 
-            <div>
-              @if (Route::has('password.request'))
-                <a
-                  class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
-                  href="{{ route('password.request') }}"
-                  wire:navigate
-                >
-                  {{ __('Forgot your password?') }}
-                </a>
-              @endif
-
-              <x-button
-                class="ml-3"
-                x-bind:disabled="submitIsDisabled"
+            @if (Route::has('password.request'))
+              <a
+                class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+                href="{{ route('password.request') }}"
+                wire:navigate
               >
-                <x-icon.animate-spin
-                  class="mr-2 h-5 w-5 text-gray-50"
-                  x-cloak
-                  x-show="submitIsDisabled"
-                />
-                <span x-text="informationOnSubmitButton"></span>
-              </x-button>
+                {{ __('Forgot your password?') }}
+              </a>
+            @endif
+          </div>
+
+          <x-button
+            class="mt-6 w-full"
+            x-bind:disabled="submitIsDisabled"
+          >
+            <x-icon.animate-spin
+              class="mr-2 h-5 w-5 text-gray-50"
+              x-cloak
+              x-show="submitIsDisabled"
+            />
+            <span x-text="informationOnSubmitButton"></span>
+          </x-button>
+        </form>
+        <div class="mt-6">
+          <div class="relative">
+            <div
+              class="absolute inset-0 flex items-center"
+              aria-hidden="true"
+            >
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-base font-medium">
+              <span class="bg-gray-50 px-6 text-gray-900">或者使用</span>
             </div>
           </div>
-        </form>
+
+          <div class="mt-6">
+            <button
+              class="shadow-xs flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-white px-4 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
+              type="button"
+              x-on:click="authenticateWithPasskey"
+            >
+              <x-icon.fingerprint class="size-5" />
+              <span>密碼金鑰</span>
+            </button>
+          </div>
+        </div>
       </x-card>
     </div>
   </div>

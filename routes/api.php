@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PasskeyController;
 use App\Http\Controllers\Api\ShowAllTagsController;
 use App\Http\Controllers\Api\TwitterOembedController;
 use App\Http\Controllers\Api\UploadImageController;
@@ -20,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/passkeys/register', [PasskeyController::class, 'registerOptions'])
+    ->middleware('auth:sanctum');
+
+Route::get('/passkeys/authenticate', [PasskeyController::class, 'authenticateOptions']);
 
 // Upload the image to S3
 Route::middleware('auth:sanctum')

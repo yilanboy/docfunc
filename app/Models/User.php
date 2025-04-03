@@ -84,4 +84,9 @@ class User extends Authenticatable implements MustVerifyEmail
             get: fn($value) => get_gravatar(email: $this->email, size: 512)
         )->shouldCache();
     }
+
+    public function passkeys(): HasMany
+    {
+        return $this->hasMany(Passkey::class);
+    }
 }

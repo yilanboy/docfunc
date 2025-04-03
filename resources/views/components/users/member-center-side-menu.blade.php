@@ -23,6 +23,16 @@
 
     <a
       class="flex items-center rounded-md p-2 hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-700"
+      href="{{ route('users.updatePasskey', ['id' => auth()->id()]) }}"
+      wire:current="bg-gray-200 dark:bg-gray-700"
+      wire:navigate
+    >
+      <x-icon.fingerprint class="w-5" />
+      <span class="ml-2">密碼金鑰</span>
+    </a>
+
+    <a
+      class="flex items-center rounded-md p-2 hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-700"
       href="{{ route('users.destroy', ['id' => auth()->id()]) }}"
       wire:current="bg-gray-200 dark:bg-gray-700"
       wire:navigate

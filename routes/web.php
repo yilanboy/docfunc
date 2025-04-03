@@ -11,8 +11,10 @@ use App\Livewire\Pages\Tags\ShowTagPage;
 use App\Livewire\Pages\Users\DestroyUserPage;
 use App\Livewire\Pages\Users\EditUserPage;
 use App\Livewire\Pages\Users\ShowUserPage;
+use App\Livewire\Pages\Users\UpdatePasskeyPage;
 use App\Livewire\Pages\Users\UpdatePasswordPage;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,8 @@ Route::middleware('auth')->prefix('/users')->group(function () {
     Route::get('/{id}/edit', EditUserPage::class)->name('users.edit');
     Route::get('/{id}/password', UpdatePasswordPage::class)->name('users.password');
     Route::get('/{id}/destroy', DestroyUserPage::class)->name('users.destroy');
+
+    Route::get('/{id}/update-passkey', UpdatePasskeyPage::class)->name('users.updatePasskey');
 
     Route::get('/{user}/destroy-confirmation', DestroyUserController::class)
         ->name('users.destroy-confirmation')
