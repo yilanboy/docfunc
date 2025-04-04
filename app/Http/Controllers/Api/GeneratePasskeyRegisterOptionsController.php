@@ -9,7 +9,6 @@ use Session;
 use Str;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
-use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
