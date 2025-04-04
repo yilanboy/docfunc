@@ -64,7 +64,8 @@ class LoginPage extends Component
     {
         $data = $this->validate(['answer' => ['required', 'json']]);
 
-        $publicKeyCredential = Serializer::make()->fromJson($data['answer'], PublicKeyCredential::class);
+        $publicKeyCredential = Serializer::make()
+            ->fromJson($data['answer'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
             $this->dispatch('info-badge', status: 'danger', message: 'Invalid passkey response.');
@@ -78,15 +79,21 @@ class LoginPage extends Component
             return;
         }
 
+        $publicKeyCredentialSource = Serializer::make()
+            ->fromJson($passkey->data, PublicKeyCredentialSource::class);
+
+        $publicKeyCredentialRequestOptions = Serializer::make()->fromJson(
+            Session::get('passkey-authentication-options'),
+            PublicKeyCredentialRequestOptions::class,
+        );
+
         try {
             AuthenticatorAssertionResponseValidator::create(
                 new CeremonyStepManagerFactory()->requestCeremony()
             )->check(
-                publicKeyCredentialSource: Serializer::make()->fromJson($passkey->data,
-                    PublicKeyCredentialSource::class),
+                publicKeyCredentialSource: $publicKeyCredentialSource,
                 authenticatorAssertionResponse: $publicKeyCredential->response,
-                publicKeyCredentialRequestOptions: Serializer::make()->fromJson(Session::get('passkey-authentication-options'),
-                    PublicKeyCredentialRequestOptions::class),
+                publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions,
                 host: request()->getHost(),
                 userHandle: null,
             );

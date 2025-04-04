@@ -13,37 +13,12 @@ use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
-class PasskeyController extends Controller
+class GeneratePasskeyAuthenticationOptionsController extends Controller
 {
     /**
      * @throws InvalidDataException
      */
-    public function registerOptions(Request $request)
-    {
-        $options = new PublicKeyCredentialCreationOptions(
-            rp: new PublicKeyCredentialRpEntity(
-                name: config('app.name'),
-                id: $this->hostname(),
-            ),
-            user: new PublicKeyCredentialUserEntity(
-                name: $request->user()->email,
-                id: $request->user()->id,
-                displayName: $request->user()->name,
-            ),
-            challenge: $this->challenge(),
-        );
-
-        $options = Serializer::make()->toJson($options);
-
-        Session::flash('passkey-registration-options', $options);
-
-        return $options;
-    }
-
-    /**
-     * @throws InvalidDataException
-     */
-    public function authenticateOptions()
+    public function __invoke(): string
     {
         $options = new PublicKeyCredentialRequestOptions(
             challenge: $this->challenge(),

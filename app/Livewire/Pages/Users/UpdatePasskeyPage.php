@@ -18,6 +18,7 @@ class UpdatePasskeyPage extends Component
     public User $user;
 
     public string $name = '';
+
     public string $passkey = '';
 
     public function mount(int $id): void
@@ -32,23 +33,28 @@ class UpdatePasskeyPage extends Component
             'passkey' => ['required', 'json'],
         ]);
 
-        $publicKeyCredential = Serializer::make()->fromJson($data['passkey'], PublicKeyCredential::class);
+        $publicKeyCredential = Serializer::make()
+            ->fromJson($data['passkey'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
-            $this->dispatch('info-badge', status: 'danger', message: 'Invalid passkey response.');
+            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
         }
+
+        $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
+            Session::get('passkey-registration-options'),
+            PublicKeyCredentialCreationOptions::class,
+        );
 
         try {
             $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create(
                 new CeremonyStepManagerFactory()->requestCeremony()
             )->check(
                 authenticatorAttestationResponse: $publicKeyCredential->response,
-                publicKeyCredentialCreationOptions: Serializer::make()->fromJson(Session::get('passkey-registration-options'),
-                    PublicKeyCredentialCreationOptions::class),
+                publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions,
                 host: request()->getHost(),
             );
         } catch (Throwable) {
-            $this->dispatch('info-badge', status: 'danger', message: 'The given passkey is invalid.');
+            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
@@ -59,7 +65,7 @@ class UpdatePasskeyPage extends Component
             'data' => Serializer::make()->toJson($publicKeyCredentialSource),
         ]);
 
-        $this->dispatch('info-badge', status: 'success', message: 'Passkey created successfully.');
+        $this->dispatch('info-badge', status: 'success', message: '成功建立密碼金鑰！');
     }
 
     public function destroy(int $passkeyId): void
@@ -70,7 +76,7 @@ class UpdatePasskeyPage extends Component
 
         $passkey->delete();
 
-        $this->dispatch('info-badge', status: 'success', message: 'Passkey deleted successfully.');
+        $this->dispatch('info-badge', status: 'success', message: '成功刪除密碼金鑰！');
     }
 
     public function render()
