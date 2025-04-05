@@ -7,6 +7,7 @@ use App\Support\Serializer;
 use Illuminate\Http\Request;
 use Session;
 use Str;
+use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
@@ -28,12 +29,14 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             name: $request->user()->email,
             id: $request->user()->id,
             displayName: $request->user()->name,
+            icon: null
         );
 
         $options = new PublicKeyCredentialCreationOptions(
             rp: $relatedPartyEntity,
             user: $userEntity,
             challenge: $this->challenge(),
+            authenticatorSelection: AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
         );
 
         $options = Serializer::make()->toJson($options);

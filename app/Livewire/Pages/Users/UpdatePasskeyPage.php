@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Users;
 
 use App\Models\User;
+use App\Support\CustomCounterChecker;
 use App\Support\Serializer;
 use Livewire\Component;
 use Session;
@@ -45,9 +46,12 @@ class UpdatePasskeyPage extends Component
             PublicKeyCredentialCreationOptions::class,
         );
 
+        $csmFactory = new CeremonyStepManagerFactory;
+        $csmFactory->setCounterChecker(new CustomCounterChecker);
+
         try {
             $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create(
-                new CeremonyStepManagerFactory()->requestCeremony()
+                $csmFactory->requestCeremony()
             )->check(
                 authenticatorAttestationResponse: $publicKeyCredential->response,
                 publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions,
