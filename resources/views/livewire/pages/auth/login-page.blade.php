@@ -7,7 +7,7 @@
     Alpine.data('login', () => ({
       submitIsEnabled: false,
       captchaSiteKey: @js(config('services.captcha.site_key')),
-      answer: null,
+      answer: $wire.entangle('answer'),
       browserSupportsWebAuthn,
       submitIsDisabled() {
         return this.submitIsEnabled === false;
@@ -29,9 +29,9 @@
         const optionsJSON = await response.json();
 
         try {
-          this.answer = await startAuthentication({
+          this.answer = JSON.stringify(await startAuthentication({
             optionsJSON
-          });
+          }))
         } catch (error) {
           this.$wire.dispatch('info-badge', {
             status: 'danger',
@@ -40,8 +40,6 @@
 
           return;
         }
-
-        this.$wire.answer = JSON.stringify(this.answer);
 
         this.$wire.loginWithPasskey()
       },
@@ -82,13 +80,18 @@
       </div>
 
       {{-- 登入表單 --}}
-      <x-card class="mt-4 w-full space-y-6 overflow-hidden sm:max-w-md">
-
+      <x-card class="mt-4 w-full overflow-hidden sm:max-w-md">
         {{-- Session 狀態訊息 --}}
-        <x-auth-session-status :status="session('status')" />
+        <x-auth-session-status
+          class="mb-6"
+          :status="session('status')"
+        />
 
         {{-- 驗證錯誤訊息 --}}
-        <x-auth-validation-errors :errors="$errors" />
+        <x-auth-validation-errors
+          class="mb-6"
+          :errors="$errors"
+        />
 
         <form
           id="login"
@@ -154,7 +157,7 @@
         </form>
 
         {{-- Passkey login --}}
-        <div class="relative">
+        <div class="relative mt-6">
           <div
             class="absolute inset-0 flex items-center"
             aria-hidden="true"

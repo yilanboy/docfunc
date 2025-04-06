@@ -41,7 +41,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
 
         $options = Serializer::make()->toJson($options);
 
-        Session::flash('passkey-registration-options', $options);
+        Session::put('passkey-registration-options', $options);
 
         return $options;
     }

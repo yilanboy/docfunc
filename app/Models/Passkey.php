@@ -15,10 +15,12 @@ class Passkey extends Model
         'name',
         'credential_id',
         'data',
+        'last_used_at',
     ];
 
     protected $casts = [
         'data' => 'json',
+        'last_used_at' => 'datetime',
     ];
 
     public function user(): belongsTo

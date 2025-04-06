@@ -42,7 +42,7 @@ class UpdatePasskeyPage extends Component
         }
 
         $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
-            Session::get('passkey-registration-options'),
+            Session::pull('passkey-registration-options'),
             PublicKeyCredentialCreationOptions::class,
         );
 
@@ -70,6 +70,8 @@ class UpdatePasskeyPage extends Component
         ]);
 
         $this->dispatch('info-badge', status: 'success', message: '成功建立密碼金鑰！');
+
+        $this->reset('name', 'passkey');
     }
 
     public function destroy(int $passkeyId): void

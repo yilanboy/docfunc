@@ -52,6 +52,15 @@ class LoginPage extends Component
             ]);
         }
 
+        // If the user has PassKeys, he won't be able to log in using just the password
+        if (Auth::user()->passkeys()->count() > 0) {
+            session()->flash('status', '你的帳號已啟用 Passkey 登入，請使用 Passkey 登入');
+
+            Auth::logout();
+
+            return;
+        }
+
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
@@ -68,13 +77,13 @@ class LoginPage extends Component
             ->fromJson($data['answer'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
-            $this->dispatch('info-badge', status: 'danger', message: 'Invalid passkey response.');
+            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
         }
 
         $passkey = Passkey::firstWhere('credential_id', $publicKeyCredential->rawId);
 
         if (! $passkey) {
-            $this->dispatch('info-badge', status: 'danger', message: 'This passkey is not valid.');
+            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
@@ -83,7 +92,7 @@ class LoginPage extends Component
             ->fromJson($passkey->data, PublicKeyCredentialSource::class);
 
         $publicKeyCredentialRequestOptions = Serializer::make()->fromJson(
-            Session::get('passkey-authentication-options'),
+            Session::pull('passkey-authentication-options'),
             PublicKeyCredentialRequestOptions::class,
         );
 
@@ -98,10 +107,14 @@ class LoginPage extends Component
                 userHandle: null,
             );
         } catch (Throwable) {
-            $this->dispatch('info-badge', status: 'success', message: 'This passkey is not valid.');
+            $this->dispatch('info-badge', status: 'success', message: '密碼金鑰無效');
 
             return;
         }
+
+        $passkey->update([
+            'last_used_at' => now(),
+        ]);
 
         Auth::loginUsingId($passkey->user_id);
         Session::regenerate();

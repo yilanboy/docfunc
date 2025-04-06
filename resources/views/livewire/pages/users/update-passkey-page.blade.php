@@ -5,8 +5,8 @@
 @script
   <script>
     Alpine.data('updatePasskeyPage', () => ({
-      name: '',
-      passkey: null,
+      name: $wire.entangle('name'),
+      passkey: $wire.entangle('passkey'),
       browserSupportsWebAuthn,
       async register() {
         if (!this.browserSupportsWebAuthn()) {
@@ -31,9 +31,9 @@
         const optionsJSON = await response.json();
 
         try {
-          this.passkey = await startRegistration({
+          this.passkey = JSON.stringify(await startRegistration({
             optionsJSON
-          });
+          }))
         } catch (e) {
           this.$wire.dispatch('info-badge', {
             status: 'danger',
@@ -43,11 +43,7 @@
           return;
         }
 
-        this.$wire.name = this.name;
-        this.$wire.passkey = JSON.stringify(this.passkey);
         this.$wire.store()
-        this.name = '';
-        this.passkey = null;
       }
     }));
   </script>
@@ -79,28 +75,58 @@
           />
         </form>
 
-        @foreach ($user->passkeys as $passkey)
-          <div class="flex justify-between rounded-md bg-gray-100 p-4">
-            <div class="flex flex-col gap-2">
-              <span>{{ $passkey->name }}</span>
-              <span>{{ $passkey->created_at->diffForHumans() }}</span>
-            </div>
-            <button
-              class="focus:outline-hidden focus:ring-3 inline-flex cursor-pointer items-center justify-center rounded-xl border border-transparent bg-red-600 px-4 py-2 uppercase tracking-widest text-gray-50 ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-700 active:bg-red-600 disabled:opacity-25"
-              type="button"
-              wire:click="destroy({{ $passkey->id }})"
-              wire:confirm="你確定要刪除這個密碼金鑰嗎？"
-            >
-              刪除
-            </button>
-          </div>
-        @endforeach
+        <ul
+          class="divide-y divide-gray-200 dark:divide-gray-700"
+          role="list"
+        >
+          @foreach ($user->passkeys as $passkey)
+            <li class="flex justify-between gap-x-6 py-5">
+              <div class="flex min-w-0 gap-x-4">
+                <x-icon.fingerprint class="size-12 flex-none rounded-full dark:text-gray-50" />
+                <div class="min-w-0 flex-auto">
+                  <p class="text-sm/6 font-semibold text-gray-900 dark:text-gray-50">
+                    {{ $passkey->name }}
+                  </p>
+                  <p class="mt-1 flex truncate text-xs/5 text-gray-500 dark:text-gray-400">
+                    建立於{{ $passkey->created_at->diffForHumans() }}
+                  </p>
+                </div>
+              </div>
+              <div class="flex shrink-0 items-center gap-x-6">
+                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                  <p class="text-sm/6 text-gray-900 dark:text-gray-50">
+                    {{ implode(' / ', json_decode($passkey->data, true)['transports']) }}
+                  </p>
+                  <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">
+                    @if ($passkey->last_used_at)
+                      上次使用於
+                      <time datetime="{{ $passkey->last_used_at }}">
+                        {{ $passkey->last_used_at->diffForHumans() }}
+                      </time>
+                    @else
+                      尚未使用
+                    @endif
+                  </p>
+                </div>
+                <button
+                  class="-m-2.5 block cursor-pointer p-2.5 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                  type="button"
+                  wire:click="destroy({{ $passkey->id }})"
+                  wire:confirm="你確定要刪除這個密碼金鑰嗎？"
+                >
+                  <span class="sr-only">開啟編輯選單</span>
+                  <x-icon.x class="size-6" />
+                </button>
+
+              </div>
+            </li>
+          @endforeach
+        </ul>
 
         <div class="flex items-center justify-end">
-          {{-- 儲存按鈕 --}}
           <x-button form="passkey">
             <x-icon.save class="w-5" />
-            <span class="ml-2">儲存</span>
+            <span class="ml-2">新增密碼金鑰</span>
           </x-button>
         </div>
       </x-card>
