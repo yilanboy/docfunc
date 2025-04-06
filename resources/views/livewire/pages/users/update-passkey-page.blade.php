@@ -95,7 +95,7 @@
               <div class="flex shrink-0 items-center gap-x-6">
                 <div class="hidden sm:flex sm:flex-col sm:items-end">
                   <p class="text-sm/6 text-gray-900 dark:text-gray-50">
-                    {{ implode(' / ', json_decode($passkey->data, true)['transports']) }}
+                    {{ implode(' / ', $passkey->data['transports']) }}
                   </p>
                   <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">
                     @if ($passkey->last_used_at)

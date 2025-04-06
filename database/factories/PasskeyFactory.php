@@ -22,7 +22,7 @@ class PasskeyFactory extends Factory
             'user_id' => User::factory(),
             'name' => fake()->word,
             'credential_id' => Str::random(),
-            'data' => []
+            'data' => ['transports' => ['internal']],
         ];
     }
 }

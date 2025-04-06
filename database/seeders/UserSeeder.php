@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Passkey;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -11,7 +10,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::factory()
-            ->has(Passkey::factory(3))
+            // ->has(Passkey::factory(3))
             ->count(10)
             ->create();
 

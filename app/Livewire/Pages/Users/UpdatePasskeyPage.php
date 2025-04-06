@@ -66,7 +66,7 @@ class UpdatePasskeyPage extends Component
         request()->user()->passkeys()->create([
             'name' => $data['name'],
             'credential_id' => $publicKeyCredentialSource->publicKeyCredentialId,
-            'data' => Serializer::make()->toJson($publicKeyCredentialSource),
+            'data' => json_decode(Serializer::make()->toJson($publicKeyCredentialSource), true),
         ]);
 
         $this->dispatch('info-badge', status: 'success', message: '成功建立密碼金鑰！');
