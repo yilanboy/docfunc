@@ -25,6 +25,8 @@ class UpdatePasskeyPage extends Component
     public function mount(int $id): void
     {
         $this->user = User::findOrFail($id);
+
+        $this->authorize('update', $this->user);
     }
 
     public function store(): void
