@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Facades\Log;
 use Webauthn\Counter\CounterChecker;
 use Webauthn\Exception\CounterException;
 use Webauthn\PublicKeyCredentialSource;
@@ -14,22 +13,14 @@ class CustomCounterChecker implements CounterChecker
      */
     public function check(PublicKeyCredentialSource $publicKeyCredentialSource, int $currentCounter): void
     {
-        if (in_array('usb', $publicKeyCredentialSource->transports)) {
+        if ($currentCounter >= $publicKeyCredentialSource->counter) {
             return;
         }
 
-        try {
-            $currentCounter > $publicKeyCredentialSource->counter || throw CounterException::create(
-                $currentCounter,
-                $publicKeyCredentialSource->counter,
-                'Invalid counter.'
-            );
-        } catch (CounterException $throwable) {
-            Log::error('Error checking counter', [
-                'exception' => $throwable,
-            ]);
-
-            throw $throwable;
-        }
+        throw CounterException::create(
+            $currentCounter,
+            $publicKeyCredentialSource->counter,
+            'Invalid counter.'
+        );
     }
 }
