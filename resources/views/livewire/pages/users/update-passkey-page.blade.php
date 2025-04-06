@@ -82,7 +82,11 @@
           @foreach ($user->passkeys as $passkey)
             <li class="flex justify-between gap-x-6 py-5">
               <div class="flex min-w-0 gap-x-4">
-                <x-icon.fingerprint class="size-12 flex-none rounded-full dark:text-gray-50" />
+                @if (in_array('usb', $passkey->data['transports']))
+                  <x-icon.usb-drive class="size-12 flex-none dark:text-gray-50" />
+                @else
+                  <x-icon.fingerprint class="size-12 flex-none dark:text-gray-50" />
+                @endif
                 <div class="min-w-0 flex-auto">
                   <p class="text-sm/6 font-semibold text-gray-900 dark:text-gray-50">
                     {{ $passkey->name }}
