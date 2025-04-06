@@ -23,10 +23,10 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/passkeys/register', GeneratePasskeyRegisterOptionsController::class)
+Route::get('/passkeys/generate-register-options', GeneratePasskeyRegisterOptionsController::class)
     ->middleware('auth:sanctum');
 
-Route::get('/passkeys/authenticate', GeneratePasskeyAuthenticationOptionsController::class);
+Route::get('/passkeys/generate-authentication-options', GeneratePasskeyAuthenticationOptionsController::class);
 
 // Upload the image to S3
 Route::middleware('auth:sanctum')

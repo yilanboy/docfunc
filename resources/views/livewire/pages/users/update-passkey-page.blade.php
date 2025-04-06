@@ -27,7 +27,7 @@
           return;
         }
 
-        const response = await fetch('/api/passkeys/register');
+        const response = await fetch('/api/passkeys/generate-register-options');
         const optionsJSON = await response.json();
 
         try {

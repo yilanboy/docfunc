@@ -80,7 +80,9 @@ class LoginPage extends Component
             $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
         }
 
-        $passkey = Passkey::firstWhere('credential_id', $publicKeyCredential->rawId);
+        $rawId = json_decode($data['answer'], true)['rawId'];
+
+        $passkey = Passkey::firstWhere('credential_id', $rawId);
 
         if (! $passkey) {
             $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
@@ -92,7 +94,7 @@ class LoginPage extends Component
             ->fromJson(json_encode($passkey->data), PublicKeyCredentialSource::class);
 
         $publicKeyCredentialRequestOptions = Serializer::make()->fromJson(
-            Session::pull('passkey-authentication-options'),
+            Session::get('passkey-authentication-options'),
             PublicKeyCredentialRequestOptions::class,
         );
 
@@ -107,7 +109,7 @@ class LoginPage extends Component
                 userHandle: null,
             );
         } catch (Throwable) {
-            $this->dispatch('info-badge', status: 'success', message: '密碼金鑰無效');
+            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }

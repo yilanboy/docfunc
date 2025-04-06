@@ -26,22 +26,27 @@ class GeneratePasskeyRegisterOptionsController extends Controller
         );
 
         $userEntity = new PublicKeyCredentialUserEntity(
-            name: $request->user()->email,
+            name: $request->user()->name,
             id: $request->user()->id,
             displayName: $request->user()->name,
             icon: null
+        );
+
+        $authenticatorSelectionCriteria = AuthenticatorSelectionCriteria::create(
+            authenticatorAttachment: AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
+            residentKey: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED,
         );
 
         $options = new PublicKeyCredentialCreationOptions(
             rp: $relatedPartyEntity,
             user: $userEntity,
             challenge: $this->challenge(),
-            authenticatorSelection: AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE
+            authenticatorSelection: $authenticatorSelectionCriteria
         );
 
         $options = Serializer::make()->toJson($options);
 
-        Session::put('passkey-registration-options', $options);
+        Session::flash('passkey-registration-options', $options);
 
         return $options;
     }

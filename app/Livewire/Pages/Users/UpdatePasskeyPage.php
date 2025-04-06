@@ -44,7 +44,7 @@ class UpdatePasskeyPage extends Component
         }
 
         $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
-            Session::pull('passkey-registration-options'),
+            Session::get('passkey-registration-options'),
             PublicKeyCredentialCreationOptions::class,
         );
 
@@ -65,10 +65,15 @@ class UpdatePasskeyPage extends Component
             return;
         }
 
+        $publicKeyCredentialSourceJson = json_decode(
+            json: Serializer::make()->toJson($publicKeyCredentialSource),
+            associative: true
+        );
+
         request()->user()->passkeys()->create([
             'name' => $data['name'],
-            'credential_id' => $publicKeyCredentialSource->publicKeyCredentialId,
-            'data' => json_decode(Serializer::make()->toJson($publicKeyCredentialSource), true),
+            'credential_id' => $publicKeyCredentialSourceJson['publicKeyCredentialId'],
+            'data' => $publicKeyCredentialSourceJson,
         ]);
 
         $this->dispatch('info-badge', status: 'success', message: '成功建立密碼金鑰！');

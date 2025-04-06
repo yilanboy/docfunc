@@ -14,7 +14,7 @@ class CustomCounterChecker implements CounterChecker
      */
     public function check(PublicKeyCredentialSource $publicKeyCredentialSource, int $currentCounter): void
     {
-        if (in_array('usb', $publicKeyCredentialSource->transports, true)) {
+        if (in_array('usb', $publicKeyCredentialSource->transports)) {
             return;
         }
 

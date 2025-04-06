@@ -7,6 +7,7 @@
     Alpine.data('login', () => ({
       submitIsEnabled: false,
       captchaSiteKey: @js(config('services.captcha.site_key')),
+      email: $wire.entangle('email'),
       answer: $wire.entangle('answer'),
       browserSupportsWebAuthn,
       submitIsDisabled() {
@@ -25,12 +26,15 @@
           return;
         }
 
-        const response = await fetch('/api/passkeys/authenticate');
+        const response = await fetch('/api/passkeys/generate-authentication-options');
         const optionsJSON = await response.json();
 
         try {
           this.answer = JSON.stringify(await startAuthentication({
-            optionsJSON
+            optionsJSON,
+            params: {
+              email: this.email
+            }
           }))
         } catch (error) {
           this.$wire.dispatch('info-badge', {
