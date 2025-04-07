@@ -3,8 +3,8 @@
 namespace App\Livewire\Pages\Users;
 
 use App\Models\User;
-use App\Support\CustomCounterChecker;
-use App\Support\Serializer;
+use App\Services\CustomCounterChecker;
+use App\Services\Serializer;
 use Livewire\Component;
 use Session;
 use Throwable;

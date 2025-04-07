@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Support\Serializer;
+use App\Services\Serializer;
 use Session;
 use Str;
 use Webauthn\Exception\InvalidDataException;

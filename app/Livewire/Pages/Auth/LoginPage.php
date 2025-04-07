@@ -4,7 +4,7 @@ namespace App\Livewire\Pages\Auth;
 
 use App\Models\Passkey;
 use App\Rules\Captcha;
-use App\Support\Serializer;
+use App\Services\Serializer;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;

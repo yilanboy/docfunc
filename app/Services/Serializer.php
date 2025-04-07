@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace App\Services;
 
 
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -23,8 +23,7 @@ class Serializer
 
     public function __construct(
         protected SymfonySerializer $serializer,
-    ) {
-    }
+    ) {}
 
     public function toJson(mixed $value): string
     {

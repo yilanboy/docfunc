@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace App\Services;
 
 use Webauthn\Counter\CounterChecker;
 use Webauthn\Exception\CounterException;
