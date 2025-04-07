@@ -54,7 +54,7 @@ class LoginPage extends Component
 
         // If the user has PassKeys, he won't be able to log in using just the password
         if (Auth::user()->passkeys()->count() > 0) {
-            session()->flash('status', '你的帳號已啟用 Passkey 登入，請使用 Passkey 登入');
+            session()->flash('status', '您的帳號已註冊密碼金鑰，請使用密碼金鑰進行登入');
 
             Auth::logout();
 
@@ -118,7 +118,7 @@ class LoginPage extends Component
             'last_used_at' => now(),
         ]);
 
-        Auth::loginUsingId($passkey->user_id);
+        Auth::loginUsingId(id: $passkey->user_id, remember: true);
         Session::regenerate();
 
         $this->dispatch('info-badge', status: 'success', message: '登入成功！');
