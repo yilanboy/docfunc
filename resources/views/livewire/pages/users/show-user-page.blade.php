@@ -44,11 +44,11 @@
         x-data="userShowTabs"
       >
         <div
-          class="relative z-0 mb-6 inline-grid h-12 w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-gray-300/40 p-1 text-gray-500 dark:bg-gray-500/40 dark:text-gray-50"
+          class="relative z-0 mb-6 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-gray-300/40 p-1 text-gray-500 dark:bg-gray-500/40 dark:text-gray-50"
         >
           @foreach (UserInfoTab::cases() as $userInfoTab)
             <button
-              class="relative z-20 inline-flex h-10 w-full cursor-pointer items-center justify-center whitespace-nowrap rounded-md text-base font-medium transition-all"
+              class="relative z-20 inline-flex w-full cursor-pointer items-center justify-center whitespace-nowrap px-4 py-2 text-sm font-medium transition-all"
               id="{{ $userInfoTab->value }}-tab-button"
               type="button"
               x-on:click="tabButtonClicked($el)"
@@ -69,7 +69,8 @@
             x-ref="tabMarker"
             x-cloak
           >
-            <div class="h-full w-full rounded-lg bg-gray-50 dark:bg-gray-800"></div>
+            <div class="h-full w-full rounded-[calc(var(--radius-xl)-(--spacing(1)))] bg-gray-50 dark:bg-gray-800">
+            </div>
           </div>
         </div>
 
