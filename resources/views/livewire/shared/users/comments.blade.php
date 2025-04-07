@@ -20,12 +20,12 @@
           characterData: false
         });
 
-        this.observers.push(userCommentsObserver)
+        this.observers.push(userCommentsObserver);
       },
       destroy() {
         this.observers.forEach((observer) => {
           observer.disconnect();
-        })
+        });
       }
     }));
   </script>
@@ -39,26 +39,28 @@
 >
   @forelse ($comments as $comment)
     <x-dashed-card
-      class="group relative max-h-64 cursor-pointer overflow-hidden after:absolute after:inset-x-0 after:bottom-0 after:h-1/2 after:bg-linear-to-b after:from-transparent after:to-gray-100 dark:after:to-gray-800"
+      class="group relative"
       wire:key="comment-{{ $comment->id }}"
     >
-      <a
-        class="absolute right-0 top-0 z-20 block h-full w-full bg-transparent"
-        href="{{ $comment->post->link_with_slug }}#comments"
-        wire:navigate
-      ></a>
+      <div class="mask-b-from-50% max-h-64 overflow-hidden">
+        <a
+          class="absolute right-0 top-0 z-20 block h-full w-full bg-transparent"
+          href="{{ $comment->post->link_with_slug }}#comments"
+          wire:navigate
+        ></a>
 
-      <span class="group-gradient-underline-grow text-xl dark:text-gray-50">
-        {{ $comment->post->title }}
-      </span>
+        <span class="group-gradient-underline-grow text-xl dark:text-gray-50">
+          {{ $comment->post->title }}
+        </span>
 
-      {{-- 留言 --}}
-      <div class="rich-text">
-        {!! $comment->body !!}
+        {{-- 留言 --}}
+        <div class="rich-text">
+          {!! $comment->body !!}
+        </div>
       </div>
 
       <div
-        class="absolute bottom-3 right-3 z-10 flex items-center rounded-lg bg-emerald-500 px-2 py-1 text-sm text-gray-50 dark:bg-lividus-600"
+        class="dark:bg-lividus-600 absolute bottom-3 right-3 z-10 flex items-center rounded-lg bg-emerald-500 px-2 py-1 text-sm text-gray-50"
       >
         <x-icon.clock class="w-4" />
         <time
