@@ -19,7 +19,7 @@ class DestroyUserPage extends Component
     public User $user;
 
     #[Locked]
-    public string $destroyUserConfirmationRouteName = 'users.destroy-confirmation';
+    public string $destroyUserConfirmationRouteName = 'users.destroy';
 
     #[Locked]
     public int $urlValidMinutes = 5;

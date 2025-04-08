@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class UpdatePasswordPage extends Component
+class EditPasswordPage extends Component
 {
     use AuthorizesRequests;
 
@@ -64,6 +64,6 @@ class UpdatePasswordPage extends Component
     #[Title('會員中心 - 更改密碼')]
     public function render(): View
     {
-        return view('livewire.pages.users.update-password-page');
+        return view('livewire.pages.users.edit-password-page');
     }
 }

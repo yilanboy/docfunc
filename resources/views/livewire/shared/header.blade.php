@@ -176,7 +176,7 @@
               <span class="ml-2">個人資訊</span>
             </x-dropdown.link>
 
-            <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
+            <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
               <x-icon.geer-fill class="w-4" />
               <span class="ml-2">設定</span>
             </x-dropdown.link>
@@ -330,7 +330,7 @@
                   <span class="ml-2">個人資訊</span>
                 </x-dropdown.link>
 
-                <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
+                <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
                   <x-icon.geer-fill class="w-4" />
                   <span class="ml-2">設定</span>
                 </x-dropdown.link>

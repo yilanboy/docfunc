@@ -13,14 +13,14 @@ use function Pest\Livewire\livewire;
 
 describe('destroy user', function () {
     beforeEach(function () {
-        $this->destroyUserConfirmationRouteName = 'users.destroy-confirmation';
+        $this->destroyUserConfirmationRouteName = 'users.destroy';
         $this->urlValidMinutes = 5;
     });
 
     test('non-logged-in users cannot access the destroy user page', function () {
         $user = User::factory()->create();
 
-        get(route('users.destroy', ['id' => $user->id]))
+        get(route('settings.users.destroy', ['id' => $user->id]))
             ->assertStatus(302)
             ->assertRedirect(route('login'));
     });
@@ -30,7 +30,7 @@ describe('destroy user', function () {
 
         $this->actingAs($user);
 
-        get(route('users.destroy', ['id' => $user->id]))
+        get(route('settings.users.destroy', ['id' => $user->id]))
             ->assertSuccessful();
     });
 
@@ -40,11 +40,11 @@ describe('destroy user', function () {
 
         $this->actingAs($user);
 
-        get(route('users.destroy', ['id' => $anotherUser->id]))
+        get(route('settings.users.destroy', ['id' => $anotherUser->id]))
             ->assertForbidden();
     });
 
-    test('destroy user route name must be users.destroy-confirmation', function () {
+    test('destroy user route name must be users.destroy', function () {
         $user = loginAsUser();
 
         livewire(DestroyUserPage::class, ['id' => $user->id])

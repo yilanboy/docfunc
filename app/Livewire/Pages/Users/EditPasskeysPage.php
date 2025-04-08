@@ -14,7 +14,7 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
-class UpdatePasskeyPage extends Component
+class EditPasskeysPage extends Component
 {
     public User $user;
 
@@ -94,6 +94,6 @@ class UpdatePasskeyPage extends Component
 
     public function render()
     {
-        return view('livewire.pages.users.update-passkey-page');
+        return view('livewire.pages.users.edit-passkeys-page');
     }
 }

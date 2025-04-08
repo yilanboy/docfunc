@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Users\UpdatePasswordPage;
+use App\Livewire\Pages\Users\EditPasswordPage;
 use App\Models\User;
 
 use function Pest\Laravel\get;
@@ -10,7 +10,7 @@ describe('user password', function () {
     test('non-logged-in users cannot access the update password page', function () {
         $user = User::factory()->create();
 
-        get(route('users.password', ['id' => $user->id]))
+        get(route('settings.users.password.edit', ['id' => $user->id]))
             ->assertStatus(302)
             ->assertRedirect(route('login'));
     });
@@ -20,7 +20,7 @@ describe('user password', function () {
 
         loginAsUser();
 
-        get(route('users.password', ['id' => $user->id]))
+        get(route('settings.users.password.edit', ['id' => $user->id]))
             ->assertStatus(403);
     });
 
@@ -29,7 +29,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        get(route('users.password', ['id' => $user->id]))
+        get(route('settings.users.password.edit', ['id' => $user->id]))
             ->assertSuccessful();
     });
 
@@ -41,7 +41,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(UpdatePasswordPage::class, ['id' => $user->id])
+        livewire(EditPasswordPage::class, ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -62,7 +62,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(UpdatePasswordPage::class, ['id' => $user->id])
+        livewire(EditPasswordPage::class, ['id' => $user->id])
             ->set('current_password', $wrongPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -83,7 +83,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(UpdatePasswordPage::class, ['id' => $user->id])
+        livewire(EditPasswordPage::class, ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $wrongNewPasswordConfirmation)

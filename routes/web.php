@@ -9,10 +9,10 @@ use App\Livewire\Pages\Posts\PostIndexPage;
 use App\Livewire\Pages\Posts\ShowPostPage;
 use App\Livewire\Pages\Tags\ShowTagPage;
 use App\Livewire\Pages\Users\DestroyUserPage;
+use App\Livewire\Pages\Users\EditPasskeysPage;
+use App\Livewire\Pages\Users\EditPasswordPage;
 use App\Livewire\Pages\Users\EditUserPage;
 use App\Livewire\Pages\Users\ShowUserPage;
-use App\Livewire\Pages\Users\UpdatePasskeyPage;
-use App\Livewire\Pages\Users\UpdatePasswordPage;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,15 +38,16 @@ Route::middleware('auth')->prefix('/users')->group(function () {
         ->name('users.show')
         ->withoutMiddleware('auth');
 
-    Route::get('/{id}/edit', EditUserPage::class)->name('users.edit');
-    Route::get('/{id}/password', UpdatePasswordPage::class)->name('users.password');
-    Route::get('/{id}/destroy', DestroyUserPage::class)->name('users.destroy');
-
-    Route::get('/{id}/update-passkey', UpdatePasskeyPage::class)->name('users.updatePasskey');
-
-    Route::get('/{user}/destroy-confirmation', DestroyUserController::class)
-        ->name('users.destroy-confirmation')
+    Route::get('/{user}/destroy', DestroyUserController::class)
+        ->name('users.destroy')
         ->withoutMiddleware('auth');
+});
+
+Route::middleware('auth')->prefix('/settings/users')->group(function () {
+    Route::get('/{id}/passkeys/edit', EditPasskeysPage::class)->name('settings.users.passkeys.edit');
+    Route::get('/{id}/edit', EditUserPage::class)->name('settings.users.edit');
+    Route::get('/{id}/password/edit', EditPasswordPage::class)->name('settings.users.password.edit');
+    Route::get('/{id}/destroy', DestroyUserPage::class)->name('settings.users.destroy');
 });
 
 // 文章列表與內容
