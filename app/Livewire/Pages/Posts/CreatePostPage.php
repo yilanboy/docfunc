@@ -43,7 +43,7 @@ class CreatePostPage extends Component
 
         $this->form->clearAutoSave($this->autoSaveKey);
 
-        $this->dispatch('info-badge', status: 'success', message: '成功新增文章！');
+        $this->dispatch('toast', status: 'success', message: '成功新增文章！');
 
         $this->redirect($post->link_with_slug, navigate: true);
     }

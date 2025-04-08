@@ -54,9 +54,8 @@
 
   {{ $slot }}
 
-  {{-- Flash Alert --}}
-  @persist('alert')
-    <x-alert />
+  @persist('toast')
+    <x-toast />
   @endpersist
 </body>
 

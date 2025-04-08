@@ -22,7 +22,7 @@ test('non-logged-in users can leave a anonymous comment', function () {
         ->assertDispatched('append-new-id-to-root-comment-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
-        ->assertDispatched('info-badge',
+        ->assertDispatched('toast',
             status: 'success',
             message: '成功新增留言！',
         );
@@ -50,7 +50,7 @@ test('logged-in users can leave a comment', function () {
         ->assertDispatched('append-new-id-to-root-comment-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
-        ->assertDispatched('info-badge',
+        ->assertDispatched('toast',
             status: 'success',
             message: '成功新增留言！',
         );
@@ -149,7 +149,7 @@ it('can reply to others comment', function () {
         ->assertDispatched('append-new-id-to-'.$comment->id.'-comment-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
-        ->assertDispatched('info-badge',
+        ->assertDispatched('toast',
             status: 'success',
             message: '成功新增留言！',
         );
@@ -167,7 +167,7 @@ it('will show alert, when user want to reply to deleted post', function () {
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
-        ->assertDispatched(event: 'info-badge', status: 'danger', message: '無法回覆！文章已被刪除！');
+        ->assertDispatched(event: 'toast', status: 'danger', message: '無法回覆！文章已被刪除！');
 });
 
 it('will show alert, when user want to reply to deleted comment', function () {
@@ -184,5 +184,5 @@ it('will show alert, when user want to reply to deleted comment', function () {
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save', parentId: $commentId)
-        ->assertDispatched(event: 'info-badge', status: 'danger', message: '無法回覆！留言已被刪除！');
+        ->assertDispatched(event: 'toast', status: 'danger', message: '無法回覆！留言已被刪除！');
 });

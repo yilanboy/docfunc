@@ -4,7 +4,6 @@ namespace App\Livewire\Pages\Settings\Users;
 
 use App\Mail\DestroyUser;
 use App\Models\User;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
@@ -14,8 +13,6 @@ use Livewire\Component;
 
 class DestroyUserPage extends Component
 {
-    use AuthorizesRequests;
-
     public User $user;
 
     #[Locked]
@@ -44,7 +41,7 @@ class DestroyUserPage extends Component
 
         Mail::to($user)->queue(new DestroyUser($destroyUserLink));
 
-        $this->dispatch('info-badge', status: 'success', message: '已寄出信件！');
+        $this->dispatch('toast', status: 'success', message: '已寄出信件！');
     }
 
     #[Title('會員中心 - 刪除帳號')]

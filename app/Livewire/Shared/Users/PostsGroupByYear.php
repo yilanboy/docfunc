@@ -4,14 +4,11 @@ namespace App\Livewire\Shared\Users;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class PostsGroupByYear extends Component
 {
-    use AuthorizesRequests;
-
     public int $userId;
 
     /**
@@ -29,12 +26,12 @@ class PostsGroupByYear extends Component
 
         $post->is_private = ! $post->is_private;
 
-        $post->withoutTimestamps(fn () => $post->save());
+        $post->withoutTimestamps(fn() => $post->save());
 
         $this->refreshPostsByYear();
 
         $this->dispatch(
-            'info-badge',
+            'toast',
             status: 'success',
             message: $post->is_private ? '文章狀態已切換為私人' : '文章狀態已切換為公開',
         );
@@ -46,24 +43,24 @@ class PostsGroupByYear extends Component
 
         $this->authorize('update', $post);
 
-        $post->withoutTimestamps(fn () => $post->restore());
+        $post->withoutTimestamps(fn() => $post->restore());
 
         $this->refreshPostsByYear();
 
-        $this->dispatch('info-badge', status: 'success', message: '文章已恢復');
+        $this->dispatch('toast', status: 'success', message: '文章已恢復');
     }
 
     public function destroy(Post $post): void
     {
         $this->authorize('destroy', $post);
 
-        $post->withoutTimestamps(fn () => $post->delete());
+        $post->withoutTimestamps(fn() => $post->delete());
 
         $this->refreshPostsByYear();
 
         $this->dispatch('refreshUserPosts');
 
-        $this->dispatch('info-badge', status: 'success', message: '文章已刪除');
+        $this->dispatch('toast', status: 'success', message: '文章已刪除');
     }
 
     public function refreshPostsByYear(): void

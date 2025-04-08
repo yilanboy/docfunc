@@ -3,15 +3,12 @@
 namespace App\Livewire\Shared\Posts;
 
 use App\Models\Post;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class PostDesktopMenu extends Component
 {
-    use AuthorizesRequests;
-
     #[Locked]
     public $postId;
 
@@ -24,9 +21,9 @@ class PostDesktopMenu extends Component
     {
         $this->authorize('destroy', $post);
 
-        $post->withoutTimestamps(fn () => $post->delete());
+        $post->withoutTimestamps(fn() => $post->delete());
 
-        $this->dispatch('info-badge', status: 'success', message: '成功刪除文章！');
+        $this->dispatch('toast', status: 'success', message: '成功刪除文章！');
 
         $this->redirectRoute(
             name: 'users.show',

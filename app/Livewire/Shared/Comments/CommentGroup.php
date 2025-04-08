@@ -4,7 +4,6 @@ namespace App\Livewire\Shared\Comments;
 
 use App\Models\Comment;
 use App\Traits\MarkdownConverter;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -12,7 +11,6 @@ use Livewire\Component;
 
 class CommentGroup extends Component
 {
-    use AuthorizesRequests;
     use MarkdownConverter;
 
     #[Locked]
@@ -79,7 +77,7 @@ class CommentGroup extends Component
 
         // Check comment is not deleted
         if (is_null($comment)) {
-            $this->dispatch(event: 'info-badge', status: 'danger', message: '該留言已被刪除！');
+            $this->dispatch(event: 'toast', status: 'danger', message: '該留言已被刪除！');
 
             return;
         }
@@ -92,7 +90,7 @@ class CommentGroup extends Component
 
         $this->dispatch(event: 'update-comments-count');
 
-        $this->dispatch(event: 'info-badge', status: 'success', message: '成功刪除留言！');
+        $this->dispatch(event: 'toast', status: 'success', message: '成功刪除留言！');
     }
 
     public function render(): View

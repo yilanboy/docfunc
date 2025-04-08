@@ -3,15 +3,12 @@
 namespace App\Livewire\Pages\Settings\Users;
 
 use App\Models\User;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class EditUserPage extends Component
 {
-    use AuthorizesRequests;
-
     public string $name;
 
     public ?string $introduction;
@@ -67,7 +64,7 @@ class EditUserPage extends Component
             'introduction' => $this->introduction,
         ]);
 
-        $this->dispatch('info-badge', status: 'success', message: '個人資料更新成功');
+        $this->dispatch('toast', status: 'success', message: '個人資料更新成功');
     }
 
     #[Title('會員中心 - 編輯個人資料')]

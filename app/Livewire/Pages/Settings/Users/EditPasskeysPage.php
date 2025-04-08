@@ -40,7 +40,7 @@ class EditPasskeysPage extends Component
             ->fromJson($data['passkey'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
-            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
         }
 
         $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
@@ -60,7 +60,7 @@ class EditPasskeysPage extends Component
                 host: request()->getHost(),
             );
         } catch (Throwable) {
-            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
@@ -76,7 +76,7 @@ class EditPasskeysPage extends Component
             'data' => $publicKeyCredentialSourceJson,
         ]);
 
-        $this->dispatch('info-badge', status: 'success', message: '成功建立密碼金鑰！');
+        $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
 
         $this->reset('name', 'passkey');
     }
@@ -89,7 +89,7 @@ class EditPasskeysPage extends Component
 
         $passkey->delete();
 
-        $this->dispatch('info-badge', status: 'success', message: '成功刪除密碼金鑰！');
+        $this->dispatch('toast', status: 'success', message: '成功刪除密碼金鑰！');
     }
 
     public function render()

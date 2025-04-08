@@ -4,7 +4,6 @@ namespace App\Livewire\Pages\Settings\Users;
 
 use App\Models\User;
 use App\Rules\MatchOldPassword;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
@@ -12,8 +11,6 @@ use Livewire\Component;
 
 class EditPasswordPage extends Component
 {
-    use AuthorizesRequests;
-
     public User $user;
 
     public string $current_password = '';
@@ -56,7 +53,7 @@ class EditPasswordPage extends Component
 
         $user->update(['password' => $this->new_password]);
 
-        $this->dispatch('info-badge', status: 'success', message: '密碼更新成功！');
+        $this->dispatch('toast', status: 'success', message: '密碼更新成功！');
 
         $this->reset(['current_password', 'new_password', 'new_password_confirmation']);
     }

@@ -20,7 +20,7 @@ test('the author can delete his comment', function () {
     ])
         ->call('destroyComment', id: $comment->id)
         ->assertDispatched('update-comments-count')
-        ->assertDispatched('info-badge',
+        ->assertDispatched('toast',
             status: 'success',
             message: '成功刪除留言！',
         );
@@ -42,7 +42,7 @@ test('post author can delete other users comment', function () {
     ])
         ->call('destroyComment', id: $comment->id)
         ->assertDispatched('update-comments-count')
-        ->assertDispatched('info-badge',
+        ->assertDispatched('toast',
             status: 'success',
             message: '成功刪除留言！',
         );
@@ -66,5 +66,5 @@ it('will show alert when user want to delete the deleted comment', function () {
         'commentGroupName' => 1,
     ])
         ->call('destroyComment', id: $commentId)
-        ->assertDispatched('info-badge', status: 'danger', message: '該留言已被刪除！');
+        ->assertDispatched('toast', status: 'danger', message: '該留言已被刪除！');
 });

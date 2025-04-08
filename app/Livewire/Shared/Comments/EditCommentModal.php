@@ -6,13 +6,11 @@ use App\Livewire\Forms\CommentForm;
 use App\Models\Comment;
 use App\Traits\MarkdownConverter;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class EditCommentModal extends Component
 {
-    use AuthorizesRequests;
     use MarkdownConverter;
 
     public CommentForm $form;

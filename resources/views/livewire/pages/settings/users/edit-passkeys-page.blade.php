@@ -10,7 +10,7 @@
       browserSupportsWebAuthn,
       async register() {
         if (!this.browserSupportsWebAuthn()) {
-          this.$wire.dispatch('info-badge', {
+          this.$wire.dispatch('toast', {
             status: 'danger',
             message: '不支援 WebAuthn'
           });
@@ -19,7 +19,7 @@
         }
 
         if (this.name === '') {
-          this.$wire.dispatch('info-badge', {
+          this.$wire.dispatch('toast', {
             status: 'danger',
             message: '請輸入密碼金鑰名稱'
           });
@@ -35,7 +35,7 @@
             optionsJSON
           }));
         } catch (e) {
-          this.$wire.dispatch('info-badge', {
+          this.$wire.dispatch('toast', {
             status: 'danger',
             message: '註冊失敗，請重新註冊'
           });

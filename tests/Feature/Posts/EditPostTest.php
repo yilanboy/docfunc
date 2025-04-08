@@ -93,7 +93,7 @@ describe('edit post', function () {
             ->call('privateStatusToggle', $post->id)
             ->assertHasNoErrors()
             ->assertDispatched(
-                'info-badge',
+                'toast',
                 status: 'success',
                 // if original status is true, then the message should be '文章狀態已切換為公開'
                 // because the status is toggled to false

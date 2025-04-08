@@ -14,7 +14,7 @@ class Header extends Component
     {
         $logout();
 
-        $this->dispatch('info-badge', status: 'success', message: '成功登出！');
+        $this->dispatch('toast', status: 'success', message: '成功登出！');
 
         $this->redirect(route('login'), navigate: true);
     }

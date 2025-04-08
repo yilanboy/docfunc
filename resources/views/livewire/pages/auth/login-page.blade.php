@@ -18,7 +18,7 @@
       },
       async loginWithPasskey() {
         if (!this.browserSupportsWebAuthn()) {
-          this.$wire.dispatch('info-badge', {
+          this.$wire.dispatch('toast', {
             status: 'danger',
             message: '不支援 WebAuthn'
           });
@@ -37,7 +37,7 @@
             }
           }))
         } catch (error) {
-          this.$wire.dispatch('info-badge', {
+          this.$wire.dispatch('toast', {
             status: 'danger',
             message: '登入失敗，請稍後再試'
           });

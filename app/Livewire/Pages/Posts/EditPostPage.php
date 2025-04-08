@@ -6,7 +6,6 @@ use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -14,7 +13,6 @@ use Livewire\WithFileUploads;
 
 class EditPostPage extends Component
 {
-    use AuthorizesRequests;
     use WithFileUploads;
 
     public PostForm $form;
@@ -40,7 +38,7 @@ class EditPostPage extends Component
     {
         $this->form->update($post);
 
-        $this->dispatch('info-badge', status: 'success', message: '成功更新文章！');
+        $this->dispatch('toast', status: 'success', message: '成功更新文章！');
 
         $this->redirect($post->link_with_slug, navigate: true);
     }

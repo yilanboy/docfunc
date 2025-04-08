@@ -3,14 +3,11 @@
 namespace App\Livewire\Pages\Posts;
 
 use App\Models\Post;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
 use Livewire\Component;
 
 class ShowPostPage extends Component
 {
-    use AuthorizesRequests;
-
     /**
      * @var Post get the post id from url path
      *

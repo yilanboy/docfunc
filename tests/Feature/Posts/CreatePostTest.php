@@ -59,7 +59,7 @@ describe('create post', function () {
                 'id' => 1,
                 'slug' => $contentService->makeSlug($title),
             ]))
-            ->assertDispatched('info-badge', status: 'success', message: '成功新增文章！');
+            ->assertDispatched('toast', status: 'success', message: '成功新增文章！');
 
         $post = Post::latest()->first();
 

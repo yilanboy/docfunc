@@ -64,7 +64,7 @@ class LoginPage extends Component
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->dispatch('info-badge', status: 'success', message: '登入成功！');
+        $this->dispatch('toast', status: 'success', message: '登入成功！');
 
         $this->redirectIntended(route('root', absolute: false), navigate: true);
     }
@@ -77,7 +77,7 @@ class LoginPage extends Component
             ->fromJson($data['answer'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
-            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
         }
 
         $rawId = json_decode($data['answer'], true)['rawId'];
@@ -85,7 +85,7 @@ class LoginPage extends Component
         $passkey = Passkey::firstWhere('credential_id', $rawId);
 
         if (! $passkey) {
-            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
@@ -109,7 +109,7 @@ class LoginPage extends Component
                 userHandle: null,
             );
         } catch (Throwable) {
-            $this->dispatch('info-badge', status: 'danger', message: '密碼金鑰無效');
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
@@ -121,7 +121,7 @@ class LoginPage extends Component
         Auth::loginUsingId(id: $passkey->user_id, remember: true);
         Session::regenerate();
 
-        $this->dispatch('info-badge', status: 'success', message: '登入成功！');
+        $this->dispatch('toast', status: 'success', message: '登入成功！');
 
         $this->redirectIntended(route('root', absolute: false), navigate: true);
     }

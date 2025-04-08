@@ -57,7 +57,7 @@ class CreateCommentModal extends Component
         $post = Post::find(id: $this->postId, columns: ['id', 'user_id']);
 
         if (is_null($post)) {
-            $this->dispatch(event: 'info-badge', status: 'danger', message: '無法回覆！文章已被刪除！');
+            $this->dispatch(event: 'toast', status: 'danger', message: '無法回覆！文章已被刪除！');
 
             $this->redirect(url: route('posts.index'), navigate: true);
 
@@ -69,7 +69,7 @@ class CreateCommentModal extends Component
             $parentComment = Comment::find(id: $this->form->parent_id, columns: ['id']);
 
             if (is_null($parentComment)) {
-                $this->dispatch(event: 'info-badge', status: 'danger', message: '無法回覆！留言已被刪除！');
+                $this->dispatch(event: 'toast', status: 'danger', message: '無法回覆！留言已被刪除！');
 
                 return;
             }
@@ -103,7 +103,7 @@ class CreateCommentModal extends Component
 
         $this->dispatch(event: 'update-comments-count');
 
-        $this->dispatch(event: 'info-badge', status: 'success', message: '成功新增留言！');
+        $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
 
         $this->reset('form.body', 'form.parent_id', 'previewIsEnabled');
     }

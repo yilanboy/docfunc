@@ -27,7 +27,7 @@ test('users can authenticate using the login screen', function () {
         ->set('password', $password)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('login')
-        ->assertDispatched('info-badge', status: 'success', message: '登入成功！')
+        ->assertDispatched('toast', status: 'success', message: '登入成功！')
         ->assertRedirect('/');
 
     $this->assertAuthenticated();
