@@ -177,8 +177,8 @@
             </x-dropdown.link>
 
             <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
-              <x-icon.person-circle class="w-4" />
-              <span class="ml-2">會員中心</span>
+              <x-icon.geer-fill class="w-4" />
+              <span class="ml-2">設定</span>
             </x-dropdown.link>
 
             <x-dropdown.button
@@ -331,8 +331,8 @@
                 </x-dropdown.link>
 
                 <x-dropdown.link href="{{ route('users.edit', ['id' => auth()->id()]) }}">
-                  <x-icon.person-circle class="w-4" />
-                  <span class="ml-2">會員中心</span>
+                  <x-icon.geer-fill class="w-4" />
+                  <span class="ml-2">設定</span>
                 </x-dropdown.link>
 
                 <x-dropdown.button
