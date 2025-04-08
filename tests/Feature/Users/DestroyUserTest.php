@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Users\DestroyUserPage;
+use App\Livewire\Pages\Settings\Users\DestroyUserPage;
 use App\Mail\DestroyUser;
 use App\Models\Comment;
 use App\Models\Post;

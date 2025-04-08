@@ -1,52 +1,52 @@
 @assets
-@vite('resources/ts/webauthn.ts')
+  @vite('resources/ts/webauthn.ts')
 @endassets
 
 @script
-<script>
-  Alpine.data('updatePasskeyPage', () => ({
-    name: $wire.entangle('name'),
-    passkey: $wire.entangle('passkey'),
-    browserSupportsWebAuthn,
-    async register() {
-      if (!this.browserSupportsWebAuthn()) {
-        this.$wire.dispatch('info-badge', {
-          status: 'danger',
-          message: '不支援 WebAuthn'
-        });
+  <script>
+    Alpine.data('updatePasskeyPage', () => ({
+      name: $wire.entangle('name'),
+      passkey: $wire.entangle('passkey'),
+      browserSupportsWebAuthn,
+      async register() {
+        if (!this.browserSupportsWebAuthn()) {
+          this.$wire.dispatch('info-badge', {
+            status: 'danger',
+            message: '不支援 WebAuthn'
+          });
 
-        return;
+          return;
+        }
+
+        if (this.name === '') {
+          this.$wire.dispatch('info-badge', {
+            status: 'danger',
+            message: '請輸入密碼金鑰名稱'
+          });
+
+          return;
+        }
+
+        const response = await fetch('/api/passkeys/generate-register-options');
+        const optionsJSON = await response.json();
+
+        try {
+          this.passkey = JSON.stringify(await startRegistration({
+            optionsJSON
+          }));
+        } catch (e) {
+          this.$wire.dispatch('info-badge', {
+            status: 'danger',
+            message: '註冊失敗，請重新註冊'
+          });
+
+          return;
+        }
+
+        this.$wire.store();
       }
-
-      if (this.name === '') {
-        this.$wire.dispatch('info-badge', {
-          status: 'danger',
-          message: '請輸入密碼金鑰名稱'
-        });
-
-        return;
-      }
-
-      const response = await fetch('/api/passkeys/generate-register-options');
-      const optionsJSON = await response.json();
-
-      try {
-        this.passkey = JSON.stringify(await startRegistration({
-          optionsJSON
-        }));
-      } catch (e) {
-        this.$wire.dispatch('info-badge', {
-          status: 'danger',
-          message: '註冊失敗，請重新註冊'
-        });
-
-        return;
-      }
-
-      this.$wire.store();
-    }
-  }));
-</script>
+    }));
+  </script>
 @endscript
 
 <x-layouts.layout-main x-data="updatePasskeyPage">

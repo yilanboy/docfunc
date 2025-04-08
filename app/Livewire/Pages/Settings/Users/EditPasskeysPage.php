@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Users;
+namespace App\Livewire\Pages\Settings\Users;
 
 use App\Models\User;
 use App\Services\CustomCounterChecker;
@@ -94,6 +94,6 @@ class EditPasskeysPage extends Component
 
     public function render()
     {
-        return view('livewire.pages.users.edit-passkeys-page');
+        return view('livewire.pages.settings.users.edit-passkeys-page');
     }
 }

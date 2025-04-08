@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Users;
+namespace App\Livewire\Pages\Settings\Users;
 
 use App\Mail\DestroyUser;
 use App\Models\User;
@@ -50,6 +50,6 @@ class DestroyUserPage extends Component
     #[Title('會員中心 - 刪除帳號')]
     public function render(): View
     {
-        return view('livewire.pages.users.destroy-user-page');
+        return view('livewire.pages.settings.users.destroy-user-page');
     }
 }

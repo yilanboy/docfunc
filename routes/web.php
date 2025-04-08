@@ -7,11 +7,11 @@ use App\Livewire\Pages\Posts\CreatePostPage;
 use App\Livewire\Pages\Posts\EditPostPage;
 use App\Livewire\Pages\Posts\PostIndexPage;
 use App\Livewire\Pages\Posts\ShowPostPage;
+use App\Livewire\Pages\Settings\Users\DestroyUserPage;
+use App\Livewire\Pages\Settings\Users\EditPasskeysPage;
+use App\Livewire\Pages\Settings\Users\EditPasswordPage;
+use App\Livewire\Pages\Settings\Users\EditUserPage;
 use App\Livewire\Pages\Tags\ShowTagPage;
-use App\Livewire\Pages\Users\DestroyUserPage;
-use App\Livewire\Pages\Users\EditPasskeysPage;
-use App\Livewire\Pages\Users\EditPasswordPage;
-use App\Livewire\Pages\Users\EditUserPage;
 use App\Livewire\Pages\Users\ShowUserPage;
 use Illuminate\Support\Facades\Route;
 

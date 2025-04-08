@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Users\EditPasswordPage;
+use App\Livewire\Pages\Settings\Users\EditPasswordPage;
 use App\Models\User;
 
 use function Pest\Laravel\get;

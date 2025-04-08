@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Users;
+namespace App\Livewire\Pages\Settings\Users;
 
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -73,6 +73,6 @@ class EditUserPage extends Component
     #[Title('會員中心 - 編輯個人資料')]
     public function render(): View
     {
-        return view('livewire.pages.users.edit-user-page');
+        return view('livewire.pages.settings.users.edit-user-page');
     }
 }
