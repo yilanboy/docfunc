@@ -13,8 +13,7 @@ use function Pest\Livewire\livewire;
 
 describe('destroy user', function () {
     beforeEach(function () {
-        $this->destroyUserConfirmationRouteName = 'users.destroy';
-        $this->urlValidMinutes = 5;
+        $this->routeName = 'users.destroy';
     });
 
     test('non-logged-in users cannot access the destroy user page', function () {
@@ -44,14 +43,6 @@ describe('destroy user', function () {
             ->assertForbidden();
     });
 
-    test('destroy user route name must be users.destroy', function () {
-        $user = loginAsUser();
-
-        livewire(DestroyUserPage::class, ['id' => $user->id])
-            ->assertSet('destroyUserConfirmationRouteName', $this->destroyUserConfirmationRouteName)
-            ->assertSet('urlValidMinutes', $this->urlValidMinutes);
-    });
-
     test('schedule the task of sending the \'destroy user\' email in the queue', function () {
         Mail::fake();
 
@@ -74,7 +65,7 @@ describe('destroy user', function () {
         $this->actingAs($user);
 
         $destroyUserLink = URL::temporarySignedRoute(
-            $this->destroyUserConfirmationRouteName,
+            $this->routeName,
             now()->addMinutes(5),
             ['user' => $user->id]
         );
@@ -92,7 +83,7 @@ describe('destroy user', function () {
         $this->actingAs($user);
 
         $destroyUserLink = URL::temporarySignedRoute(
-            $this->destroyUserConfirmationRouteName,
+            $this->routeName,
             now()->addMinutes(5),
             ['user' => $user->id]
         );
