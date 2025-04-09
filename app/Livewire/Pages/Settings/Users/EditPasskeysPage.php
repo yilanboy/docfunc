@@ -41,10 +41,20 @@ class EditPasskeysPage extends Component
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+            return;
+        }
+
+        $options = Session::get('passkey-registration-options');
+
+        if (! $options) {
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+            return;
         }
 
         $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
-            Session::get('passkey-registration-options'),
+            $options,
             PublicKeyCredentialCreationOptions::class,
         );
 

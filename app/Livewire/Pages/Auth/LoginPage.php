@@ -93,8 +93,16 @@ class LoginPage extends Component
         $publicKeyCredentialSource = Serializer::make()
             ->fromJson(json_encode($passkey->data), PublicKeyCredentialSource::class);
 
+        $options = Session::get('passkey-authentication-options');
+
+        if (! $options) {
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+            return;
+        }
+
         $publicKeyCredentialRequestOptions = Serializer::make()->fromJson(
-            Session::get('passkey-authentication-options'),
+            $options,
             PublicKeyCredentialRequestOptions::class,
         );
 
