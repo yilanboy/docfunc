@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Serializer;
+use Illuminate\Support\Uri;
 use Session;
 use Str;
 use Webauthn\Exception\InvalidDataException;
@@ -17,8 +18,8 @@ class GeneratePasskeyAuthenticationOptionsController extends Controller
     public function __invoke(): string
     {
         $options = new PublicKeyCredentialRequestOptions(
-            challenge: $this->challenge(),
-            rpId: $this->hostname(),
+            challenge: Str::random(),
+            rpId: Uri::of(config('app.url'))->host(),
             allowCredentials: [],
         );
 
@@ -27,15 +28,5 @@ class GeneratePasskeyAuthenticationOptionsController extends Controller
         Session::flash('passkey-authentication-options', $options);
 
         return $options;
-    }
-
-    protected function challenge(): string
-    {
-        return Str::random();
-    }
-
-    protected function hostname(): string
-    {
-        return parse_url(config('app.url'), PHP_URL_HOST);
     }
 }
