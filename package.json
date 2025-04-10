@@ -6,6 +6,7 @@
     },
     "devDependencies": {
         "@shufo/prettier-plugin-blade": "^1.14.1",
+        "@simplewebauthn/browser": "^13.1.0",
         "@tailwindcss/typography": "^0.5.15",
         "@tailwindcss/vite": "^4.0.0",
         "@types/yaireo__tagify": "^4.27.0",
@@ -22,8 +23,5 @@
         "typescript": "^5.7.2",
         "vite": "^6.0.2"
     },
-    "type": "module",
-    "dependencies": {
-        "@simplewebauthn/browser": "^13.1.0"
-    }
+    "type": "module"
 }
