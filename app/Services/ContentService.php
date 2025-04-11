@@ -37,7 +37,7 @@ class ContentService
                 ->allowAttribute('data-language', 'pre')
                 ->allowAttribute('class', 'span')
                 ->allowElement('code', ['class'])
-                ->allowElement('figure', ['class'])
+                ->allowElement('figure', ['class', 'style'])
                 ->allowElement('oembed', ['class', 'url'])
                 ->forceAttribute('a', 'rel', 'noopener noreferrer')
                 ->forceAttribute('a', 'target', '_blank')
