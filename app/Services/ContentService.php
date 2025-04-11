@@ -36,6 +36,7 @@ class ContentService
                 ->allowSafeElements()
                 ->allowAttribute('data-language', 'pre')
                 ->allowAttribute('class', 'span')
+                ->allowAttribute('style', 'p')
                 ->allowElement('code', ['class'])
                 ->allowElement('figure', ['class', 'style'])
                 ->allowElement('oembed', ['class', 'url'])
