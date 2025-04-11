@@ -15,7 +15,6 @@ use App\Livewire\Pages\Tags\ShowTagPage;
 use App\Livewire\Pages\Users\ShowUserPage;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

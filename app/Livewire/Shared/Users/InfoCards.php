@@ -18,7 +18,7 @@ class InfoCards extends Component
             ->loadCount([
                 'posts as posts_count_in_this_year' => function ($query) {
                     $query->whereYear('created_at', date('Y'));
-                }
+                },
             ]);
 
         $commentCountsInAllPosts = Comment::query()
@@ -29,7 +29,7 @@ class InfoCards extends Component
         $categories = Category::with([
             'posts' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
-            }
+            },
         ])->get();
 
         return view(

@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
-use Symfony\Component\Serializer\Serializer as SymfonySerializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
@@ -22,7 +21,7 @@ class Serializer
     }
 
     public function __construct(
-        protected SymfonySerializer $serializer,
+        protected SerializerInterface $serializer,
     ) {}
 
     public function toJson(mixed $value): string

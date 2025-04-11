@@ -21,7 +21,7 @@ class PostDesktopMenu extends Component
     {
         $this->authorize('destroy', $post);
 
-        $post->withoutTimestamps(fn() => $post->delete());
+        $post->withoutTimestamps(fn () => $post->delete());
 
         $this->dispatch('toast', status: 'success', message: '成功刪除文章！');
 

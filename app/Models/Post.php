@@ -20,6 +20,8 @@ use Spatie\Feed\FeedItem;
 /**
  * @property string $link_with_slug 帶有 slug 的文章連結，set by linkWithSlug()
  * @property string $tags_json json 格式的標籤列表, set by tagsJson()
+ * @property User $user
+ * @property Collection<int, Tag> $tags
  *
  * @method int increment(string $column, float|int $amount = 1, array $extra = []) 將該欄位值加 1
  * @method int decrement(string $column, float|int $amount = 1, array $extra = []) 將該欄位值減 1
@@ -95,7 +97,7 @@ class Post extends Model implements Feedable
     public function linkWithSlug(): Attribute
     {
         return new Attribute(
-            get: fn($value) => route('posts.show', [
+            get: fn ($value) => route('posts.show', [
                 'id' => $this->id,
                 'slug' => $this->slug,
             ])
@@ -107,8 +109,8 @@ class Post extends Model implements Feedable
         // 生成包含 tag ID 與 tag name 的 json 字串
         // [{"id":"2","value":"C#"},{"id":"5","value":"Dart"}]
         return new Attribute(
-            get: fn($value) => $this->tags
-                ->map(fn(Tag $tag) => ['id' => $tag->id, 'value' => $tag->name])
+            get: fn ($value) => $this->tags
+                ->map(fn (Tag $tag) => ['id' => $tag->id, 'value' => $tag->name])
                 ->toJson()
         );
     }

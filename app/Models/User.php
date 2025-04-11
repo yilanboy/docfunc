@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function gravatarUrl(): Attribute
     {
         return new Attribute(
-            get: fn($value) => get_gravatar(email: $this->email, size: 512)
+            get: fn ($value) => get_gravatar(email: $this->email, size: 512)
         )->shouldCache();
     }
 

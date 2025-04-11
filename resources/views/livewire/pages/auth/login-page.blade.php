@@ -13,7 +13,7 @@
       submitIsDisabled() {
         return this.submitIsEnabled === false;
       },
-      informationOnSubmitButton() {
+      textOnSubmitButton() {
         return this.submitIsEnabled ? '登入' : '驗證中';
       },
       async loginWithPasskey() {
@@ -156,7 +156,10 @@
               x-cloak
               x-show="submitIsDisabled"
             />
-            <span x-text="informationOnSubmitButton"></span>
+            <span
+              class="h-[1lh]"
+              x-text="textOnSubmitButton"
+            ></span>
           </x-button>
         </form>
 

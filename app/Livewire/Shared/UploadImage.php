@@ -17,7 +17,7 @@ class UploadImage extends Component
     #[Validate(['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'], message: [
         'image' => '必須是圖片',
         'mimes' => '圖片格式必須是 jpeg, png, jpg',
-        'max' => '圖片大小不能超過 1024 KB'
+        'max' => '圖片大小不能超過 1024 KB',
     ])]
     public $image = null;
 

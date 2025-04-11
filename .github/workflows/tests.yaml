@@ -82,8 +82,8 @@ jobs:
           php -r "file_exists('.env') || copy('.env.example', '.env');"
           php artisan key:generate
 
-      # - name: Run the static analysis
-      #   run: vendor/bin/phpstan analyse --memory-limit=2G
+      - name: Run the static analysis
+        run: vendor/bin/phpstan analyse --memory-limit=2G
 
       - name: Test with pest
         run: vendor/bin/pest --coverage-clover ./coverage.xml

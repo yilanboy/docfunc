@@ -44,7 +44,7 @@ class PasskeyPolicy
      */
     public function delete(User $user, Passkey $passkey): bool
     {
-        return $user?->id === $passkey->user_id;
+        return $user->id === $passkey->user_id;
     }
 
     /**

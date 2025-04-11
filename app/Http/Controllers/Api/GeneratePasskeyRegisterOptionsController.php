@@ -28,7 +28,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
 
         $userEntity = new PublicKeyCredentialUserEntity(
             name: $request->user()->name,
-            id: $request->user()->id,
+            id: strval($request->user()->id),
             displayName: $request->user()->name,
             icon: null
         );

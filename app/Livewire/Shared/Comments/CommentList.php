@@ -89,7 +89,7 @@ class CommentList extends Component
                 'comments.created_at',
                 'comments.updated_at',
                 'users.name as user_name',
-                'users.email as user_email'
+                'users.email as user_email',
             ])
             // Use a sub query to generate children_count column,
             // this line must be after select method
@@ -117,7 +117,6 @@ class CommentList extends Component
             ->get()
             ->keyBy('id')
             ->toArray();
-
 
         // Livewire will save data in frontend, so we need to remove sensitive data
         $callback = function (array $comment): array {

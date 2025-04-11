@@ -20,7 +20,7 @@ class CommentForm extends Form
     #[Validate(['required', 'min:5', 'max:2000'], message: [
         'required' => '請填寫留言內容',
         'min' => '留言內容至少 5 個字元',
-        'max' => '留言內容最多 2000 個字元'
+        'max' => '留言內容最多 2000 個字元',
     ])]
     public string $body = '';
 
