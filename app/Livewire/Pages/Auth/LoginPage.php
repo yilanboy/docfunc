@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Throwable;
@@ -33,6 +34,14 @@ class LoginPage extends Component
     public string $captchaToken = '';
 
     public string $answer = '';
+
+    #[Locked]
+    public string $optionEndpoint = '';
+
+    public function mount(): void
+    {
+        $this->optionEndpoint = route('passkeys.authentication-options');
+    }
 
     public function login(): void
     {

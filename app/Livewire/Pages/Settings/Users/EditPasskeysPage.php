@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\Settings\Users;
 use App\Models\User;
 use App\Services\CustomCounterChecker;
 use App\Services\Serializer;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Session;
 use Throwable;
@@ -22,9 +23,13 @@ class EditPasskeysPage extends Component
 
     public string $passkey = '';
 
+    #[Locked]
+    public string $optionEndpoint = '';
+
     public function mount(int $id): void
     {
         $this->user = User::findOrFail($id);
+        $this->optionEndpoint = route('passkeys.register-options');
 
         $this->authorize('update', $this->user);
     }

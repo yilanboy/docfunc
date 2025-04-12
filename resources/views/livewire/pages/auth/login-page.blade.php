@@ -8,6 +8,7 @@
       submitIsEnabled: false,
       captchaSiteKey: @js(config('services.captcha.site_key')),
       email: $wire.entangle('email'),
+      optionEndpoint: @js($optionEndpoint),
       answer: $wire.entangle('answer'),
       browserSupportsWebAuthn,
       submitIsDisabled() {
@@ -26,7 +27,7 @@
           return;
         }
 
-        const response = await fetch('/api/passkeys/generate-authentication-options');
+        const response = await fetch(this.optionEndpoint);
         const optionsJSON = await response.json();
 
         try {
@@ -152,7 +153,7 @@
             x-bind:disabled="submitIsDisabled"
           >
             <x-icon.animate-spin
-              class="mr-2 h-5 w-5 text-gray-50"
+              class="mr-2 size-5 text-gray-50"
               x-cloak
               x-show="submitIsDisabled"
             />

@@ -5,6 +5,7 @@
 @script
   <script>
     Alpine.data('updatePasskeyPage', () => ({
+      optionEndpoint: @js($optionEndpoint),
       name: $wire.entangle('name'),
       passkey: $wire.entangle('passkey'),
       browserSupportsWebAuthn,
@@ -27,7 +28,7 @@
           return;
         }
 
-        const response = await fetch('/api/passkeys/generate-register-options');
+        const response = await fetch(this.optionEndpoint);
         const optionsJSON = await response.json();
 
         try {
