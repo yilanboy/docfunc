@@ -35,7 +35,7 @@ return [
     'different' => ':attribute 與 :other 必須不同。',
     'digits' => ':attribute 必須是 :digits 位數字。',
     'digits_between' => ':attribute 必須介於 :min 至 :max 位數字。',
-    'dimensions' => ':attribute 圖片尺寸不正確。',
+    'dimensions' => ':attribute 圖片尺寸不正確。長度不能超過 :max_height 像素，寬度不能超過 :max_width 像素。',
     'distinct' => ':attribute 已經存在。',
     'doesnt_end_with' => ':attribute 不能以下列之一結尾：:values。',
     'doesnt_start_with' => ':attribute 不能以下列之一開頭：:values。',
