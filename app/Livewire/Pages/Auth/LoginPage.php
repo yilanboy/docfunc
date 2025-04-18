@@ -87,6 +87,8 @@ class LoginPage extends Component
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+            return;
         }
 
         $rawId = json_decode($data['answer'], true)['rawId'];
