@@ -80,15 +80,14 @@ class EditPasskeysPage extends Component
             return;
         }
 
-        $publicKeyCredentialSourceJson = json_decode(
-            json: Serializer::make()->toJson($publicKeyCredentialSource),
-            associative: true
+        $publicKeyCredentialSourceArray = Serializer::make()->toArray(
+            $publicKeyCredentialSource
         );
 
         request()->user()->passkeys()->create([
             'name' => $data['name'],
-            'credential_id' => $publicKeyCredentialSourceJson['publicKeyCredentialId'],
-            'data' => $publicKeyCredentialSourceJson,
+            'credential_id' => $publicKeyCredentialSourceArray['publicKeyCredentialId'],
+            'data' => $publicKeyCredentialSourceArray,
         ]);
 
         $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');

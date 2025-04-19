@@ -22,7 +22,9 @@ class Serializer
 
     public function __construct(
         protected SerializerInterface $serializer,
-    ) {}
+    )
+    {
+    }
 
     public function toJson(mixed $value): string
     {
@@ -41,5 +43,10 @@ class Serializer
         return $this
             ->serializer
             ->deserialize($value, $desiredClass, 'json');
+    }
+
+    public function toArray(mixed $value): array
+    {
+        return $this->serializer->normalize($value, 'json');
     }
 }
