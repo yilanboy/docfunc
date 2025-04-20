@@ -23,7 +23,7 @@ it('can filter the dangerous HTML element', function () {
         </body>
     HTML;
 
-    expect($this->contentService->sanitizeHtml($body))
+    expect($this->contentService->htmlPurifier($body))
         ->not->toContain('<body onload="alert(\'this a xss attack\')">')
         ->not->toContain('<script>alert(\'this a xss attack\');</script>')
         ->not->toContain('<IMG SRC=j&#X41vascript:alert(\'test2\')>')
@@ -50,14 +50,14 @@ it('can keep the custom HTML elements we want', function () {
         </body>
     HTML;
 
-    expect($this->contentService->sanitizeHtml($body))
+    expect($this->contentService->htmlPurifier($body))
         ->toContain('<span class="text-tiny">Could you keep it down, please?</span>')
         ->toContain('<pre data-language="Bash" spellcheck="false">')
         ->toContain('<code class="language-bash">mkdir highlight-blade</code>')
-        ->toContain('<a href="https://google.com" rel="noopener noreferrer" target="_blank">Google</a>')
+        ->toContain('<a href="https://google.com" rel="nofollow noreferrer noopener" target="_blank">Google</a>')
         ->toContain('<figure class="media image-block-helper-added group relative">')
         ->toContain('<figcaption>Share Image</figcaption>')
-        ->toContain('<oembed url="https://www.youtube.com/watch?v&#61;rvln9U9w8ZI" class="oembed-processed"></oembed>');
+        ->toContain('<oembed url="https://www.youtube.com/watch?v=rvln9U9w8ZI" class="oembed-processed"></oembed>');
 });
 
 it('can find all images in the post body', function () {

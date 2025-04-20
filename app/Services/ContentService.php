@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use Dom\HTMLDocument;
-use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
-use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class ContentService
 {
@@ -29,22 +29,40 @@ class ContentService
     /**
      * 過濾 html 格式的文章內容，避免 XSS 攻擊
      */
-    public static function sanitizeHtml(string $html): string
+    public static function htmlPurifier(string $html): string
     {
-        $htmlSanitizer = new HtmlSanitizer(
-            new HtmlSanitizerConfig()
-                ->allowSafeElements()
-                ->allowAttribute('data-language', 'pre')
-                ->allowAttribute('class', 'span')
-                ->allowAttribute('style', 'p')
-                ->allowElement('code', ['class'])
-                ->allowElement('figure', ['class', 'style'])
-                ->allowElement('oembed', ['class', 'url'])
-                ->forceAttribute('a', 'rel', 'noopener noreferrer')
-                ->forceAttribute('a', 'target', '_blank')
-        );
+        $config = HTMLPurifier_Config::createDefault();
 
-        return $htmlSanitizer->sanitize($html);
+        // default config
+        $config->set('Core.Encoding', 'utf-8');
+        $config->set('HTML.DefinitionID', 'content');
+        $config->set('Cache.SerializerPath', config('purifier.cache.path'));
+
+        // add target="_blank" and rel="nofollow noreferrer noopener" to all links
+        $config->set('HTML.TargetBlank', true);
+        $config->set('HTML.Nofollow', true);
+
+        // disable cache in development
+        if (! app()->isProduction()) {
+            $config->set('Cache.DefinitionImpl', null);
+        }
+
+        $definition = $config->maybeGetRawHTMLDefinition();
+
+        if (! is_null($definition)) {
+            $definition->addElement('pre', 'Block', 'Flow', 'Common', [
+                'data-language' => 'Text',
+                'spellcheck' => 'Text',
+            ]);
+            $definition->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow',
+                'Common');
+            $definition->addElement('figcaption', 'Inline', 'Flow', 'Common');
+            $definition->addElement('oembed', 'Block', 'Flow', 'Common', ['url' => 'URI']);
+        }
+
+        $purifier = new HTMLPurifier($config);
+
+        return $purifier->purify($html);
     }
 
     /**

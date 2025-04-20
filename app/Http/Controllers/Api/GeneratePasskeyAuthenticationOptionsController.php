@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Serializer;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
-use Session;
-use Str;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialRequestOptions;
 

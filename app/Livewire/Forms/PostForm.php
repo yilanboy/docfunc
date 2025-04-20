@@ -109,7 +109,7 @@ class PostForm extends Form
 
     public function setBody(): void
     {
-        $this->body = ContentService::sanitizeHtml($this->body);
+        $this->body = ContentService::htmlPurifier($this->body);
     }
 
     public function setExcerpt(): void
