@@ -43,6 +43,7 @@ import coreTranslations from 'ckeditor5/translations/zh.js';
 import 'ckeditor5/ckeditor5-editor.css';
 // Override the default styles.
 import './custom.css';
+import { languageSettings } from '../config.js';
 
 class ClassicEditor extends ClassicEditorBase {}
 
@@ -168,38 +169,10 @@ ClassicEditor.defaultConfig = {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
     },
     codeBlock: {
-        languages: [
-            { language: 'text', label: 'Plain text' }, // The default language.
-            { language: 'bash', label: 'Bash' },
-            { language: 'blade', label: 'Blade' },
-            { language: 'c', label: 'C' },
-            { language: 'cs', label: 'C#' },
-            { language: 'cpp', label: 'C++' },
-            { language: 'css', label: 'CSS' },
-            { language: 'dart', label: 'Dart' },
-            { language: 'dockerfile', label: 'Dockerfile' },
-            { language: 'go', label: 'Go' },
-            { language: 'hcl', label: 'HCL' },
-            { language: 'html', label: 'HTML' },
-            { language: 'ini', label: 'INI' },
-            { language: 'java', label: 'Java' },
-            { language: 'javascript', label: 'JavaScript' },
-            { language: 'json', label: 'JSON' },
-            { language: 'kotlin', label: 'Kotlin' },
-            { language: 'nginx', label: 'Nginx Config' },
-            { language: 'php', label: 'PHP' },
-            { language: 'python', label: 'Python' },
-            { language: 'ruby', label: 'Ruby' },
-            { language: 'rust', label: 'Rust' },
-            { language: 'shell', label: 'Shell' },
-            { language: 'svelte', label: 'Svelte' },
-            { language: 'sql', label: 'SQL' },
-            { language: 'swift', label: 'Swift' },
-            { language: 'toml', label: 'TOML' },
-            { language: 'typescript', label: 'TypeScript' },
-            { language: 'xml', label: 'XML' },
-            { language: 'yaml', label: 'YAML' },
-        ],
+        languages: Object.keys(languageSettings).map((key) => ({
+            language: key,
+            label: languageSettings[key].label,
+        })),
         indentSequence: '    ',
     },
     translations: [coreTranslations],

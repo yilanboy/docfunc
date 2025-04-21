@@ -1,5 +1,5 @@
 import { Modal } from '../modal.js';
-import { button, icon } from './config.js';
+import { button, icon, label, languageSettings } from '../config.js';
 
 declare global {
     interface Window {
@@ -53,6 +53,37 @@ function createExpandCodeButton(preOuterHtml: string): HTMLButtonElement {
     return expandCodeButton;
 }
 
+function findLanguagePrefixClass(element: HTMLElement) {
+    const prefix = 'language-';
+
+    const foundClass = Array.from(element.classList).find((className) =>
+        className.startsWith(prefix),
+    );
+
+    if (!foundClass) {
+        return 'text';
+    }
+
+    return foundClass.substring(prefix.length);
+}
+
+// create language label
+function createLanguageLabel(language: string): HTMLSpanElement {
+    const labelElement: HTMLSpanElement = document.createElement('span');
+    labelElement.classList.add(...label.BASE_CLASS_NAME);
+
+    if (languageSettings[language]) {
+        labelElement.innerText = languageSettings[language].label;
+        labelElement.style.backgroundColor =
+            languageSettings[language].backgroundColor;
+        labelElement.style.color = languageSettings[language].color;
+    } else {
+        labelElement.innerText = language;
+    }
+
+    return labelElement;
+}
+
 window.codeBlockHelper = function (element: HTMLElement): void {
     const preTags: HTMLCollectionOf<HTMLPreElement> =
         element.getElementsByTagName('pre');
@@ -75,6 +106,13 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         code.classList.add('font-jetbrains-mono', 'text-lg', 'font-semibold');
 
+        // get language from code class name, the class name is like "language-javascript"
+        // we need to get the last part of the class name
+
+        const foo = findLanguagePrefixClass(code);
+
+        const languageLabelElement: HTMLSpanElement = createLanguageLabel(foo);
+
         // start to create copy button...
         const copyButton: HTMLButtonElement = createCopyCodeButton(
             code.innerText,
@@ -94,6 +132,8 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         preTag.appendChild(codeHelperGroup);
 
         // append these button in pre tag
+        // append language label
+        codeHelperGroup.appendChild(languageLabelElement);
         codeHelperGroup.appendChild(copyButton);
         codeHelperGroup.appendChild(expandCodeButton);
 
@@ -102,6 +142,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         document.addEventListener(
             'livewire:navigating',
             () => {
+                languageLabelElement.remove();
                 copyButton.remove();
                 expandCodeButton.remove();
                 codeHelperGroup.remove();

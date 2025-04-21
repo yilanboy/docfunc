@@ -1,5 +1,5 @@
 import { Modal } from '../modal.js';
-import { button, icon } from './config.js';
+import { button, icon } from '../config.js';
 
 declare global {
     interface Window {
