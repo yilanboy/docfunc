@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
@@ -21,10 +23,8 @@ class Serializer
     }
 
     public function __construct(
-        protected SerializerInterface $serializer,
-    )
-    {
-    }
+        protected SerializerInterface|NormalizerInterface $serializer,
+    ) {}
 
     public function toJson(mixed $value): string
     {
@@ -45,6 +45,9 @@ class Serializer
             ->deserialize($value, $desiredClass, 'json');
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function toArray(mixed $value): array
     {
         return $this->serializer->normalize($value, 'json');
