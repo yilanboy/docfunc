@@ -96,7 +96,7 @@
 
   {{--  modal  --}}
   <div
-    class="mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-gray-50 p-5 transition-all md:max-w-2xl dark:bg-gray-800"
+    class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-gray-50 p-5 transition-all md:max-w-2xl dark:bg-gray-800"
     x-show="modalIsOpen"
     x-transition.origin.bottom.duration.300ms
   >
