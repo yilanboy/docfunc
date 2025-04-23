@@ -179,7 +179,7 @@
 
         <div class="mt-6">
           <button
-            class="shadow-xs flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-gray-50 px-4 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:ring-transparent dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-700 dark:hover:bg-gray-700"
+            class="shadow-xs flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-gray-50 px-4 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:ring-transparent active:bg-gray-50 dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-700 dark:hover:bg-gray-700 dark:active:bg-gray-800"
             type="button"
             x-on:click="loginWithPasskey"
           >
