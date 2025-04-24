@@ -15,13 +15,9 @@ class PostList extends Component
 
     public ?int $categoryId = null;
 
-    public ?string $categoryName = null;
-
-    public ?string $categoryDescription = null;
-
     public ?int $tagId = null;
 
-    public ?string $tagName = null;
+    public string $badge = '全部文章';
 
     #[Url]
     public string $order = PostOrder::LATEST->value;

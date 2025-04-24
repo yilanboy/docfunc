@@ -6,8 +6,7 @@
         {{-- 文章列表 --}}
         <livewire:shared.posts.post-list
           :categoryId="$category->id"
-          :categoryName="$category->name"
-          :categoryDescription="$category->description"
+          :badge="$category->name . '：' . $category->description"
         />
       </div>
 

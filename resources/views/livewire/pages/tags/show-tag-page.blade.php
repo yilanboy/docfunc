@@ -6,7 +6,7 @@
         {{-- 文章列表 --}}
         <livewire:shared.posts.post-list
           :tagId="$tag->id"
-          :tagName="$tag->name"
+          :badge="'標籤：' . $tag->name"
         />
       </div>
 

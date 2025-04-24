@@ -64,18 +64,10 @@
       </div>
     </nav>
 
-    {{-- Class --}}
+    {{-- Class badge --}}
     <div
       class="dark:bg-lividus-700 hidden items-center justify-center rounded-lg bg-emerald-100 px-4 py-2 text-emerald-700 md:flex dark:text-gray-50"
-    >
-      @if ($categoryId)
-        {{ $categoryName }}：{{ $categoryDescription }}
-      @elseif($tagId)
-        標籤：{{ $tagName }}
-      @else
-        全部文章
-      @endif
-    </div>
+    >{{ $badge }}</div>
   </div>
 
   {{-- Post List --}}
