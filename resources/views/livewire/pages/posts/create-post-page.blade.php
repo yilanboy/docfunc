@@ -121,7 +121,7 @@
         <div class="flex w-full flex-col items-center justify-center space-y-6">
           {{-- title --}}
           <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-            <x-icon.pencil class="w-6" />
+            <x-icons.pencil class="w-6" />
             <span class="ml-4">新增文章</span>
           </div>
 
@@ -225,7 +225,7 @@
 
                 {{-- save button --}}
                 <x-button wire:loading.attr="disabled">
-                  <x-icon.save
+                  <x-icons.save
                     class="w-6"
                     wire:loading.remove
                   />
@@ -234,7 +234,7 @@
                     class="h-5 w-5"
                     wire:loading
                   >
-                    <x-icon.animate-spin />
+                    <x-icons.animate-spin />
                   </span>
 
                   <span class="ml-2">儲存</span>

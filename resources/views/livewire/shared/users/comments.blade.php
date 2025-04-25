@@ -62,7 +62,7 @@
       <div
         class="dark:bg-lividus-600 absolute bottom-3 right-3 z-10 flex items-center rounded-lg bg-emerald-500 px-2 py-1 text-sm text-gray-50"
       >
-        <x-icon.clock class="w-4" />
+        <x-icons.clock class="w-4" />
         <time
           class="ml-2"
           datetime="{{ $comment->created_at->toDateString() }}"
@@ -71,7 +71,7 @@
     </x-dashed-card>
   @empty
     <x-card class="flex h-32 items-center justify-center text-gray-400 dark:text-gray-600">
-      <x-icon.exclamation-circle class="w-6" />
+      <x-icons.exclamation-circle class="w-6" />
       <span class="ml-2">找篇文章留言吧！</span>
     </x-card>
   @endforelse

@@ -20,9 +20,9 @@ enum PostOrder: string
     public function iconComponentName(): string
     {
         return match ($this) {
-            self::LATEST => 'icon.stars',
-            self::RECENT => 'icon.wrench',
-            self::COMMENT => 'icon.chat-square-text',
+            self::LATEST => 'icons.stars',
+            self::RECENT => 'icons.wrench',
+            self::COMMENT => 'icons.chat-square-text',
         };
     }
 }

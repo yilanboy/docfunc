@@ -5,7 +5,7 @@
       href="{{ route('root') }}"
       wire:navigate
     >
-      <x-icon.arrow-left-circle class="w-6" />
+      <x-icons.arrow-left-circle class="w-6" />
       <span class="ml-2">返回文章列表</span>
     </a>
   </div>
@@ -15,7 +15,7 @@
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-        <x-icon.person-check class="w-6" />
+        <x-icons.person-check class="w-6" />
         <span class="ml-4">驗證 Email</span>
       </div>
 

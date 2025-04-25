@@ -21,14 +21,14 @@
         class="text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125"
         wire:loading.remove
       >
-        <x-icon.save class="w-6" />
+        <x-icons.save class="w-6" />
       </span>
 
       <span
         class="size-10"
         wire:loading
       >
-        <x-icon.animate-spin />
+        <x-icons.animate-spin />
       </span>
     </button>
   </div>

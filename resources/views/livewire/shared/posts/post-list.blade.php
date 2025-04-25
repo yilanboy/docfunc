@@ -103,7 +103,7 @@
       {{-- Tags --}}
       @if ($post->tags_count > 0)
         <div class="z-20 flex w-fit flex-wrap items-center text-base">
-          <x-icon.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
+          <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
 
           @foreach ($post->tags as $tag)
             <x-tag :href="route('tags.show', ['id' => $tag->id])">
@@ -125,7 +125,7 @@
 
         {{-- Author --}}
         <div class="flex items-center">
-          <x-icon.person class="w-4" />
+          <x-icons.person class="w-4" />
           <span class="ml-2">{{ $post->user->name }}</span>
         </div>
 
@@ -133,7 +133,7 @@
 
         {{-- Published time --}}
         <div class="flex items-center">
-          <x-icon.clock class="w-4" />
+          <x-icons.clock class="w-4" />
           <time
             class="ml-2"
             datetime="{{ $post->created_at->toDateString() }}"
@@ -144,7 +144,7 @@
 
         {{-- Comments --}}
         <div class="flex items-center">
-          <x-icon.chat-square-text class="w-4" />
+          <x-icons.chat-square-text class="w-4" />
           <span class="ml-2">{{ $post->comments_count }}</span>
         </div>
       </div>

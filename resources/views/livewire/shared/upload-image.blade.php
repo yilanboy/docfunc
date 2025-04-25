@@ -59,7 +59,7 @@
         type="button"
         x-on:click="removePreviewUrl"
       >
-        <x-icon.x-circle
+        <x-icons.x-circle
           class="size-24 opacity-0 transition-all duration-150 group-hover:text-gray-50 group-hover:opacity-100"
         />
       </button>
@@ -83,7 +83,7 @@
         type="button"
         x-on:click="clearImage"
       >
-        <x-icon.x-circle
+        <x-icons.x-circle
           class="size-24 opacity-0 transition-all duration-150 group-hover:text-gray-50 group-hover:opacity-100"
         />
       </button>
@@ -108,7 +108,7 @@
       >
 
       <div class="flex flex-col items-center justify-center space-y-2 text-center">
-        <x-icon.upload class="size-10" />
+        <x-icons.upload class="size-10" />
 
         <p>預覽圖 (jpg, jpeg or png)</p>
 

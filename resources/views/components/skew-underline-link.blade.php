@@ -14,7 +14,7 @@
 >
   <span class="relative z-20 flex items-center justify-center">
     @if (empty($icon))
-      <x-icon.home class="w-5" />
+      <x-icons.home class="w-5" />
     @else
       <div class="w-5">{!! $icon !!}</div>
     @endif

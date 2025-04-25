@@ -75,7 +75,7 @@
 
             <span class="dark:text-gray-50">{{ $comment['user_name'] }}</span>
           @else
-            <x-icon.question-circle-fill class="size-10 text-gray-300 dark:text-gray-500" />
+            <x-icons.question-circle-fill class="size-10 text-gray-300 dark:text-gray-500" />
 
             <span class="dark:text-gray-50">訪客</span>
           @endif
@@ -105,7 +105,7 @@
                 type="button"
                 x-on:click="openEditCommentModal"
               >
-                <x-icon.pencil class="w-4" />
+                <x-icons.pencil class="w-4" />
                 <span class="ml-2">編輯</span>
               </button>
             @endif
@@ -117,7 +117,7 @@
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
               >
-                <x-icon.trash class="w-4" />
+                <x-icons.trash class="w-4" />
                 <span class="ml-2">刪除</span>
               </button>
             @endif
@@ -131,7 +131,7 @@
               type="button"
               x-on:click="openCreateCommentModal"
             >
-              <x-icon.reply-fill class="w-4" />
+              <x-icons.reply-fill class="w-4" />
               <span class="ml-2">回覆</span>
             </button>
           @endif

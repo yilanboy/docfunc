@@ -37,7 +37,7 @@
         wire:navigate
       >
         <div class="relative z-0 flex items-center text-gray-200 transition duration-700 ease-in-out">
-          <x-icon.pencil class="w-5" />
+          <x-icons.pencil class="w-5" />
           <span class="ml-2">新增文章</span>
         </div>
       </a>
@@ -48,7 +48,7 @@
   @if ($popularTags->count())
     <x-card class="dark:text-gray-50">
       <div class="flex items-center justify-center">
-        <x-icon.tags class="w-5" />
+        <x-icons.tags class="w-5" />
         <span class="ml-2">熱門標籤</span>
       </div>
 
@@ -68,7 +68,7 @@
   @if ($links->count())
     <x-card class="dark:text-gray-50">
       <div class="flex items-center justify-center">
-        <x-icon.file-earmark-code class="w-5" />
+        <x-icons.file-earmark-code class="w-5" />
         <span class="ml-2">學習資源推薦</span>
       </div>
 
@@ -83,7 +83,7 @@
             rel="nofollow noopener noreferrer"
           >
             <span class="mr-2 flex h-[1lh] items-center">
-              <x-icon.link-45deg class="w-5" />
+              <x-icons.link-45deg class="w-5" />
             </span>
             {{ $link->title }}
           </a>
@@ -99,7 +99,7 @@
     target="_blank"
     rel="nofollow noopener"
   >
-    <x-icon.rss class="w-5" />
+    <x-icons.rss class="w-5" />
     <span
       class="ml-2"
       x-ref="subscriptionText"

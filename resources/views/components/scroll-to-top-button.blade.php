@@ -8,6 +8,6 @@
   ]) }}
 >
   <span class="m-auto text-3xl font-bold">
-    <x-icon.arrow-up class="w-8" />
+    <x-icons.arrow-up class="w-8" />
   </span>
 </button>

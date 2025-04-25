@@ -5,7 +5,7 @@
       href="{{ route('login') }}"
       wire:navigate
     >
-      <x-icon.arrow-left-circle class="w-6" />
+      <x-icons.arrow-left-circle class="w-6" />
       <span class="ml-2">返回登入</span>
     </a>
   </div>
@@ -14,7 +14,7 @@
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-        <x-icon.question-circle class="w-6" />
+        <x-icons.question-circle class="w-6" />
         <span class="ml-4">忘記密碼</span>
       </div>
 

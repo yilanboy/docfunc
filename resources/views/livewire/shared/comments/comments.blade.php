@@ -36,7 +36,7 @@
       {{-- show comments count --}}
       <div class="flex items-center justify-center gap-6">
         <div class="flex items-center gap-2 dark:text-gray-50">
-          <x-icon.chat-square-text class="size-5" />
+          <x-icons.chat-square-text class="size-5" />
           <span>{{ $commentCounts }} 則留言</span>
         </div>
 
@@ -47,12 +47,12 @@
               type="button"
               x-on:click="openOrderDropdown"
             >
-              <x-icon.animate-spin
+              <x-icons.animate-spin
                 class="size-5"
                 wire:loading
                 wire:target="changeOrder"
               />
-              <x-icon.filter-left
+              <x-icons.filter-left
                 class="size-5"
                 wire:loading.remove
                 wire:target="changeOrder"
@@ -100,7 +100,7 @@
         x-on:click="openCreateCommentModal"
       >
         <div class="relative z-0 flex items-center text-lg text-gray-200 transition duration-500 ease-in-out">
-          <x-icon.chat-dots class="w-5" />
+          <x-icons.chat-dots class="w-5" />
 
           @if (auth()->check())
             <span class="ml-2">新增留言</span>

@@ -75,7 +75,7 @@
         type="button"
         x-on:click="closeToast"
       >
-        <x-icon.x class="size-6" />
+        <x-icons.x class="size-6" />
       </button>
     </div>
   </div>

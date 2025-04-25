@@ -88,7 +88,7 @@
 
                   {{-- post created time --}}
                   <div class="hidden items-center md:flex">
-                    <x-icon.clock class="w-4" />
+                    <x-icons.clock class="w-4" />
                     <time
                       class="ml-2"
                       datetime="{{ $post->created_at->toDateString() }}"
@@ -108,7 +108,7 @@
                     class="hidden hover:text-neutral-500 md:flex md:items-center dark:hover:text-neutral-300"
                     href="{{ $post->link_with_slug }}#comments"
                   >
-                    <x-icon.chat-square-text class="w-4" />
+                    <x-icons.chat-square-text class="w-4" />
                     <span class="ml-2">{{ $post->comments_count }}</span>
                   </a>
 
@@ -117,7 +117,7 @@
                 {{-- post tags --}}
                 @if ($post->tags()->exists())
                   <div class="mt-4 flex flex-wrap items-center text-base">
-                    <x-icon.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
+                    <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
 
                     @foreach ($post->tags as $tag)
                       <x-tag :href="route('tags.show', ['id' => $tag->id])">

@@ -70,7 +70,7 @@
       href="{{ route('root') }}"
       wire:navigate
     >
-      <x-icon.arrow-left-circle class="w-6" />
+      <x-icons.arrow-left-circle class="w-6" />
       <span class="ml-2">返回文章列表</span>
     </a>
   </div>
@@ -80,7 +80,7 @@
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-        <x-icon.door-open class="w-6" />
+        <x-icons.door-open class="w-6" />
         <span class="ml-4">登入</span>
       </div>
 
@@ -152,7 +152,7 @@
             class="mt-6 w-full"
             x-bind:disabled="submitIsDisabled"
           >
-            <x-icon.animate-spin
+            <x-icons.animate-spin
               class="mr-2 size-5 text-gray-50"
               x-cloak
               x-show="submitIsDisabled"
@@ -183,7 +183,7 @@
             type="button"
             x-on:click="loginWithPasskey"
           >
-            <x-icon.fingerprint class="size-5" />
+            <x-icons.fingerprint class="size-5" />
             <span>使用密碼金鑰</span>
           </button>
         </div>

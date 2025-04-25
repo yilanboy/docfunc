@@ -147,7 +147,7 @@
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
-          <x-icon.github class="w-6" />
+          <x-icons.github class="w-6" />
         </a>
         <a
           class="text-2xl text-gray-400 duration-300 hover:text-gray-50"
@@ -156,7 +156,7 @@
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
-          <x-icon.twitter-x class="w-6" />
+          <x-icons.twitter-x class="w-6" />
         </a>
         <a
           class="text-2xl text-gray-400 duration-300 hover:text-gray-50"
@@ -165,7 +165,7 @@
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
-          <x-icon.facebook class="w-6" />
+          <x-icons.facebook class="w-6" />
         </a>
       </div>
     </div>

@@ -20,9 +20,9 @@ enum UserInfoTab: string
     public function iconComponentName(): string
     {
         return match ($this) {
-            self::INFORMATION => 'icon.info-circle',
-            self::POSTS => 'icon.file-earmark-richtext',
-            self::COMMENTS => 'icon.chat-square-text',
+            self::INFORMATION => 'icons.info-circle',
+            self::POSTS => 'icons.file-earmark-richtext',
+            self::COMMENTS => 'icons.chat-square-text',
         };
     }
 

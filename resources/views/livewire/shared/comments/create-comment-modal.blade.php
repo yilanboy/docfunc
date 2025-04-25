@@ -107,13 +107,13 @@
         type="button"
         x-on:click="closeModal"
       >
-        <x-icon.x class="size-8" />
+        <x-icons.x class="size-8" />
       </button>
     </div>
 
     <div class="flex flex-col gap-5">
       <div class="flex items-center justify-center space-x-2 text-2xl text-gray-900 dark:text-gray-50">
-        <x-icon.chat-dots class="w-8" />
+        <x-icons.chat-dots class="w-8" />
         <span>新增留言</span>
       </div>
 
@@ -171,12 +171,12 @@
           </x-toggle-switch>
 
           <x-button x-bind:disabled="submitIsDisabled">
-            <x-icon.reply-fill
+            <x-icons.reply-fill
               class="mr-2 w-5"
               x-cloak
               x-show="submitIsEnabled"
             />
-            <x-icon.animate-spin
+            <x-icons.animate-spin
               class="mr-2 h-5 w-5 text-gray-50"
               x-cloak
               x-show="submitIsDisabled"

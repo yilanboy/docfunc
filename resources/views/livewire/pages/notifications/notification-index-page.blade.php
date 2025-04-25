@@ -6,7 +6,7 @@
       <div class="flex w-full flex-col items-center justify-center space-y-6 md:w-[700px]">
         {{-- 頁面標題 --}}
         <div class="flex items-center justify-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-          <x-icon.bell class="w-6" />
+          <x-icons.bell class="w-6" />
           <span class="ml-4">我的通知</span>
         </div>
 
@@ -31,7 +31,7 @@
 
               {{-- 通知時間 --}}
               <div class="mt-4 flex items-center text-sm text-gray-400">
-                <x-icon.clock class="w-4" />
+                <x-icons.clock class="w-4" />
                 <span
                   class="ml-2"
                   title="{{ $notification->created_at }}"

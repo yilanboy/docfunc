@@ -83,13 +83,13 @@
         type="button"
         x-on:click="closeModal"
       >
-        <x-icon.x class="size-8" />
+        <x-icons.x class="size-8" />
       </button>
     </div>
 
     <div class="flex flex-col gap-5">
       <div class="flex items-center justify-center space-x-2 text-2xl text-gray-900 dark:text-gray-50">
-        <x-icon.chat-dots class="w-8" />
+        <x-icons.chat-dots class="w-8" />
         <span>編輯留言</span>
       </div>
 
@@ -131,7 +131,7 @@
           </x-toggle-switch>
 
           <x-button>
-            <x-icon.reply-fill class="w-5" />
+            <x-icons.reply-fill class="w-5" />
             <span class="ml-2">更新</span>
           </x-button>
         </div>

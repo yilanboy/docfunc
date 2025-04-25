@@ -38,7 +38,7 @@
     x-on:keydown.window.prevent.ctrl.k="openSearchBar"
     x-on:keydown.window.escape="closeSearchBar"
   >
-    <x-icon.search class="size-4 transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50" />
+    <x-icons.search class="size-4 transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50" />
 
     <span class="transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50">搜尋</span>
 
@@ -105,10 +105,10 @@
               />
 
               <div class="absolute left-3 top-3.5 text-lg text-gray-400 dark:text-gray-50">
-                <x-icon.search class="w-5" />
+                <x-icons.search class="w-5" />
               </div>
 
-              <x-icon.animate-spin
+              <x-icons.animate-spin
                 class="absolute right-3 top-3 h-5 w-5 text-gray-700 dark:text-gray-50"
                 wire:loading
               />
@@ -134,7 +134,7 @@
                           wire:navigate
                         >
                           <span class="mr-2 flex h-[1lh] items-center">
-                            <x-icon.caret-right class="w-4" />
+                            <x-icons.caret-right class="w-4" />
                           </span>
                           {{ $result->title }}
                         </a>

@@ -89,11 +89,11 @@
         aria-label="Toggle Dark Mode"
         x-on:click="switchTheme"
       >
-        <x-icon.sun
+        <x-icons.sun
           class="absolute inset-x-auto top-3 size-6 text-amber-400 transition-all duration-300 group-hover:text-amber-500 dark:top-full"
         />
 
-        <x-icon.moon-stars
+        <x-icons.moon-stars
           class="absolute inset-x-auto -top-full size-6 text-[#f6f1d5] transition-all duration-300 group-hover:text-[#ddd8bf] dark:top-3"
         />
       </button>
@@ -114,7 +114,7 @@
           href="{{ route('login') }}"
           wire:navigate
         >
-          <x-icon.door-open class="w-5" />
+          <x-icons.door-open class="w-5" />
           <span class="ml-2">登入</span>
         </a>
       @endguest
@@ -128,7 +128,7 @@
             aria-label="Notifications"
             wire:navigate
           >
-            <x-icon.bell class="size-6" />
+            <x-icons.bell class="size-6" />
           </a>
 
           @if (auth()->user()->unreadNotifications->count() > 0)
@@ -167,17 +167,17 @@
             x-transition.origin.top.right=""
           >
             <x-dropdown.link href="{{ route('posts.create') }}">
-              <x-icon.pencil class="w-4" />
+              <x-icons.pencil class="w-4" />
               <span class="ml-2">新增文章</span>
             </x-dropdown.link>
 
             <x-dropdown.link href="{{ route('users.show', ['id' => auth()->id()]) }}">
-              <x-icon.info-circle class="w-4" />
+              <x-icons.info-circle class="w-4" />
               <span class="ml-2">個人資訊</span>
             </x-dropdown.link>
 
             <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
-              <x-icon.geer-fill class="w-4" />
+              <x-icons.geer-fill class="w-4" />
               <span class="ml-2">設定</span>
             </x-dropdown.link>
 
@@ -185,7 +185,7 @@
               wire:confirm="你確定要登出嗎？"
               wire:click="logout"
             >
-              <x-icon.box-arrow-left class="w-4" />
+              <x-icons.box-arrow-left class="w-4" />
               <span class="ml-2">登出</span>
             </x-dropdown.button>
           </x-dropdown.menu>
@@ -216,7 +216,7 @@
               x-cloak
               x-show="dropdownMenuIsClose"
             >
-              <x-icon.list class="w-7" />
+              <x-icons.list class="w-7" />
             </div>
             {{-- open category dropdown menu icon --}}
             <div
@@ -224,7 +224,7 @@
               x-cloak
               x-show="dropdownMenuIsOpen"
             >
-              <x-icon.x class="w-7" />
+              <x-icons.x class="w-7" />
             </div>
           </button>
         </div>
@@ -247,9 +247,9 @@
             aria-label="Toggle Dark Mode"
             x-on:click="switchTheme"
           >
-            <x-icon.sun class="w-5 text-amber-400 hover:text-amber-500 dark:hidden" />
+            <x-icons.sun class="w-5 text-amber-400 hover:text-amber-500 dark:hidden" />
 
-            <x-icon.moon-stars class="hidden w-5 text-[#f6f1d5] hover:text-[#ddd8bf] dark:block" />
+            <x-icons.moon-stars class="hidden w-5 text-[#f6f1d5] hover:text-[#ddd8bf] dark:block" />
           </button>
 
           @guest
@@ -280,7 +280,7 @@
                 href="{{ route('notifications.index') }}"
                 wire:navigate
               >
-                <x-icon.bell class="w-5" />
+                <x-icons.bell class="w-5" />
               </a>
 
               @if (auth()->user()->unreadNotifications->count() > 0)
@@ -321,17 +321,17 @@
                 x-transition.origin.top.right=""
               >
                 <x-dropdown.link href="{{ route('posts.create') }}">
-                  <x-icon.pencil class="w-4" />
+                  <x-icons.pencil class="w-4" />
                   <span class="ml-2">新增文章</span>
                 </x-dropdown.link>
 
                 <x-dropdown.link href="{{ route('users.show', ['id' => auth()->id()]) }}">
-                  <x-icon.info-circle class="w-4" />
+                  <x-icons.info-circle class="w-4" />
                   <span class="ml-2">個人資訊</span>
                 </x-dropdown.link>
 
                 <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
-                  <x-icon.geer-fill class="w-4" />
+                  <x-icons.geer-fill class="w-4" />
                   <span class="ml-2">設定</span>
                 </x-dropdown.link>
 
@@ -339,7 +339,7 @@
                   wire:confirm="你確定要登出嗎？"
                   wire:click="logout"
                 >
-                  <x-icon.box-arrow-left class="w-4" />
+                  <x-icons.box-arrow-left class="w-4" />
                   <span class="ml-2">登出</span>
                 </x-dropdown.button>
               </x-dropdown.menu>
@@ -372,7 +372,7 @@
           ])
           wire:navigate
         >
-          <x-icon.home class="w-4" />
+          <x-icons.home class="w-4" />
           <span class="ml-2">全部文章</span>
         </a>
 

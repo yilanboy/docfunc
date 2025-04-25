@@ -31,7 +31,7 @@
       href="{{ route('login') }}"
       wire:navigate
     >
-      <x-icon.arrow-left-circle class="w-6" />
+      <x-icons.arrow-left-circle class="w-6" />
       <span class="ml-2">返回登入</span>
     </a>
   </div>
@@ -40,7 +40,7 @@
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
-        <x-icon.person-plus class="w-6" />
+        <x-icons.person-plus class="w-6" />
         <span class="ml-4">註冊</span>
       </div>
 
@@ -114,7 +114,7 @@
               class="ml-4"
               x-bind:disabled="submitIsDisabled"
             >
-              <x-icon.animate-spin
+              <x-icons.animate-spin
                 class="mr-2 h-5 w-5 text-gray-50"
                 x-cloak
                 x-show="submitIsDisabled"

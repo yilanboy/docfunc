@@ -10,7 +10,7 @@
       role="button"
       wire:navigate
     >
-      <x-icon.home class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125" />
+      <x-icons.home class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125" />
     </a>
   </x-tooltip>
 
@@ -27,7 +27,7 @@
       data-url="{{ request()->fullUrl() }}"
       type="button"
     >
-      <x-icon.facebook
+      <x-icons.facebook
         class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125" />
     </button>
   </x-tooltip>
@@ -46,8 +46,9 @@
       data-url="{{ request()->fullUrl() }}"
       type="button"
     >
-      <x-icon.twitter-x
-        class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125" />
+      <x-icons.twitter-x
+        class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125"
+      />
     </button>
   </x-tooltip>
 
@@ -62,7 +63,7 @@
       data-clipboard="{{ urldecode(request()->fullUrl()) }}"
       type="button"
     >
-      <x-icon.link-45deg
+      <x-icons.link-45deg
         class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125"
       />
     </button>
@@ -82,7 +83,7 @@
         role="button"
         wire:navigate
       >
-        <x-icon.pencil-square
+        <x-icons.pencil-square
           class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125"
         />
       </a>
@@ -100,7 +101,7 @@
         wire:confirm="你確定要刪除文章嗎？（7 天之內可以還原）"
         wire:click="destroy({{ $postId }})"
       >
-        <x-icon.trash
+        <x-icons.trash
           class="w-6 text-2xl transition duration-150 ease-in group-hover:rotate-12 group-hover:scale-125" />
       </button>
     </x-tooltip>

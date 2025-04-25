@@ -7,7 +7,7 @@
       wire:current="bg-gray-200 dark:bg-gray-700"
       wire:navigate
     >
-      <x-icon.person-lines class="w-5" />
+      <x-icons.person-lines class="w-5" />
       <span class="ml-2">編輯個人資料</span>
     </a>
 
@@ -17,7 +17,7 @@
       wire:current="bg-gray-200 dark:bg-gray-700"
       wire:navigate
     >
-      <x-icon.file-earmark-lock class="w-5" />
+      <x-icons.file-earmark-lock class="w-5" />
       <span class="ml-2">修改密碼</span>
     </a>
 
@@ -27,7 +27,7 @@
       wire:current="bg-gray-200 dark:bg-gray-700"
       wire:navigate
     >
-      <x-icon.fingerprint class="w-5" />
+      <x-icons.fingerprint class="w-5" />
       <span class="ml-2">密碼金鑰</span>
     </a>
 
@@ -37,7 +37,7 @@
       wire:current="bg-gray-200 dark:bg-gray-700"
       wire:navigate
     >
-      <x-icon.person-x class="w-5" />
+      <x-icons.person-x class="w-5" />
       <span class="ml-2">刪除帳號</span>
     </a>
   </div>

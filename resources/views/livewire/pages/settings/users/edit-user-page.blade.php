@@ -71,7 +71,7 @@
           <div class="flex items-center justify-end">
             {{-- 儲存按鈕 --}}
             <x-button>
-              <x-icon.save class="w-5" />
+              <x-icons.save class="w-5" />
               <span class="ml-2">儲存</span>
             </x-button>
           </div>

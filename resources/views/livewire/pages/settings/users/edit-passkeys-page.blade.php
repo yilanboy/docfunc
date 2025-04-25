@@ -64,11 +64,9 @@
         {{-- 驗證錯誤訊息 --}}
         <x-auth-validation-errors :errors="$errors" />
 
-        <div
-          class="relative ml-4 rounded-md border-none bg-emerald-300/20 px-4 py-2 text-emerald-500 before:absolute before:-left-4 before:top-0 before:h-full before:w-1.5 before:rounded-sm before:bg-emerald-500 before:contain-none dark:text-emerald-400 dark:before:bg-emerald-400"
-        >
+        <x-quotes.success>
           註冊密碼金鑰後，將無法使用密碼進行登入
-        </div>
+        </x-quotes.success>
 
         <form
           id="passkey"
@@ -90,9 +88,9 @@
             <li class="flex justify-between gap-x-6 py-5">
               <div class="flex min-w-0 gap-x-4">
                 @if (in_array('usb', $passkey->data['transports']))
-                  <x-icon.usb-drive-fill class="size-12 flex-none dark:text-gray-50" />
+                  <x-icons.usb-drive-fill class="size-12 flex-none dark:text-gray-50" />
                 @else
-                  <x-icon.fingerprint class="size-12 flex-none dark:text-gray-50" />
+                  <x-icons.fingerprint class="size-12 flex-none dark:text-gray-50" />
                 @endif
                 <div class="min-w-0 flex-auto">
                   <p class="text-sm/6 font-semibold text-gray-900 dark:text-gray-50">
@@ -106,7 +104,7 @@
               <div class="flex shrink-0 items-center gap-x-6">
                 <div class="hidden sm:flex sm:flex-col sm:items-end">
                   <p class="text-sm/6 text-gray-900 dark:text-gray-50">
-                    {{ implode(' / ', $passkey->data['transports']) }}
+                    {{ strtoupper(implode(' / ', $passkey->data['transports'])) }}
                   </p>
                   <p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">
                     @if ($passkey->last_used_at)
@@ -126,7 +124,7 @@
                   wire:confirm="你確定要刪除這個密碼金鑰嗎？"
                 >
                   <span class="sr-only">開啟編輯選單</span>
-                  <x-icon.x class="size-6" />
+                  <x-icons.x class="size-6" />
                 </button>
 
               </div>
@@ -136,7 +134,7 @@
 
         <div class="flex items-center justify-end">
           <x-button form="passkey">
-            <x-icon.save class="w-5" />
+            <x-icons.save class="w-5" />
             <span class="ml-2">新增密碼金鑰</span>
           </x-button>
         </div>
