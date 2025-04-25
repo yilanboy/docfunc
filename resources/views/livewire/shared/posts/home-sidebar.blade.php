@@ -32,11 +32,11 @@
 
     <div class="mt-8 flex items-center justify-center">
       <a
-        class="before:bg-lividus-600 hover:before:scale-10 dark:bg-lividus-600 group relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-emerald-500 px-4 py-2 [transform:translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:h-8 before:w-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-0 before:rounded-full before:opacity-0 before:transition before:duration-700 before:ease-in-out hover:before:opacity-100 dark:before:bg-emerald-500"
+        class="before:bg-lividus-600 dark:bg-lividus-700 group relative flex w-full items-center justify-center overflow-hidden rounded-lg bg-emerald-600 px-4 py-2 [transform:translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:size-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-0 before:rounded-full before:opacity-0 before:transition before:duration-700 before:ease-in-out hover:before:scale-[10] hover:before:opacity-100 dark:before:bg-emerald-700"
         href="{{ route('posts.create') }}"
         wire:navigate
       >
-        <div class="relative z-0 flex items-center text-gray-200 transition duration-700 ease-in-out">
+        <div class="relative z-0 flex items-center text-gray-200 transition duration-500 ease-in-out">
           <x-icons.pencil class="w-5" />
           <span class="ml-2">新增文章</span>
         </div>

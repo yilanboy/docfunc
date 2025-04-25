@@ -117,7 +117,7 @@
                 {{-- post tags --}}
                 @if ($post->tags()->exists())
                   <div class="mt-4 flex flex-wrap items-center text-base">
-                    <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
+                    <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-200" />
 
                     @foreach ($post->tags as $tag)
                       <x-tag :href="route('tags.show', ['id' => $tag->id])">

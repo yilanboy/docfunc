@@ -103,7 +103,7 @@
       {{-- Tags --}}
       @if ($post->tags_count > 0)
         <div class="z-20 flex w-fit flex-wrap items-center text-base">
-          <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-300" />
+          <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-200" />
 
           @foreach ($post->tags as $tag)
             <x-tag :href="route('tags.show', ['id' => $tag->id])">
