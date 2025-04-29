@@ -61,7 +61,7 @@ export class Modal {
             <!-- Background backdrop, show/hide based on modal state -->
             <div
                 id="${BACKGROUND_BACKDROP_ID}"
-                class="fixed inset-0 bg-gray-500/75 backdrop-blur-md transition-opacity ${HIDE_BACKGROUND_BACKDROP_CLASS_NAME.join(' ')}"
+                class="fixed inset-0 bg-zinc-500/75 backdrop-blur-md transition-opacity ${HIDE_BACKGROUND_BACKDROP_CLASS_NAME.join(' ')}"
             ></div>
 
             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -80,7 +80,7 @@ export class Modal {
                 <button
                     id="${CLOSE_MODAL_BUTTON_ID}"
                     type="button"
-                    class="text-gray-200 transition duration-300 hover:text-gray-50 cursor-pointer"
+                    class="text-zinc-200 transition duration-300 hover:text-zinc-50 cursor-pointer"
                 >
                    ${X_CIRCLE_FILL_ICON_SVG}
                 </button>

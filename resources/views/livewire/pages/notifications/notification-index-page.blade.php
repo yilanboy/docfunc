@@ -5,7 +5,7 @@
 
       <div class="flex w-full flex-col items-center justify-center space-y-6 md:w-[700px]">
         {{-- 頁面標題 --}}
-        <div class="flex items-center justify-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+        <div class="flex items-center justify-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
           <x-icons.bell class="w-6" />
           <span class="ml-4">我的通知</span>
         </div>
@@ -18,19 +18,19 @@
               {{-- 文章標題 --}}
               <div class="mt-2 space-x-2 md:mt-0">
 
-                <span class="dark:text-gray-50">在你的文章中</span>
+                <span class="dark:text-zinc-50">在你的文章中</span>
                 <a
-                  class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+                  class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
                   href="{{ $notification->data['post_link'] }}"
                   wire:navigate
                 >
                   {{ $notification->data['post_title'] }}
                 </a>
-                <span class="dark:text-gray-50">有了新的言</span>
+                <span class="dark:text-zinc-50">有了新的言</span>
               </div>
 
               {{-- 通知時間 --}}
-              <div class="mt-4 flex items-center text-sm text-gray-400">
+              <div class="mt-4 flex items-center text-sm text-zinc-400">
                 <x-icons.clock class="w-4" />
                 <span
                   class="ml-2"
@@ -44,7 +44,7 @@
           </x-card>
 
         @empty
-          <x-card class="flex h-24 w-full items-center justify-center dark:text-gray-50">
+          <x-card class="flex h-24 w-full items-center justify-center dark:text-zinc-50">
             <span>沒有消息通知！</span>
           </x-card>
         @endforelse

@@ -7,7 +7,7 @@
 {{-- prettier-ignore-end --}}
 
 <a
-  class="outline-hidden active:outline-hidden group relative inline-block h-auto w-auto cursor-pointer items-center justify-center rounded-sm px-1 text-lg text-gray-900/80 transition-all duration-300 hover:-rotate-3 dark:text-gray-50"
+  class="outline-hidden active:outline-hidden group relative inline-block h-auto w-auto cursor-pointer items-center justify-center rounded-sm px-1 text-lg text-zinc-900/80 transition-all duration-300 hover:-rotate-3 dark:text-zinc-50"
   href="{{ $link }}"
   {{ $attributes }}
   wire:navigate

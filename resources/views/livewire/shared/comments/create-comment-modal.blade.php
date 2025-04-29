@@ -89,21 +89,21 @@
 >
   {{-- gray background --}}
   <div
-    class="fixed inset-0 bg-gray-500/75 transition-opacity"
+    class="fixed inset-0 bg-zinc-500/75 transition-opacity"
     x-show="modalIsOpen"
     x-transition.opacity
   ></div>
 
   {{--  modal  --}}
   <div
-    class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-gray-50 p-5 transition-all md:max-w-2xl dark:bg-gray-800"
+    class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-zinc-50 p-5 transition-all md:max-w-2xl dark:bg-zinc-800"
     x-show="modalIsOpen"
     x-transition.origin.bottom.duration.300ms
   >
     {{-- close modal button --}}
     <div class="absolute right-5 top-5">
       <button
-        class="cursor-pointer text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+        class="cursor-pointer text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300"
         type="button"
         x-on:click="closeModal"
       >
@@ -112,13 +112,13 @@
     </div>
 
     <div class="flex flex-col gap-5">
-      <div class="flex items-center justify-center space-x-2 text-2xl text-gray-900 dark:text-gray-50">
+      <div class="flex items-center justify-center space-x-2 text-2xl text-zinc-900 dark:text-zinc-50">
         <x-icons.chat-dots class="w-8" />
         <span>新增留言</span>
       </div>
 
       <div
-        class="w-full rounded-lg bg-gray-200/60 px-4 py-2 dark:bg-gray-700/60 dark:text-gray-50"
+        class="w-full rounded-lg bg-zinc-200/60 px-4 py-2 dark:bg-zinc-700/60 dark:text-zinc-50"
         x-cloak
         x-show="showReplyToLabel"
         x-text="replyToLabel"
@@ -133,10 +133,10 @@
         @if ($previewIsEnabled)
           <div class="space-y-2">
             <div class="space-x-4">
-              <span class="font-semibold dark:text-gray-50">
+              <span class="font-semibold dark:text-zinc-50">
                 {{ auth()->check() ? auth()->user()->name : '訪客' }}
               </span>
-              <span class="text-gray-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
+              <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
             </div>
             <div class="rich-text h-80 overflow-auto">
               {!! $this->removeHeadingInHtml($this->convertToHtml($this->form->body)) !!}
@@ -177,7 +177,7 @@
               x-show="submitIsEnabled"
             />
             <x-icons.animate-spin
-              class="mr-2 h-5 w-5 text-gray-50"
+              class="mr-2 h-5 w-5 text-zinc-50"
               x-cloak
               x-show="submitIsDisabled"
             />

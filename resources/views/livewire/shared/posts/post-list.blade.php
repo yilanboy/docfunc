@@ -34,7 +34,7 @@
   {{-- Sort --}}
   <div class="flex w-full text-sm md:flex-row md:justify-between">
     <nav
-      class="relative z-0 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-lg text-gray-500 md:w-fit dark:text-gray-50"
+      class="relative z-0 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-lg text-zinc-500 md:w-fit dark:text-zinc-50"
       wire:ignore
     >
       @foreach (PostOrder::cases() as $postOrder)
@@ -60,13 +60,13 @@
         x-ref="tabMarker"
         x-cloak
       >
-        <div class="h-full w-full rounded-md bg-gray-100 dark:bg-gray-800"></div>
+        <div class="h-full w-full rounded-md bg-zinc-100 dark:bg-zinc-800"></div>
       </div>
     </nav>
 
     {{-- Class badge --}}
     <div
-      class="dark:bg-lividus-700 hidden items-center justify-center rounded-lg bg-emerald-100 px-4 py-2 text-emerald-700 md:flex dark:text-gray-50"
+      class="hidden items-center justify-center rounded-lg bg-zinc-50 px-4 py-2 md:flex dark:bg-zinc-800 dark:text-zinc-50"
     >{{ $badge }}</div>
   </div>
 
@@ -75,7 +75,7 @@
     <x-card class="group relative isolate grid cursor-pointer grid-cols-1 gap-4 overflow-hidden">
       {{-- Category icon in background --}}
       <div
-        class="dark:text-lividus-800 absolute -bottom-16 -right-4 z-0 size-56 rotate-12 text-emerald-200 transition-all duration-300 group-hover:-bottom-4 group-hover:-right-0"
+        class="absolute -bottom-16 -right-4 z-0 size-56 rotate-12 text-zinc-200/60 transition-all duration-300 group-hover:-bottom-4 group-hover:-right-0 dark:text-zinc-700/60"
       >
         {!! $post->category->icon !!}
       </div>
@@ -90,13 +90,13 @@
 
       {{-- Title --}}
       <div class="z-10">
-        <h1 class="group-gradient-underline-grow inline text-xl font-semibold dark:text-gray-50">
+        <h1 class="group-gradient-underline-grow inline text-xl font-semibold dark:text-zinc-50">
           {{ $post->title }}
         </h1>
       </div>
 
       {{-- Excerpt --}}
-      <div class="z-10 text-base leading-relaxed text-gray-500">
+      <div class="z-10 text-base leading-relaxed text-zinc-500">
         {{ $post->excerpt }}
       </div>
 
@@ -152,7 +152,7 @@
 
   @empty
     <x-card
-      class="flex h-36 w-full items-center justify-center transition duration-150 ease-in hover:-translate-x-2 dark:text-gray-50"
+      class="flex h-36 w-full items-center justify-center transition duration-150 ease-in hover:-translate-x-2 dark:text-zinc-50"
     >
       <span>Whoops！此分類底下還沒有文章，趕緊寫一篇吧！</span>
     </x-card>

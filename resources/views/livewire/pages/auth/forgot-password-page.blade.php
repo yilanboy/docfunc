@@ -1,7 +1,7 @@
 <x-layouts.layout-auth>
   <div class="fixed left-5 top-5">
     <a
-      class="flex items-center text-2xl text-gray-400 transition duration-150 ease-in hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-50"
+      class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
       href="{{ route('login') }}"
       wire:navigate
     >
@@ -13,13 +13,13 @@
   <div class="container mx-auto">
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
-      <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+      <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
         <x-icons.question-circle class="w-6" />
         <span class="ml-4">忘記密碼</span>
       </div>
 
       <x-card class="mt-4 w-full space-y-6 overflow-hidden sm:max-w-md">
-        <div class="text-gray-600 dark:text-gray-50">
+        <div class="text-zinc-600 dark:text-zinc-50">
           {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 

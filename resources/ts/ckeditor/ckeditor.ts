@@ -42,7 +42,7 @@ import coreTranslations from 'ckeditor5/translations/zh.js';
 
 import 'ckeditor5/ckeditor5-editor.css';
 // Override the default styles.
-import './custom.css';
+// import './custom.css';
 import { languageSettings } from '../config.js';
 
 class ClassicEditor extends ClassicEditorBase {}

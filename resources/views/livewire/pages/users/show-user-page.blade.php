@@ -44,7 +44,7 @@
         x-data="userShowTabs"
       >
         <div
-          class="relative z-0 mb-6 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-gray-300/40 p-1 text-gray-500 dark:bg-gray-500/40 dark:text-gray-50"
+          class="relative z-0 mb-6 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-zinc-300/40 p-1 text-zinc-500 dark:bg-zinc-500/40 dark:text-zinc-50"
         >
           @foreach (UserInfoTab::cases() as $userInfoTab)
             <button
@@ -69,7 +69,7 @@
             x-ref="tabMarker"
             x-cloak
           >
-            <div class="h-full w-full rounded-[calc(var(--radius-xl)-(--spacing(1)))] bg-gray-50 dark:bg-gray-800">
+            <div class="h-full w-full rounded-[calc(var(--radius-xl)-(--spacing(1)))] bg-zinc-50 dark:bg-zinc-800">
             </div>
           </div>
         </div>

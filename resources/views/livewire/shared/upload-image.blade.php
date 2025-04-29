@@ -55,17 +55,17 @@
       >
 
       <button
-        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50"
+        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-150 hover:bg-zinc-600/50"
         type="button"
         x-on:click="removePreviewUrl"
       >
         <x-icons.x-circle
-          class="size-24 opacity-0 transition-all duration-150 group-hover:text-gray-50 group-hover:opacity-100"
+          class="size-24 opacity-0 transition-all duration-150 group-hover:text-zinc-50 group-hover:opacity-100"
         />
       </button>
 
       <span
-        class="dark:bg-lividus-50 dark:text-lividus-700 dark:ring-lividus-700/10 absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10"
+        class="absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10 dark:bg-gray-50 dark:text-gray-700 dark:ring-gray-700/10"
       >預覽圖</span>
     </div>
   @elseif ($errors->isEmpty() && !is_null($image))
@@ -79,17 +79,17 @@
       >
 
       <button
-        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-gray-600/50"
+        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-lg transition-all duration-150 hover:bg-zinc-600/50"
         type="button"
         x-on:click="clearImage"
       >
         <x-icons.x-circle
-          class="size-24 opacity-0 transition-all duration-150 group-hover:text-gray-50 group-hover:opacity-100"
+          class="size-24 opacity-0 transition-all duration-150 group-hover:text-zinc-50 group-hover:opacity-100"
         />
       </button>
 
       <span
-        class="dark:bg-lividus-50 dark:text-lividus-700 dark:ring-lividus-700/10 absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10"
+        class="absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10 dark:bg-gray-50 dark:text-gray-700 dark:ring-gray-700/10"
       >預覽圖</span>
     </div>
   @else

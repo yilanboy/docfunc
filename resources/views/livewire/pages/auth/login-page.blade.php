@@ -66,7 +66,7 @@
 <x-layouts.layout-auth x-data="login">
   <div class="fixed left-5 top-5">
     <a
-      class="flex items-center text-2xl text-gray-400 transition duration-150 ease-in hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-50"
+      class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
       href="{{ route('root') }}"
       wire:navigate
     >
@@ -79,7 +79,7 @@
 
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
-      <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+      <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
         <x-icons.door-open class="w-6" />
         <span class="ml-4">登入</span>
       </div>
@@ -139,7 +139,7 @@
 
             @if (Route::has('password.request'))
               <a
-                class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+                class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
                 href="{{ route('password.request') }}"
                 wire:navigate
               >
@@ -153,7 +153,7 @@
             x-bind:disabled="submitIsDisabled"
           >
             <x-icons.animate-spin
-              class="mr-2 size-5 text-gray-50"
+              class="mr-2 size-5 text-zinc-50"
               x-cloak
               x-show="submitIsDisabled"
             />
@@ -170,16 +170,16 @@
             class="absolute inset-0 flex items-center"
             aria-hidden="true"
           >
-            <div class="w-full border-t border-gray-200 dark:border-gray-500"></div>
+            <div class="w-full border-t border-zinc-200 dark:border-zinc-500"></div>
           </div>
           <div class="relative flex justify-center text-base font-medium">
-            <span class="bg-gray-50 px-6 text-gray-900 dark:bg-gray-800 dark:text-gray-50">或者</span>
+            <span class="bg-zinc-50 px-6 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50">或者</span>
           </div>
         </div>
 
         <div class="mt-6">
           <button
-            class="shadow-xs flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-gray-50 px-4 py-2 text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:ring-transparent active:bg-gray-50 dark:bg-gray-800 dark:text-gray-50 dark:ring-gray-700 dark:hover:bg-gray-700 dark:active:bg-gray-800"
+            class="shadow-xs flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl bg-zinc-50 px-4 py-2 text-zinc-900 ring-1 ring-inset ring-zinc-300 hover:bg-zinc-100 focus-visible:ring-transparent active:bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-50 dark:ring-zinc-700 dark:hover:bg-zinc-700 dark:active:bg-zinc-800"
             type="button"
             x-on:click="loginWithPasskey"
           >

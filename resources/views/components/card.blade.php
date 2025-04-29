@@ -1,3 +1,3 @@
-<div {{ $attributes->merge(['class' => 'rounded-xl bg-gray-50 p-4 dark:bg-gray-800']) }}>
+<div {{ $attributes->merge(['class' => 'rounded-xl bg-zinc-50 p-4 dark:bg-zinc-800']) }}>
   {{ $slot }}
 </div>

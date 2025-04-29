@@ -39,7 +39,7 @@
   {{-- prettier-ignore-end --}}
 </head>
 
-<body class="font-noto-sans overscroll-y-none bg-gray-200 text-lg text-gray-900 antialiased dark:bg-gray-900">
+<body class="font-noto-sans overscroll-y-none bg-zinc-200 text-lg text-zinc-900 antialiased dark:bg-zinc-900">
   {{-- Set theme --}}
   <script>
     if (

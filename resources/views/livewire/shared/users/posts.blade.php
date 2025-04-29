@@ -29,7 +29,7 @@
     <x-card class="relative w-full text-lg">
       <div class="relative mb-6 flex justify-end">
         <button
-          class="focus:outline-hidden inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-lg font-medium transition-colors hover:bg-neutral-100 focus:bg-white focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 active:bg-white disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-600 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800 dark:active:bg-gray-600"
+          class="focus:outline-hidden inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2 text-lg font-medium transition-colors hover:bg-neutral-100 focus:bg-white focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 active:bg-white disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700 dark:focus:bg-zinc-600 dark:focus:ring-zinc-600 dark:focus:ring-offset-zinc-800 dark:active:bg-zinc-600"
           type="button"
           x-on:click="toggleDropdown"
           x-text="showCurrentYearText"
@@ -59,7 +59,7 @@
 
       @foreach ($this->postsGroupByYear as $year => $posts)
         <div
-          class="rounded-md border border-gray-200 bg-gray-50 duration-200 dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-md border border-zinc-200 bg-zinc-50 duration-200 dark:border-zinc-700 dark:bg-zinc-800"
           data-year="{{ $year }}"
           x-cloak
           x-show="showPostsByYear"
@@ -76,7 +76,7 @@
       @endforeach
     </x-card>
   @else
-    <x-card class="flex h-32 items-center justify-center text-gray-400 dark:text-gray-600">
+    <x-card class="flex h-32 items-center justify-center text-zinc-400 dark:text-zinc-600">
       <x-icons.exclamation-circle class="w-6" />
       <span class="ml-2">目前還沒有發佈任何文章喔！</span>
     </x-card>

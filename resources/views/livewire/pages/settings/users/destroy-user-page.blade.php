@@ -5,8 +5,8 @@
 
       <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
         <div class="space-y-4">
-          <h1 class="w-full text-center text-2xl dark:text-gray-50">刪除帳號</h1>
-          <hr class="h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+          <h1 class="w-full text-center text-2xl dark:text-zinc-50">刪除帳號</h1>
+          <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
         </div>
 
         <x-quotes.danger class="flex">
@@ -16,14 +16,14 @@
 
         {{-- 說明 --}}
         <div class="flex flex-col items-start justify-center">
-          <span class="dark:text-gray-50">很遺憾您要離開...</span>
-          <span class="dark:text-gray-50">如果您確定要刪除帳號，請點選下方的按鈕並收取信件</span>
+          <span class="dark:text-zinc-50">很遺憾您要離開...</span>
+          <span class="dark:text-zinc-50">如果您確定要刪除帳號，請點選下方的按鈕並收取信件</span>
         </div>
 
         {{-- 寄出刪除帳號信件 --}}
         <div class="w-full">
           <button
-            class="focus:outline-hidden focus:ring-3 inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 uppercase tracking-widest text-gray-50 ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 active:bg-red-900 disabled:opacity-25"
+            class="focus:outline-hidden focus:ring-3 inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 uppercase tracking-widest text-zinc-50 ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 active:bg-red-900 disabled:opacity-25"
             type="button"
             wire:confirm="您確定要寄出刪除帳號信件嗎？"
             wire:click="sendDestroyEmail({{ $user->id }})"

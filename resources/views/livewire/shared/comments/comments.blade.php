@@ -35,7 +35,7 @@
     <div class="flex justify-between">
       {{-- show comments count --}}
       <div class="flex items-center justify-center gap-6">
-        <div class="flex items-center gap-2 dark:text-gray-50">
+        <div class="flex items-center gap-2 dark:text-zinc-50">
           <x-icons.chat-square-text class="size-5" />
           <span>{{ $commentCounts }} 則留言</span>
         </div>
@@ -43,7 +43,7 @@
         <div class="relative inline-block text-left">
           <div>
             <button
-              class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-gray-900 dark:text-gray-50"
+              class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-zinc-900 dark:text-zinc-50"
               type="button"
               x-on:click="openOrderDropdown"
             >
@@ -62,7 +62,7 @@
           </div>
 
           <div
-            class="focus:outline-hidden absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-50 shadow-lg ring-1 ring-black/5 dark:bg-gray-800 dark:ring-white/20"
+            class="focus:outline-hidden absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-zinc-50 shadow-lg ring-1 ring-black/5 dark:bg-zinc-800 dark:ring-white/20"
             x-show="orderDropdownIsOpen"
             x-transition:enter="transition ease-out duration-100"
             x-transition:enter-start="transform opacity-0 scale-95"
@@ -79,9 +79,9 @@
                   type="button"
                   @class([
                       'flex w-full justify-start px-4 py-2 cursor-pointer',
-                      'bg-gray-200 text-gray-900 outline-hidden dark:bg-gray-600 dark:text-gray-50' =>
+                      'bg-zinc-200 text-zinc-900 outline-hidden dark:bg-zinc-600 dark:text-zinc-50' =>
                           $order === $commentOrder,
-                      'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700' =>
+                      'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-700' =>
                           $order !== $commentOrder,
                   ])
                   x-on:click="changeOrder"
@@ -99,7 +99,7 @@
         {{-- the comment group name should be full name --}}
         x-on:click="openCreateCommentModal"
       >
-        <div class="relative z-0 flex items-center text-lg text-gray-200 transition duration-500 ease-in-out">
+        <div class="relative z-0 flex items-center text-lg text-zinc-200 transition duration-500 ease-in-out">
           <x-icons.chat-dots class="w-5" />
 
           @if (auth()->check())

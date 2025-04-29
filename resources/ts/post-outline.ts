@@ -20,8 +20,8 @@ function createPostOutlineLinks(
     let postOutlineInnerHtml: string = '';
 
     postOutlineInnerHtml += `
-        <div class="mb-4 flex items-center justify-center dark:text-gray-50">目錄</div>
-        <hr class="mb-1 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+        <div class="mb-4 flex items-center justify-center dark:text-zinc-50">目錄</div>
+        <hr class="mb-1 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
     `;
 
     headings.forEach((heading: HTMLHeadingElement, index: number): void => {
@@ -31,7 +31,7 @@ function createPostOutlineLinks(
             <a
                 href="#${heading.id}"
                 id="${heading.id}-link"
-                class="mb-1 flex rounded-sm p-1 text-sm text-gray-500 transition duration-150 hover:bg-gray-300 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                class="mb-1 flex rounded-sm p-1 text-sm text-zinc-500 transition duration-150 hover:bg-zinc-300 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-200"
             >
                 <span class="flex items-center justify-center">⏵</span>
                 <span class="ml-2">${heading.textContent}</span>
@@ -88,7 +88,7 @@ function showWhichSectionIAmIn(
 
     const clearHighlighting = () => {
         outlineLinks.forEach((link) => {
-            link.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+            link.classList.remove('bg-zinc-300', 'dark:bg-zinc-600');
         });
     };
 
@@ -111,7 +111,7 @@ function showWhichSectionIAmIn(
                 const outlineLink = document.getElementById(
                     `${currentKey}-link`,
                 );
-                outlineLink?.classList.add('bg-gray-300', 'dark:bg-gray-600');
+                outlineLink?.classList.add('bg-zinc-300', 'dark:bg-zinc-600');
                 break;
             }
         }

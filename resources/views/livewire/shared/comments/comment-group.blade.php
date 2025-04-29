@@ -73,20 +73,20 @@
               >
             </a>
 
-            <span class="dark:text-gray-50">{{ $comment['user_name'] }}</span>
+            <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
           @else
-            <x-icons.question-circle-fill class="size-10 text-gray-300 dark:text-gray-500" />
+            <x-icons.question-circle-fill class="size-10 text-zinc-300 dark:text-zinc-500" />
 
-            <span class="dark:text-gray-50">訪客</span>
+            <span class="dark:text-zinc-50">訪客</span>
           @endif
 
           <time
-            class="hidden text-gray-400 md:block"
+            class="hidden text-zinc-400 md:block"
             datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
           >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
 
           @if ($comment['created_at'] !== $comment['updated_at'])
-            <span class="text-gray-400">(已編輯)</span>
+            <span class="text-zinc-400">(已編輯)</span>
           @endif
         </div>
 
@@ -94,11 +94,11 @@
           {!! $this->removeHeadingInHtml($this->convertToHtml($comment['body'])) !!}
         </div>
 
-        <div class="flex items-center justify-end gap-6 text-base text-gray-400">
+        <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
           @auth
             @if (auth()->id() === $comment['user_id'])
               <button
-                class="flex items-center hover:text-gray-500 dark:hover:text-gray-300"
+                class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 data-comment-group-name="{{ $commentGroupName }}"
                 data-comment-id="{{ $comment['id'] }}"
                 data-comment-body="{{ $comment['body'] }}"
@@ -112,7 +112,7 @@
 
             @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
               <button
-                class="flex items-center hover:text-gray-500 dark:hover:text-gray-300"
+                class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 type="button"
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
@@ -125,7 +125,7 @@
 
           @if ($currentLayer < $maxLayer)
             <button
-              class="flex items-center hover:text-gray-500 dark:hover:text-gray-300"
+              class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
               data-comment-id="{{ $comment['id'] }}"
               data-comment-user-name="{{ is_null($comment['user_name']) ? '訪客' : $comment['user_name'] }}"
               type="button"

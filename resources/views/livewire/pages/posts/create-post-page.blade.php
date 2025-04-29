@@ -120,7 +120,7 @@
       <div class="w-full max-w-3xl p-2 xl:p-0">
         <div class="flex w-full flex-col items-center justify-center space-y-6">
           {{-- title --}}
-          <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+          <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
             <x-icons.pencil class="w-6" />
             <span class="ml-4">新增文章</span>
           </div>
@@ -196,7 +196,7 @@
                   >標籤 (最多 5 個)</label>
 
                   <input
-                    class="tagify-custom-look dark:border-gray-600! border-gray-300! w-full rounded-md bg-white dark:bg-gray-700"
+                    class="tagify-custom-look dark:border-zinc-600! border-zinc-300! w-full rounded-md bg-white dark:bg-zinc-700"
                     id="tags"
                     type="text"
                     placeholder="標籤 (最多 5 個)"
@@ -217,7 +217,7 @@
               <div class="mt-4 flex items-center justify-between xl:hidden">
                 {{-- show characters count --}}
                 <div
-                  class="dark:text-gray-50"
+                  class="dark:text-zinc-50"
                   wire:ignore
                 >
                   <span class="character-counter"></span>

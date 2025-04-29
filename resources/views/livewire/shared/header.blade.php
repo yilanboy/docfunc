@@ -39,7 +39,7 @@
   x-data="header"
 >
   <div
-    class="relative hidden h-20 w-full items-center justify-center bg-gray-50 transition-all duration-300 lg:flex dark:bg-gray-800"
+    class="relative hidden h-20 w-full items-center justify-center bg-zinc-50 transition-all duration-300 lg:flex dark:bg-zinc-800"
     id="desktop-header"
   >
     {{-- logo --}}
@@ -53,7 +53,7 @@
         src="{{ asset('images/icon/icon.png') }}"
         alt="logo"
       >
-      <span class="ml-3 font-mono text-2xl font-bold dark:text-gray-50">{{ config('app.name') }}</span>
+      <span class="ml-3 font-mono text-2xl font-bold dark:text-zinc-50">{{ config('app.name') }}</span>
     </a>
 
     <div class="flex space-x-6">
@@ -101,7 +101,7 @@
       @guest
         @if ($showRegisterButton)
           <a
-            class="border-lividus-600 text-lividus-600 hover:bg-lividus-600 flex h-10 items-center justify-center rounded-lg border-2 bg-transparent px-3 transition duration-150 hover:border-transparent hover:text-gray-50"
+            class="flex h-10 items-center justify-center rounded-lg border-2 border-gray-600 bg-transparent px-3 text-gray-600 transition duration-150 hover:border-transparent hover:bg-gray-600 hover:text-zinc-50"
             href="{{ route('register') }}"
             wire:navigate
           >
@@ -110,7 +110,7 @@
         @endif
 
         <a
-          class="flex h-10 items-center justify-center rounded-lg border-2 border-emerald-600 bg-transparent px-3 text-emerald-600 transition duration-150 hover:border-transparent hover:bg-emerald-600 hover:text-gray-50"
+          class="flex h-10 items-center justify-center rounded-lg border-2 border-emerald-600 bg-transparent px-3 text-emerald-600 transition duration-150 hover:border-transparent hover:bg-emerald-600 hover:text-zinc-50"
           href="{{ route('login') }}"
           wire:navigate
         >
@@ -123,7 +123,7 @@
         {{-- notification --}}
         <span class="relative inline-flex rounded-md">
           <a
-            class="flex size-12 items-center justify-center rounded-lg text-xl text-gray-500 transition duration-150 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+            class="flex size-12 items-center justify-center rounded-lg text-xl text-zinc-500 transition duration-150 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
             href="{{ route('notifications.index') }}"
             aria-label="Notifications"
             wire:navigate
@@ -143,7 +143,7 @@
           {{-- headshot --}}
           <div>
             <button
-              class="focus:outline-hidden flex cursor-pointer rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
+              class="focus:outline-hidden flex cursor-pointer rounded-full bg-zinc-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
               id="desktop-user-menu-button"
               type="button"
               x-on:click="toggleProfileMenu"
@@ -195,7 +195,7 @@
   </div>
 
   <div
-    class="bg-gray-50 lg:hidden dark:bg-gray-800"
+    class="bg-zinc-50 lg:hidden dark:bg-zinc-800"
     id="mobile-header"
   >
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -203,7 +203,7 @@
         <div class="absolute inset-y-0 left-0 flex items-center">
           {{-- category dropdown menu toggle --}}
           <button
-            class="inline-flex items-center justify-center rounded-md p-2 text-gray-700"
+            class="inline-flex items-center justify-center rounded-md p-2 text-zinc-700"
             type="button"
             aria-controls="mobile-menu"
             aria-expanded="false"
@@ -212,7 +212,7 @@
             <span class="sr-only">Open main menu</span>
             {{-- close category dropdown menu icon --}}
             <div
-              class="text-3xl text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              class="text-3xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               x-cloak
               x-show="dropdownMenuIsClose"
             >
@@ -220,7 +220,7 @@
             </div>
             {{-- open category dropdown menu icon --}}
             <div
-              class="text-xl text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              class="text-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               x-cloak
               x-show="dropdownMenuIsOpen"
             >
@@ -235,7 +235,7 @@
             src="{{ asset('images/icon/icon.png') }}"
             alt="logo"
           >
-          <span class="ml-3 hidden font-mono text-xl font-bold md:block dark:text-gray-50">
+          <span class="ml-3 hidden font-mono text-xl font-bold md:block dark:text-zinc-50">
             {{ config('app.name') }}
           </span>
         </div>
@@ -255,7 +255,7 @@
           @guest
             @if ($showRegisterButton)
               <a
-                class="border-lividus-400 text-lividus-400 hover:bg-lividus-400 rounded-md border-2 bg-transparent px-4 py-2 hover:border-transparent hover:text-gray-50"
+                class="rounded-md border-2 border-gray-400 bg-transparent px-4 py-2 text-gray-400 hover:border-transparent hover:bg-gray-400 hover:text-zinc-50"
                 href="{{ route('register') }}"
                 wire:navigate
               >
@@ -264,7 +264,7 @@
             @endif
 
             <a
-              class="rounded-md border-2 border-emerald-600 bg-transparent px-4 py-2 text-emerald-600 hover:border-transparent hover:bg-emerald-600 hover:text-gray-50"
+              class="rounded-md border-2 border-emerald-600 bg-transparent px-4 py-2 text-emerald-600 hover:border-transparent hover:bg-emerald-600 hover:text-zinc-50"
               href="{{ route('login') }}"
               wire:navigate
             >
@@ -276,7 +276,7 @@
             {{-- notification --}}
             <div class="relative inline-flex rounded-md">
               <a
-                class="rounded-full text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                class="rounded-full text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                 href="{{ route('notifications.index') }}"
                 wire:navigate
               >
@@ -295,7 +295,7 @@
               {{-- headshot --}}
               <div>
                 <button
-                  class="focus:outline-hidden flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
+                  class="focus:outline-hidden flex rounded-full bg-zinc-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
                   id="mobile-user-menu-button"
                   type="button"
                   aria-expanded="false"
@@ -367,8 +367,8 @@
           @if ($inIndexPage) aria-current="page" @endif
           @class([
               'flex items-center px-3 py-2 rounded-md font-medium',
-              'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50' => $inIndexPage,
-              'text-gray-500 dark:text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-50' => !$inIndexPage,
+              'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inIndexPage,
+              'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inIndexPage,
           ])
           wire:navigate
         >
@@ -385,8 +385,8 @@
             @if ($inCategoryPage) aria-current="page" @endif
             @class([
                 'block px-3 py-2 rounded-md font-medium flex items-center',
-                'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-50' => $inCategoryPage,
-                'text-gray-500 dark:text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-50' => !$inCategoryPage,
+                'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inCategoryPage,
+                'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inCategoryPage,
             ])
             wire:navigate
           >

@@ -5,8 +5,8 @@
 
       <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
         <div class="space-y-4">
-          <h1 class="w-full text-center text-2xl dark:text-gray-50">編輯個人資料</h1>
-          <hr class="h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+          <h1 class="w-full text-center text-2xl dark:text-zinc-50">編輯個人資料</h1>
+          <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
         </div>
 
         <div class="flex flex-col items-center justify-center gap-4">
@@ -17,10 +17,10 @@
             alt="{{ $name }}"
           >
 
-          <div class="flex dark:text-gray-50">
+          <div class="flex dark:text-zinc-50">
             <span class="mr-2">個人圖像由</span>
             <a
-              class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+              class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
               href="https://zh-tw.gravatar.com/"
               target="_blank"
               rel="nofollow noopener noreferrer"

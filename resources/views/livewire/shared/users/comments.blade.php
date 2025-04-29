@@ -42,14 +42,14 @@
       class="group relative"
       wire:key="comment-{{ $comment->id }}"
     >
-      <div class="mask-b-from-50% max-h-64 overflow-hidden">
-        <a
-          class="absolute right-0 top-0 z-20 block h-full w-full bg-transparent"
-          href="{{ $comment->post->link_with_slug }}#comments"
-          wire:navigate
-        ></a>
+      <a
+        class="absolute right-0 top-0 z-10 block h-full w-full bg-transparent"
+        href="{{ $comment->post->link_with_slug }}#comments"
+        wire:navigate
+      ></a>
 
-        <span class="group-gradient-underline-grow text-xl dark:text-gray-50">
+      <div class="mask-b-from-50% max-h-64 overflow-hidden">
+        <span class="group-gradient-underline-grow text-xl dark:text-zinc-50">
           {{ $comment->post->title }}
         </span>
 
@@ -60,7 +60,7 @@
       </div>
 
       <div
-        class="dark:bg-lividus-600 absolute bottom-3 right-3 z-10 flex items-center rounded-lg bg-emerald-500 px-2 py-1 text-sm text-gray-50"
+        class="absolute bottom-3 right-3 flex items-center rounded-lg bg-zinc-200/60 px-2 py-1 text-sm text-zinc-500 dark:bg-zinc-700/60 dark:text-zinc-50"
       >
         <x-icons.clock class="w-4" />
         <time
@@ -70,7 +70,7 @@
       </div>
     </x-dashed-card>
   @empty
-    <x-card class="flex h-32 items-center justify-center text-gray-400 dark:text-gray-600">
+    <x-card class="flex h-32 items-center justify-center text-zinc-400 dark:text-zinc-600">
       <x-icons.exclamation-circle class="w-6" />
       <span class="ml-2">找篇文章留言吧！</span>
     </x-card>

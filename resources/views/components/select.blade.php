@@ -6,13 +6,13 @@
 
   <div class="grid grid-cols-1">
     <select
-      class="dark:focus:outline-lividus-500 col-start-1 row-start-1 h-12 w-full appearance-none rounded-md bg-white py-2 pl-4 pr-8 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-500 dark:bg-gray-700 dark:text-gray-50 dark:outline-gray-600"
+      class="dark:focus:outline-lividus-500 col-start-1 row-start-1 h-12 w-full appearance-none rounded-md bg-white py-2 pl-4 pr-8 text-lg text-zinc-900 outline-1 -outline-offset-1 outline-zinc-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-500 dark:bg-zinc-700 dark:text-zinc-50 dark:outline-zinc-600"
       {{ $attributes }}
     >
       {{ $slot }}
     </select>
     <svg
-      class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-50"
+      class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-zinc-500 sm:size-4 dark:text-zinc-50"
       data-slot="icon"
       aria-hidden="true"
       viewBox="0 0 16 16"

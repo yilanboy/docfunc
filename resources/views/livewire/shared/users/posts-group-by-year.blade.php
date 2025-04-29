@@ -2,18 +2,18 @@
   {{-- posts list --}}
   @foreach ($posts as $post)
     <div
-      class="group flex flex-col justify-between rounded-sm px-2 py-2 transition duration-100 hover:bg-gray-100 md:flex-row dark:hover:bg-gray-700"
+      class="group flex flex-col justify-between rounded-sm px-2 py-2 transition duration-100 hover:bg-zinc-100 md:flex-row dark:hover:bg-zinc-700"
       {{-- in this list, these post attribue will be change in the loop, so we have to track them down --}}
       wire:key="{{ $post->id . $post->is_private . $post->deleted_at }}"
     >
-      <x-icons.arrow-right class="w-5 dark:text-gray-400" />
+      <x-icons.arrow-right class="w-5 dark:text-zinc-400" />
 
       <div class="ml-2 w-full">
         @if ($post->trashed())
           <span class="text-red-400 line-through">{{ $post->title . ' (已刪除)' }}</span>
         @elseif ($post->is_private)
           <a
-            class="duration-200 ease-out hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-50"
+            class="duration-200 ease-out hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-50"
             href="{{ $post->link_with_slug }}"
             wire:navigate
           >
@@ -21,7 +21,7 @@
           </a>
         @else
           <a
-            class="duration-200 ease-out hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-gray-50"
+            class="duration-200 ease-out hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-50"
             href="{{ $post->link_with_slug }}"
             wire:navigate
           >
@@ -36,7 +36,7 @@
           {{-- restore --}}
           @if ($post->trashed())
             <button
-              class="text-gray-500 duration-200 ease-out hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              class="text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               type="button"
               title="還原文章"
               wire:loading.attr="disabled"
@@ -49,7 +49,7 @@
             {{-- private --}}
             @if ($post->is_private)
               <button
-                class="text-gray-500 duration-200 ease-out hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                class="text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                 type="button"
                 title="公開文章"
                 wire:loading.attr="disabled"
@@ -60,7 +60,7 @@
               </button>
             @else
               <button
-                class="text-gray-500 duration-200 ease-out hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                class="text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                 type="button"
                 title="關閉文章"
                 wire:loading.attr="disabled"
@@ -74,7 +74,7 @@
 
             {{-- edit --}}
             <a
-              class="text-gray-500 duration-200 ease-out hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              class="text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               href="{{ route('posts.edit', ['id' => $post->id]) }}"
               title="編輯文章"
               role="button"

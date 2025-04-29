@@ -27,7 +27,7 @@
 <x-layouts.layout-auth x-data="register">
   <div class="fixed left-5 top-5">
     <a
-      class="flex items-center text-2xl text-gray-400 transition duration-150 ease-in hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-50"
+      class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
       href="{{ route('login') }}"
       wire:navigate
     >
@@ -39,7 +39,7 @@
   <div class="container mx-auto">
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
-      <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+      <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
         <x-icons.person-plus class="w-6" />
         <span class="ml-4">註冊</span>
       </div>
@@ -103,7 +103,7 @@
 
           <div class="mt-6 flex items-center justify-end">
             <a
-              class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+              class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
               href="{{ route('login') }}"
               wire:navigate
             >
@@ -115,7 +115,7 @@
               x-bind:disabled="submitIsDisabled"
             >
               <x-icons.animate-spin
-                class="mr-2 h-5 w-5 text-gray-50"
+                class="mr-2 h-5 w-5 text-zinc-50"
                 x-cloak
                 x-show="submitIsDisabled"
               />

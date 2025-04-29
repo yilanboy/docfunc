@@ -7,10 +7,10 @@
 }
 
 :root.dark {
-    --ck-color-base-background: #374151;
-    --ck-color-engine-placeholder-text: #a1a1aa;
+    --ck-color-base-background: theme('colors.zinc.700');
+    --ck-color-engine-placeholder-text: theme('colors.zinc.50');
 
-    --ck-color-base-border: #4b5563;
+    --ck-color-base-border: theme('colors.zinc.600');
 
     /* Helper variables to avoid duplication in the colors. */
     --ck-custom-background: hsl(270, 1%, 29%);
@@ -62,7 +62,9 @@
 
     /* -- Overrides the default .ck-splitbutton class colors. ----------------------------------- */
 
-    --ck-color-split-button-hover-background: var(--ck-color-button-default-hover-background);
+    --ck-color-split-button-hover-background: var(
+        --ck-color-button-default-hover-background
+    );
     --ck-color-split-button-hover-border: var(--ck-custom-foreground);
 
     /* -- Overrides the default .ck-input class colors. ----------------------------------------- */
@@ -83,7 +85,9 @@
     --ck-color-list-background: var(--ck-custom-background);
     --ck-color-list-button-hover-background: var(--ck-color-base-foreground);
     --ck-color-list-button-on-background: var(--ck-color-base-active);
-    --ck-color-list-button-on-background-focus: var(--ck-color-base-active-focus);
+    --ck-color-list-button-on-background-focus: var(
+        --ck-color-base-active-focus
+    );
     --ck-color-list-button-on-text: var(--ck-color-base-background);
 
     /* -- Overrides the default .ck-balloon-panel class colors. --------------------------------- */

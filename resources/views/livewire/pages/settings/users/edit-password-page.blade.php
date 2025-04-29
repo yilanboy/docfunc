@@ -5,8 +5,8 @@
 
       <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
         <div class="space-y-4">
-          <h1 class="w-full text-center text-2xl dark:text-gray-50">修改密碼</h1>
-          <hr class="h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+          <h1 class="w-full text-center text-2xl dark:text-zinc-50">修改密碼</h1>
+          <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
         </div>
 
         {{-- 驗證錯誤訊息 --}}

@@ -30,7 +30,7 @@
 <search x-data="search">
   {{-- 搜尋按鈕 --}}
   <button
-    class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-gray-200 p-2 text-sm text-gray-500 xl:flex dark:bg-gray-600 dark:text-gray-400"
+    class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-zinc-200 p-2 text-sm text-zinc-500 xl:flex dark:bg-zinc-600 dark:text-zinc-400"
     type="button"
     aria-label="Search"
     x-on:click="openSearchBar"
@@ -38,12 +38,12 @@
     x-on:keydown.window.prevent.ctrl.k="openSearchBar"
     x-on:keydown.window.escape="closeSearchBar"
   >
-    <x-icons.search class="size-4 transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50" />
+    <x-icons.search class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
 
-    <span class="transition duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-50">搜尋</span>
+    <span class="transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50">搜尋</span>
 
     <kbd
-      class="font-noto-sans inline-flex items-center rounded-sm bg-gray-300 px-2 py-1 dark:bg-gray-500 dark:text-gray-200"
+      class="font-noto-sans inline-flex items-center rounded-sm bg-zinc-300 px-2 py-1 dark:bg-zinc-500 dark:text-zinc-200"
       x-ref="searchShortcut"
       wire:ignore
     ></kbd>
@@ -62,7 +62,7 @@
 
       {{-- modal --}}
       <div
-        class="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity"
+        class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity"
         x-show="searchBarIsOpen"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -95,7 +95,7 @@
                 for="searchBox"
               >搜尋</label>
               <input
-                class="outline-hidden focus:ring-3 w-full rounded-xl border border-gray-400 bg-gray-50 px-10 py-2 text-xl placeholder-gray-400 focus:border-indigo-300 focus:ring-indigo-200/50 dark:bg-gray-800 dark:text-gray-50 dark:placeholder-white"
+                class="outline-hidden focus:ring-3 w-full rounded-xl border border-zinc-400 bg-zinc-50 px-10 py-2 text-xl placeholder-zinc-400 focus:border-indigo-300 focus:ring-indigo-200/50 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder-white"
                 id="searchBox"
                 type="text"
                 x-ref="searchBar"
@@ -104,12 +104,12 @@
                 placeholder="搜尋文章"
               />
 
-              <div class="absolute left-3 top-3.5 text-lg text-gray-400 dark:text-gray-50">
+              <div class="absolute left-3 top-3.5 text-lg text-zinc-400 dark:text-zinc-50">
                 <x-icons.search class="w-5" />
               </div>
 
               <x-icons.animate-spin
-                class="absolute right-3 top-3 h-5 w-5 text-gray-700 dark:text-gray-50"
+                class="absolute right-3 top-3 h-5 w-5 text-zinc-700 dark:text-zinc-50"
                 wire:loading
               />
             </div>
@@ -117,19 +117,19 @@
             {{-- 搜尋結果列表 --}}
             @if (strlen($search) >= 2)
               <div
-                class="mt-4 w-full rounded-xl bg-gray-50 p-2 ring-1 ring-black/20 dark:bg-gray-800 dark:text-gray-50"
+                class="mt-4 w-full rounded-xl bg-zinc-50 p-2 ring-1 ring-black/20 dark:bg-zinc-800 dark:text-zinc-50"
                 wire:transition
               >
                 @if ($results->count() > 0)
                   <div class="flex items-center justify-center">搜尋結果</div>
 
-                  <hr class="my-2 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+                  <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
                   <ul>
                     @foreach ($results as $result)
                       <li>
                         <a
-                          class="flex items-start rounded-md p-2 text-left hover:bg-gray-200 dark:text-gray-50 dark:hover:bg-gray-600"
+                          class="flex items-start rounded-md p-2 text-left hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-600"
                           href="{{ $result->link_with_slug }}"
                           wire:navigate
                         >
@@ -147,7 +147,7 @@
                   </div>
                 @endif
 
-                <hr class="my-2 h-0.5 border-0 bg-gray-300 dark:bg-gray-700">
+                <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
                 {{-- Algolia Logo --}}
                 <div class="flex w-full items-center justify-center">

@@ -1,7 +1,7 @@
 <x-layouts.layout-auth>
   <div class="fixed left-5 top-5">
     <a
-      class="flex items-center text-2xl text-gray-400 transition duration-150 ease-in hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-50"
+      class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
       href="{{ route('root') }}"
       wire:navigate
     >
@@ -14,13 +14,13 @@
 
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
-      <div class="flex items-center fill-current text-2xl text-gray-700 dark:text-gray-50">
+      <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
         <x-icons.person-check class="w-6" />
         <span class="ml-4">驗證 Email</span>
       </div>
 
       <x-card class="mt-4 w-full overflow-hidden sm:max-w-md">
-        <div class="mb-4 text-gray-600 dark:text-gray-50">
+        <div class="mb-4 text-zinc-600 dark:text-zinc-50">
           {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
         </div>
 
@@ -40,7 +40,7 @@
           </x-button>
 
           <button
-            class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-50"
+            class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
             type="button"
             wire:click="$dispatch('logout')"
           >
