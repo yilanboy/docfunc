@@ -1,5 +1,5 @@
 @php
-  use App\Enums\UserInfoTab;
+  use App\Enums\UserInfoOptions;
 @endphp
 
 @assets
@@ -43,10 +43,10 @@
         class="w-full max-w-3xl"
         x-data="userShowTabs"
       >
-        <div
-          class="relative z-0 mb-6 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-zinc-300/40 p-1 text-zinc-500 dark:bg-zinc-500/40 dark:text-zinc-50"
+        <nav
+          class="relative z-0 mb-6 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-xl bg-zinc-300/50 p-1 text-zinc-500 dark:bg-zinc-500/30 dark:text-zinc-50"
         >
-          @foreach (UserInfoTab::cases() as $userInfoTab)
+          @foreach (UserInfoOptions::cases() as $userInfoTab)
             <button
               class="relative z-20 inline-flex w-full cursor-pointer items-center justify-center whitespace-nowrap px-4 py-2 text-sm font-medium transition-all"
               id="{{ $userInfoTab->value }}-tab-button"
@@ -72,9 +72,9 @@
             <div class="h-full w-full rounded-[calc(var(--radius-xl)-(--spacing(1)))] bg-zinc-50 dark:bg-zinc-800">
             </div>
           </div>
-        </div>
+        </nav>
 
-        @foreach (UserInfoTab::cases() as $userInfoTab)
+        @foreach (UserInfoOptions::cases() as $userInfoTab)
           <div
             id="{{ $userInfoTab->value }}-content"
             x-cloak

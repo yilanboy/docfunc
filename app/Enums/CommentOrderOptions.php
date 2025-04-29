@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum CommentOrder: string
+use App\Interfaces\OptionsInterface;
+
+enum CommentOrderOptions: string implements OptionsInterface
 {
     case POPULAR = 'popular';
 

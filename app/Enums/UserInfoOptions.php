@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum UserInfoTab: string
+use App\Interfaces\OptionsInterface;
+
+enum UserInfoOptions: string implements OptionsInterface
 {
     case INFORMATION = 'information';
     case POSTS = 'posts';

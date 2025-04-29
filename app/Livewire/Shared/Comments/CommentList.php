@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Shared\Comments;
 
-use App\Enums\CommentOrder;
+use App\Enums\CommentOrderOptions;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
@@ -39,7 +39,7 @@ class CommentList extends Component
     public string $commentListName = 'root-comment-list';
 
     #[Locked]
-    public CommentOrder $order = CommentOrder::LATEST;
+    public CommentOrderOptions $order = CommentOrderOptions::LATEST;
 
     /**
      * Comments list array, the format is like:
@@ -95,13 +95,13 @@ class CommentList extends Component
             // this line must be after select method
             ->withCount('children')
             ->join('users', 'comments.user_id', '=', 'users.id', 'left')
-            ->when($this->order === CommentOrder::LATEST, function (Builder $query) {
+            ->when($this->order === CommentOrderOptions::LATEST, function (Builder $query) {
                 $query->latest('comments.id');
             })
-            ->when($this->order === CommentOrder::OLDEST, function (Builder $query) {
+            ->when($this->order === CommentOrderOptions::OLDEST, function (Builder $query) {
                 $query->oldest('comments.id');
             })
-            ->when($this->order === CommentOrder::POPULAR, function (Builder $query) {
+            ->when($this->order === CommentOrderOptions::POPULAR, function (Builder $query) {
                 $query->orderByDesc('children_count');
             })
             // Don't show new comments, avoid showing duplicate comments,

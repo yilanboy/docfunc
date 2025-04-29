@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Shared\Posts;
 
-use App\Enums\PostOrder;
+use App\Enums\PostOrderOptions;
 use App\Models\Post;
 use Illuminate\View\View;
 use Livewire\Attributes\Url;
@@ -20,9 +20,9 @@ class PostList extends Component
     public string $badge = '全部文章';
 
     #[Url]
-    public string $order = PostOrder::LATEST->value;
+    public string $order = PostOrderOptions::LATEST->value;
 
-    public function changeOrder(PostOrder $newOrder): void
+    public function changeOrder(PostOrderOptions $newOrder): void
     {
         $this->order = $newOrder->value;
 

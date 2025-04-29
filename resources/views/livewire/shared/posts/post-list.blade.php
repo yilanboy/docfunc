@@ -1,5 +1,5 @@
 @php
-  use App\Enums\PostOrder;
+  use App\Enums\PostOrderOptions;
 @endphp
 
 @script
@@ -34,10 +34,10 @@
   {{-- Sort --}}
   <div class="flex w-full text-sm md:flex-row md:justify-between">
     <nav
-      class="relative z-0 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-lg text-zinc-500 md:w-fit dark:text-zinc-50"
+      class="relative z-0 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-lg bg-zinc-300/50 p-1 text-zinc-500 md:w-fit dark:bg-zinc-500/30 dark:text-zinc-50"
       wire:ignore
     >
-      @foreach (PostOrder::cases() as $postOrder)
+      @foreach (PostOrderOptions::cases() as $postOrder)
         <button
           class="relative z-20 inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium"
           id="{{ $postOrder->value }}-tab-button"

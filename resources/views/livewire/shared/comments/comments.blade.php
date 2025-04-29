@@ -23,7 +23,7 @@
 @endscript
 
 @php
-  use App\Enums\CommentOrder;
+  use App\Enums\CommentOrderOptions;
 @endphp
 
 <div
@@ -73,7 +73,7 @@
             x-on:click.outside="closeOrderDropdown"
           >
             <div class="w-full py-1">
-              @foreach (CommentOrder::cases() as $commentOrder)
+              @foreach (CommentOrderOptions::cases() as $commentOrder)
                 <button
                   data-order="{{ $commentOrder->value }}"
                   type="button"

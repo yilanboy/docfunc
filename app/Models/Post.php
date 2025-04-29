@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\PostOrder;
+use App\Enums\PostOrderOptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -76,8 +76,8 @@ class Post extends Model implements Feedable
         $query->withCount('comments')
             ->when($order, function ($query, $order) {
                 return match ($order) {
-                    PostOrder::RECENT->value => $query->orderBy('updated_at', 'desc'),
-                    PostOrder::COMMENT->value => $query->orderBy('comments_count', 'desc'),
+                    PostOrderOptions::RECENT->value => $query->orderBy('updated_at', 'desc'),
+                    PostOrderOptions::COMMENT->value => $query->orderBy('comments_count', 'desc'),
                     default => $query->latest(),
                 };
             });

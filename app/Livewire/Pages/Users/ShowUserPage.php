@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Pages\Users;
 
-use App\Enums\UserInfoTab;
+use App\Enums\UserInfoOptions;
 use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Attributes\Renderless;
@@ -14,7 +14,7 @@ class ShowUserPage extends Component
     public User $user;
 
     #[Url(as: 'tab', keep: true)]
-    public string $tabSelected = UserInfoTab::INFORMATION->value;
+    public string $tabSelected = UserInfoOptions::INFORMATION->value;
 
     public function mount(int $id): void
     {
@@ -22,7 +22,7 @@ class ShowUserPage extends Component
     }
 
     #[Renderless]
-    public function changeTab(UserInfoTab $userInfoTab): void
+    public function changeTab(UserInfoOptions $userInfoTab): void
     {
         $this->tabSelected = $userInfoTab->value;
     }

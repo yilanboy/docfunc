@@ -47,7 +47,7 @@
 @endscript
 
 @php
-  use App\Enums\CommentOrder;
+  use App\Enums\CommentOrderOptions;
 @endphp
 
 <div
@@ -155,7 +155,7 @@
         />
 
         {{-- If this comment has no sub-messages,
-          do not render the next level of sub-comment list to avoid redundant SQL queries. --}}
+                  do not render the next level of sub-comment list to avoid redundant SQL queries. --}}
         @if ($comment['children_count'] > 0)
           <livewire:shared.comments.comment-list
             :post-id="$postId"
@@ -164,7 +164,7 @@
             :current-layer="$currentLayer + 1"
             :parent-id="$comment['id']"
             :comment-list-name="$comment['id'] . '-comment-list'"
-            :order="CommentOrder::OLDEST"
+            :order="CommentOrderOptions::OLDEST"
             :key="$comment['id'] . '-comment-list'"
           />
         @endif

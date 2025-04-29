@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum PostOrder: string
+use App\Interfaces\OptionsInterface;
+
+enum PostOrderOptions: string implements OptionsInterface
 {
     case LATEST = 'latest';
     case RECENT = 'recent';

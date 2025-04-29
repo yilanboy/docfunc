@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\PostOrder;
+use App\Enums\PostOrderOptions;
 use App\Livewire\Shared\Posts\PostList;
 use App\Models\Comment;
 use App\Models\Post;
@@ -67,7 +67,7 @@ describe('home page', function () {
         $tagOneJsonString = Tag::query()
             ->where('id', 1)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
 
         $tagOnePost->tags()->attach(
@@ -291,10 +291,10 @@ describe('home page', function () {
         ]);
 
         livewire(PostList::class)
-            ->set('order', PostOrder::LATEST->value)
+            ->set('order', PostOrderOptions::LATEST->value)
             ->assertSee($latestPost->title)
             ->assertDontSee($latestUpdatedPost->title)
-            ->call('changeOrder', PostOrder::RECENT->value)
+            ->call('changeOrder', PostOrderOptions::RECENT->value)
             ->assertSee($latestUpdatedPost->title)
             ->assertDontSee($latestPost->title);
     });
