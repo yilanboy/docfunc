@@ -2,47 +2,17 @@
   use App\Enums\PostOrderOptions;
 @endphp
 
-@script
-  <script>
-    // Tab can only be 'information', 'posts', 'comments'
-    Alpine.data('postsTabs', () => ({
-      tabSelected: @js($order),
-      tabButtonClicked(tabButton) {
-        this.tabSelected = tabButton.id.replace('-tab-button', '');
-        this.tabRepositionMarker(tabButton);
-      },
-      tabRepositionMarker(tabButton) {
-        this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
-        this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
-        this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
-      },
-      tabContentActive(tabContent) {
-        return this.tabSelected === tabContent.id.replace('-content', '');
-      },
-      init() {
-        let tabSelectedButtons = document.getElementById(this.tabSelected + '-tab-button');
-        this.tabRepositionMarker(tabSelectedButtons);
-      }
-    }));
-  </script>
-@endscript
-
-<div
-  class="space-y-6"
-  x-data="postsTabs"
->
+<div class="space-y-6">
   {{-- Sort --}}
   <div class="flex w-full text-sm md:flex-row md:justify-between">
-    <nav
-      class="relative z-0 inline-grid w-full select-none grid-cols-3 items-center justify-center rounded-lg bg-zinc-300/50 p-1 text-zinc-500 md:w-fit dark:bg-zinc-500/30 dark:text-zinc-50"
+    <x-tabs.nav
+      class="md:w-fit"
       wire:ignore
+      :tab-init="$order"
     >
       @foreach (PostOrderOptions::cases() as $postOrder)
-        <button
-          class="relative z-20 inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium"
-          id="{{ $postOrder->value }}-tab-button"
-          type="button"
-          x-on:click="tabButtonClicked($el)"
+        <x-tabs.button
+          :tab-value="$postOrder->value"
           {{-- Update url query parameter in livewire --}}
           wire:click="changeOrder('{{ $postOrder }}')"
           wire:key="{{ $postOrder->value }}-tab-button"
@@ -52,21 +22,13 @@
             :component="$postOrder->iconComponentName()"
           />
           <span>{{ $postOrder->label() }}</span>
-        </button>
+        </x-tabs.button>
       @endforeach
-
-      <div
-        class="absolute left-0 z-10 h-full w-fit duration-300 ease-out"
-        x-ref="tabMarker"
-        x-cloak
-      >
-        <div class="h-full w-full rounded-md bg-zinc-100 dark:bg-zinc-800"></div>
-      </div>
-    </nav>
+    </x-tabs.nav>
 
     {{-- Class badge --}}
     <div
-      class="hidden items-center justify-center rounded-lg bg-zinc-50 px-4 py-2 md:flex dark:bg-zinc-800 dark:text-zinc-50"
+      class="hidden items-center justify-center rounded-xl bg-zinc-50 px-3 py-1.5 md:flex dark:bg-zinc-800 dark:text-zinc-50"
     >{{ $badge }}</div>
   </div>
 
