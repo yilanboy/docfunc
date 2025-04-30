@@ -18,7 +18,7 @@
           wire:key="{{ $postOrder->value }}-tab-button"
         >
           <x-dynamic-component
-            class="w-4"
+            class="w-3"
             :component="$postOrder->iconComponentName()"
           />
           <span>{{ $postOrder->label() }}</span>

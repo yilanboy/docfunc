@@ -43,7 +43,7 @@
               wire:key="{{ $userInfoTab->value }}-tab-button"
             >
               <x-dynamic-component
-                class="w-4"
+                class="w-3"
                 :component="$userInfoTab->iconComponentName()"
               />
               <span>{{ $userInfoTab->label() }}</span>
