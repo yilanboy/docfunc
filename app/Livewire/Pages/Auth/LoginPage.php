@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Pages\Auth;
 
+ini_set('json.exceptions', '1');
+
 use App\Models\Passkey;
 use App\Rules\Captcha;
 use App\Services\Serializer;
@@ -21,6 +23,7 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
+
 
 #[Title('登入')]
 class LoginPage extends Component
@@ -82,7 +85,9 @@ class LoginPage extends Component
     {
         $data = $this->validate(['answer' => ['required', 'json']]);
 
-        $publicKeyCredential = Serializer::make()
+        $serializer = Serializer::make();
+
+        $publicKeyCredential = $serializer
             ->fromJson($data['answer'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
@@ -101,7 +106,7 @@ class LoginPage extends Component
             return;
         }
 
-        $publicKeyCredentialSource = Serializer::make()
+        $publicKeyCredentialSource = $serializer
             ->fromJson(json_encode($passkey->data), PublicKeyCredentialSource::class);
 
         $options = Session::get('passkey-authentication-options');
@@ -112,7 +117,7 @@ class LoginPage extends Component
             return;
         }
 
-        $publicKeyCredentialRequestOptions = Serializer::make()->fromJson(
+        $publicKeyCredentialRequestOptions = $serializer->fromJson(
             $options,
             PublicKeyCredentialRequestOptions::class,
         );

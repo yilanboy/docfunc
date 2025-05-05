@@ -41,7 +41,9 @@ class EditPasskeysPage extends Component
             'passkey' => ['required', 'json'],
         ]);
 
-        $publicKeyCredential = Serializer::make()
+        $serializer = Serializer::make();
+
+        $publicKeyCredential = $serializer
             ->fromJson($data['passkey'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
@@ -58,7 +60,7 @@ class EditPasskeysPage extends Component
             return;
         }
 
-        $publicKeyCredentialCreationOptions = Serializer::make()->fromJson(
+        $publicKeyCredentialCreationOptions = $serializer->fromJson(
             $options,
             PublicKeyCredentialCreationOptions::class,
         );
@@ -80,7 +82,7 @@ class EditPasskeysPage extends Component
             return;
         }
 
-        $publicKeyCredentialSourceArray = Serializer::make()->toArray(
+        $publicKeyCredentialSourceArray = $serializer->toArray(
             $publicKeyCredentialSource
         );
 
