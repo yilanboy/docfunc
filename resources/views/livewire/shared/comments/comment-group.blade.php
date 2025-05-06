@@ -98,7 +98,7 @@
           @auth
             @if (auth()->id() === $comment['user_id'])
               <button
-                class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 data-comment-group-name="{{ $commentGroupName }}"
                 data-comment-id="{{ $comment['id'] }}"
                 data-comment-body="{{ $comment['body'] }}"
@@ -112,7 +112,7 @@
 
             @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
               <button
-                class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 type="button"
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
@@ -125,7 +125,7 @@
 
           @if ($currentLayer < $maxLayer)
             <button
-              class="flex items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+              class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
               data-comment-id="{{ $comment['id'] }}"
               data-comment-user-name="{{ is_null($comment['user_name']) ? '訪客' : $comment['user_name'] }}"
               type="button"

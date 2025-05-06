@@ -57,7 +57,7 @@
   @if ($showMoreButtonIsActive)
     <div class="mt-6 flex w-full items-center justify-center">
       <button
-        class="shadow-xs rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-600 hover:bg-emerald-100 dark:bg-gray-700 dark:text-zinc-50 dark:hover:bg-gray-600"
+        class="shadow-xs cursor-pointer rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-600 hover:bg-emerald-100 dark:bg-gray-700 dark:text-zinc-50 dark:hover:bg-gray-600"
         type="button"
         x-on:click="showMoreComments"
       >
