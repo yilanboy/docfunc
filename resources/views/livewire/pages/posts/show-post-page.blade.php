@@ -104,14 +104,10 @@
                   <div class="hidden md:block">&bull;</div>
 
                   {{-- comments count --}}
-                  <a
-                    class="hidden hover:text-neutral-500 md:flex md:items-center dark:hover:text-neutral-300"
-                    href="{{ $post->link_with_slug }}#comments"
-                  >
+                  <div class="hidden md:flex md:items-center">
                     <x-icons.chat-square-text class="w-4" />
                     <span class="ml-2">{{ $post->comments_count }}</span>
-                  </a>
-
+                  </div>
                 </div>
 
                 {{-- post tags --}}
