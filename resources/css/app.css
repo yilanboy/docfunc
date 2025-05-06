@@ -78,8 +78,8 @@
     prose-img:w-full prose-img:rounded-xl
     /* figcaption */
     prose-figcaption:table-caption prose-figcaption:[caption-side:bottom] prose-figcaption:break-words
-    prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-zinc-200
-    dark:prose-figcaption:bg-zinc-700 dark:prose-figcaption:text-slate-100
+    prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-zinc-200!
+    dark:prose-figcaption:bg-zinc-700! dark:prose-figcaption:text-slate-100
     /* hr */
     prose-hr:my-3 prose-hr:h-1 prose-hr:border-none prose-hr:bg-slate-300 dark:prose-hr:bg-slate-500
     /* code */
