@@ -104,14 +104,20 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         const code: HTMLElement = codes[0];
 
-        code.classList.add('font-jetbrains-mono', 'text-lg', 'font-semibold');
+        code.classList.add(
+            'font-jetbrains-mono',
+            'text-lg',
+            'font-semibold',
+            'min-w-2xl',
+        );
 
         // get language from code class name, the class name is like "language-javascript"
         // we need to get the last part of the class name
 
-        const foo = findLanguagePrefixClass(code);
+        const language = findLanguagePrefixClass(code);
 
-        const languageLabelElement: HTMLSpanElement = createLanguageLabel(foo);
+        const languageLabelElement: HTMLSpanElement =
+            createLanguageLabel(language);
 
         // start to create copy button...
         const copyButton: HTMLButtonElement = createCopyCodeButton(

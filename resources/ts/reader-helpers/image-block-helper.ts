@@ -7,7 +7,7 @@ declare global {
     }
 }
 
-function createExpandImageButton(preOuterHtml: string): HTMLButtonElement {
+function createExpandImageButton(imageOuterHtml: string): HTMLButtonElement {
     const expandImageButton: HTMLButtonElement =
         document.createElement('button');
     expandImageButton.classList.add(
@@ -18,10 +18,7 @@ function createExpandImageButton(preOuterHtml: string): HTMLButtonElement {
     );
     expandImageButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-    const modal = new Modal({
-        innerHtml: preOuterHtml,
-        customClassName: ['font-jetbrains-mono', 'text-xl'],
-    });
+    const modal = new Modal({ innerHtml: imageOuterHtml });
 
     expandImageButton.addEventListener(
         'click',
@@ -56,7 +53,11 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
         const image: HTMLImageElement = images[0];
 
-        const expandImageButton = createExpandImageButton(image.outerHTML);
+        const newImage: HTMLImageElement = document.createElement('img');
+        newImage.classList.add('min-w-3xl', 'rounded-xl');
+        newImage.src = image.src;
+
+        const expandImageButton = createExpandImageButton(newImage.outerHTML);
 
         figureTag.appendChild(expandImageButton);
 
