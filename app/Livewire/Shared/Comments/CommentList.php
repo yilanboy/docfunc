@@ -54,18 +54,13 @@ class CommentList extends Component
      *     'user_name': string|null,
      *     'user_gravatar_url': string|null,
      * }>>
-     * >
      */
     public array $commentsList = [];
 
     public bool $showMoreButtonIsActive = true;
 
-    /**
-     * Recording new comments that created by user.
-     *
-     * @var array<int>
-     */
-    public array $newCommentIds = [];
+    /** @var array<int> */
+    public array $loadedCommentIds = [];
 
     public function mount(): void
     {
@@ -74,12 +69,12 @@ class CommentList extends Component
 
     #[Renderless]
     #[On('append-new-id-to-{commentListName}')]
-    public function appendNewIdToNewCommentIds(int $id): void
+    public function appendNewIdToLoadedCommentIds(int $id): void
     {
-        $this->newCommentIds[] = $id;
+        $this->loadedCommentIds[] = $id;
     }
 
-    private function getComments(int $skip): array
+    private function getComments(): array
     {
         $comments = Comment::query()
             ->select([
@@ -106,14 +101,13 @@ class CommentList extends Component
             })
             // Don't show new comments, avoid showing duplicate comments,
             // New comments have already showed in new comment group.
-            ->whereNotIn('comments.id', $this->newCommentIds)
+            ->whereNotIn('comments.id', $this->loadedCommentIds)
             ->where('comments.post_id', $this->postId)
             // When parent id is not null,
             // it means this comment list is children of another comment.
             ->where('comments.parent_id', $this->parentId)
-            ->skip($skip)
             // Plus one is needed here because we need to determine whether there is a next page.
-            ->take($this->perPage + 1)
+            ->limit($this->perPage + 1)
             ->get()
             ->keyBy('id')
             ->toArray();
@@ -127,6 +121,13 @@ class CommentList extends Component
         };
 
         return array_map($callback, $comments);
+    }
+
+    public function updateLoadedCommentIds(array $comments): void
+    {
+        if (count($comments) > 0) {
+            $this->loadedCommentIds = [...$this->loadedCommentIds, ...array_keys($comments)];
+        }
     }
 
     private function updateCommentsList(array $comments): void
@@ -143,10 +144,11 @@ class CommentList extends Component
         }
     }
 
-    public function showMoreComments(int $skip = 0): void
+    public function showMoreComments(): void
     {
-        $comments = $this->getComments($skip);
+        $comments = $this->getComments();
 
+        $this->updateLoadedCommentIds($comments);
         $this->updateCommentsList($comments);
         $this->updateShowMoreButtonStatus($comments);
     }

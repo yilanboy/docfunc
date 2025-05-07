@@ -3,14 +3,6 @@
     Alpine.data('commentList', () => ({
       listeners: [],
       currentScrollY: 0,
-      showMoreComments() {
-        // Calculate how many comment cards are at the bottom of this comment list.
-        const skip = this.$root.querySelectorAll(
-          '& > div.comment-group > div.comment-card'
-        ).length;
-
-        this.$wire.showMoreComments(skip);
-      },
       init() {
         this.listeners.push(
           this.$wire.$hook('commit.prepare', () => {
@@ -59,7 +51,7 @@
       <button
         class="shadow-xs cursor-pointer rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-600 hover:bg-emerald-100 dark:bg-gray-700 dark:text-zinc-50 dark:hover:bg-gray-600"
         type="button"
-        x-on:click="showMoreComments"
+        wire:click="showMoreComments"
       >
         <x-icons.animate-spin
           class="mr-2 size-5"

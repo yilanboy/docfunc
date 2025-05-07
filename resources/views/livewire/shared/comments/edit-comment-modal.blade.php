@@ -2,29 +2,34 @@
   <script>
     Alpine.data('editCommentModal', () => ({
       observers: [],
-      modalIsOpen: false,
-      id: null,
-      body: @entangle('form.body'),
-      groupName: null,
+      comment: {
+        id: null,
+        groupName: null
+      },
+      modal: {
+        isOpen: false,
+        body: @entangle('form.body')
+      },
       openModal(event) {
-        this.id = event.detail.id;
-        this.body = event.detail.body;
-        this.groupName = event.detail.groupName;
+        this.comment.id = event.detail.id;
+        this.comment.groupName = event.detail.groupName;
 
-        this.modalIsOpen = true;
+        this.modal.body = event.detail.body;
+        this.modal.isOpen = true;
+
         this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
       },
       closeModal() {
-        this.modalIsOpen = false;
+        this.modal.isOpen = false;
       },
-      submitForm() {
-        this.$wire.save(this.id, this.groupName);
+      submitModal() {
+        this.$wire.save(this.comment.id, this.comment.groupName);
       },
       tabToFourSpaces() {
         this.$el.setRangeText('    ', this.$el.selectionStart, this.$el.selectionStart, 'end');
       },
       bodyIsEmpty() {
-        return this.body === '';
+        return this.modal.body === '';
       },
       init() {
         let previewObserver = new MutationObserver(() => {
@@ -58,7 +63,7 @@
   x-cloak
   x-data="editCommentModal"
   x-ref="editCommentModal"
-  x-show="modalIsOpen"
+  x-show="modal.isOpen"
   x-on:open-edit-comment-modal.window="openModal"
   x-on:close-edit-comment-modal.window="closeModal"
   x-on:keydown.escape.window="closeModal"
@@ -66,14 +71,14 @@
   {{-- gray background --}}
   <div
     class="fixed inset-0 bg-zinc-500/75 transition-opacity"
-    x-show="modalIsOpen"
+    x-show="modal.isOpen"
     x-transition.opacity
   ></div>
 
   {{--  modal  --}}
   <div
     class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-zinc-50 p-5 transition-all md:max-w-2xl dark:bg-zinc-800"
-    x-show="modalIsOpen"
+    x-show="modal.isOpen"
     x-transition.origin.bottom.duration.300ms
   >
     {{-- close modal button --}}
@@ -95,7 +100,7 @@
 
       <form
         class="space-y-6"
-        x-on:submit.prevent="submitForm"
+        x-on:submit.prevent="submitModal"
       >
         <x-auth-validation-errors :errors="$errors" />
 
@@ -114,7 +119,7 @@
             id="edit-comment-body"
             x-ref="editCommentTextarea"
             x-on:keydown.tab.prevent="tabToFourSpaces"
-            x-model="body"
+            x-model="modal.body"
             rows="12"
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required

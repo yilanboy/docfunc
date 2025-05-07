@@ -2,51 +2,55 @@
   <script>
     Alpine.data('createCommentModal', () => ({
       observers: [],
-      modalIsOpen: false,
-      submitIsEnabled: false,
-      parentId: @entangle('form.parent_id'),
-      body: @entangle('form.body'),
-      captchaSiteKey: @js(config('services.captcha.site_key')),
-      captchaToken: @entangle('captchaToken'),
-      replyTo: null,
+      modal: {
+        isOpen: false,
+        submitIsEnabled: false,
+        parentId: @entangle('form.parent_id'),
+        replyTo: null,
+        body: @entangle('form.body')
+      },
+      captcha: {
+        siteKey: @js(config('services.captcha.site_key')),
+        token: @entangle('captchaToken')
+      },
       openModal(event) {
-        this.parentId = event.detail.parentId;
-        this.replyTo = event.detail.replyTo;
+        this.modal.parentId = event.detail.parentId;
+        this.modal.replyTo = event.detail.replyTo;
+        this.modal.isOpen = true;
 
-        this.modalIsOpen = true;
         this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
       },
       closeModal() {
-        this.modalIsOpen = false;
+        this.modal.isOpen = false;
       },
-      submitForm() {
+      submitModal() {
         this.$wire.save();
       },
       tabToFourSpaces() {
         this.$el.setRangeText('    ', this.$el.selectionStart, this.$el.selectionStart, 'end');
       },
       bodyIsEmpty() {
-        return this.body === '';
+        return this.modal.body === '';
       },
       submitIsDisabled() {
-        return this.submitIsEnabled === false;
+        return this.modal.submitIsEnabled === false;
       },
       informationOnSubmitButton() {
-        return this.submitIsEnabled ? '回覆' : '驗證中';
+        return this.modal.submitIsEnabled ? '回覆' : '驗證中';
       },
       showReplyToLabel() {
-        return this.replyTo !== null;
+        return this.modal.replyTo !== null;
       },
       replyToLabel() {
-        return '回覆 ' + this.replyTo + ' 的留言';
+        return '回覆 ' + this.modal.replyTo + ' 的留言';
       },
       init() {
         turnstile.ready(() => {
           turnstile.render(this.$refs.turnstileBlock, {
-            sitekey: this.captchaSiteKey,
+            sitekey: this.captcha.siteKey,
             callback: (token) => {
-              this.captchaToken = token;
-              this.submitIsEnabled = true;
+              this.captcha.token = token;
+              this.modal.submitIsEnabled = true;
             }
           });
         });
@@ -82,7 +86,7 @@
   x-cloak
   x-data="createCommentModal"
   x-ref="createCommentModal"
-  x-show="modalIsOpen"
+  x-show="modal.isOpen"
   x-on:open-create-comment-modal.window="openModal"
   x-on:close-create-comment-modal.window="closeModal"
   x-on:keydown.escape.window="closeModal"
@@ -90,14 +94,14 @@
   {{-- gray background --}}
   <div
     class="fixed inset-0 bg-zinc-500/75 transition-opacity"
-    x-show="modalIsOpen"
+    x-show="modal.isOpen"
     x-transition.opacity
   ></div>
 
   {{--  modal  --}}
   <div
     class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-zinc-50 p-5 transition-all md:max-w-2xl dark:bg-zinc-800"
-    x-show="modalIsOpen"
+    x-show="modal.isOpen"
     x-transition.origin.bottom.duration.300ms
   >
     {{-- close modal button --}}
@@ -126,7 +130,7 @@
 
       <form
         class="space-y-6"
-        x-on:submit.prevent="submitForm"
+        x-on:submit.prevent="submitModal"
       >
         <x-auth-validation-errors :errors="$errors" />
 
@@ -148,7 +152,7 @@
             x-ref="createCommentTextarea"
             {{-- change tab into 4 spaces --}}
             x-on:keydown.tab.prevent="tabToFourSpaces"
-            x-model="body"
+            x-model="modal.body"
             rows="12"
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required
@@ -174,7 +178,7 @@
             <x-icons.reply-fill
               class="mr-2 w-5"
               x-cloak
-              x-show="submitIsEnabled"
+              x-show="modal.submitIsEnabled"
             />
             <x-icons.animate-spin
               class="mr-2 h-5 w-5 text-zinc-50"
