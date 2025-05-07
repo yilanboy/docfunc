@@ -5,7 +5,6 @@ namespace App\Livewire\Pages\Auth;
 ini_set('json.exceptions', '1');
 
 use App\Models\Passkey;
-use App\Rules\Captcha;
 use App\Services\Serializer;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
@@ -34,8 +33,6 @@ class LoginPage extends Component
 
     public bool $remember = false;
 
-    public string $captchaToken = '';
-
     public string $answer = '';
 
     #[Locked]
@@ -51,7 +48,6 @@ class LoginPage extends Component
         $this->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'captchaToken' => ['required', new Captcha()]
         ]);
 
         $this->ensureIsNotRateLimited();
@@ -84,6 +80,8 @@ class LoginPage extends Component
     public function loginWithPasskey(): void
     {
         $data = $this->validate(['answer' => ['required', 'json']]);
+
+        $this->ensureIsNotRateLimited();
 
         $serializer = Serializer::make();
 
@@ -143,6 +141,8 @@ class LoginPage extends Component
         ]);
 
         Auth::loginUsingId(id: $passkey->user_id, remember: true);
+
+        RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
         $this->dispatch('toast', status: 'success', message: '登入成功！');

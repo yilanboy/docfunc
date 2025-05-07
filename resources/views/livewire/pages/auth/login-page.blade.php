@@ -5,18 +5,11 @@
 @script
   <script>
     Alpine.data('login', () => ({
-      submitIsEnabled: false,
-      captchaSiteKey: @js(config('services.captcha.site_key')),
-      email: $wire.entangle('email'),
-      optionEndpoint: @js($optionEndpoint),
-      answer: $wire.entangle('answer'),
+      passkey: {
+        optionEndpoint: @js($optionEndpoint),
+        answer: $wire.entangle('answer'),
+      },
       browserSupportsWebAuthn,
-      submitIsDisabled() {
-        return this.submitIsEnabled === false;
-      },
-      textOnSubmitButton() {
-        return this.submitIsEnabled ? '登入' : '驗證中';
-      },
       async loginWithPasskey() {
         if (!this.browserSupportsWebAuthn()) {
           this.$wire.dispatch('toast', {
@@ -27,15 +20,12 @@
           return;
         }
 
-        const response = await fetch(this.optionEndpoint);
+        const response = await fetch(this.passkey.optionEndpoint);
         const optionsJSON = await response.json();
 
         try {
-          this.answer = JSON.stringify(await startAuthentication({
-            optionsJSON,
-            params: {
-              email: this.email
-            }
+          this.passkey.answer = JSON.stringify(await startAuthentication({
+            optionsJSON
           }))
         } catch (error) {
           this.$wire.dispatch('toast', {
@@ -47,17 +37,6 @@
         }
 
         this.$wire.loginWithPasskey()
-      },
-      init() {
-        turnstile.ready(() => {
-          turnstile.render(this.$refs.turnstileBlock, {
-            sitekey: this.captchaSiteKey,
-            callback: (token) => {
-              this.$wire.set('captchaToken', token);
-              this.submitIsEnabled = true;
-            }
-          });
-        });
       }
     }));
   </script>
@@ -76,7 +55,6 @@
   </div>
 
   <div class="container mx-auto">
-
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
@@ -131,12 +109,6 @@
               記住我
             </x-checkbox>
 
-            <div
-              class="hidden"
-              wire:ignore
-              x-ref="turnstileBlock"
-            ></div>
-
             @if (Route::has('password.request'))
               <a
                 class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
@@ -148,20 +120,7 @@
             @endif
           </div>
 
-          <x-button
-            class="mt-6 w-full"
-            x-bind:disabled="submitIsDisabled"
-          >
-            <x-icons.animate-spin
-              class="mr-2 size-5 text-zinc-50"
-              x-cloak
-              x-show="submitIsDisabled"
-            />
-            <span
-              class="h-[1lh]"
-              x-text="textOnSubmitButton"
-            ></span>
-          </x-button>
+          <x-button class="mt-6 w-full">登入</x-button>
         </form>
 
         {{-- Passkey login --}}
