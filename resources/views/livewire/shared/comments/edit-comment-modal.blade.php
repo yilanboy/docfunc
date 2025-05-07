@@ -2,19 +2,19 @@
   <script>
     Alpine.data('editCommentModal', () => ({
       observers: [],
+      modal: {
+        isOpen: false
+      },
       comment: {
         id: null,
-        groupName: null
-      },
-      modal: {
-        isOpen: false,
+        groupName: null,
         body: @entangle('form.body')
       },
       openModal(event) {
         this.comment.id = event.detail.id;
         this.comment.groupName = event.detail.groupName;
+        this.comment.body = event.detail.body;
 
-        this.modal.body = event.detail.body;
         this.modal.isOpen = true;
 
         this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
@@ -29,7 +29,7 @@
         this.$el.setRangeText('    ', this.$el.selectionStart, this.$el.selectionStart, 'end');
       },
       bodyIsEmpty() {
-        return this.modal.body === '';
+        return this.comment.body === '';
       },
       init() {
         let previewObserver = new MutationObserver(() => {
@@ -119,7 +119,7 @@
             id="edit-comment-body"
             x-ref="editCommentTextarea"
             x-on:keydown.tab.prevent="tabToFourSpaces"
-            x-model="modal.body"
+            x-model="comment.body"
             rows="12"
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required

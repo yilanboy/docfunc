@@ -15,7 +15,7 @@
       openCreateCommentModal() {
         this.$dispatch('open-create-comment-modal', {
           parentId: null,
-          replyTo: null
+          replyTo: ''
         });
       }
     }));

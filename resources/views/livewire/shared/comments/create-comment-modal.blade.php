@@ -4,9 +4,11 @@
       observers: [],
       modal: {
         isOpen: false,
-        submitIsEnabled: false,
+        isSubmitEnabled: false,
+        replyTo: '',
+      },
+      comment: {
         parentId: @entangle('form.parent_id'),
-        replyTo: null,
         body: @entangle('form.body')
       },
       captcha: {
@@ -14,7 +16,8 @@
         token: @entangle('captchaToken')
       },
       openModal(event) {
-        this.modal.parentId = event.detail.parentId;
+        this.comment.parentId = event.detail.parentId;
+
         this.modal.replyTo = event.detail.replyTo;
         this.modal.isOpen = true;
 
@@ -30,16 +33,16 @@
         this.$el.setRangeText('    ', this.$el.selectionStart, this.$el.selectionStart, 'end');
       },
       bodyIsEmpty() {
-        return this.modal.body === '';
+        return this.comment.body === '';
       },
       submitIsDisabled() {
-        return this.modal.submitIsEnabled === false;
+        return this.modal.isSubmitEnabled === false;
       },
       informationOnSubmitButton() {
-        return this.modal.submitIsEnabled ? '回覆' : '驗證中';
+        return this.modal.isSubmitEnabled ? '回覆' : '驗證中';
       },
       showReplyToLabel() {
-        return this.modal.replyTo !== null;
+        return this.modal.replyTo !== '';
       },
       replyToLabel() {
         return '回覆 ' + this.modal.replyTo + ' 的留言';
@@ -50,7 +53,7 @@
             sitekey: this.captcha.siteKey,
             callback: (token) => {
               this.captcha.token = token;
-              this.modal.submitIsEnabled = true;
+              this.modal.isSubmitEnabled = true;
             }
           });
         });
@@ -152,7 +155,7 @@
             x-ref="createCommentTextarea"
             {{-- change tab into 4 spaces --}}
             x-on:keydown.tab.prevent="tabToFourSpaces"
-            x-model="modal.body"
+            x-model="comment.body"
             rows="12"
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required
@@ -178,7 +181,7 @@
             <x-icons.reply-fill
               class="mr-2 w-5"
               x-cloak
-              x-show="modal.submitIsEnabled"
+              x-show="modal.isSubmitEnabled"
             />
             <x-icons.animate-spin
               class="mr-2 h-5 w-5 text-zinc-50"
