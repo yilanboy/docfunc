@@ -1,7 +1,7 @@
 <div class="absolute right-1/2 top-0 -z-10 h-screen w-full max-w-[1920px] translate-x-1/2">
   <div id="background-right">
     <div class="absolute left-[2%] top-[6rem] hidden md:block">
-      <x-icons.controller class="size-56 rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
+      <x-icons.controller class="size-48 rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
     </div>
 
     <div class="absolute left-[24%] top-[18rem] hidden lg:block">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="absolute left-[18%] top-[34rem] hidden md:block">
-      <x-icons.chat-heart class="size-56 -rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
+      <x-icons.chat-heart class="size-48 -rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
     </div>
 
     <div class="absolute left-[2%] top-[38rem] hidden lg:block">
@@ -51,7 +51,7 @@
     </div>
 
     <div class="absolute right-[36%] top-[4rem] hidden lg:block">
-      <x-icons.cloud class="size-56 rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
+      <x-icons.cloud class="size-48 rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
     </div>
 
     <div class="absolute right-[34%] top-[24rem] hidden lg:block">
@@ -70,7 +70,7 @@
     </div>
 
     <div class="absolute right-[14%] top-[18rem] hidden md:block">
-      <x-icons.floppy class="size-56 -rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
+      <x-icons.floppy class="size-48 -rotate-12 text-zinc-300/60 dark:text-zinc-950/80" />
     </div>
 
     <div class="absolute right-[4%] top-[32rem] hidden lg:block">
@@ -83,7 +83,7 @@
 
     <div class="absolute right-[4%] top-[44rem] hidden md:block">
       <x-icons.php
-        class="size-56 rotate-12"
+        class="size-48 rotate-12"
         :pathClassName="'fill-zinc-300/60 dark:fill-zinc-950/60'"
       />
     </div>
