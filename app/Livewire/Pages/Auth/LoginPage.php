@@ -172,4 +172,9 @@ class LoginPage extends Component
     {
         return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
     }
+
+    public function render()
+    {
+        return view('livewire.pages.auth.login-page');
+    }
 }

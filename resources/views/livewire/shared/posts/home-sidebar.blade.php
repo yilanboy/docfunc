@@ -1,13 +1,14 @@
 @script
   <script>
     Alpine.data('homeSideMenu', () => ({
+      rssLinkLabel: '訂閱 RSS',
       copyWebFeedUrl() {
         navigator.clipboard.writeText(this.$el.getAttribute('href')).then(
-          () => this.$refs.subscriptionText.innerText = '複製成功',
-          () => this.$refs.subscriptionText.innerText = '複製失敗'
+          () => this.rssLinkLabel = '複製成功',
+          () => this.rssLinkLabel = '複製失敗'
         );
 
-        setTimeout(() => this.$refs.subscriptionText.innerText = '訂閱文章', 2000);
+        setTimeout(() => this.rssLinkLabel = '複製 RSS 網址', 2000);
       }
     }));
   </script>
@@ -27,7 +28,7 @@
     <hr class="my-4 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
     <span class="group-gradient-underline-grow leading-relaxed">
-      嘗試用部落格來紀錄自己學習的過程，與生活上的大小事。此部落格使用 TALL Stack 所開發🚀
+      這是一個使用 TALL Stack 開發的部落格，用來記錄自己學習的過程，與生活上的大小事。🚀
     </span>
 
     <div class="mt-8 flex items-center justify-center">
@@ -40,6 +41,32 @@
           <x-icons.pencil class="w-5" />
           <span class="ml-2">新增文章</span>
         </div>
+      </a>
+    </div>
+  </x-card>
+
+  <x-card class="dark:text-zinc-50">
+    <div class="flex items-center justify-center">
+      <x-icons.rss class="w-5" />
+      <span class="ml-2">RSS 訂閱</span>
+    </div>
+
+    <hr class="my-4 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+
+    <span class="group-gradient-underline-grow leading-relaxed">
+      取得最新文章的通知！🔔
+    </span>
+
+    <div class="mt-8 flex items-center justify-center">
+      <a
+        class="focus:outline-hidden focus:ring-3 inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-zinc-500 px-4 py-2 tracking-widest text-zinc-50 ring-zinc-300 transition duration-150 ease-in-out hover:bg-zinc-600 focus:border-zinc-700 active:bg-zinc-500 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500 dark:active:bg-zinc-600"
+        href="{{ route('feeds.main') }}"
+        x-on:click.prevent="copyWebFeedUrl"
+      >
+        <span
+          class="ml-2 h-[1lh]"
+          x-text="rssLinkLabel"
+        ></span>
       </a>
     </div>
   </x-card>
@@ -91,18 +118,4 @@
       </div>
     </x-card>
   @endif
-
-  <a
-    class="focus:outline-hidden focus:ring-3 inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-zinc-500 px-4 py-2 tracking-widest text-zinc-50 ring-zinc-300 transition duration-150 ease-in-out hover:bg-zinc-600 focus:border-zinc-700 active:bg-zinc-700 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500"
-    href="{{ route('feeds.main') }}"
-    x-on:click.prevent="copyWebFeedUrl"
-    target="_blank"
-    rel="nofollow noopener"
-  >
-    <x-icons.rss class="w-5" />
-    <span
-      class="ml-2"
-      x-ref="subscriptionText"
-    >訂閱文章</span>
-  </a>
 </div>
