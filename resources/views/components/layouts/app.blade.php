@@ -36,6 +36,12 @@
 
   {{-- Cloudflare Turnstile --}}
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+
+  {{--  Google AdSense --}}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8601039015348926"
+          crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-8601039015348926">
+
   {{-- prettier-ignore-end --}}
 </head>
 

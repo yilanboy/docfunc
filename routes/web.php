@@ -73,3 +73,9 @@ Route::get('/notifications', NotificationIndexPage::class)->name('notifications.
 
 // Web Feed
 Route::feeds();
+
+// Google Adsense
+Route::get('/ads.txt', function () {
+    return response('google.com, pub-8601039015348926, DIRECT, f08c47fec0942fa0')
+        ->header('Content-Type', 'text/plain');
+});
