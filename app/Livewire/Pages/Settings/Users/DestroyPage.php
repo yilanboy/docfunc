@@ -10,7 +10,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class DestroyUserPage extends Component
+class DestroyPage extends Component
 {
     public User $user;
 
@@ -40,6 +40,6 @@ class DestroyUserPage extends Component
     #[Title('會員中心 - 刪除帳號')]
     public function render(): View
     {
-        return view('livewire.pages.settings.users.destroy-user-page');
+        return view('livewire.pages.settings.users.destroy-page');
     }
 }

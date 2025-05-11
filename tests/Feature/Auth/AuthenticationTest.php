@@ -25,7 +25,6 @@ test('users can authenticate using the login screen', function () {
     livewire(LoginPage::class)
         ->set('email', $user->email)
         ->set('password', $password)
-        ->set('captchaToken', 'fake-captcha-response')
         ->call('login')
         ->assertDispatched('toast', status: 'success', message: '登入成功！')
         ->assertRedirect('/');
@@ -39,7 +38,6 @@ test('email is required', function () {
     livewire(LoginPage::class)
         ->set('email', '')
         ->set('password', 'Password101')
-        ->set('captchaToken', 'fake-captcha-response')
         ->call('login')
         ->assertHasErrors(['email' => 'required']);
 });
@@ -50,42 +48,14 @@ test('password is required', function () {
     livewire(LoginPage::class)
         ->set('email', 'email@examle.com')
         ->set('password', '')
-        ->set('captchaToken', 'fake-captcha-response')
         ->call('login')
         ->assertHasErrors(['password' => 'required']);
-});
-
-test('captcha token is required', function () {
-    User::factory()->create();
-
-    livewire(LoginPage::class)
-        ->set('email', 'allen@example.com')
-        ->set('password', 'Password101')
-        ->set('captchaToken', '')
-        ->call('login')
-        ->assertHasErrors(['captchaToken' => 'required']);
-});
-
-test('captcha challenge failed', function () {
-    Http::fake([
-        'https://challenges.cloudflare.com/turnstile/v0/siteverify' => Http::response(['response' => false]),
-    ]);
-
-    User::factory()->create();
-
-    livewire(LoginPage::class)
-        ->set('email', 'allen@example.com')
-        ->set('password', 'Password101')
-        ->set('captchaToken', 'fake-captcha-response')
-        ->call('login')
-        ->assertHasErrors(['captchaToken']);
 });
 
 test('email must be a valid email address', function () {
     livewire(LoginPage::class)
         ->set('email', 'wrongEmail')
         ->set('password', 'Password101')
-        ->set('captchaToken', 'fake-captcha-response')
         ->call('login')
         ->assertHasErrors(['email' => 'email']);
 });
@@ -98,7 +68,6 @@ test('users can not authenticate with invalid password', function () {
     livewire(LoginPage::class)
         ->set('email', $user->email)
         ->set('password', 'wrongPassword101')
-        ->set('captchaToken', 'fake-captcha-response')
         ->call('login');
 
     $this->assertGuest();

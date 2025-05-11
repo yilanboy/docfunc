@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('comments', () => ({
+    Alpine.data('commentBoard', () => ({
       orderDropdownIsOpen: false,
       openOrderDropdown() {
         this.orderDropdownIsOpen = true;
@@ -28,8 +28,7 @@
 
 <div
   class="w-full"
-  id="comments"
-  x-data="comments"
+  x-data="commentBoard"
 >
   <div class="mt-6 w-full">
     <div class="flex justify-between">

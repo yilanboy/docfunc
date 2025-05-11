@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class PostIndexPage extends Component
+class IndexPage extends Component
 {
     public function render(): View
     {
@@ -14,6 +14,6 @@ class PostIndexPage extends Component
             ? config('app.name')
             : '所有文章';
 
-        return view('livewire.pages.posts.post-index-page')->title($title);
+        return view('livewire.pages.posts.index-page')->title($title);
     }
 }

@@ -169,7 +169,7 @@
               </div>
             </x-card>
 
-            <livewire:shared.comments.comments
+            <livewire:shared.comments.comment-board
               :post-id="$post->id"
               :post-user-id="$post->user_id"
               :comment-counts="$post->comments_count"

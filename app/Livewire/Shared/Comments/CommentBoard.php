@@ -9,7 +9,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Comments extends Component
+class CommentBoard extends Component
 {
     #[Locked]
     public int $postId;
@@ -41,6 +41,6 @@ class Comments extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.comments.comments');
+        return view('livewire.shared.comments.comment-board');
     }
 }

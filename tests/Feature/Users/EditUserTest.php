@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Settings\Users\EditUserPage;
+use App\Livewire\Pages\Settings\Users\EditPage as UsersEditPage;
 use App\Models\User;
 
 use function Pest\Faker\fake;
@@ -40,7 +40,7 @@ describe('edit user', function () {
 
         $this->actingAs($user);
 
-        livewire(EditUserPage::class, [
+        livewire(UsersEditPage::class, [
             'id' => $user->id,
             'name' => $user->name,
             'introduction' => $user->introduction,
@@ -56,7 +56,7 @@ describe('edit user', function () {
 
         $this->actingAs($user);
 
-        livewire(EditUserPage::class, [
+        livewire(UsersEditPage::class, [
             'id' => $user->id,
             'name' => $user->name,
             'introduction' => $user->introduction,
@@ -73,7 +73,7 @@ describe('edit user', function () {
 
             $this->actingAs($user);
 
-            livewire(EditUserPage::class, [
+            livewire(UsersEditPage::class, [
                 'id' => $user->id,
                 'name' => $user->name,
                 'introduction' => $user->introduction,

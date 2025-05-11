@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Settings\Users\DestroyUserPage;
+use App\Livewire\Pages\Settings\Users\DestroyPage as UsersDestroyPage;
 use App\Mail\DestroyUser;
 use App\Models\Comment;
 use App\Models\Post;
@@ -50,7 +50,7 @@ describe('destroy user', function () {
 
         $this->actingAs($user);
 
-        livewire(DestroyUserPage::class, ['id' => $user->id])
+        livewire(UsersDestroyPage::class, ['id' => $user->id])
             ->call('sendDestroyEmail', user: $user)
             ->assertDispatched('toast', status: 'success', message: '已寄出信件！');
 

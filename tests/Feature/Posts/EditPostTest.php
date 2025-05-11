@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Posts\EditPostPage;
+use App\Livewire\Pages\Posts\EditPage as PostsEditPage;
 use App\Livewire\Shared\Users\PostsGroupByYear;
 use App\Models\Post;
 use App\Models\Tag;
@@ -47,10 +47,10 @@ describe('edit post', function () {
         $newTagCollection = Tag::factory()->count(3)->create();
 
         $newTagsJson = $newTagCollection
-            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
-        livewire(EditPostPage::class, ['id' => $post->id])
+        livewire(PostsEditPage::class, ['id' => $post->id])
             ->set('form.title', $newTitle)
             ->set('form.category_id', $categoryId)
             ->set('form.tags', $newTagsJson)
@@ -64,7 +64,7 @@ describe('edit post', function () {
         $contentService = app(ContentService::class);
 
         $newTagIdsArray = $newTagCollection
-            ->map(fn($item) => $item->id)
+            ->map(fn ($item) => $item->id)
             ->all();
 
         expect($post)

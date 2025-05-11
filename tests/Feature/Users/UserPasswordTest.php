@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Settings\Users\EditPasswordPage;
+use App\Livewire\Pages\Settings\Users\Password\EditPage as PasswordEditPage;
 use App\Models\User;
 
 use function Pest\Laravel\get;
@@ -41,7 +41,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(EditPasswordPage::class, ['id' => $user->id])
+        livewire(PasswordEditPage::class, ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -62,7 +62,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(EditPasswordPage::class, ['id' => $user->id])
+        livewire(PasswordEditPage::class, ['id' => $user->id])
             ->set('current_password', $wrongPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -83,7 +83,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(EditPasswordPage::class, ['id' => $user->id])
+        livewire(PasswordEditPage::class, ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $wrongNewPasswordConfirmation)

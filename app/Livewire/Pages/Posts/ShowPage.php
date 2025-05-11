@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ShowPostPage extends Component
+class ShowPage extends Component
 {
     /**
      * @var Post get the post id from url path
@@ -37,7 +37,7 @@ class ShowPostPage extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.posts.show-post-page')
+        return view('livewire.pages.posts.show-page')
             ->title($this->post->title);
     }
 }

@@ -10,7 +10,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CreatePostPage extends Component
+class CreatePage extends Component
 {
     use WithFileUploads;
 
@@ -51,6 +51,6 @@ class CreatePostPage extends Component
     #[Title('新增文章')]
     public function render(): View
     {
-        return view('livewire.pages.posts.create-post-page');
+        return view('livewire.pages.posts.create-page');
     }
 }

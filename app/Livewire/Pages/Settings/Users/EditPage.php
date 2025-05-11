@@ -7,7 +7,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class EditUserPage extends Component
+class EditPage extends Component
 {
     public string $name;
 
@@ -70,6 +70,6 @@ class EditUserPage extends Component
     #[Title('會員中心 - 編輯個人資料')]
     public function render(): View
     {
-        return view('livewire.pages.settings.users.edit-user-page');
+        return view('livewire.pages.settings.users.edit-page');
     }
 }

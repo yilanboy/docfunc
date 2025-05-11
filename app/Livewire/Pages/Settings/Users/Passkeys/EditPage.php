@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Settings\Users;
+namespace App\Livewire\Pages\Settings\Users\Passkeys;
 
 use App\Models\User;
 use App\Services\CustomCounterChecker;
@@ -15,7 +15,7 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
-class EditPasskeysPage extends Component
+class EditPage extends Component
 {
     public User $user;
 
@@ -110,6 +110,6 @@ class EditPasskeysPage extends Component
 
     public function render()
     {
-        return view('livewire.pages.settings.users.edit-passkeys-page');
+        return view('livewire.pages.settings.users.passkeys.edit-page');
     }
 }

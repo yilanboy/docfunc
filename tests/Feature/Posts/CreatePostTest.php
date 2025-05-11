@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Pages\Posts\CreatePostPage;
+use App\Livewire\Pages\Posts\CreatePage as PostsCreatePage;
 use App\Livewire\Shared\UploadImage;
 use App\Models\Category;
 use App\Models\Post;
@@ -40,12 +40,12 @@ describe('create post', function () {
         $tagCollection = Tag::factory()->count(3)->create();
 
         $tagsJson = $tagCollection
-            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         $contentService = app(ContentService::class);
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', $title)
@@ -64,7 +64,7 @@ describe('create post', function () {
         $post = Post::latest()->first();
 
         $tagIdsArray = $tagCollection
-            ->map(fn($item) => $item->id)
+            ->map(fn ($item) => $item->id)
             ->all();
 
         expect(Cache::has('auto_save_user_'.$user->id.'_create_post'))->toBeFalse()
@@ -82,7 +82,7 @@ describe('create post', function () {
     test('title at least 4 characters', function () {
         loginAsUser();
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(3))
@@ -95,7 +95,7 @@ describe('create post', function () {
     test('title at most 50 characters', function () {
         loginAsUser();
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(51))
@@ -108,7 +108,7 @@ describe('create post', function () {
     test('body at least 500 characters', function () {
         loginAsUser();
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(4))
@@ -121,7 +121,7 @@ describe('create post', function () {
     test('body at most 20000 characters', function () {
         loginAsUser();
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(4))
@@ -176,7 +176,7 @@ describe('create post', function () {
 
         $this->actingAs($user);
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])->assertSet('autoSaveKey', 'auto_save_user_'.$user->id.'_create_post');
     });
@@ -198,11 +198,11 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', $title)
@@ -241,7 +241,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -258,7 +258,7 @@ describe('create post', function () {
             now()->addDays(7)
         );
 
-        livewire(CreatePostPage::class, [
+        livewire(PostsCreatePage::class, [
             'categories' => Category::all(['id', 'name']),
         ])
             ->assertSet('form.title', $title)

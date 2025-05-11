@@ -11,7 +11,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class EditPostPage extends Component
+class EditPage extends Component
 {
     use WithFileUploads;
 
@@ -46,6 +46,6 @@ class EditPostPage extends Component
     #[Title('編輯文章')]
     public function render(): View
     {
-        return view('livewire.pages.posts.edit-post-page');
+        return view('livewire.pages.posts.edit-page');
     }
 }

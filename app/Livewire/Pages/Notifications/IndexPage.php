@@ -7,7 +7,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class NotificationIndexPage extends Component
+class IndexPage extends Component
 {
     use WithPagination;
 
@@ -19,7 +19,7 @@ class NotificationIndexPage extends Component
         auth()->user()->unreadNotifications->markAsRead();
 
         return view(
-            'livewire.pages.notifications.notification-index-page',
+            'livewire.pages.notifications.index-page',
             compact('notifications'),
         );
     }

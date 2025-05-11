@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Pages\Settings\Users;
+namespace App\Livewire\Pages\Settings\Users\Password;
 
 use App\Models\User;
 use App\Rules\MatchOldPassword;
@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class EditPasswordPage extends Component
+class EditPage extends Component
 {
     public User $user;
 
@@ -61,6 +61,6 @@ class EditPasswordPage extends Component
     #[Title('會員中心 - 更改密碼')]
     public function render(): View
     {
-        return view('livewire.pages.settings.users.edit-password-page');
+        return view('livewire.pages.settings.users.password.edit-page');
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ShowCategoryPage extends Component
+class ShowPage extends Component
 {
     public Category $category;
 
@@ -22,7 +22,7 @@ class ShowCategoryPage extends Component
             redirect()->to($this->category->link_with_name);
         }
 
-        return view('livewire.pages.categories.show-category-page')
+        return view('livewire.pages.categories.show-page')
             ->title($this->category->name);
     }
 }

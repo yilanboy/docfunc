@@ -9,7 +9,7 @@ use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class ShowUserPage extends Component
+class ShowPage extends Component
 {
     public User $user;
 
@@ -29,7 +29,7 @@ class ShowUserPage extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.users.show-user-page')
+        return view('livewire.pages.users.show-page')
             ->title($this->user->name.' 的個人資訊');
     }
 }

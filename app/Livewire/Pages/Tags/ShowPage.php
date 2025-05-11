@@ -6,7 +6,7 @@ use App\Models\Tag;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class ShowTagPage extends Component
+class ShowPage extends Component
 {
     public Tag $tag;
 
@@ -17,7 +17,7 @@ class ShowTagPage extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.tags.show-tag-page')
+        return view('livewire.pages.tags.show-page')
             ->title($this->tag->name);
     }
 }
