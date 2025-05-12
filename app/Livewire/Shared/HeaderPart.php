@@ -8,7 +8,7 @@ use App\Services\SettingService;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
-class Header extends Component
+class HeaderPart extends Component
 {
     public function logout(Logout $logout): void
     {
@@ -28,7 +28,7 @@ class Header extends Component
         $showRegisterButton = SettingService::isRegisterAllowed();
 
         return view(
-            'livewire.shared.header',
+            'livewire.shared.header-part',
             compact('categories', 'showRegisterButton')
         );
     }

@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Notifications\IndexPage as NotificationsIndexPage;
-use App\Livewire\Shared\Comments\CreateCommentModal;
+use App\Livewire\Shared\Comments\CreateModalPart;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\NewComment;
@@ -19,7 +19,7 @@ test('you will receive a notification when there is a comment on your post', fun
 
     $this->actingAs($user);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -40,7 +40,7 @@ test('you will see a red ping animation on notification icon when there is a com
 
     $this->actingAs($user);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -73,7 +73,7 @@ test('if you reply to your own post, there will be no notification', function ()
 
     $this->actingAs($author);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -90,7 +90,7 @@ test('you can clear unread notifications if you visit the notification page', fu
 
     $this->actingAs($user);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');

@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Auth\LoginPage;
-use App\Livewire\Shared\Header;
+use App\Livewire\Shared\HeaderPart;
 use App\Models\User;
 
 use function Pest\Laravel\get;
@@ -76,7 +76,7 @@ test('users can not authenticate with invalid password', function () {
 test('login user can logout', function () {
     loginAsUser();
 
-    livewire(Header::class)
+    livewire(HeaderPart::class)
         ->call('logout');
 
     $this->assertGuest();

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class HomeSidebar extends Component
+class HomeSidebarPart extends Component
 {
     public function render(): View
     {
@@ -24,6 +24,6 @@ class HomeSidebar extends Component
             return Link::all();
         });
 
-        return view('livewire.shared.posts.home-sidebar', compact('popularTags', 'links'));
+        return view('livewire.shared.posts.home-sidebar-part', compact('popularTags', 'links'));
     }
 }

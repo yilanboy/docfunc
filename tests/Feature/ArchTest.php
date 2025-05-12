@@ -11,3 +11,7 @@ arch()
 arch('livewire full-page component must have a  \'Page\' suffix')
     ->expect('App\Livewire\Pages')
     ->toHaveSuffix('Page');
+
+arch('livewire shared component must have a  \'Part\' suffix')
+    ->expect('App\Livewire\Shared')
+    ->toHaveSuffix('Part');

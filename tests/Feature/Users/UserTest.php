@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Shared\Users\Posts;
+use App\Livewire\Shared\Users\PostsPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -14,7 +14,7 @@ describe('user', function () {
 
         get(route('users.show', ['id' => $user->id, 'tab' => $tabQueryString]))
             ->assertStatus(200)
-            ->assertSeeLivewire(Posts::class);
+            ->assertSeeLivewire(PostsPart::class);
     })->with([
         'information',
         'posts',
@@ -28,7 +28,7 @@ describe('user', function () {
 
         get(route('users.show', ['id' => $user->id, 'tab' => $tabQueryString]))
             ->assertStatus(200)
-            ->assertSeeLivewire(Posts::class);
+            ->assertSeeLivewire(PostsPart::class);
     })->with([
         'information',
         'posts',

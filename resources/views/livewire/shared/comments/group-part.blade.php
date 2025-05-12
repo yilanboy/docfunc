@@ -144,7 +144,7 @@
         class="relative pl-4 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
         wire:key="{{ $comment['id'] }}-children"
       >
-        <livewire:shared.comments.comment-group
+        <livewire:shared.comments.group-part
           :post-id="$postId"
           :post-user-id="$postUserId"
           :max-layer="$maxLayer"
@@ -157,7 +157,7 @@
         {{-- If this comment has no sub-messages,
                   do not render the next level of sub-comment list to avoid redundant SQL queries. --}}
         @if ($comment['children_count'] > 0)
-          <livewire:shared.comments.comment-list
+          <livewire:shared.comments.list-part
             :post-id="$postId"
             :post-user-id="$postUserId"
             :max-layer="$maxLayer"

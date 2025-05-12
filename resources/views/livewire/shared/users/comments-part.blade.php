@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('userComments', () => ({
+    Alpine.data('usersCommentsPart', () => ({
       observers: [],
       init() {
         hljs.highlightAll();
@@ -34,7 +34,7 @@
 {{-- 會員留言 --}}
 <div
   class="w-full space-y-6"
-  x-data="userComments"
+  x-data="usersCommentsPart"
   x-ref="userComments"
 >
   @forelse ($comments as $comment)

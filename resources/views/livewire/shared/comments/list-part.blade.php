@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('commentList', () => ({
+    Alpine.data('commentsListPart', () => ({
       listeners: [],
       currentScrollY: 0,
       init() {
@@ -31,10 +31,10 @@
 {{-- 留言列表 --}}
 <div
   class="w-full"
-  x-data="commentList"
+  x-data="commentsListPart"
 >
   @foreach ($commentsList as $comments)
-    <livewire:shared.comments.comment-group
+    <livewire:shared.comments.group-part
       :post-id="$postId"
       :post-user-id="$postUserId"
       :max-layer="$maxLayer"

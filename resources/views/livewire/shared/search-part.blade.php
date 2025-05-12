@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('search', () => ({
+    Alpine.data('searchPart', () => ({
       searchBarIsOpen: false,
       openSearchBar() {
         this.searchBarIsOpen = true;
@@ -27,7 +27,7 @@
   </script>
 @endscript
 
-<search x-data="search">
+<search x-data="searchPart">
   {{-- 搜尋按鈕 --}}
   <button
     class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-zinc-200 p-2 text-sm text-zinc-500 xl:flex dark:bg-zinc-600 dark:text-zinc-400"

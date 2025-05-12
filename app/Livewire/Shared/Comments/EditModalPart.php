@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class EditCommentModal extends Component
+class EditModalPart extends Component
 {
     use MarkdownConverter;
 
@@ -38,6 +38,6 @@ class EditCommentModal extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.comments.edit-comment-modal');
+        return view('livewire.shared.comments.edit-modal-part');
     }
 }

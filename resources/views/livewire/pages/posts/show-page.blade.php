@@ -67,7 +67,7 @@
             >
               {{-- mobile menu --}}
               @if (auth()->id() === $post->user_id)
-                <livewire:shared.posts.post-mobile-menu :post-id="$post->id" />
+                <livewire:shared.posts.mobile-menu-part :post-id="$post->id" />
               @endif
 
               <article>
@@ -169,7 +169,7 @@
               </div>
             </x-card>
 
-            <livewire:shared.comments.comment-board
+            <livewire:shared.comments.board-part
               :post-id="$post->id"
               :post-user-id="$post->user_id"
               :comment-counts="$post->comments_count"
@@ -178,7 +178,7 @@
 
           <div class="hidden xl:block xl:w-1/5">
             {{-- desktop side menu --}}
-            <livewire:shared.posts.post-desktop-menu
+            <livewire:shared.posts.desktop-menu-part
               :post-id="$post->id"
               :post-title="$post->title"
               :author-id="$post->user_id"

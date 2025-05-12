@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Shared;
+namespace App\Livewire\Shared\Posts;
 
 use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Random\RandomException;
 
-class UploadImage extends Component
+class UploadPreviewImagePart extends Component
 {
     use WithFileUploads;
 
@@ -55,6 +55,6 @@ class UploadImage extends Component
 
     public function render()
     {
-        return view('livewire.shared.upload-image');
+        return view('livewire.shared.posts.upload-preview-image-part');
     }
 }

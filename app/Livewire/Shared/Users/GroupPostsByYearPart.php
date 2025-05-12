@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class PostsGroupByYear extends Component
+class GroupPostsByYearPart extends Component
 {
     public int $userId;
 
@@ -79,6 +79,6 @@ class PostsGroupByYear extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.users.posts-group-by-year');
+        return view('livewire.shared.users.group-posts-by-year-part');
     }
 }

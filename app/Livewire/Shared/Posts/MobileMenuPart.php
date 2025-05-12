@@ -7,15 +7,10 @@ use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
-class PostDesktopMenu extends Component
+class MobileMenuPart extends Component
 {
     #[Locked]
-    public $postId;
-
-    public $postTitle;
-
-    #[Locked]
-    public $authorId;
+    public int $postId;
 
     public function destroy(Post $post): void
     {
@@ -25,20 +20,17 @@ class PostDesktopMenu extends Component
 
         $this->dispatch('toast', status: 'success', message: '成功刪除文章！');
 
-        $this->redirectRoute(
-            name: 'users.show',
-            parameters: [
+        $this->redirect(
+            route('users.show', [
                 'id' => auth()->id(),
                 'tab' => 'posts',
                 'current-posts-year' => $post->created_at->format('Y'),
-            ],
-            // @pest-mutate-ignore
-            navigate: true,
+            ])
         );
     }
 
     public function render(): View
     {
-        return view('livewire.shared.posts.post-desktop-menu');
+        return view('livewire.shared.posts.mobile-menu-part');
     }
 }

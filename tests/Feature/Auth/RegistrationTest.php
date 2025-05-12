@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Auth\RegisterPage;
-use App\Livewire\Shared\Header;
+use App\Livewire\Shared\HeaderPart;
 use App\Models\Setting;
 use App\Models\User;
 
@@ -207,5 +207,5 @@ test('guest can not see register button', function () {
         ->firstOrFail()
         ->update(['value' => false]);
 
-    livewire(Header::class)->assertDontSeeText('註冊');
+    livewire(HeaderPart::class)->assertDontSeeText('註冊');
 });

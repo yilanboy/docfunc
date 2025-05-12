@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Shared\Comments\CreateCommentModal;
+use App\Livewire\Shared\Comments\CreateModalPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -14,7 +14,7 @@ test('non-logged-in users can leave a anonymous comment', function () {
 
     $body = fake()->words(5, true);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
@@ -42,7 +42,7 @@ test('logged-in users can leave a comment', function () {
 
     $body = fake()->words(5, true);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
@@ -68,7 +68,7 @@ test('the message must be at least 5 characters long', function () {
 
     $body = str()->random(4);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
@@ -81,7 +81,7 @@ test('the message must be less than 2000 characters', function () {
 
     $body = str()->random(2001);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
@@ -94,7 +94,7 @@ test('the message must have the captcha token', function () {
 
     $body = fake()->words(5, true);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->call('save')
         ->assertHasErrors()
@@ -118,7 +118,7 @@ it('can see the comment preview', function () {
     - item 3
     MARKDOWN;
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->set('previewIsEnabled', true)
@@ -140,7 +140,7 @@ it('can reply to others comment', function () {
     $post = Post::factory()->create();
     $comment = Comment::factory()->create(['post_id' => $post->id]);
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.parent_id', $comment->id)
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')
@@ -163,7 +163,7 @@ it('will show alert, when user want to reply to deleted post', function () {
 
     $post->delete();
 
-    livewire(CreateCommentModal::class, ['postId' => $postId])
+    livewire(CreateModalPart::class, ['postId' => $postId])
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
@@ -179,7 +179,7 @@ it('will show alert, when user want to reply to deleted comment', function () {
 
     $comment->delete();
 
-    livewire(CreateCommentModal::class, ['postId' => $post->id])
+    livewire(CreateModalPart::class, ['postId' => $post->id])
         ->set('form.parent_id', $comment->id)
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')

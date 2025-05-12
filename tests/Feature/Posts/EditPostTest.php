@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Posts\EditPage as PostsEditPage;
-use App\Livewire\Shared\Users\PostsGroupByYear;
+use App\Livewire\Shared\Users\GroupPostsByYearPart;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\ContentService;
@@ -85,7 +85,7 @@ describe('edit post', function () {
 
         loginAsUser($post->user);
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'year' => now()->year,
             'userId' => $post->user_id,
             'posts' => $post->all(),
@@ -115,7 +115,7 @@ describe('edit post', function () {
 
         loginAsUser($post->user);
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'year' => now()->year,
             'userId' => $post->user_id,
             'posts' => $post->all(),

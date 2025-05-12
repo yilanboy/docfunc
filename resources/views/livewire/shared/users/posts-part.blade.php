@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('userPosts', () => ({
+    Alpine.data('usersPostsPart', () => ({
       currentYear: @entangle('currentPostsYear').live,
       dropdownIsOpen: false,
       toggleDropdown() {
@@ -23,8 +23,8 @@
   </script>
 @endscript
 
-<div x-data="userPosts">
-  @if (!empty($this->postsGroupByYear))
+<div x-data="usersPostsPart">
+  @if (!empty($this->groupPostsByYear))
     {{-- 會員文章 --}}
     <x-card class="relative w-full text-lg">
       <div class="relative mb-6 flex justify-end">
@@ -45,7 +45,7 @@
           x-transition:enter-start="-translate-y-2"
           x-transition:enter-end="translate-y-0"
         >
-          @foreach (array_keys($this->postsGroupByYear) as $year)
+          @foreach (array_keys($this->groupPostsByYear) as $year)
             <x-dropdown.button
               data-year="{{ $year }}"
               x-on:click="switchPostsByYear"
@@ -57,7 +57,7 @@
         </x-dropdown.menu>
       </div>
 
-      @foreach ($this->postsGroupByYear as $year => $posts)
+      @foreach ($this->groupPostsByYear as $year => $posts)
         <div
           class="rounded-md border border-zinc-200 bg-zinc-50 duration-200 dark:border-zinc-700 dark:bg-zinc-800"
           data-year="{{ $year }}"
@@ -66,7 +66,7 @@
           x-transition
           wire:key="{{ $year . '-posts' }}"
         >
-          <livewire:shared.users.posts-group-by-year
+          <livewire:shared.users.group-posts-by-year-part
             :key="$year . '-posts'"
             :user-id="$userId"
             :posts="$posts"

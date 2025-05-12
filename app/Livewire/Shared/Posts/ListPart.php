@@ -9,7 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class PostList extends Component
+class ListPart extends Component
 {
     use WithPagination;
 
@@ -47,6 +47,6 @@ class PostList extends Component
             ->paginate(10)
             ->withQueryString();
 
-        return view('livewire.shared.posts.post-list', compact('posts'));
+        return view('livewire.shared.posts.list-part', compact('posts'));
     }
 }

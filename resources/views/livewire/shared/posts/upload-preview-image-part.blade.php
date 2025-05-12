@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('uploadImage', () => ({
+    Alpine.data('postsUploadPreviewImagePart', () => ({
       isUploading: false,
       progress: 0,
       makeIsUploadingTrue() {
@@ -38,7 +38,7 @@
 
 <div
   class="col-span-2 text-base"
-  x-data="uploadImage"
+  x-data="postsUploadPreviewImagePart"
   x-on:livewire-upload-start="makeIsUploadingTrue"
   x-on:livewire-upload-finish="makeIsUploadingFalse"
   x-on:livewire-upload-error="makeIsUploadingFalse"

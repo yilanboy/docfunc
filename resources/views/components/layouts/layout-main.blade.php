@@ -4,7 +4,7 @@
 >
   <x-background />
 
-  <livewire:shared.header />
+  <livewire:shared.header-part />
 
   {{ $slot }}
 

@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('commentBoard', () => ({
+    Alpine.data('commentsBoardPart', () => ({
       orderDropdownIsOpen: false,
       openOrderDropdown() {
         this.orderDropdownIsOpen = true;
@@ -28,7 +28,7 @@
 
 <div
   class="w-full"
-  x-data="commentBoard"
+  x-data="commentsBoardPart"
 >
   <div class="mt-6 w-full">
     <div class="flex justify-between">
@@ -112,7 +112,7 @@
   </div>
 
   {{-- new root comment will show here --}}
-  <livewire:shared.comments.comment-group
+  <livewire:shared.comments.group-part
     :post-id="$postId"
     :post-user-id="$postUserId"
     :max-layer="$maxLayer"
@@ -121,7 +121,7 @@
   />
 
   {{-- root comment list --}}
-  <livewire:shared.comments.comment-list
+  <livewire:shared.comments.list-part
     :post-id="$postId"
     :post-user-id="$postUserId"
     :max-layer="$maxLayer"
@@ -130,8 +130,8 @@
   />
 
   {{-- create comment modal --}}
-  <livewire:shared.comments.create-comment-modal :post-id="$postId" />
+  <livewire:shared.comments.create-modal-part :post-id="$postId" />
 
   {{-- edit comment modal --}}
-  <livewire:shared.comments.edit-comment-modal />
+  <livewire:shared.comments.edit-modal-part />
 </div>

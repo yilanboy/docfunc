@@ -9,9 +9,9 @@ use Livewire\Attributes\Url;
 use Livewire\Component;
 
 /**
- * @property-read array<int, array<int, Post>> $postsGroupByYear
+ * @property-read array<int, array<int, Post>> $groupPostsByYear
  */
-class Posts extends Component
+class PostsPart extends Component
 {
     public int $userId;
 
@@ -27,7 +27,7 @@ class Posts extends Component
      * @return array<int, non-empty-list<Post>> $postsGroupByYear
      */
     #[Computed]
-    public function postsGroupByYear(): array
+    public function groupPostsByYear(): array
     {
         $posts = Post::whereUserId($this->userId)
             ->when(auth()->id() === $this->userId, function ($query) {
@@ -57,13 +57,13 @@ class Posts extends Component
 
     public function mount(): void
     {
-        if (! array_key_exists($this->currentPostsYear, $this->postsGroupByYear)) {
-            $this->currentPostsYear = array_key_first($this->postsGroupByYear) ?? '';
+        if (! array_key_exists($this->currentPostsYear, $this->groupPostsByYear)) {
+            $this->currentPostsYear = array_key_first($this->groupPostsByYear) ?? '';
         }
     }
 
     public function render(): View
     {
-        return view('livewire.shared.users.posts');
+        return view('livewire.shared.users.posts-part');
     }
 }

@@ -138,7 +138,7 @@
             >
               <div class="grid grid-cols-2 gap-5">
                 {{-- post preview image --}}
-                <livewire:shared.upload-image wire:model.live="form.preview_url" />
+                <livewire:shared.posts.upload-preview-image-part wire:model.live="form.preview_url" />
 
                 {{-- post classfication --}}
                 <div class="col-span-2 md:col-span-1">

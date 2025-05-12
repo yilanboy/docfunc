@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class Search extends Component
+class SearchPart extends Component
 {
     public string $search = '';
 
@@ -18,6 +18,6 @@ class Search extends Component
             $results = Post::search($this->search)->take(10)->get();
         }
 
-        return view('livewire.shared.search', ['results' => $results]);
+        return view('livewire.shared.search-part', ['results' => $results]);
     }
 }

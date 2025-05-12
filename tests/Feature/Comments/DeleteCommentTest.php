@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Shared\Comments\CommentGroup;
+use App\Livewire\Shared\Comments\GroupPart;
 use App\Models\Comment;
 use App\Models\User;
 
@@ -11,7 +11,7 @@ test('the author can delete his comment', function () {
 
     Livewire::actingAs(User::find($comment->user_id));
 
-    livewire(CommentGroup::class, [
+    livewire(GroupPart::class, [
         'postId' => $comment->post_id,
         'postUserId' => $comment->post->user_id,
         'maxLayer' => 2,
@@ -33,7 +33,7 @@ test('post author can delete other users comment', function () {
 
     Livewire::actingAs(User::find($comment->post->user_id));
 
-    livewire(CommentGroup::class, [
+    livewire(GroupPart::class, [
         'postId' => $comment->post_id,
         'postUserId' => $comment->post->user_id,
         'maxLayer' => 2,
@@ -58,7 +58,7 @@ it('will show alert when user want to delete the deleted comment', function () {
 
     $comment->delete();
 
-    livewire(CommentGroup::class, [
+    livewire(GroupPart::class, [
         'postId' => $postId,
         'postUserId' => $postAuthorId,
         'maxLayer' => 2,

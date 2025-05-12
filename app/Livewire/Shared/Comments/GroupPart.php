@@ -9,7 +9,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class CommentGroup extends Component
+class GroupPart extends Component
 {
     use MarkdownConverter;
 
@@ -95,6 +95,6 @@ class CommentGroup extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.comments.comment-group');
+        return view('livewire.shared.comments.group-part');
     }
 }

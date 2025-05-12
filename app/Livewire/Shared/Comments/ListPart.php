@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-class CommentList extends Component
+class ListPart extends Component
 {
     #[Locked]
     public int $postId;
@@ -155,6 +155,6 @@ class CommentList extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.comments.comment-list');
+        return view('livewire.shared.comments.list-part');
     }
 }

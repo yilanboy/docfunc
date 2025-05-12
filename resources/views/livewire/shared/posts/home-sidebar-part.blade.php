@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('homeSideMenu', () => ({
+    Alpine.data('homeSideMenuPart', () => ({
       rssLinkLabel: '訂閱 RSS',
       copyWebFeedUrl() {
         navigator.clipboard.writeText(this.$el.getAttribute('href')).then(
@@ -16,7 +16,7 @@
 
 <div
   class="space-y-6"
-  x-data="homeSideMenu"
+  x-data="homeSideMenuPart"
 >
   {{-- 介紹 --}}
   <x-card class="group dark:text-zinc-50">

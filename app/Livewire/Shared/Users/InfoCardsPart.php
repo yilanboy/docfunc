@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\View\View;
 use Livewire\Component;
 
-class InfoCards extends Component
+class InfoCardsPart extends Component
 {
     public string $userId;
 
@@ -33,7 +33,7 @@ class InfoCards extends Component
         ])->get();
 
         return view(
-            'livewire.shared.users.info-cards',
+            'livewire.shared.users.info-cards-part',
             compact('user', 'categories', 'commentCountsInAllPosts'),
         );
     }

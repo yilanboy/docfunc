@@ -9,7 +9,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Comments extends Component
+class CommentsPart extends Component
 {
     use MarkdownConverter;
     use WithPagination;
@@ -37,6 +37,6 @@ class Comments extends Component
             return $comment;
         });
 
-        return view('livewire.shared.users.comments', ['comments' => $comments]);
+        return view('livewire.shared.users.comments-part', ['comments' => $comments]);
     }
 }

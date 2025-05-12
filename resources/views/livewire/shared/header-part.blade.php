@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('header', () => ({
+    Alpine.data('headerPart', () => ({
       html: document.documentElement,
       // dropdown only show in mobile
       dropdownMenuIsOpen: false,
@@ -36,7 +36,7 @@
 <nav
   class="z-20 mb-6"
   id="header"
-  x-data="header"
+  x-data="headerPart"
 >
   <div
     class="relative hidden h-20 w-full items-center justify-center bg-zinc-50 transition-all duration-300 lg:flex dark:bg-zinc-800"
@@ -80,7 +80,7 @@
     <div class="absolute inset-y-1/2 right-6 flex items-center space-x-5">
 
       {{-- search --}}
-      <livewire:shared.search />
+      <livewire:shared.search-part />
 
       {{-- light / dark mode toggle --}}
       <button

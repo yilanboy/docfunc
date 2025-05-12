@@ -13,7 +13,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Throwable;
 
-class CreateCommentModal extends Component
+class CreateModalPart extends Component
 {
     use MarkdownConverter;
 
@@ -110,6 +110,6 @@ class CreateCommentModal extends Component
 
     public function render(): View
     {
-        return view('livewire.shared.comments.create-comment-modal');
+        return view('livewire.shared.comments.create-modal-part');
     }
 }

@@ -31,9 +31,9 @@ enum UserInfoOptions: string implements OptionsInterface
     public function livewireComponentName(): string
     {
         return match ($this) {
-            self::INFORMATION => 'shared.users.info-cards',
-            self::POSTS => 'shared.users.posts',
-            self::COMMENTS => 'shared.users.comments',
+            self::INFORMATION => 'shared.users.info-cards-part',
+            self::POSTS => 'shared.users.posts-part',
+            self::COMMENTS => 'shared.users.comments-part',
         };
     }
 }

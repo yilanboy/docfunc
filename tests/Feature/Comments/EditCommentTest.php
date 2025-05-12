@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Shared\Comments\EditCommentModal;
+use App\Livewire\Shared\Comments\EditModalPart;
 use App\Models\Comment;
 use App\Models\User;
 
@@ -18,7 +18,7 @@ test('logged-in users can update their comments', function () {
 
     $body = 'new comment';
 
-    livewire(EditCommentModal::class)
+    livewire(EditModalPart::class)
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertDispatched('close-edit-comment-modal')
@@ -39,7 +39,7 @@ test('the updated message must be at least 5 characters long', function () {
 
     $body = str()->random(4);
 
-    livewire(EditCommentModal::class)
+    livewire(EditModalPart::class)
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'min:5'])
@@ -60,7 +60,7 @@ test('the updated message must be less than 2000 characters', function () {
 
     $body = str()->random(2001);
 
-    livewire(EditCommentModal::class)
+    livewire(EditModalPart::class)
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'max:2000'])
@@ -77,7 +77,7 @@ test('users can\'t update others\' comments', function () {
 
     $body = 'new comment';
 
-    livewire(EditCommentModal::class)
+    livewire(EditModalPart::class)
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertForbidden();
@@ -103,7 +103,7 @@ it('can see the comment preview', function () {
     - item 3
     MARKDOWN;
 
-    livewire(EditCommentModal::class)
+    livewire(EditModalPart::class)
         ->set('form.body', $body)
         ->set('previewIsEnabled', true)
         ->assertSeeHtmlInOrder([

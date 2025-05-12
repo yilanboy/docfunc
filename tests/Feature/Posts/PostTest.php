@@ -1,7 +1,7 @@
 <?php
 
 use App\Enums\PostOrderOptions;
-use App\Livewire\Shared\Posts\PostList;
+use App\Livewire\Shared\Posts\ListPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
@@ -30,7 +30,7 @@ describe('home page', function () {
 
         get(route('posts.index'))
             ->assertStatus(200)
-            ->assertSeeLivewire(PostList::class);
+            ->assertSeeLivewire(ListPart::class);
     });
 
     it('will be redirect if slug is not in the url', function () {
@@ -48,13 +48,13 @@ describe('home page', function () {
             'category_id' => 1,
         ]);
 
-        livewire(PostList::class, [
+        livewire(ListPart::class, [
             'categoryId' => 1,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 1;
         });
 
-        livewire(PostList::class, [
+        livewire(ListPart::class, [
             'categoryId' => 2,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 0;
@@ -74,13 +74,13 @@ describe('home page', function () {
             app(FormatTransferService::class)->tagsJsonToTagIdsArray($tagOneJsonString)
         );
 
-        livewire(PostList::class, [
+        livewire(ListPart::class, [
             'tagId' => 1,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 1;
         });
 
-        livewire(PostList::class, [
+        livewire(ListPart::class, [
             'tagId' => 2,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 0;
@@ -114,7 +114,7 @@ describe('home page', function () {
             ]);
 
         Livewire::withQueryParams(['order' => $queryString])
-            ->test(PostList::class)
+            ->test(ListPart::class)
             ->assertViewHas('posts', function ($posts) use ($title) {
                 return $posts->first()->title === $title;
             });
@@ -150,7 +150,7 @@ describe('home page', function () {
                 'updated_at' => now()->subDays(15),
             ]);
 
-        Livewire::test(PostList::class, ['categoryId' => 0, 'tagId' => 0])
+        Livewire::test(ListPart::class, ['categoryId' => 0, 'tagId' => 0])
             ->call('changeOrder', $order)
             ->assertViewHas('posts', function ($posts) use ($title) {
                 return $posts->first()->title === $title;
@@ -290,7 +290,7 @@ describe('home page', function () {
             'updated_at' => now(),
         ]);
 
-        livewire(PostList::class)
+        livewire(ListPart::class)
             ->set('order', PostOrderOptions::LATEST->value)
             ->assertSee($latestPost->title)
             ->assertDontSee($latestUpdatedPost->title)

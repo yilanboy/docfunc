@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Posts\CreatePage as PostsCreatePage;
-use App\Livewire\Shared\UploadImage;
+use App\Livewire\Shared\Posts\UploadPreviewImagePart;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
@@ -134,7 +134,7 @@ describe('create post', function () {
     it('can check image type', function () {
         $file = UploadedFile::fake()->create('document.pdf', 512);
 
-        livewire(UploadImage::class)
+        livewire(UploadPreviewImagePart::class)
             ->set('image', $file)
             ->assertHasErrors('image');
     });
@@ -142,7 +142,7 @@ describe('create post', function () {
     it('can check image size', function () {
         $file = UploadedFile::fake()->image('image.jpg')->size(1025);
 
-        livewire(UploadImage::class)
+        livewire(UploadPreviewImagePart::class)
             ->set('image', $file)
             ->assertHasErrors('image');
     });
@@ -152,7 +152,7 @@ describe('create post', function () {
 
         $image = UploadedFile::fake()->image('fake_image.jpg');
 
-        livewire(UploadImage::class)
+        livewire(UploadPreviewImagePart::class)
             ->set('image', $image)
             ->assertHasNoErrors()
             ->assertSeeHtml('id="upload-image"');
@@ -165,7 +165,7 @@ describe('create post', function () {
 
         $file = UploadedFile::fake()->create('document.pdf', 512);
 
-        livewire(UploadImage::class)
+        livewire(UploadPreviewImagePart::class)
             ->set('image', $file)
             ->assertHasErrors('image')
             ->assertDontSeeHtml('id="upload-image"');

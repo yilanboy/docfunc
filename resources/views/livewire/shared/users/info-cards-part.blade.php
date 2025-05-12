@@ -1,6 +1,6 @@
 @script
   <script>
-    Alpine.data('userInfoCards', () => ({
+    Alpine.data('usersInfoCardsPart', () => ({
       init() {
         document.querySelectorAll('.count-up').forEach((countUp) => {
           let from = 0;
@@ -32,7 +32,7 @@
 {{-- 會員基本資訊 --}}
 <div
   class="grid w-full grid-cols-6 gap-6 dark:text-zinc-50"
-  x-data="userInfoCards"
+  x-data="usersInfoCardsPart"
 >
   <div
     class="bg-linear-to-br p-(--card-padding) rounded-(--card-radius) col-span-6 from-green-500 via-emerald-500 to-teal-500 [--card-padding:--spacing(1)] [--card-radius:var(--radius-2xl)] md:col-span-2 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500"

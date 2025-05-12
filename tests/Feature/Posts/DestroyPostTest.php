@@ -1,15 +1,15 @@
 <?php
 
-use App\Livewire\Shared\Posts\PostDesktopMenu;
-use App\Livewire\Shared\Posts\PostMobileMenu;
-use App\Livewire\Shared\Users\PostsGroupByYear;
+use App\Livewire\Shared\Posts\DesktopMenuPart;
+use App\Livewire\Shared\Posts\MobileMenuPart;
+use App\Livewire\Shared\Users\GroupPostsByYearPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 
 use function Pest\Livewire\livewire;
 
-// covers(PostMobileMenu::class, PostDesktopMenu::class, PostsGroupByYear::class);
+// covers(MobileMenuPart::class, DesktopMenuPart::class, GroupPostsByYearPart::class);
 
 describe('destroy post', function () {
     test('author can soft delete own post in desktop show post page', function () {
@@ -17,7 +17,7 @@ describe('destroy post', function () {
 
         $this->actingAs(User::find($post->user_id));
 
-        livewire(PostDesktopMenu::class, [
+        livewire(DesktopMenuPart::class, [
             'postId' => $post->id,
             'postTitle' => $post->title,
             'authorId' => $post->user_id,
@@ -36,7 +36,7 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in desktop show post page', function () {
         $post = Post::factory()->create();
 
-        livewire(PostDesktopMenu::class, [
+        livewire(DesktopMenuPart::class, [
             'postId' => $post->id,
             'postTitle' => $post->title,
             'authorId' => $post->user_id,
@@ -53,7 +53,7 @@ describe('destroy post', function () {
         // Login as another user
         loginAsUser();
 
-        livewire(PostDesktopMenu::class, [
+        livewire(DesktopMenuPart::class, [
             'postId' => $post->id,
             'postTitle' => $post->title,
             'authorId' => $post->user_id,
@@ -69,7 +69,7 @@ describe('destroy post', function () {
 
         loginAsUser(User::find($post->user_id));
 
-        livewire(PostMobileMenu::class, ['postId' => $post->id])
+        livewire(MobileMenuPart::class, ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertDispatched('toast', status: 'success', message: '成功刪除文章！')
             ->assertRedirect(route('users.show', [
@@ -84,7 +84,7 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in mobile show post page', function () {
         $post = Post::factory()->create();
 
-        livewire(PostMobileMenu::class, ['postId' => $post->id])
+        livewire(MobileMenuPart::class, ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertForbidden();
 
@@ -96,7 +96,7 @@ describe('destroy post', function () {
 
         loginAsUser();
 
-        livewire(PostMobileMenu::class, ['postId' => $post->id])
+        livewire(MobileMenuPart::class, ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertForbidden();
 
@@ -108,7 +108,7 @@ describe('destroy post', function () {
 
         loginAsUser(User::find($post->user_id));
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $post->user_id,
             'year' => $post->created_at->format('Y'),
@@ -122,7 +122,7 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in user information post card', function () {
         $post = Post::factory()->create();
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $post->user_id,
             'year' => $post->created_at->format('Y'),
@@ -138,7 +138,7 @@ describe('destroy post', function () {
 
         loginAsUser();
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $post->user_id,
             'year' => $post->created_at->format('Y'),
@@ -161,7 +161,7 @@ describe('destroy post', function () {
 
         $this->assertSoftDeleted('posts', ['id' => $post->id]);
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $post->user_id,
             'year' => $post->created_at->format('Y'),
@@ -184,7 +184,7 @@ describe('destroy post', function () {
 
         $oldUpdatedAt = $post->updated_at;
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $post->user_id,
             'year' => $post->created_at->format('Y'),
@@ -210,7 +210,7 @@ describe('destroy post', function () {
             'deleted_at' => now(),
         ]);
 
-        livewire(PostsGroupByYear::class, [
+        livewire(GroupPostsByYearPart::class, [
             'posts' => [$post],
             'userId' => $user->id,
             'year' => $post->created_at->format('Y'),
