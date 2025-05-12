@@ -35,13 +35,15 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     return copyButton;
 }
 
-function createExpandCodeButton(preOuterHtml: string): HTMLButtonElement {
+function createExpandCodeButton(pre: HTMLPreElement): HTMLButtonElement {
+    pre.classList.add('min-w-3xl');
+
     const expandCodeButton: HTMLButtonElement =
         document.createElement('button');
     expandCodeButton.classList.add(...button.BASE_CLASS_NAME);
     expandCodeButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-    const modal = new Modal({ innerHtml: preOuterHtml });
+    const modal = new Modal({ innerHtml: pre.outerHTML });
 
     expandCodeButton.addEventListener(
         'click',
@@ -104,12 +106,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         const code: HTMLElement = codes[0];
 
-        code.classList.add(
-            'font-jetbrains-mono',
-            'text-lg',
-            'font-semibold',
-            'min-w-2xl',
-        );
+        code.classList.add('font-jetbrains-mono', 'text-lg', 'font-semibold');
 
         // get language from code class name, the class name is like "language-javascript"
         // we need to get the last part of the class name
@@ -124,7 +121,9 @@ window.codeBlockHelper = function (element: HTMLElement): void {
             code.innerText,
         );
 
-        const expandCodeButton = createExpandCodeButton(preTag.outerHTML);
+        const expandCodeButton = createExpandCodeButton(
+            preTag.cloneNode(true) as HTMLPreElement,
+        );
 
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(
