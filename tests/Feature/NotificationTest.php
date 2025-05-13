@@ -10,6 +10,10 @@ use function Pest\Faker\fake;
 use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;
 
+test("guest can't visit notification page", function () {
+    get(route('notifications.index'))->assertRedirectToRoute('login');
+});
+
 test('you will receive a notification when there is a comment on your post', function () {
     Notification::fake();
 
