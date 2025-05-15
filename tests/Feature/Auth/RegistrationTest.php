@@ -43,6 +43,25 @@ test('guest can register', function () {
     ]);
 });
 
+test('password will be hashed', function () {
+    livewire(RegisterPage::class)
+        ->set('name', 'Test User')
+        ->set('email', 'test@example.com')
+        ->set('password', 'Password101')
+        ->set('password_confirmation', 'Password101')
+        ->set('captchaToken', 'fake-captcha-response')
+        ->call('register')
+        ->assertRedirect('/verify-email');
+
+    $this->assertAuthenticated();
+
+    $user = User::query()
+        ->where('email', 'test@example.com')
+        ->firstOrFail();
+
+    expect(Hash::check('Password101', $user->password))->toBeTrue();
+});
+
 test('name is required', function () {
     livewire(RegisterPage::class)
         ->set('name', '')

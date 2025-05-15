@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Rules\Captcha;
 use App\Services\SettingService;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -40,10 +40,10 @@ class RegisterPage extends Component
         ]);
 
         $validated['name'] = trim($validated['name']);
-        $validated['password'] = Hash::make($validated['password']);
-        unset($validated['captchaToken']);
 
-        event(new Registered(($user = User::create($validated))));
+        $user = User::create(Arr::only($validated, ['name', 'email', 'password']));
+
+        event(new Registered($user));
 
         Auth::login($user);
 
