@@ -23,7 +23,7 @@
   @include('feed::links')
 
   {{-- Favicon --}}
-  <link rel="icon" href="{{ asset('images/icon/icon.png') }}" type="image/png">
+  <link rel="icon" href="{{ asset('images/icon/logo.svg') }}" type="image/png">
 
   {{-- Font --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">

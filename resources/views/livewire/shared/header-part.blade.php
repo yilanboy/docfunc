@@ -49,8 +49,13 @@
       wire:navigate
     >
       <img
-        class="size-10"
-        src="{{ asset('images/icon/icon.png') }}"
+        class="block size-10 dark:hidden"
+        src="{{ asset('images/icon/logo.svg') }}"
+        alt="logo"
+      >
+      <img
+        class="hidden size-10 dark:block"
+        src="{{ asset('images/icon/dark-logo.svg') }}"
         alt="logo"
       >
       <span class="ml-3 font-mono text-2xl font-bold dark:text-zinc-50">{{ config('app.name') }}</span>
@@ -231,8 +236,13 @@
 
         <div class="mx-auto flex items-center">
           <img
-            class="hidden size-10 md:inline-block"
-            src="{{ asset('images/icon/icon.png') }}"
+            class="block size-10 dark:hidden"
+            src="{{ asset('images/icon/logo.svg') }}"
+            alt="logo"
+          >
+          <img
+            class="hidden size-10 dark:block"
+            src="{{ asset('images/icon/dark-logo.svg') }}"
             alt="logo"
           >
           <span class="ml-3 hidden font-mono text-xl font-bold md:block dark:text-zinc-50">
@@ -285,7 +295,8 @@
 
               @if (auth()->user()->unreadNotifications->count() > 0)
                 <span class="absolute right-2 top-2 -mr-1 -mt-1 flex h-3 w-3">
-                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                  <span
+                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                   <span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
                 </span>
               @endif
