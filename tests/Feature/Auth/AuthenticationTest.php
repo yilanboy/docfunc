@@ -2,6 +2,7 @@
 
 use App\Livewire\Pages\Auth\LoginPage;
 use App\Livewire\Shared\HeaderPart;
+use App\Models\Passkey;
 use App\Models\User;
 
 use function Pest\Laravel\get;
@@ -78,6 +79,23 @@ test('login user can logout', function () {
 
     livewire(HeaderPart::class)
         ->call('logout');
+
+    $this->assertGuest();
+});
+
+test("users can't login if they has a passkey", function () {
+    $user = User::factory()->create([
+        'password' => bcrypt('correctPassword101'),
+    ]);
+
+    Passkey::factory()
+        ->create(['user_id' => $user->id]);
+
+    livewire(LoginPage::class)
+        ->set('email', $user->email)
+        ->set('password', 'correctPassword101')
+        ->call('login')
+        ->assertSeeText('您的帳號已註冊密碼金鑰，請使用密碼金鑰進行登入');
 
     $this->assertGuest();
 });
