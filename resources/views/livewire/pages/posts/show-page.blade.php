@@ -61,15 +61,15 @@
           </div>
 
           <div class="flex w-full max-w-3xl flex-col items-center justify-start px-2 xl:px-0">
+            {{-- mobile menu --}}
+            @if (auth()->id() === $post->user_id)
+              <livewire:shared.posts.mobile-menu-part :post-id="$post->id" />
+            @endif
+
             <x-card
               class="w-full"
               x-ref="postCard"
             >
-              {{-- mobile menu --}}
-              @if (auth()->id() === $post->user_id)
-                <livewire:shared.posts.mobile-menu-part :post-id="$post->id" />
-              @endif
-
               <article>
                 {{-- post title --}}
                 <h1 class="dark:text-lividus-500 text-4xl font-semibold leading-relaxed text-emerald-600">
