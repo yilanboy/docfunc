@@ -142,8 +142,18 @@
     padding: 1rem;
 }
 
+#edit-post pre > code {
+    display: block;
+    overflow-x: auto;
+}
+
 #create-post pre {
     padding: 1rem;
+}
+
+#create-post pre > code {
+    display: block;
+    overflow-x: auto;
 }
 
 /* Alpine.js */
