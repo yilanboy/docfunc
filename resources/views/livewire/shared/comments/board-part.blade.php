@@ -132,6 +132,8 @@
   {{-- create comment modal --}}
   <livewire:shared.comments.create-modal-part :post-id="$postId" />
 
-  {{-- edit comment modal --}}
-  <livewire:shared.comments.edit-modal-part />
+  @auth
+    {{-- edit comment modal --}}
+    <livewire:shared.comments.edit-modal-part />
+  @endauth
 </div>

@@ -8,8 +8,9 @@
       comment: {
         id: null,
         groupName: null,
-        body: @entangle('form.body')
+        body: $wire.entangle('form.body').live
       },
+      previewIsEnable: false,
       openModal(event) {
         this.comment.id = event.detail.id;
         this.comment.groupName = event.detail.groupName;
@@ -21,6 +22,7 @@
       },
       closeModal() {
         this.modal.isOpen = false;
+        this.previewIsEnable = false;
       },
       submitModal() {
         this.$wire.save(this.comment.id, this.comment.groupName);
@@ -30,6 +32,9 @@
       },
       bodyIsEmpty() {
         return this.comment.body === '';
+      },
+      previewIsDisable() {
+        return this.previewIsEnable === false;
       },
       init() {
         let previewObserver = new MutationObserver(() => {
@@ -104,17 +109,24 @@
       >
         <x-auth-validation-errors :errors="$errors" />
 
-        @if ($previewIsEnabled)
-          <div class="space-y-2">
-            <div class="space-x-4">
-              <span class="font-semibold dark:text-zinc-50">{{ auth()->user()->name }}</span>
-              <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
-            </div>
-            <div class="rich-text h-80 overflow-auto">
-              {!! $this->removeHeadingInHtml($this->convertToHtml($this->form->body)) !!}
-            </div>
+        <div
+          class="space-y-2"
+          x-cloak
+          x-show="previewIsEnable"
+        >
+          <div class="space-x-4">
+            <span class="font-semibold dark:text-zinc-50"> {{ auth()->user()->name }}</span>
+            <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
           </div>
-        @else
+          <div class="rich-text h-80 overflow-auto">
+            {!! $this->removeHeadingInHtml($this->convertToHtml($this->form->body)) !!}
+          </div>
+        </div>
+
+        <div
+          x-cloak
+          x-show="previewIsDisable"
+        >
           <x-floating-label-textarea
             id="edit-comment-body"
             x-ref="editCommentTextarea"
@@ -124,12 +136,12 @@
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required
           />
-        @endif
+        </div>
 
         <div class="flex items-center justify-between space-x-3">
           <x-toggle-switch
             id="edit-comment-modal-preview"
-            wire:model.live="previewIsEnabled"
+            x-model="previewIsEnable"
             x-bind:disabled="bodyIsEmpty"
           >
             預覽

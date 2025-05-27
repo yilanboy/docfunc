@@ -15,8 +15,6 @@ class EditModalPart extends Component
 
     public CommentForm $form;
 
-    public bool $previewIsEnabled = false;
-
     /**
      * @throws AuthorizationException
      */

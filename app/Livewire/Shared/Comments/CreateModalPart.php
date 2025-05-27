@@ -22,8 +22,6 @@ class CreateModalPart extends Component
     #[Locked]
     public int $postId;
 
-    public bool $previewIsEnabled = false;
-
     public string $captchaToken = '';
 
     protected function rules(): array
@@ -105,7 +103,7 @@ class CreateModalPart extends Component
 
         $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
 
-        $this->reset('form.body', 'form.parent_id', 'previewIsEnabled');
+        $this->reset('form.body', 'form.parent_id');
     }
 
     public function render(): View

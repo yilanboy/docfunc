@@ -105,7 +105,6 @@ it('can see the comment preview', function () {
 
     livewire(EditModalPart::class)
         ->set('form.body', $body)
-        ->set('previewIsEnabled', true)
         ->assertSeeHtmlInOrder([
             '<p>Title</p>',
             '<p>This is a <strong>comment</strong></p>',
