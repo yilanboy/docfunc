@@ -119,7 +119,7 @@
             <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
           </div>
           <div class="rich-text h-80 overflow-auto">
-            {!! $this->removeHeadingInHtml($this->convertToHtml($this->form->body)) !!}
+            {!! $this->convertToHtml($this->form->body) !!}
           </div>
         </div>
 

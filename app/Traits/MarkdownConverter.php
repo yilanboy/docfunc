@@ -3,9 +3,12 @@
 namespace App\Traits;
 
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\MarkdownConverter as CommonMarkdownConverter;
+use League\CommonMark\Node\Block\Paragraph;
 
 trait MarkdownConverter
 {
@@ -27,32 +30,27 @@ trait MarkdownConverter
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension);
         $environment->addExtension(new ExternalLinkExtension);
+        // replace heading to paragraph
+        $environment->addEventListener(DocumentParsedEvent::class, function (DocumentParsedEvent $event) {
+            $walker = $event->getDocument()->walker();
+
+            while ($event = $walker->next()) {
+                $node = $event->getNode();
+
+                if ($node instanceof Heading) {
+                    $paragraph = new Paragraph;
+
+                    foreach ($node->children() as $child) {
+                        $paragraph->appendChild($child);
+                    }
+
+                    $node->replaceWith($paragraph);
+                }
+            }
+        });
 
         $converter = new CommonMarkdownConverter($environment);
 
         return $converter->convert($body);
-    }
-
-    public function removeHeadingInHtml(string $html): string
-    {
-        $search = [
-            '<h1>', '</h1>',
-            '<h2>', '</h2>',
-            '<h3>', '</h3>',
-            '<h4>', '</h4>',
-            '<h5>', '</h5>',
-            '<h6>', '</h6>',
-        ];
-
-        $replace = [
-            '<p>', '</p>',
-            '<p>', '</p>',
-            '<p>', '</p>',
-            '<p>', '</p>',
-            '<p>', '</p>',
-            '<p>', '</p>',
-        ];
-
-        return str_replace($search, $replace, $html);
     }
 }

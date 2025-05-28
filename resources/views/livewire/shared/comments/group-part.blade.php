@@ -91,7 +91,7 @@
         </div>
 
         <div class="rich-text">
-          {!! $this->removeHeadingInHtml($this->convertToHtml($comment['body'])) !!}
+          {!! $this->convertToHtml($comment['body']) !!}
         </div>
 
         <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
