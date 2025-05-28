@@ -63,7 +63,7 @@
 @utility rich-text {
     @apply prose text-lg max-w-none prose-slate dark:prose-invert leading-8
     /* paragraph */
-    prose-p:break-all
+    prose-p:break-all lg:prose-p:break-normal
     /*  heading  */
     prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
     prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
