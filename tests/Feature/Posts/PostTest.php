@@ -161,13 +161,9 @@ describe('home page', function () {
         ['comment', 'this post has the most comments'],
     ]);
 
-    test('user can view a post', function () {
-        $user = loginAsUser();
-
-        $post = Post::factory()->make();
-        $post->user_id = $user->id;
-        $post->category_id = 3;
-        $post->save();
+    test('guest can view a post with comments', function () {
+        $post = Post::factory()->create();
+        Comment::factory(10)->create(['post_id' => $post->id]);
 
         get($post->link_with_slug)
             ->assertStatus(200)
