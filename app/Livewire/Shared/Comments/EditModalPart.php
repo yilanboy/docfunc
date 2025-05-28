@@ -5,6 +5,7 @@ namespace App\Livewire\Shared\Comments;
 use App\Livewire\Forms\CommentForm;
 use App\Models\Comment;
 use App\Traits\MarkdownConverter;
+use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -14,6 +15,16 @@ class EditModalPart extends Component
     use MarkdownConverter;
 
     public CommentForm $form;
+
+    /**
+     * @throws Exception
+     */
+    public function mount(): void
+    {
+        if (! auth()->check()) {
+            throw new Exception(message: 'Edit modal part component requires authentication.');
+        }
+    }
 
     /**
      * @throws AuthorizationException

@@ -6,6 +6,15 @@ use App\Models\User;
 
 use function Pest\Livewire\livewire;
 
+test('edit comment modal part will throw an error if not logged in', function () {
+    livewire(EditModalPart::class);
+})->throws(Exception::class);
+
+test('edit comment modal part can be rendered by logged in users', function () {
+    loginAsUser();
+    livewire(EditModalPart::class);
+})->throwsNoExceptions();
+
 test('logged-in users can update their comments', function () {
     $oldBody = 'old comment';
     $commentGroupName = '1-comment-group';
