@@ -33,6 +33,8 @@ it('can filter the dangerous HTML element', function () {
 it('can keep the custom HTML elements we want', function () {
     $body = <<<'HTML'
         <body>
+            <p style="text-align:right;">by my friend</p>
+
             <span class="text-tiny">Could you keep it down, please?</span>
 
             <pre data-language="Bash" spellcheck="false">
@@ -41,7 +43,7 @@ it('can keep the custom HTML elements we want', function () {
 
             <a href="https://google.com">Google</a>
 
-            <figure class="media image-block-helper-added group relative">
+            <figure class="media image-block-helper-added group relative" style="width:75%;">
                 <img src="image.jpg" alt="share">
                 <figcaption>Share Image</figcaption>
             </figure>
@@ -51,13 +53,14 @@ it('can keep the custom HTML elements we want', function () {
     HTML;
 
     expect($this->contentService->htmlPurifier($body))
+        ->toContain('<p style="text-align:right;">by my friend</p>')
         ->toContain('<span class="text-tiny">Could you keep it down, please?</span>')
         ->toContain('<pre data-language="Bash" spellcheck="false">')
         ->toContain('<code class="language-bash">mkdir highlight-blade</code>')
-        ->toContain('<a href="https://google.com" rel="nofollow noreferrer noopener" target="_blank">Google</a>')
-        ->toContain('<figure class="media image-block-helper-added group relative">')
+        ->toContain('<a href="https://google.com" rel="noopener noreferrer" target="_blank">Google</a>')
+        ->toContain('<figure class="media image-block-helper-added group relative" style="width:75%;">')
         ->toContain('<figcaption>Share Image</figcaption>')
-        ->toContain('<oembed url="https://www.youtube.com/watch?v=rvln9U9w8ZI" class="oembed-processed"></oembed>');
+        ->toContain('<oembed url="https://www.youtube.com/watch?v&#61;rvln9U9w8ZI" class="oembed-processed"></oembed>');
 });
 
 it('can find all images in the post body', function () {

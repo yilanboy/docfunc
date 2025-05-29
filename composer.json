@@ -15,7 +15,6 @@
         "aws/aws-sdk-php": "^3.247",
         "bref/bref": "^2.3",
         "bref/laravel-bridge": "^2.2",
-        "ezyang/htmlpurifier": "^4.18",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.3",
@@ -25,6 +24,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^3.0",
         "spatie/laravel-feed": "^4.1",
+        "symfony/html-sanitizer": "^7.3",
         "web-auth/webauthn-lib": "^5.2"
     },
     "require-dev": {
