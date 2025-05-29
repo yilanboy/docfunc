@@ -32,6 +32,15 @@ class ListPart extends Component
     public function render(): View
     {
         $posts = Post::query()
+            ->select([
+                'id',
+                'category_id',
+                'user_id',
+                'title',
+                'excerpt',
+                'slug',
+                'created_at',
+            ])
             ->withCount('tags') // 計算標籤數目
             ->when($this->categoryId, function ($query) {
                 return $query->where('category_id', $this->categoryId);
@@ -43,7 +52,7 @@ class ListPart extends Component
             })
             ->where('is_private', false)
             ->withOrder($this->order)
-            ->with('user', 'category', 'tags') // 預加載防止 N+1 問題
+            ->with('user:id,name', 'category:id,icon,name', 'tags:id,name') // 預加載防止 N+1 問題
             ->paginate(10)
             ->withQueryString();
 
