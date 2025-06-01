@@ -1,38 +1,5 @@
-@script
-  <script>
-    Alpine.data('commentsListPart', () => ({
-      listeners: [],
-      currentScrollY: 0,
-      init() {
-        this.listeners.push(
-          this.$wire.$hook('commit.prepare', () => {
-            this.currentScrollY = window.scrollY;
-          }),
-          this.$wire.$hook('morph.updated', () => {
-            // make sure scroll position will update after dom updated
-            queueMicrotask(() => {
-              window.scrollTo({
-                top: this.currentScrollY,
-                behavior: 'instant'
-              });
-            });
-          })
-        );
-      },
-      destroy() {
-        this.listeners.forEach((listener) => {
-          listener();
-        });
-      }
-    }));
-  </script>
-@endscript
-
 {{-- 留言列表 --}}
-<div
-  class="w-full"
-  x-data="commentsListPart"
->
+<div class="w-full">
   @foreach ($commentsList as $comments)
     <livewire:shared.comments.group-part
       :post-id="$postId"
@@ -52,6 +19,7 @@
         class="shadow-xs cursor-pointer rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-600 hover:bg-emerald-100 dark:bg-gray-700 dark:text-zinc-50 dark:hover:bg-gray-600"
         type="button"
         wire:click="showMoreComments"
+        wire:retain
       >
         <x-icons.animate-spin
           class="mr-2 size-5"

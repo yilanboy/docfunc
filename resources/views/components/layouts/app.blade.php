@@ -25,7 +25,7 @@
   {{-- Favicon --}}
   <link rel="icon" href="{{ asset('images/icon/logo.svg') }}" type="image/png">
 
-  @vite('resources/css/app.css')
+  @vite(['resources/ts/app.ts','resources/css/app.css'])
 
   {{-- Cloudflare Turnstile --}}
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>

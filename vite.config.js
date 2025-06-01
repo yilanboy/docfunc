@@ -7,6 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 // typescript
+                'resources/ts/app.ts',
                 'resources/ts/ckeditor/ckeditor.ts',
                 'resources/ts/sharer.ts',
                 'resources/ts/highlight.ts',
