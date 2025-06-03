@@ -2,19 +2,48 @@
   use App\Enums\PostOrderOptions;
 @endphp
 
-<div class="space-y-6">
+@script
+  <script>
+    Alpine.data('postsListPart', () => ({
+      order: '',
+      tabButtonClicked(tabButton) {
+        this.tabRepositionMarker(tabButton);
+        this.order = tabButton.id.replace('-tab-button', '');
+
+        this.$wire.changeOrder(this.order);
+      },
+      tabRepositionMarker(tabButton) {
+        this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
+        this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
+        this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
+      },
+      init() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        this.order = urlParams.get('order') ?? 'latest'
+
+        const tabSelectedButtons = document.getElementById(this.order + '-tab-button');
+        this.tabRepositionMarker(tabSelectedButtons);
+      }
+    }));
+  </script>
+@endscript
+
+<div
+  class="space-y-6"
+  x-data="postsListPart"
+>
   {{-- Sort --}}
   <div class="flex w-full text-sm md:flex-row md:justify-between">
     <x-tabs.nav
       class="md:w-fit"
       wire:ignore
-      :tab-init="$order"
     >
       @foreach (PostOrderOptions::cases() as $postOrder)
         <x-tabs.button
-          :tab-value="$postOrder->value"
-          {{-- Update url query parameter in livewire --}}
-          wire:click="changeOrder('{{ $postOrder }}')"
+          id="{{ $postOrder->value . '-tab-button' }}"
+          x-on:click="tabButtonClicked($el)"
           wire:key="{{ $postOrder->value }}-tab-button"
         >
           <x-dynamic-component
@@ -24,6 +53,11 @@
           <span>{{ $postOrder->label() }}</span>
         </x-tabs.button>
       @endforeach
+
+      <x-tabs.tab-marker
+        x-ref="tabMarker"
+        x-cloak
+      />
     </x-tabs.nav>
 
     {{-- Class badge --}}

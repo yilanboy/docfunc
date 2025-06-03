@@ -13,8 +13,8 @@ class ShowPage extends Component
 {
     public User $user;
 
-    #[Url(as: 'tab', keep: true)]
-    public string $tabSelected = UserInfoOptions::INFORMATION->value;
+    #[Url(keep: true)]
+    public string $tab = UserInfoOptions::INFORMATION->value;
 
     public function mount(int $id): void
     {
@@ -24,7 +24,7 @@ class ShowPage extends Component
     #[Renderless]
     public function changeTab(UserInfoOptions $userInfoTab): void
     {
-        $this->tabSelected = $userInfoTab->value;
+        $this->tab = $userInfoTab->value;
     }
 
     public function render(): View
