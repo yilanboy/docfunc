@@ -52,7 +52,7 @@ class ListPart extends Component
             })
             ->where('is_private', false)
             ->withOrder($this->order)
-            ->with('user:id,name', 'category:id,icon,name', 'tags:id,name') // 預加載防止 N+1 問題
+            ->with(['user:id,name', 'category:id,icon,name', 'tags:id,name']) // 預加載防止 N+1 問題
             ->paginate(10)
             ->withQueryString();
 
