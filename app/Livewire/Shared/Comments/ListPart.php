@@ -120,20 +120,6 @@ class ListPart extends Component
         return array_map($callback, $comments);
     }
 
-    public function updateLoadedCommentIds(array $comments): void
-    {
-        if (count($comments) > 0) {
-            $this->loadedCommentIds = [...$this->loadedCommentIds, ...array_keys($comments)];
-        }
-    }
-
-    private function updateCommentsList(array $comments): void
-    {
-        if (count($comments) > 0) {
-            $this->commentsList[] = array_slice($comments, 0, $this->perPage, true);
-        }
-    }
-
     private function updateShowMoreButtonStatus(array $comments): void
     {
         if (count($comments) <= $this->perPage) {
@@ -145,9 +131,11 @@ class ListPart extends Component
     {
         $comments = $this->getComments();
 
-        $this->updateLoadedCommentIds($comments);
-        $this->updateCommentsList($comments);
         $this->updateShowMoreButtonStatus($comments);
+
+        $comments = array_slice($comments, 0, $this->perPage, true);
+        $this->loadedCommentIds = [...$this->loadedCommentIds, ...array_keys($comments)];
+        $this->commentsList[] = $comments;
     }
 
     public function render(): View
