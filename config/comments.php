@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'max_level' => 5,
+    'max_level' => 2,
 ];
