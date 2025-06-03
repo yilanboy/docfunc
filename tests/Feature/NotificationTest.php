@@ -103,7 +103,10 @@ test('you can clear unread notifications if you visit the notification page', fu
 
     $this->actingAs($author);
 
-    livewire(NotificationsIndexPage::class);
+    $comment = $post->comments->first();
+
+    livewire(NotificationsIndexPage::class)
+        ->assertSee(route('comments.show', ['id' => $comment->id]));
 
     $author->refresh();
 
