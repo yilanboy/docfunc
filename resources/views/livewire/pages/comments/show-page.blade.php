@@ -62,7 +62,7 @@
     <div class="flex items-stretch justify-center">
       <div class="flex w-full max-w-3xl flex-col items-center justify-start px-2 xl:px-0">
         <div
-          class="flex w-full items-center justify-end gap-2 text-zinc-500 underline-offset-4 hover:text-zinc-600 hover:underline dark:text-zinc-400 hover:dark:text-zinc-300"
+          class="flex w-full items-center justify-end gap-2 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 hover:dark:text-zinc-300"
         >
           <x-icons.file-earmark-richtext class="w-4" />
           <a href="{{ route('posts.show', ['id' => $comment->post->id, 'slug' => $comment->post->slug]) }}">返回文章</a>
