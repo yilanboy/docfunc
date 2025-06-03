@@ -55,6 +55,9 @@ class ShowPage extends Component
 
     public function render(): View
     {
-        return view('livewire.pages.comments.show-page');
+        $user = $this->comment->user_id ? $this->comment->user->name : '訪客';
+
+        return view('livewire.pages.comments.show-page')
+            ->title($user.'的留言');
     }
 }

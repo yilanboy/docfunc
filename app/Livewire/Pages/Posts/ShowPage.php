@@ -22,7 +22,9 @@ class ShowPage extends Component
 
     public function mount(int $id): void
     {
-        $this->post = Post::query()->withCount('comments')->find($id);
+        $this->post = Post::query()
+            ->withCount('comments')
+            ->findOrFail($id);
 
         // private post, only the author can see
         if ($this->post->is_private) {

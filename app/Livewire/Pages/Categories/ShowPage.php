@@ -12,7 +12,7 @@ class ShowPage extends Component
 
     public function mount(int $id): void
     {
-        $this->category = Category::find($id);
+        $this->category = Category::findOrFail($id);
     }
 
     public function render(): View
