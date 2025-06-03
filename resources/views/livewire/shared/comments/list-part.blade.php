@@ -4,8 +4,7 @@
     <livewire:shared.comments.group-part
       :post-id="$postId"
       :post-user-id="$postUserId"
-      :max-layer="$maxLayer"
-      :current-layer="$currentLayer"
+      :current-level="$currentLevel"
       :parent-id="$parentId"
       :comments="$comments"
       :comment-group-name="array_key_first($comments) . '-comment-group'"

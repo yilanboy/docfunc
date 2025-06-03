@@ -123,7 +123,7 @@
             @endif
           @endauth
 
-          @if ($currentLayer < $maxLayer)
+          @if ($currentLevel < config('comments.max_level'))
             <button
               class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
               data-comment-id="{{ $comment['id'] }}"
@@ -139,7 +139,7 @@
       </div>
     </x-dashed-card>
 
-    @if ($currentLayer < $maxLayer)
+    @if ($currentLevel < config('comments.max_level'))
       <div
         class="relative pl-4 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
         wire:key="{{ $comment['id'] }}-children"
@@ -147,8 +147,7 @@
         <livewire:shared.comments.group-part
           :post-id="$postId"
           :post-user-id="$postUserId"
-          :max-layer="$maxLayer"
-          :current-layer="$currentLayer + 1"
+          :current-level="$currentLevel + 1"
           :parent-id="$comment['id']"
           :comment-group-name="$comment['id'] . '-new-comment-group'"
           :key="$comment['id'] . '-new-comment-group'"
@@ -160,8 +159,7 @@
           <livewire:shared.comments.list-part
             :post-id="$postId"
             :post-user-id="$postUserId"
-            :max-layer="$maxLayer"
-            :current-layer="$currentLayer + 1"
+            :current-level="$currentLevel + 1"
             :parent-id="$comment['id']"
             :comment-list-name="$comment['id'] . '-comment-list'"
             :order="CommentOrderOptions::OLDEST"

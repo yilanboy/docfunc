@@ -115,7 +115,6 @@
   <livewire:shared.comments.group-part
     :post-id="$postId"
     :post-user-id="$postUserId"
-    :max-layer="$maxLayer"
     :comment-group-name="'root-new-comment-group'"
     :key="'root-new-comment-group-order-by-' . $order->value"
   />
@@ -124,7 +123,6 @@
   <livewire:shared.comments.list-part
     :post-id="$postId"
     :post-user-id="$postUserId"
-    :max-layer="$maxLayer"
     :order="$order"
     :key="'root-comment-list-order-by-' . $order->value"
   />

@@ -22,7 +22,7 @@ class NewComment extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         $post = $this->comment->post;
-        $link = $post->link_with_slug.'#comments';
+        $link = route('comments.show', ['id' => $this->comment->id]);
 
         // 存入資料庫裡的數據
         return [

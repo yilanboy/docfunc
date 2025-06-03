@@ -20,10 +20,7 @@ class ListPart extends Component
     public int $postUserId;
 
     #[Locked]
-    public int $maxLayer = 2;
-
-    #[Locked]
-    public int $currentLayer = 1;
+    public int $currentLevel = 1;
 
     #[Locked]
     public ?int $parentId = null;

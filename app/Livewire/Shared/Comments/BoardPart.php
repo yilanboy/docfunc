@@ -18,9 +18,6 @@ class BoardPart extends Component
     public int $postUserId;
 
     #[Locked]
-    public int $maxLayer = 2;
-
-    #[Locked]
     public int $commentCounts;
 
     #[Locked]

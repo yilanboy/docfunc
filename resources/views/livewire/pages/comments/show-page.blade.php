@@ -119,11 +119,11 @@
                 @endif
               @endauth
 
-              @if (is_null($comment->parent_id))
+              @if ($comment->hierarchy->level < config('comments.max_level'))
                 <button
                   class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                   data-comment-id="{{ $comment->id }}"
-                  data-comment-user-name="{{ is_null($comment->user->name) ? '訪客' : $comment->user->name }}"
+                  data-comment-user-name="{{ is_null($comment->user_id) ? '訪客' : $comment->user->name }}"
                   type="button"
                   x-on:click="openCreateCommentModal"
                 >
@@ -135,7 +135,7 @@
           </div>
         </x-dashed-card>
 
-        @if (is_null($comment->parent_id))
+        @if ($comment->hierarchy->level < config('comments.max_level'))
           <div
             class="relative w-full pl-4 before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
           >
@@ -144,8 +144,7 @@
               :post-id="$comment->post->id"
               :post-user-id="$comment->post->user_id"
               :parent-id="$comment->id"
-              :max-layer="2"
-              :current-layer="2"
+              :current-level="$comment->hierarchy->level + 1"
               :comment-group-name="$comment->id . '-new-comment-group'"
             />
 
@@ -155,17 +154,15 @@
                 :post-id="$comment->post->id"
                 :post-user-id="$comment->post->user_id"
                 :parent-id="$comment->id"
-                :max-layer="2"
-                :current-layer="2"
+                :current-level="$comment->hierarchy->level + 1"
                 :comment-list-name="$comment->id . '-comment-list'"
               />
             @endif
           </div>
         @endif
-
       </div>
 
-      @if (is_null($comment->parent_id))
+      @if ($comment->hierarchy->level < config('comments.max_level'))
         {{-- create comment modal --}}
         <livewire:shared.comments.create-modal-part :post-id="$comment->post->id" />
       @endif
