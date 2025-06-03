@@ -51,12 +51,12 @@
 @endphp
 
 <div
-  class="comment-group w-full"
+  class="w-full"
   x-data="commentGroup"
 >
   @foreach ($comments as $comment)
     <x-dashed-card
-      class="comment-card mt-6"
+      class="mt-6"
       wire:key="{{ $comment['id'] }}-comment-card-{{ $comment['updated_at'] }}"
     >
       <div class="flex flex-col">

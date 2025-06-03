@@ -40,25 +40,23 @@
         </div>
 
         <div class="relative inline-block text-left">
-          <div>
-            <button
-              class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-zinc-900 dark:text-zinc-50"
-              type="button"
-              x-on:click="openOrderDropdown"
-            >
-              <x-icons.animate-spin
-                class="size-5"
-                wire:loading
-                wire:target="changeOrder"
-              />
-              <x-icons.filter-left
-                class="size-5"
-                wire:loading.remove
-                wire:target="changeOrder"
-              />
-              <span>排序依據</span>
-            </button>
-          </div>
+          <button
+            class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-zinc-900 dark:text-zinc-50"
+            type="button"
+            x-on:click="openOrderDropdown"
+          >
+            <x-icons.animate-spin
+              class="size-5"
+              wire:loading
+              wire:target="changeOrder"
+            />
+            <x-icons.filter-left
+              class="size-5"
+              wire:loading.remove
+              wire:target="changeOrder"
+            />
+            <span>排序依據</span>
+          </button>
 
           <div
             class="focus:outline-hidden absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-zinc-50 shadow-lg ring-1 ring-black/5 dark:bg-zinc-800 dark:ring-white/20"

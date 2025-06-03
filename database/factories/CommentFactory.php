@@ -16,6 +16,7 @@ class CommentFactory extends Factory
         return [
             'user_id' => User::factory(),
             'post_id' => Post::factory(),
+            'parent_id' => null,
             'body' => fake()->sentence,
             'created_at' => fake()->dateTimeThisMonth(now()),
             'updated_at' => now(),

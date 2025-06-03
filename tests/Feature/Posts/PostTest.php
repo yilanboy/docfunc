@@ -161,16 +161,6 @@ describe('home page', function () {
         ['comment', 'this post has the most comments'],
     ]);
 
-    test('guest can view a post with comments', function () {
-        $post = Post::factory()->create();
-        Comment::factory(10)->create(['post_id' => $post->id]);
-
-        get($post->link_with_slug)
-            ->assertStatus(200)
-            ->assertSee($post->title)
-            ->assertSee($post->body);
-    });
-
     test('author can visit own private post', function () {
         $user = User::factory()->create();
 

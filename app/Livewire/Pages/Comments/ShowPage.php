@@ -16,7 +16,9 @@ class ShowPage extends Component
 
     public function mount(int $id): void
     {
-        $this->comment = Comment::query()->with(['user', 'post', 'children'])->find($id);
+        $this->comment = Comment::query()
+            ->with(['user', 'post', 'children'])
+            ->findOr($id, fn () => abort(404));
     }
 
     #[On('update-comment-in-comments-show-page')]
