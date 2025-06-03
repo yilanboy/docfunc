@@ -73,5 +73,8 @@ Route::get('/categories/{id}/{name?}', Pages\Categories\ShowPage::class)
 Route::get('/tags/{id}', Pages\Tags\ShowPage::class)
     ->name('tags.show');
 
+Route::get('/comments/{id}', Pages\Comments\ShowPage::class)
+    ->name('comments.show');
+
 // Web Feed
 Route::feeds();

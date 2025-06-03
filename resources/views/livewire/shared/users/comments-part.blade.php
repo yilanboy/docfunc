@@ -44,7 +44,7 @@
     >
       <a
         class="absolute right-0 top-0 z-10 block h-full w-full bg-transparent"
-        href="{{ $comment->post->link_with_slug }}#comments"
+        href="{{ route('comments.show', ['id' => $comment->id]) }}"
         wire:navigate
       ></a>
 
