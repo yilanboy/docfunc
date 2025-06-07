@@ -123,27 +123,6 @@ class Post extends Model implements Feedable
         return config('scout.prefix');
     }
 
-    /**
-     * Modify the query used to retrieve models when making all the models searchable.
-     */
-    protected function makeAllSearchableUsing(Builder $query): Builder
-    {
-        return $query->with('user');
-    }
-
-    /**
-     * Get the indexable data array for the model
-     */
-    public function toSearchableArray(): array
-    {
-        $array = $this->toArray();
-
-        $array['author_name'] = $this->user->name;
-        $array['url'] = $this->link_with_slug;
-
-        return $array;
-    }
-
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create()

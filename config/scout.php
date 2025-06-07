@@ -115,6 +115,12 @@ return [
     'algolia' => [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
+        'index-settings' => [
+            // 'users' => [
+            //     'searchableAttributes' => ['id', 'name', 'email'],
+            //     'attributesForFaceting'=> ['filterOnly(email)'],
+            // ],
+        ],
     ],
 
     /*
@@ -173,6 +179,7 @@ return [
             'num_retries' => env('TYPESENSE_NUM_RETRIES', 3),
             'retry_interval_seconds' => env('TYPESENSE_RETRY_INTERVAL_SECONDS', 1),
         ],
+        // 'max_total_results' => env('TYPESENSE_MAX_TOTAL_RESULTS', 1000),
         'model-settings' => [
             // User::class => [
             //     'collection-schema' => [
