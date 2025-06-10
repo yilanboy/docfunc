@@ -90,13 +90,15 @@ class CreateModalPart extends Component
             id: $comment->id
         );
 
+        $this->reset('form.body', 'form.parent_id');
+
         $this->dispatch(event: 'close-create-comment-modal');
+
+        $this->dispatch('reset-body-in-create-comment-modal');
 
         $this->dispatch(event: 'update-comments-count');
 
         $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
-
-        $this->reset('form.body', 'form.parent_id');
     }
 
     public function render(): View

@@ -8,7 +8,7 @@
       comment: {
         id: null,
         groupName: null,
-        body: $wire.entangle('form.body').live
+        body: ''
       },
       previewIsEnable: false,
       openModal(event) {
@@ -25,6 +25,7 @@
         this.previewIsEnable = false;
       },
       submitModal() {
+        this.$wire.form.body = this.comment.body;
         this.$wire.save(this.comment.id, this.comment.groupName);
       },
       tabToFourSpaces() {

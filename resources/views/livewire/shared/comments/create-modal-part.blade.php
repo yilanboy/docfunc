@@ -8,16 +8,14 @@
         replyTo: '',
       },
       comment: {
-        parentId: $wire.entangle('form.parent_id'),
-        body: $wire.entangle('form.body').live
+        body: ''
       },
       captcha: {
         siteKey: @js(config('services.captcha.site_key')),
-        token: $wire.entangle('captchaToken')
       },
       previewIsEnable: false,
       openModal(event) {
-        this.comment.parentId = event.detail.parentId;
+        this.$wire.form.parent_id = event.detail.parentId;
 
         this.modal.replyTo = event.detail.replyTo;
         this.modal.isOpen = true;
@@ -29,6 +27,7 @@
         this.previewIsEnable = false;
       },
       submitModal() {
+        this.$wire.form.body = this.comment.body;
         this.$wire.save();
       },
       tabToFourSpaces() {
@@ -57,10 +56,14 @@
           turnstile.render(this.$refs.turnstileBlock, {
             sitekey: this.captcha.siteKey,
             callback: (token) => {
-              this.captcha.token = token;
+              this.$wire.captchaToken = token;
               this.modal.isSubmitEnabled = true;
             }
           });
+        });
+
+        this.$wire.on('reset-body-in-create-comment-modal', () => {
+          this.comment.body = '';
         });
 
         let previewObserver = new MutationObserver(() => {
