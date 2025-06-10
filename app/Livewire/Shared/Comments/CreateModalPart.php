@@ -49,6 +49,7 @@ class CreateModalPart extends Component
      */
     public function save(): void
     {
+        // validate captcha
         $this->validate();
 
         // If post has already been deleted.

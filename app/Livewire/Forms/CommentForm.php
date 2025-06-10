@@ -8,20 +8,24 @@ use Livewire\Form;
 
 class CommentForm extends Form
 {
-    #[Validate(['required', 'numeric'])]
+    #[Validate(rule: ['required', 'numeric'], onUpdate: false)]
     public int $post_id;
 
-    #[Validate(['nullable', 'numeric'])]
+    #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
     public ?int $user_id = null;
 
-    #[Validate('nullable', 'numeric')]
+    #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
     public ?int $parent_id = null;
 
-    #[Validate(['required', 'min:5', 'max:2000'], message: [
-        'required' => '請填寫留言內容',
-        'min' => '留言內容至少 5 個字元',
-        'max' => '留言內容最多 2000 個字元',
-    ])]
+    #[Validate(
+        rule: ['required', 'min:5', 'max:2000'],
+        message: [
+            'required' => '請填寫留言內容',
+            'min' => '留言內容至少 5 個字元',
+            'max' => '留言內容最多 2000 個字元',
+        ],
+        onUpdate: false,
+    )]
     public string $body = '';
 
     public function store(): Comment
