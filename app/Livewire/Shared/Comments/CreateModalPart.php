@@ -24,20 +24,6 @@ class CreateModalPart extends Component
 
     public string $captchaToken = '';
 
-    protected function rules(): array
-    {
-        return [
-            'captchaToken' => ['required', new Captcha],
-        ];
-    }
-
-    protected function messages(): array
-    {
-        return [
-            'captchaToken.required' => '未完成驗證',
-        ];
-    }
-
     public function mount(): void
     {
         $this->form->post_id = $this->postId;
@@ -49,8 +35,14 @@ class CreateModalPart extends Component
      */
     public function save(): void
     {
-        // validate captcha
-        $this->validate();
+        $this->validate(
+            rules: [
+                'captchaToken' => ['required', new Captcha],
+            ],
+            messages: [
+                'captchaToken.required' => '未完成驗證',
+            ]
+        );
 
         // If post has already been deleted.
         $post = Post::find(id: $this->postId, columns: ['id', 'user_id']);
