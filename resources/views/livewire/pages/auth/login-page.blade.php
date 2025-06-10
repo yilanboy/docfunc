@@ -6,8 +6,7 @@
   <script>
     Alpine.data('login', () => ({
       passkey: {
-        optionEndpoint: @js($optionEndpoint),
-        answer: $wire.entangle('answer'),
+        optionEndpoint: $wire.optionEndpoint,
       },
       browserSupportsWebAuthn,
       async loginWithPasskey() {
@@ -24,7 +23,7 @@
         const optionsJSON = await response.json();
 
         try {
-          this.passkey.answer = JSON.stringify(await startAuthentication({
+          this.$wire.answer = JSON.stringify(await startAuthentication({
             optionsJSON
           }))
         } catch (error) {

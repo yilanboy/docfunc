@@ -37,7 +37,7 @@ class EditPage extends Component
     public function store(): void
     {
         $data = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
             'passkey' => ['required', 'json'],
         ]);
 
@@ -92,9 +92,10 @@ class EditPage extends Component
             'data' => $publicKeyCredentialSourceArray,
         ]);
 
-        $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
-
         $this->reset('name', 'passkey');
+
+        $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
+        $this->dispatch('reset-passkey-name');
     }
 
     public function destroy(int $passkeyId): void

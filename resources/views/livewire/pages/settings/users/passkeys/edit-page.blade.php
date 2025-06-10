@@ -5,9 +5,10 @@
 @script
   <script>
     Alpine.data('updatePasskeyPage', () => ({
-      optionEndpoint: @js($optionEndpoint),
-      name: $wire.entangle('name'),
-      passkey: $wire.entangle('passkey'),
+      passkey: {
+        optionEndpoint: $wire.optionEndpoint,
+      },
+      name: '',
       browserSupportsWebAuthn,
       async register() {
         if (!this.browserSupportsWebAuthn()) {
@@ -28,11 +29,11 @@
           return;
         }
 
-        const response = await fetch(this.optionEndpoint);
+        const response = await fetch(this.passkey.optionEndpoint);
         const optionsJSON = await response.json();
 
         try {
-          this.passkey = JSON.stringify(await startRegistration({
+          this.$wire.passkey = JSON.stringify(await startRegistration({
             optionsJSON
           }));
         } catch (e) {
@@ -44,7 +45,13 @@
           return;
         }
 
+        this.$wire.name = this.name;
         this.$wire.store();
+      },
+      init() {
+        this.$wire.on('reset-passkey-name', () => {
+          this.name = '';
+        });
       }
     }));
   </script>
