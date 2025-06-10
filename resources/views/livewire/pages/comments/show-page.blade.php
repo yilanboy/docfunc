@@ -61,11 +61,13 @@
   >
     <div class="flex items-stretch justify-center">
       <div class="flex w-full max-w-3xl flex-col items-center justify-start px-2 xl:px-0">
-        <div
-          class="flex w-full items-center justify-end gap-2 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 hover:dark:text-zinc-300"
-        >
-          <x-icons.file-earmark-richtext class="w-4" />
-          <a href="{{ route('posts.show', ['id' => $comment->post->id, 'slug' => $comment->post->slug]) }}">返回文章</a>
+        <div class="flex w-full items-center justify-end text-zinc-500 md:justify-between dark:text-zinc-400">
+          <span class="hidden md:inline">「{{ $comment->post->title }}」的留言</span>
+
+          <div class="flex gap-2 hover:text-zinc-600 hover:dark:text-zinc-300">
+            <x-icons.file-earmark-richtext class="w-4" />
+            <a href="{{ route('posts.show', ['id' => $comment->post->id, 'slug' => $comment->post->slug]) }}">返回文章</a>
+          </div>
         </div>
 
         <x-dashed-card class="mt-6 w-full">
