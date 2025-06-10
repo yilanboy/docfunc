@@ -21,7 +21,11 @@
         this.tabRepositionMarker(tabButton);
         this.tab = tabButton.id.replace('-tab-button', '');
 
-        this.$wire.changeTab(this.tab);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        urlParams.set('tab', this.tab);
+
+        window.history.replaceState(null, null, '?' + urlParams.toString());
       },
       tabRepositionMarker(tabButton) {
         this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
