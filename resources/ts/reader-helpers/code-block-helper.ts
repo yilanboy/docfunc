@@ -95,7 +95,7 @@ function createLanguageLabel(language: string): HTMLSpanElement {
 
 window.codeBlockHelper = function (element: HTMLElement): void {
     const zoomInCode: HTMLPreElement = document.createElement('pre');
-    zoomInCode.classList.add('min-w-3xl');
+    zoomInCode.classList.add('lg:min-w-3xl');
     zoomInCode.id = ZOOM_IN_PRE_ID;
 
     const modal = new Modal({

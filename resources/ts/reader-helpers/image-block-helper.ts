@@ -35,7 +35,7 @@ function createExpandImageButton(modal: Modal, src: string): HTMLButtonElement {
 
 window.imageBlockHelper = function (element: HTMLElement): void {
     const zoomInImage: HTMLImageElement = document.createElement('img');
-    zoomInImage.classList.add('min-w-3xl');
+    zoomInImage.classList.add('lg:min-w-3xl');
     zoomInImage.id = ZOOM_IN_IMAGE_ID;
 
     const modal = new Modal({
