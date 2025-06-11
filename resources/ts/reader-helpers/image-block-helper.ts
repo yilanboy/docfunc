@@ -7,7 +7,10 @@ declare global {
     }
 }
 
-function createExpandImageButton(imageOuterHtml: string): HTMLButtonElement {
+const ZOOM_IN_IMAGE_MODAL_ID = 'zoom-in-image-modal';
+const ZOOM_IN_IMAGE_ID = 'zoom-in-image';
+
+function createExpandImageButton(modal: Modal, src: string): HTMLButtonElement {
     const expandImageButton: HTMLButtonElement =
         document.createElement('button');
     expandImageButton.classList.add(
@@ -18,19 +21,28 @@ function createExpandImageButton(imageOuterHtml: string): HTMLButtonElement {
     );
     expandImageButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-    const modal = new Modal({ innerHtml: imageOuterHtml });
+    const zoomInImage = document.getElementById(
+        ZOOM_IN_IMAGE_ID,
+    ) as HTMLImageElement;
 
-    expandImageButton.addEventListener(
-        'click',
-        function (this: HTMLButtonElement) {
-            modal.open();
-        },
-    );
+    expandImageButton.addEventListener('click', () => {
+        zoomInImage.src = src;
+        modal.open();
+    });
 
     return expandImageButton;
 }
 
 window.imageBlockHelper = function (element: HTMLElement): void {
+    const zoomInImage: HTMLImageElement = document.createElement('img');
+    zoomInImage.classList.add('min-w-3xl');
+    zoomInImage.id = ZOOM_IN_IMAGE_ID;
+
+    const modal = new Modal({
+        id: ZOOM_IN_IMAGE_MODAL_ID,
+        innerHtml: zoomInImage.outerHTML,
+    });
+
     const figureTags: HTMLCollectionOf<HTMLElement> =
         element.getElementsByTagName('figure');
 
@@ -53,11 +65,7 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
         const image: HTMLImageElement = images[0];
 
-        const newImage: HTMLImageElement = document.createElement('img');
-        newImage.classList.add('min-w-3xl', 'rounded-xl');
-        newImage.src = image.src;
-
-        const expandImageButton = createExpandImageButton(newImage.outerHTML);
+        const expandImageButton = createExpandImageButton(modal, image.src);
 
         figureTag.appendChild(expandImageButton);
 
@@ -65,6 +73,7 @@ window.imageBlockHelper = function (element: HTMLElement): void {
             'livewire:navigating',
             () => {
                 expandImageButton.remove();
+                modal.remove();
                 figureTag.classList.remove(
                     'image-block-helper-added',
                     'group',

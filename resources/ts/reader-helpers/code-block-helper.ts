@@ -7,6 +7,9 @@ declare global {
     }
 }
 
+const ZOOM_IN_PRE_MODAL_ID = 'zoom-in-pre-modal';
+const ZOOM_IN_PRE_ID = 'zoom-in-pre';
+
 function createCopyCodeButton(code: string): HTMLButtonElement {
     // create copy button
     const copyButton: HTMLButtonElement = document.createElement('button');
@@ -35,19 +38,23 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     return copyButton;
 }
 
-function createExpandCodeButton(pre: HTMLPreElement): HTMLButtonElement {
-    pre.classList.add('min-w-3xl');
-
+function createExpandCodeButton(
+    modal: Modal,
+    codeOuterHTML: string,
+): HTMLButtonElement {
     const expandCodeButton: HTMLButtonElement =
         document.createElement('button');
     expandCodeButton.classList.add(...button.BASE_CLASS_NAME);
     expandCodeButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-    const modal = new Modal({ innerHtml: pre.outerHTML });
+    const zoomInCode = document.getElementById(
+        ZOOM_IN_PRE_ID,
+    ) as HTMLImageElement;
 
     expandCodeButton.addEventListener(
         'click',
         function (this: HTMLButtonElement) {
+            zoomInCode.innerHTML = codeOuterHTML;
             modal.open();
         },
     );
@@ -87,6 +94,15 @@ function createLanguageLabel(language: string): HTMLSpanElement {
 }
 
 window.codeBlockHelper = function (element: HTMLElement): void {
+    const zoomInCode: HTMLPreElement = document.createElement('pre');
+    zoomInCode.classList.add('min-w-3xl');
+    zoomInCode.id = ZOOM_IN_PRE_ID;
+
+    const modal = new Modal({
+        id: ZOOM_IN_PRE_MODAL_ID,
+        innerHtml: zoomInCode.outerHTML,
+    });
+
     const preTags: HTMLCollectionOf<HTMLPreElement> =
         element.getElementsByTagName('pre');
 
@@ -121,9 +137,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
             code.innerText,
         );
 
-        const expandCodeButton = createExpandCodeButton(
-            preTag.cloneNode(true) as HTMLPreElement,
-        );
+        const expandCodeButton = createExpandCodeButton(modal, code.outerHTML);
 
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(
@@ -151,6 +165,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
                 copyButton.remove();
                 expandCodeButton.remove();
                 codeHelperGroup.remove();
+                modal.remove();
                 preTag.classList.remove('code-block-helper-added');
             },
             { once: true },
