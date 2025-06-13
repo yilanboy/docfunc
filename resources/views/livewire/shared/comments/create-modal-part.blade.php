@@ -52,6 +52,12 @@
         return this.previewIsEnable === false;
       },
       init() {
+        this.$watch('previewIsEnable', (value) => {
+          if (value === true) {
+            this.$wire.$set('form.body', this.comment.body, true);
+          }
+        });
+
         turnstile.ready(() => {
           turnstile.render(this.$refs.turnstileBlock, {
             sitekey: this.captcha.siteKey,

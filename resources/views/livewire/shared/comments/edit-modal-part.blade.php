@@ -38,6 +38,12 @@
         return this.previewIsEnable === false;
       },
       init() {
+        this.$watch('previewIsEnable', (value) => {
+          if (value === true) {
+            this.$wire.$set('form.body', this.comment.body, true);
+          }
+        });
+
         let previewObserver = new MutationObserver(() => {
           this.$refs.editCommentModal
             .querySelectorAll('pre code:not(.hljs)')
