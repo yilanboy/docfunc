@@ -53,8 +53,10 @@
       },
       init() {
         this.$watch('previewIsEnable', (value) => {
-          if (value === true) {
+          if (value) {
             this.$wire.$set('form.body', this.comment.body, true);
+          } else {
+            this.$refs.convertedBody.innerHTML = '';
           }
         });
 
@@ -156,15 +158,24 @@
           x-cloak
           x-show="previewIsEnable"
         >
-          <div class="space-x-4">
+          <div class="relative space-x-4">
             <span class="font-semibold dark:text-zinc-50">
               {{ auth()->check() ? auth()->user()->name : '訪客' }}
             </span>
             <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
           </div>
-          <div class="rich-text h-80 overflow-auto">
+          <div
+            class="rich-text h-80 overflow-auto"
+            x-ref="convertedBody"
+          >
             {!! $this->convertToHtml($this->form->body) !!}
           </div>
+
+          <x-icons.animate-spin
+            class="absolute left-1/2 top-1/2 hidden w-10 -translate-x-1/2 -translate-y-1/2 dark:text-zinc-50"
+            wire:loading.class.remove="hidden"
+            wire:target="form.body"
+          />
         </div>
 
         <div
