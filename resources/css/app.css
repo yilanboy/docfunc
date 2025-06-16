@@ -162,34 +162,6 @@
     display: none !important;
 }
 
-/* scroll bar */
-::-webkit-scrollbar {
-    height: 0.8em;
-    width: 0.8em;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 100vw;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #6b7280;
-    border-radius: 100vw;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #4b5563;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
-}
-
-#blog-post ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
-}
-
 /* media embed */
 iframe,
 div.twitter-tweet.twitter-tweet-rendered {
