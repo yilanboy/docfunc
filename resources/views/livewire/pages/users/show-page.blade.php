@@ -48,7 +48,7 @@
 {{-- user information page --}}
 <x-layouts.layout-main>
   <div
-    class="container mx-auto flex-1"
+    class="container mx-auto grow"
     x-data="showUserPage"
   >
     <div class="animate-fade-in flex flex-col items-center justify-start px-4">

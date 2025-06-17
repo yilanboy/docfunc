@@ -33,7 +33,7 @@
   </script>
 @endscript
 
-<nav
+<header
   class="z-20 mb-6"
   id="header"
   x-data="headerPart"
@@ -61,7 +61,7 @@
       <span class="ml-3 font-mono text-2xl font-bold dark:text-zinc-50">{{ config('app.name') }}</span>
     </a>
 
-    <div class="flex space-x-6">
+    <nav class="flex space-x-6">
       <x-skew-underline-link
         :link="route('posts.index')"
         {{-- make sure both url are decode in aws lambda --}}
@@ -80,7 +80,7 @@
           {{ $category->name }}
         </x-skew-underline-link>
       @endforeach
-    </div>
+    </nav>
 
     <div class="absolute inset-y-1/2 right-6 flex items-center space-x-5">
 
@@ -199,7 +199,7 @@
     </div>
   </div>
 
-  <div
+  <header
     class="bg-zinc-50 lg:hidden dark:bg-zinc-800"
     id="mobile-header"
   >
@@ -361,51 +361,49 @@
     </div>
 
     {{-- category dropdown menu --}}
-    <div
-      class="lg:hidden"
+    <nav
+      class="space-y-1 px-2 pb-3 pt-2 lg:hidden"
       x-cloak
       x-show="dropdownMenuIsOpen"
       x-collapse
     >
-      <div class="space-y-1 px-2 pb-3 pt-2">
 
+      @php
+        $inIndexPage = urldecode(request()->url()) === urldecode(route('posts.index'));
+      @endphp
+
+      <a
+        href="{{ route('posts.index') }}"
+        @if ($inIndexPage) aria-current="page" @endif
+        @class([
+            'flex items-center px-3 py-2 rounded-md font-medium',
+            'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inIndexPage,
+            'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inIndexPage,
+        ])
+        wire:navigate
+      >
+        <x-icons.home class="w-4" />
+        <span class="ml-2">全部文章</span>
+      </a>
+
+      @foreach ($categories as $category)
         @php
-          $inIndexPage = urldecode(request()->url()) === urldecode(route('posts.index'));
+          $inCategoryPage = urldecode(request()->url()) === urldecode($category->link_with_name);
         @endphp
-
         <a
-          href="{{ route('posts.index') }}"
-          @if ($inIndexPage) aria-current="page" @endif
+          href="{{ $category->link_with_name }}"
+          @if ($inCategoryPage) aria-current="page" @endif
           @class([
-              'flex items-center px-3 py-2 rounded-md font-medium',
-              'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inIndexPage,
-              'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inIndexPage,
+              'block px-3 py-2 rounded-md font-medium flex items-center',
+              'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inCategoryPage,
+              'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inCategoryPage,
           ])
           wire:navigate
         >
-          <x-icons.home class="w-4" />
-          <span class="ml-2">全部文章</span>
+          <div class="w-4">{!! $category->icon !!}</div>
+          <span class="ml-2">{{ $category->name }}</span>
         </a>
-
-        @foreach ($categories as $category)
-          @php
-            $inCategoryPage = urldecode(request()->url()) === urldecode($category->link_with_name);
-          @endphp
-          <a
-            href="{{ $category->link_with_name }}"
-            @if ($inCategoryPage) aria-current="page" @endif
-            @class([
-                'block px-3 py-2 rounded-md font-medium flex items-center',
-                'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inCategoryPage,
-                'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inCategoryPage,
-            ])
-            wire:navigate
-          >
-            <div class="w-4">{!! $category->icon !!}</div>
-            <span class="ml-2">{{ $category->name }}</span>
-          </a>
-        @endforeach
-      </div>
-    </div>
-  </div>
-</nav>
+      @endforeach
+    </nav>
+  </header>
+</header>

@@ -109,7 +109,7 @@
 {{-- create new post --}}
 <x-layouts.layout-main>
   <div
-    class="container mx-auto"
+    class="container mx-auto grow"
     x-data="createPostPage"
     x-cloak
     x-show="showPage"

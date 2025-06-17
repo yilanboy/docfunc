@@ -58,7 +58,7 @@
 @endscript
 
 <x-layouts.layout-main x-data="updatePasskeyPage">
-  <div class="container mx-auto flex-1">
+  <div class="container mx-auto grow">
     <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
       <x-users.member-center-side-menu />
 

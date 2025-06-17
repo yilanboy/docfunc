@@ -108,7 +108,7 @@
 {{-- edit post --}}
 <x-layouts.layout-main>
   <div
-    class="container mx-auto"
+    class="container mx-auto grow"
     x-data="editPostPage"
     x-cloak
     x-show="showPage"

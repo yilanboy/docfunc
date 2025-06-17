@@ -56,7 +56,7 @@
 {{-- 文章列表 --}}
 <x-layouts.layout-main>
   <div
-    class="container mx-auto"
+    class="container mx-auto grow"
     x-data="commentsShowPage"
   >
     <div class="flex items-stretch justify-center">

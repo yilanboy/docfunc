@@ -1,6 +1,6 @@
 {{-- 通知列表 --}}
 <x-layouts.layout-main>
-  <div class="container mx-auto">
+  <div class="container mx-auto grow">
     <div class="flex items-start justify-center px-4 xl:px-0">
 
       <div class="flex w-full flex-col items-center justify-center space-y-6 md:w-[700px]">

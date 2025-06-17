@@ -11,7 +11,6 @@
   </div>
 
   <div class="container mx-auto">
-
     <div class="flex min-h-screen flex-col items-center justify-center px-4">
       {{-- 頁面標題 --}}
       <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
