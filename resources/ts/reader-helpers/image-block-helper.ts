@@ -43,6 +43,14 @@ window.imageBlockHelper = function (element: HTMLElement): void {
         innerHtml: zoomInImage.outerHTML,
     });
 
+    document.addEventListener(
+        'livewire:navigating',
+        () => {
+            modal.remove();
+        },
+        { once: true },
+    );
+
     const figureTags: HTMLCollectionOf<HTMLElement> =
         element.getElementsByTagName('figure');
 
@@ -73,7 +81,6 @@ window.imageBlockHelper = function (element: HTMLElement): void {
             'livewire:navigating',
             () => {
                 expandImageButton.remove();
-                modal.remove();
                 figureTag.classList.remove(
                     'image-block-helper-added',
                     'group',
