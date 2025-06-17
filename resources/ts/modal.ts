@@ -91,10 +91,13 @@ export class Modal {
     }
 
     public open() {
-        this.element.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        const scrollbarWidth = window.innerWidth - document.body.clientWidth;
 
-        // trigger reflow, make sure css animation is applied
+        this.element.style.display = 'block';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+
+        // trigger reflow, make sure CSS animation is applied
         this.element.offsetHeight;
 
         const backgroundBackdrop = this.element.getElementsByClassName(
@@ -148,7 +151,7 @@ export class Modal {
     private close() {
         // Abort all event listeners
         this.abortController.abort();
-        // Create new controller for next time
+        // Create a new controller for next time
         this.abortController = new AbortController();
 
         const backgroundBackdrop = this.element.getElementsByClassName(
@@ -168,7 +171,8 @@ export class Modal {
             (event: TransitionEvent) => {
                 if (event.propertyName === 'opacity') {
                     this.element.style.display = 'none';
-                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
+                    document.documentElement.style.paddingRight = '';
                 }
             },
             { once: true },
