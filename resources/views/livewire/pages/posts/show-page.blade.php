@@ -46,12 +46,12 @@
 @endscript
 
 <x-layouts.layout-main>
-  <x-porgress-bar />
-
   <div
     class="relative grow"
     x-data="showPostPage"
   >
+    <x-porgress-bar x-ref="progressBar" />
+
     <x-scroll-to-top-button x-ref="scrollToTopBtn" />
 
     <div class="container mx-auto">

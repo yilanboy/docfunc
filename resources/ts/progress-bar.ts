@@ -18,9 +18,16 @@ function progressBarAnimation(
     let value: number = Math.floor(progressWidth);
 
     progressBar.style.width = value + '%';
+    progressBar.ariaValueNow = value.toString();
 
     if (value < 0) {
         progressBar.style.width = '0%';
+        progressBar.ariaValueNow = '0';
+    }
+
+    if (value > 100) {
+        progressBar.style.width = '100%';
+        progressBar.ariaValueNow = '100';
     }
 }
 
@@ -33,6 +40,7 @@ window.setupProgressBar = function (
         section.getBoundingClientRect().height
     ) {
         progressBar.style.width = '100%';
+        progressBar.ariaValueNow = '100';
 
         return;
     }
