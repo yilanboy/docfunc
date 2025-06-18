@@ -44,10 +44,10 @@ class CreateModalPart extends Component
             ]
         );
 
-        // If post has already been deleted.
+        // If the post has already been deleted.
         $post = Post::find(id: $this->postId, columns: ['id', 'user_id']);
 
-        if (is_null($post)) {
+        if (! $post) {
             $this->dispatch(event: 'toast', status: 'danger', message: '無法回覆！文章已被刪除！');
 
             $this->redirect(url: route('posts.index'), navigate: true);
@@ -55,11 +55,14 @@ class CreateModalPart extends Component
             return;
         }
 
-        // If parent comment has already been deleted.
-        if (! is_null($this->form->parent_id)) {
-            $parentComment = Comment::find(id: $this->form->parent_id, columns: ['id']);
+        // If the parent comment has already been deleted.
+        if ($this->form->parent_id) {
+            $parentIsExists = Comment::query()
+                ->whereId($this->form->parent_id)
+                ->wherePostId($post->id)
+                ->exists();
 
-            if (is_null($parentComment)) {
+            if (! $parentIsExists) {
                 $this->dispatch(event: 'toast', status: 'danger', message: '無法回覆！留言已被刪除！');
 
                 return;
