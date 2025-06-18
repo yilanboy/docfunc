@@ -1,3 +1,9 @@
+interface ModalOptions {
+    id: string;
+    innerHtml: string;
+    customClassName?: string[];
+}
+
 const BACKGROUND_BACKDROP_CLASS_NAME: string = 'modal-background-backdrop';
 const MODAL_PANEL_CLASS_NAME: string = 'modal-panel';
 const CLOSE_MODAL_BUTTON_CLASS_NAME: string = 'close-modal-button';
@@ -34,18 +40,15 @@ const HIDE_MODAL_PANEL_CLASS_NAME: string[] = [
 
 export class Modal {
     public element: HTMLDivElement;
+    private backgroundBackdrop: HTMLDivElement;
+    private modalPanel: HTMLDivElement;
+    private closeButton: HTMLButtonElement;
     private abortController: AbortController;
+    private readonly scrollbarWidth: number;
 
-    public constructor({
-        id,
-        innerHtml,
-        customClassName = [],
-    }: {
-        id: string;
-        innerHtml: string;
-        customClassName?: string[];
-    }) {
+    public constructor({ id, innerHtml, customClassName = [] }: ModalOptions) {
         this.element = document.createElement('div');
+
         this.element.id = id;
         this.element.style.display = 'none';
         this.element.innerHTML = this.innerHtmlTemplate(
@@ -55,10 +58,24 @@ export class Modal {
 
         document.body.appendChild(this.element);
 
+        this.backgroundBackdrop = this.element.getElementsByClassName(
+            BACKGROUND_BACKDROP_CLASS_NAME,
+        )[0] as HTMLDivElement;
+
+        this.modalPanel = this.element.getElementsByClassName(
+            MODAL_PANEL_CLASS_NAME,
+        )[0] as HTMLDivElement;
+
+        this.closeButton = this.element.getElementsByClassName(
+            CLOSE_MODAL_BUTTON_CLASS_NAME,
+        )[0] as HTMLButtonElement;
+
+        this.scrollbarWidth = window.innerWidth - document.body.clientWidth;
+
         this.abortController = new AbortController();
     }
 
-    public innerHtmlTemplate(
+    private innerHtmlTemplate(
         innerHtml: string,
         customClassName: string[],
     ): string {
@@ -90,49 +107,33 @@ export class Modal {
         </div>`;
     }
 
-    public open() {
-        const scrollbarWidth = window.innerWidth - document.body.clientWidth;
+    private triggerReflow() {
+        this.element.offsetHeight;
+    }
 
+    public open() {
         this.element.style.display = 'block';
         document.documentElement.style.overflow = 'hidden';
-        document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+        document.documentElement.style.paddingRight = `${this.scrollbarWidth}px`;
 
-        // trigger reflow, make sure CSS animation is applied
-        this.element.offsetHeight;
+        this.triggerReflow();
 
-        const backgroundBackdrop = this.element.getElementsByClassName(
-            BACKGROUND_BACKDROP_CLASS_NAME,
-        )[0] as HTMLDivElement;
-
-        const modalPanel = this.element.getElementsByClassName(
-            MODAL_PANEL_CLASS_NAME,
-        )[0] as HTMLDivElement;
-
-        const closeButton = this.element.getElementsByClassName(
-            CLOSE_MODAL_BUTTON_CLASS_NAME,
-        )[0] as HTMLButtonElement;
-
-        backgroundBackdrop.classList.remove(
+        this.backgroundBackdrop.classList.remove(
             ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME,
         );
-        backgroundBackdrop.classList.add(
+        this.backgroundBackdrop.classList.add(
             ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME,
         );
-        modalPanel.classList.remove(...HIDE_MODAL_PANEL_CLASS_NAME);
-        modalPanel.classList.add(...SHOW_MODAL_PANEL_CLASS_NAME);
-        closeButton.classList.remove('opacity-0');
-        closeButton.classList.add('opacity-100');
+        this.modalPanel.classList.remove(...HIDE_MODAL_PANEL_CLASS_NAME);
+        this.modalPanel.classList.add(...SHOW_MODAL_PANEL_CLASS_NAME);
+        this.closeButton.classList.remove('opacity-0');
+        this.closeButton.classList.add('opacity-100');
 
-        // Add event listeners for closing if needed
         this.setupCloseHandlers();
     }
 
     private setupCloseHandlers() {
-        const closeButton = this.element.getElementsByClassName(
-            CLOSE_MODAL_BUTTON_CLASS_NAME,
-        )[0];
-
-        closeButton?.addEventListener('click', () => this.close(), {
+        this.closeButton.addEventListener('click', () => this.close(), {
             signal: this.abortController.signal,
         });
 
@@ -154,19 +155,7 @@ export class Modal {
         // Create a new controller for next time
         this.abortController = new AbortController();
 
-        const backgroundBackdrop = this.element.getElementsByClassName(
-            BACKGROUND_BACKDROP_CLASS_NAME,
-        )[0] as HTMLDivElement;
-
-        const modalPanel = this.element.getElementsByClassName(
-            MODAL_PANEL_CLASS_NAME,
-        )[0] as HTMLDivElement;
-
-        const closeButton = this.element.getElementsByClassName(
-            CLOSE_MODAL_BUTTON_CLASS_NAME,
-        )[0] as HTMLButtonElement;
-
-        backgroundBackdrop.addEventListener(
+        this.backgroundBackdrop.addEventListener(
             'transitionend',
             (event: TransitionEvent) => {
                 if (event.propertyName === 'opacity') {
@@ -178,16 +167,16 @@ export class Modal {
             { once: true },
         );
 
-        backgroundBackdrop.classList.remove(
+        this.backgroundBackdrop.classList.remove(
             ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME,
         );
-        backgroundBackdrop.classList.add(
+        this.backgroundBackdrop.classList.add(
             ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME,
         );
-        modalPanel.classList.remove(...SHOW_MODAL_PANEL_CLASS_NAME);
-        modalPanel.classList.add(...HIDE_MODAL_PANEL_CLASS_NAME);
-        closeButton.classList.remove('opacity-100');
-        closeButton.classList.add('opacity-0');
+        this.modalPanel.classList.remove(...SHOW_MODAL_PANEL_CLASS_NAME);
+        this.modalPanel.classList.add(...HIDE_MODAL_PANEL_CLASS_NAME);
+        this.closeButton.classList.remove('opacity-100');
+        this.closeButton.classList.add('opacity-0');
     }
 
     public remove() {
