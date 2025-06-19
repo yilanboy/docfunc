@@ -69,7 +69,7 @@
     prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
     prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
     /* link */
-    prose-a:no-underline prose-a:hover:underline prose-a:text-emerald-600 prose-a:hover:text-emerald-700
+    prose-a:no-underline prose-a:hover:underline prose-a:decoration-2 prose-a:underline-offset-4 prose-a:text-emerald-600 prose-a:hover:text-emerald-700
     dark:prose-a:text-lividus-400 dark:prose-a:hover:text-lividus-300
     /* list */
     prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
