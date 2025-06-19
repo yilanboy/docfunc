@@ -98,10 +98,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
     zoomInCode.classList.add('lg:min-w-3xl');
     zoomInCode.id = ZOOM_IN_PRE_ID;
 
-    const modal = new Modal({
-        id: ZOOM_IN_PRE_MODAL_ID,
-        innerHtml: zoomInCode.outerHTML,
-    });
+    const modal = new Modal(ZOOM_IN_PRE_MODAL_ID, zoomInCode.outerHTML);
 
     document.addEventListener(
         'livewire:navigating',

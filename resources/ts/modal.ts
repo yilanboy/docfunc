@@ -1,9 +1,3 @@
-interface ModalOptions {
-    id: string;
-    innerHtml: string;
-    customClassName?: string[];
-}
-
 const BACKGROUND_BACKDROP_CLASS_NAME: string = 'modal-background-backdrop';
 const MODAL_PANEL_CLASS_NAME: string = 'modal-panel';
 const CLOSE_MODAL_BUTTON_CLASS_NAME: string = 'close-modal-button';
@@ -46,7 +40,11 @@ export class Modal {
     private abortController: AbortController;
     private readonly scrollbarWidth: number;
 
-    public constructor({ id, innerHtml, customClassName = [] }: ModalOptions) {
+    public constructor(
+        id: string,
+        innerHtml: string,
+        customClassName: string[] = [],
+    ) {
         this.element = document.createElement('div');
 
         this.element.id = id;

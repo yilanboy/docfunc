@@ -38,10 +38,7 @@ window.imageBlockHelper = function (element: HTMLElement): void {
     zoomInImage.classList.add('lg:min-w-3xl');
     zoomInImage.id = ZOOM_IN_IMAGE_ID;
 
-    const modal = new Modal({
-        id: ZOOM_IN_IMAGE_MODAL_ID,
-        innerHtml: zoomInImage.outerHTML,
-    });
+    const modal = new Modal(ZOOM_IN_IMAGE_MODAL_ID, zoomInImage.outerHTML);
 
     document.addEventListener(
         'livewire:navigating',
