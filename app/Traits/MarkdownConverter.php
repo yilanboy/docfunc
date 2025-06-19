@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use League\CommonMark\Environment\Environment;
@@ -15,15 +17,15 @@ trait MarkdownConverter
     public function convertToHtml(string $body): string
     {
         $config = [
-            'html_input' => 'strip',
+            'html_input'         => 'strip',
             'allow_unsafe_links' => false,
-            'max_nesting_level' => 10,
-            'external_link' => [
-                'internal_hosts' => parse_url(config('app.url'), PHP_URL_HOST),
+            'max_nesting_level'  => 10,
+            'external_link'      => [
+                'internal_hosts'     => parse_url(config('app.url'), PHP_URL_HOST),
                 'open_in_new_window' => true,
-                'nofollow' => 'external',
-                'noopener' => 'external',
-                'noreferrer' => 'external',
+                'nofollow'           => 'external',
+                'noopener'           => 'external',
+                'noreferrer'         => 'external',
             ],
         ];
 
@@ -51,6 +53,6 @@ trait MarkdownConverter
 
         $converter = new CommonMarkdownConverter($environment);
 
-        return $converter->convert($body);
+        return $converter->convert($body)->getContent();
     }
 }

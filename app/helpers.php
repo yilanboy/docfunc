@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 if (! function_exists('get_gravatar')) {
     /**
      * Get either a Gravatar URL or complete image tag for a specified email address.

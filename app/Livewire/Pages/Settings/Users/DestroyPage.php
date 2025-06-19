@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Pages\Settings\Users;
 
 use App\Mail\DestroyUser;

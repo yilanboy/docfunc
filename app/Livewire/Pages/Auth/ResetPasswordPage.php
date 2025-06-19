@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Pages\Auth;
 
 use Illuminate\Auth\Events\PasswordReset;
@@ -14,7 +16,7 @@ use Livewire\Component;
 #[Title('重設密碼')]
 class ResetPasswordPage extends Component
 {
-    // token will be passed in the URL
+    // token will be passed in the URL,
     // and auto binding will take care of it
     #[Locked]
     public string $token = '';
@@ -29,7 +31,7 @@ class ResetPasswordPage extends Component
     {
         $this->token = $token;
 
-        $this->email = request()->string('email');
+        $this->email = request()->query('email');
     }
 
     /**
@@ -38,19 +40,19 @@ class ResetPasswordPage extends Component
     public function resetPassword(): void
     {
         $this->validate([
-            'token' => 'required',
-            'email' => ['required', 'email'],
+            'token'    => 'required',
+            'email'    => ['required', 'email'],
             'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
+        // Here we will attempt to reset the user's password. If it is successful, we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise, we will parse the error and return the response.
         $status = Password::reset(
             $this->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) {
                 $user->forceFill([
-                    'password' => Hash::make($this->password),
+                    'password'       => Hash::make($this->password),
                     'remember_token' => Str::random(60),
                 ])->save();
 
@@ -59,7 +61,7 @@ class ResetPasswordPage extends Component
         );
 
         // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
+        // the application's home authenticated view. If there is an error, we can
         // redirect them back to where they came from with their error message.
         if ($status != Password::PasswordReset) {
             $this->addError('email', __($status));

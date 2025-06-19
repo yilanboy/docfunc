@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -46,7 +48,7 @@ class UploadImageController extends Controller
 
         $file = $request->file('upload');
         $imageName = $this->fileService->generateFileName($file->getClientOriginalExtension());
-        Storage::disk()->put('images/'.$imageName, file_get_contents($file));
+        Storage::disk()->put('images/'.$imageName, $file);
         $url = Storage::disk()->url('images/'.$imageName);
 
         return response()->json(['url' => $url]);

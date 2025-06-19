@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Shared\Users;
 
 use App\Models\Post;
@@ -15,12 +17,12 @@ class PostsPart extends Component
 {
     public int $userId;
 
-    // this will be set from url parameter
+    // This will be set from the url parameter
     #[Url(as: 'current-posts-year')]
     public string $currentPostsYear = '';
 
     /**
-     * Get the post list of the user. this list will be grouped by year.
+     * Get the post-list of the user. This list will be grouped by year.
      * The first year will be the latest year
      * format: [2021 => [Post, Post, ...], 2020 => [Post, Post, ...], ...]
      *
@@ -58,7 +60,7 @@ class PostsPart extends Component
     public function mount(): void
     {
         if (! array_key_exists($this->currentPostsYear, $this->groupPostsByYear)) {
-            $this->currentPostsYear = array_key_first($this->groupPostsByYear) ?? '';
+            $this->currentPostsYear = (string) array_key_first($this->groupPostsByYear) ?? '';
         }
     }
 

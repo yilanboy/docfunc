@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use Dom\HTMLDocument;
@@ -52,7 +54,7 @@ class ContentService
      */
     public static function makeExcerpt(string $body, int $length = 200): string
     {
-        return str()->limit(strip_tags($body), $length);
+        return (string) str(strip_tags($body))->limit($length);
     }
 
     /**

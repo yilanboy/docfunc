@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Auth\ForgotPasswordPage;
-use App\Livewire\Pages\Auth\ResetPasswordPage as ResetPasswordComponent;
+use App\Livewire\Pages\Auth\ResetPasswordPage;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -41,7 +41,7 @@ test('reset password screen can be rendered, but url must be correct', function 
             'token' => $notification->token,
             'email' => $user->email,
         ]))
-            ->assertSeeLivewire(ResetPasswordComponent::class)
+            ->assertSeeLivewire(ResetPasswordPage::class)
             ->assertStatus(200);
 
         return true;
@@ -58,7 +58,7 @@ test('password can be reset with valid token', function () {
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
         Livewire::withQueryParams(['email' => $user->email])
-            ->test(ResetPasswordComponent::class, ['token' => $notification->token])
+            ->test(ResetPasswordPage::class, ['token' => $notification->token])
             ->set('password', 'Banana101!')
             ->set('password_confirmation', 'Banana101!')
             ->call('resetPassword');
