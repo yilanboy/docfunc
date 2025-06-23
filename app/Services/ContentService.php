@@ -36,7 +36,6 @@ class ContentService
         $htmlSanitizer = new HtmlSanitizer(
             new HtmlSanitizerConfig()
                 ->allowSafeElements()
-                ->allowStaticElements()
                 ->allowAttribute('data-language', 'pre')
                 ->allowAttribute('class', ['span', 'code', 'figure'])
                 ->allowAttribute('style', ['p', 'figure'])
