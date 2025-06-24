@@ -97,7 +97,7 @@
                 datetime="{{ date('d-m-Y', strtotime($comment->created_at)) }}"
               >{{ date('Y 年 m 月 d 日', strtotime($comment->created_at)) }}</time>
 
-              @if ($comment->created_at !== $comment->updated_at)
+              @if ($comment->created_at->toString() !== $comment->updated_at->toString())
                 <span class="text-zinc-400">(已編輯)</span>
               @endif
             </div>
