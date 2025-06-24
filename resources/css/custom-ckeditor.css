@@ -4,9 +4,19 @@
 
     /* Overrides the default font size in the theme. */
     --ck-font-size-base: 16px;
+
+    & .ck.ck-editor__editable .ck-code_selected {
+        /* emerald 200 */
+        background-color: oklch(90.5% 0.093 164.15);
+    }
 }
 
 :root.dark {
+    & .ck.ck-editor__editable .ck-code_selected {
+        /* lividus 600 */
+        background-color: #366ba1;
+    }
+
     --ck-color-base-background: theme('colors.zinc.700');
     --ck-color-engine-placeholder-text: theme('colors.zinc.50');
 
