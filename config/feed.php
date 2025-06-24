@@ -20,6 +20,7 @@ return [
 
             'title' => 'DocFunc',
             'description' => '紀錄生活上的大小事！',
+            'language' => 'zh-TW',
 
             /*
              * The image to display for the feed.  For Atom feeds, this is displayed as
@@ -31,12 +32,12 @@ return [
             /*
              * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
              */
-            'format' => 'atom',
+            'format' => 'json',
 
             /*
              * The view that will render the feed.
              */
-            'view' => 'feed::atom',
+            'view' => 'feed::json',
 
             /*
              * The mime type to be used in the <link> tag.  Set to an empty string to automatically
