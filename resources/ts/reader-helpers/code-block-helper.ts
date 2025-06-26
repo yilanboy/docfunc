@@ -94,6 +94,13 @@ function createLanguageLabel(language: string): HTMLSpanElement {
 }
 
 window.codeBlockHelper = function (element: HTMLElement): void {
+    const preTags: HTMLCollectionOf<HTMLPreElement> =
+        element.getElementsByTagName('pre');
+
+    if (preTags.length === 0) {
+        return;
+    }
+
     const zoomInCode: HTMLPreElement = document.createElement('pre');
     zoomInCode.classList.add('lg:min-w-3xl');
     zoomInCode.id = ZOOM_IN_PRE_ID;
@@ -107,9 +114,6 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         },
         { once: true },
     );
-
-    const preTags: HTMLCollectionOf<HTMLPreElement> =
-        element.getElementsByTagName('pre');
 
     // add a copy button to all pre-tags
     for (const preTag of preTags) {

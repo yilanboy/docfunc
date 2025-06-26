@@ -34,6 +34,13 @@ function createExpandImageButton(modal: Modal, src: string): HTMLButtonElement {
 }
 
 window.imageBlockHelper = function (element: HTMLElement): void {
+    const figureTags: HTMLCollectionOf<HTMLElement> =
+        element.getElementsByTagName('figure');
+
+    if (figureTags.length === 0) {
+        return;
+    }
+
     const zoomInImage: HTMLImageElement = document.createElement('img');
     zoomInImage.classList.add('lg:min-w-3xl');
     zoomInImage.id = ZOOM_IN_IMAGE_ID;
@@ -47,9 +54,6 @@ window.imageBlockHelper = function (element: HTMLElement): void {
         },
         { once: true },
     );
-
-    const figureTags: HTMLCollectionOf<HTMLElement> =
-        element.getElementsByTagName('figure');
 
     for (const figureTag of figureTags) {
         if (figureTag.classList.contains('image-block-helper-added')) {
