@@ -60,7 +60,7 @@ class PostsPart extends Component
     public function mount(): void
     {
         if (! array_key_exists($this->currentPostsYear, $this->groupPostsByYear)) {
-            $this->currentPostsYear = (string) array_key_first($this->groupPostsByYear) ?? '';
+            $this->currentPostsYear = (string) array_key_first($this->groupPostsByYear);
         }
     }
 
