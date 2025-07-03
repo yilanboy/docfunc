@@ -131,9 +131,19 @@ export class Modal {
     }
 
     private setupCloseHandlers() {
-        this.closeButton.addEventListener('click', () => this.close(), {
+        // Close by clicking backdrop
+        this.element.addEventListener('click', () => this.close(), {
             signal: this.abortController.signal,
         });
+
+        // Prevent closing when clicking modal content
+        this.modalPanel.addEventListener(
+            'click',
+            (event: Event) => {
+                event.stopPropagation();
+            },
+            { signal: this.abortController.signal },
+        );
 
         // Close by escape key
         document.addEventListener(
@@ -162,7 +172,10 @@ export class Modal {
                     document.documentElement.style.paddingRight = '';
                 }
             },
-            { once: true },
+            {
+                once: true,
+                signal: this.abortController.signal,
+            },
         );
 
         this.backgroundBackdrop.classList.remove(
