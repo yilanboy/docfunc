@@ -67,7 +67,9 @@
     prose-p:break-all lg:prose-p:break-normal
     /*  heading  */
     prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
-    prose-h2:border-b-2 prose-h2:border-slate-300 dark:prose-h2:border-slate-500 prose-h2:my-4 prose-h2:py-4 prose-h2:border-solid
+     prose-h2:my-8 prose-h2:flex prose-h2:flex-col prose-h2:gap-4
+    /*  h2 underline  */
+    prose-h2:after:w-full prose-h2:after:h-1 prose-h2:after:bg-linear-to-r prose-h2:after:from-emerald-500 dark:prose-h2:after:from-lividus-600 prose-h2:after:to-transparent
     /* link */
     prose-a:no-underline prose-a:hover:underline prose-a:decoration-2 prose-a:underline-offset-4 prose-a:text-emerald-600 prose-a:hover:text-emerald-700
     dark:prose-a:text-lividus-400 dark:prose-a:hover:text-lividus-300
