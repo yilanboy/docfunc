@@ -82,6 +82,20 @@
                 {{ $post->title }}
               </h1>
 
+              {{-- post thumbnail --}}
+              @if (!empty($post->preview_url))
+                <div
+                  class="-mx-4"
+                  id="post-thumbnail"
+                >
+                  <img
+                    class="w-full"
+                    src="{{ $post->preview_url }}"
+                    alt="{{ $post->title }}"
+                  >
+                </div>
+              @endif
+
               {{-- post information --}}
               <div class="mt-4 flex items-center space-x-2 text-base text-neutral-400">
                 {{-- classfication --}}
@@ -127,20 +141,6 @@
                       {{ $tag->name }}
                     </x-tag>
                   @endforeach
-                </div>
-              @endif
-
-              {{-- post thumbnail --}}
-              @if (!empty($post->preview_url))
-                <div
-                  class="-mx-4 mt-4"
-                  id="post-thumbnail"
-                >
-                  <img
-                    class="w-full"
-                    src="{{ $post->preview_url }}"
-                    alt="{{ $post->title }}"
-                  >
                 </div>
               @endif
 
