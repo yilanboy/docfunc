@@ -199,7 +199,7 @@
     </div>
   </div>
 
-  <header
+  <div
     class="bg-zinc-50 lg:hidden dark:bg-zinc-800"
     id="mobile-header"
   >
@@ -234,7 +234,7 @@
           </button>
         </div>
 
-        <div class="mx-auto flex items-center">
+        <div class="mx-auto hidden items-center md:flex">
           <img
             class="block size-10 dark:hidden"
             src="{{ asset('images/icon/logo.svg') }}"
@@ -245,7 +245,7 @@
             src="{{ asset('images/icon/dark-logo.svg') }}"
             alt="logo"
           >
-          <span class="ml-3 hidden font-mono text-xl font-bold md:block dark:text-zinc-50">
+          <span class="ml-3 font-mono text-xl font-bold dark:text-zinc-50">
             {{ config('app.name') }}
           </span>
         </div>
@@ -405,5 +405,5 @@
         </a>
       @endforeach
     </nav>
-  </header>
+  </div>
 </header>
