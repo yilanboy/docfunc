@@ -29,7 +29,23 @@
         this.$wire.save(this.comment.id, this.comment.groupName);
       },
       tabToFourSpaces() {
-        this.$el.setRangeText('    ', this.$el.selectionStart, this.$el.selectionStart, 'end');
+        const TAB_SPACE = '    ';
+        const start = this.$el.selectionStart;
+        const end = this.$el.selectionEnd;
+        const value = this.$el.value;
+
+        let lineStart = value.lastIndexOf('\n', start - 1) + 1;
+        let lineEnd = value.indexOf('\n', end);
+        if (lineEnd === -1) {
+          lineEnd = value.length;
+        }
+
+        const lines = value.substring(lineStart, lineEnd).split('\n');
+        const indentedLines = lines.map(line => TAB_SPACE + line);
+
+        this.$el.value = value.substring(0, lineStart) + indentedLines.join('\n') + value.substring(lineEnd);
+        this.$el.selectionStart = start + TAB_SPACE.length;
+        this.$el.selectionEnd = end + (TAB_SPACE.length * lines.length);
       },
       bodyIsEmpty() {
         return this.comment.body === '';
