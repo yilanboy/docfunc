@@ -1,3 +1,7 @@
+@assets
+  @vite('resources/ts/markdown-helper.ts')
+@endassets
+
 @script
   <script>
     Alpine.data('commentsCreateModalPart', () => ({
@@ -30,28 +34,7 @@
         this.$wire.form.body = this.comment.body;
         this.$wire.save();
       },
-      tabToFourSpaces() {
-        const TAB_SPACE = '    ';
-        const start = this.$el.selectionStart;
-        const end = this.$el.selectionEnd;
-        const value = this.$el.value;
-
-        // Find line boundaries for the selection
-        // If lastIndexOf finds a newline: returns the index of \n, then +1 gives us the character right after it (start of next line)
-        // If lastIndexOf doesn't find a newline: returns -1, then -1 + 1 = 0 (start of the string, which is the first line)
-        let lineStart = value.lastIndexOf('\n', start - 1) + 1;
-        let lineEnd = value.indexOf('\n', end);
-        if (lineEnd === -1) {
-          lineEnd = value.length;
-        }
-
-        const lines = value.substring(lineStart, lineEnd).split('\n');
-        const indentedLines = lines.map(line => TAB_SPACE + line);
-
-        this.$el.value = value.substring(0, lineStart) + indentedLines.join('\n') + value.substring(lineEnd);
-        this.$el.selectionStart = start + TAB_SPACE.length;
-        this.$el.selectionEnd = end + (TAB_SPACE.length * lines.length);
-      },
+      tabToFourSpaces,
       bodyIsEmpty() {
         return this.comment.body === '';
       },
@@ -202,6 +185,7 @@
           x-show="previewIsDisable"
         >
           <x-floating-label-textarea
+            class="font-jetbrains-mono"
             id="create-comment-body"
             x-ref="createCommentTextarea"
             {{-- change tab into 4 spaces --}}

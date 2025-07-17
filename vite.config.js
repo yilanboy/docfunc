@@ -21,6 +21,7 @@ export default defineConfig({
                 'resources/ts/scroll-to-anchor.ts',
                 'resources/ts/post-outline.ts',
                 'resources/ts/webauthn.ts',
+                'resources/ts/markdown-helper.ts',
                 // css
                 'resources/css/app.css',
                 'node_modules/@yaireo/tagify/dist/tagify.css',
