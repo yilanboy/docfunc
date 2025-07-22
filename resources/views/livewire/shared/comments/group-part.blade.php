@@ -11,9 +11,11 @@
       },
       openEditCommentModal() {
         this.$dispatch('open-edit-comment-modal', {
-          groupName: this.$el.dataset.commentGroupName,
-          id: this.$el.dataset.commentId,
-          body: this.$el.dataset.commentBody
+          comment: {
+            groupName: this.$el.dataset.commentGroupName,
+            id: this.$el.dataset.commentId,
+            body: this.$el.dataset.commentBody
+          }
         });
       },
       openCreateCommentModal() {

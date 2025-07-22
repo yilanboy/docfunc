@@ -10,16 +10,13 @@
         isOpen: false
       },
       comment: {
-        id: null,
         groupName: null,
+        id: null,
         body: ''
       },
       previewIsEnable: false,
       openModal(event) {
-        this.comment.id = event.detail.id;
-        this.comment.groupName = event.detail.groupName;
-        this.comment.body = event.detail.body;
-
+        this.comment = event.detail.comment;
         this.modal.isOpen = true;
 
         this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
