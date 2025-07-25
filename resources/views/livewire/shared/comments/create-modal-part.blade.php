@@ -12,6 +12,7 @@
         replyTo: '',
       },
       comment: {
+        parentId: null,
         body: ''
       },
       captcha: {
@@ -19,7 +20,7 @@
       },
       previewIsEnable: false,
       openModal(event) {
-        this.$wire.form.parent_id = event.detail.parentId;
+        this.comment.parentId = event.detail.parentId;
 
         this.modal.replyTo = event.detail.replyTo;
         this.modal.isOpen = true;
@@ -31,6 +32,7 @@
         this.previewIsEnable = false;
       },
       submitModal() {
+        this.$wire.form.parent_id = this.comment.parentId;
         this.$wire.form.body = this.comment.body;
         this.$wire.save();
       },
@@ -53,15 +55,14 @@
       previewIsDisable() {
         return this.previewIsEnable === false;
       },
+      previewChanged(event) {
+        if (event.target.checked) {
+          this.$wire.$set('form.body', this.comment.body, true);
+        } else {
+          this.$refs.convertedBody.innerHTML = '';
+        }
+      },
       init() {
-        this.$watch('previewIsEnable', (value) => {
-          if (value) {
-            this.$wire.$set('form.body', this.comment.body, true);
-          } else {
-            this.$refs.convertedBody.innerHTML = '';
-          }
-        });
-
         turnstile.ready(() => {
           turnstile.render(this.$refs.turnstileBlock, {
             sitekey: this.captcha.siteKey,
@@ -72,7 +73,8 @@
           });
         });
 
-        this.$wire.on('reset-body-in-create-comment-modal', () => {
+        this.$wire.on('reset-form-in-create-comment-modal', () => {
+          this.comment.parentId = null;
           this.comment.body = '';
         });
 
@@ -207,6 +209,7 @@
           <x-toggle-switch
             id="create-comment-modal-preview"
             x-model="previewIsEnable"
+            x-on:change="previewChanged"
             x-bind:disabled="bodyIsEmpty"
           >
             預覽

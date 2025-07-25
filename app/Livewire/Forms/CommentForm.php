@@ -14,7 +14,7 @@ class CommentForm extends Form
     public int $post_id;
 
     #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
-    public ?int $user_id = null;
+    public ?int $user_id;
 
     #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
     public ?int $parent_id = null;
@@ -34,7 +34,11 @@ class CommentForm extends Form
     {
         $this->validate();
 
-        return Comment::create($this->all());
+        $comment = Comment::create($this->all());
+
+        $this->reset('body', 'parent_id');
+
+        return $comment;
     }
 
     public function update(Comment $comment): void

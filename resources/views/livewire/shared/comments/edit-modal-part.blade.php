@@ -36,15 +36,14 @@
       previewIsDisable() {
         return this.previewIsEnable === false;
       },
+      previewChanged(event) {
+        if (event.target.checked) {
+          this.$wire.$set('form.body', this.comment.body, true);
+        } else {
+          this.$refs.convertedBody.innerHTML = '';
+        }
+      },
       init() {
-        this.$watch('previewIsEnable', (value) => {
-          if (value) {
-            this.$wire.$set('form.body', this.comment.body, true);
-          } else {
-            this.$refs.convertedBody.innerHTML = '';
-          }
-        });
-
         let previewObserver = new MutationObserver(() => {
           this.$refs.editCommentModal
             .querySelectorAll('pre code:not(.hljs)')
@@ -161,6 +160,7 @@
           <x-toggle-switch
             id="edit-comment-modal-preview"
             x-model="previewIsEnable"
+            x-on:change="previewChanged"
             x-bind:disabled="bodyIsEmpty"
           >
             預覽

@@ -77,7 +77,7 @@ class CreateModalPart extends Component
         $post->user->notifyNewComment(new NewComment($comment));
 
         $this->dispatch(
-            event: 'create-new-comment-to-'.($this->form->parent_id ?? 'root').'-new-comment-group',
+            event: 'create-new-comment-to-'.($comment->parent_id ?? 'root').'-new-comment-group',
             comment: [
                 'id' => $comment->id,
                 'user_id' => $comment->user_id,
@@ -91,15 +91,13 @@ class CreateModalPart extends Component
         );
 
         $this->dispatch(
-            event: 'append-new-id-to-'.($this->form->parent_id ?? 'root').'-comment-list',
+            event: 'append-new-id-to-'.($comment->parent_id ?? 'root').'-comment-list',
             id: $comment->id
         );
 
-        $this->reset('form.body', 'form.parent_id');
-
         $this->dispatch(event: 'close-create-comment-modal');
 
-        $this->dispatch('reset-body-in-create-comment-modal');
+        $this->dispatch('reset-form-in-create-comment-modal');
 
         $this->dispatch(event: 'update-comments-count');
 
