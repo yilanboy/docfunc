@@ -48,7 +48,7 @@ class UploadImageController extends Controller
 
         $file = $request->file('upload');
         $imageName = $this->fileService->generateFileName($file->getClientOriginalExtension());
-        Storage::disk()->put('images/'.$imageName, $file);
+        Storage::disk()->put('images/'.$imageName, $file->getContent());
         $url = Storage::disk()->url('images/'.$imageName);
 
         return response()->json(['url' => $url]);
