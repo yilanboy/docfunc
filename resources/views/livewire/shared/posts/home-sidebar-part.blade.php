@@ -105,7 +105,7 @@
         @foreach ($links as $link)
           <a
             class="flex items-center rounded-md p-2 hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-700"
-            href="{{ $link->link }}"
+            href="{{ $link->url }}"
             target="_blank"
             rel="nofollow noopener noreferrer"
           >
