@@ -1,18 +1,51 @@
+@assets
+  <style>
+    ::view-transition-old(root) {
+      animation-delay: 500ms;
+    }
+
+    ::view-transition-new(root) {
+      animation: circle-in 500ms;
+    }
+
+    @keyframes circle-in {
+      from {
+        clip-path: circle(0% at calc(100vw - 7rem) 2rem);
+      }
+
+      to {
+        clip-path: circle(100% at 50% 50%);
+      }
+    }
+  </style>
+@endassets
+
 @script
   <script>
     Alpine.data('headerPart', () => ({
       html: document.documentElement,
-      // dropdown only show in mobile
+      // the dropdown only shows in mobile
       dropdownMenuIsOpen: false,
       profileMenuIsOpen: false,
       switchTheme() {
-        if (this.html.classList.contains('dark')) {
-          this.html.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        } else {
-          this.html.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
+        const updateTheme = () => {
+          if (this.html.classList.contains('dark')) {
+            this.html.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+          } else {
+            this.html.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
         }
+
+        if (!document.startViewTransition) {
+          updateTheme()
+          return
+        }
+
+        document.startViewTransition(() => {
+          updateTheme()
+        });
       },
       toggleDropdownMenu() {
         this.dropdownMenuIsOpen = !this.dropdownMenuIsOpen;
@@ -95,11 +128,11 @@
         x-on:click="switchTheme"
       >
         <x-icons.sun
-          class="absolute inset-x-auto top-3 size-6 text-amber-400 transition-all duration-300 group-hover:text-amber-500 dark:top-full"
+          class="absolute inset-x-auto top-3 size-6 text-amber-400 transition-all duration-500 group-hover:text-amber-500 dark:top-full"
         />
 
         <x-icons.moon-stars
-          class="absolute inset-x-auto -top-full size-6 text-[#f6f1d5] transition-all duration-300 group-hover:text-[#ddd8bf] dark:top-3"
+          class="absolute inset-x-auto -top-full size-6 text-[#f6f1d5] transition-all duration-500 group-hover:text-[#ddd8bf] dark:top-3"
         />
       </button>
 
