@@ -10,7 +10,7 @@
 
     @keyframes circle-in {
       from {
-        clip-path: circle(0% at calc(100vw - 7rem) 2rem);
+        clip-path: circle(0% at right top);
       }
 
       to {
