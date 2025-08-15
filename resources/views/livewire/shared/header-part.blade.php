@@ -1,25 +1,3 @@
-@assets
-  <style>
-    ::view-transition-old(root) {
-      animation-delay: 500ms;
-    }
-
-    ::view-transition-new(root) {
-      animation: circle-in 500ms;
-    }
-
-    @keyframes circle-in {
-      from {
-        clip-path: circle(0% at right top);
-      }
-
-      to {
-        clip-path: circle(100% at 50% 50%);
-      }
-    }
-  </style>
-@endassets
-
 @script
   <script>
     Alpine.data('headerPart', () => ({
@@ -28,6 +6,15 @@
       dropdownMenuIsOpen: false,
       profileMenuIsOpen: false,
       switchTheme() {
+        const rect = this.$el.getBoundingClientRect();
+
+        const centerX = rect.left + (rect.width / 2);
+        const centerY = rect.top + (rect.height / 2);
+
+        const root = document.documentElement;
+        root.style.setProperty('--circle-in-start-x', `${centerX}px`);
+        root.style.setProperty('--circle-in-start-y', `${centerY}px`);
+
         const updateTheme = () => {
           if (this.html.classList.contains('dark')) {
             this.html.classList.remove('dark');
