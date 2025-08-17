@@ -10,7 +10,7 @@ class ShowLatestPostController extends Controller
 {
     public function __invoke()
     {
-        $posts = Post::latest()->take(5)->get();
+        $posts = Post::latest()->take(6)->get();
 
         return PostResource::collection($posts);
     }

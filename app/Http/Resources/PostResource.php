@@ -21,7 +21,8 @@ class PostResource extends JsonResource
             'title'      => $this->title,
             'excerpt'    => $this->excerpt,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'url'        => $this->link_with_slug,
         ];
     }
 }
