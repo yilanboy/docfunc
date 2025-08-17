@@ -10,12 +10,13 @@
         isOpen: false
       },
       comment: {
-        groupName: null,
         id: null,
         body: ''
       },
+      groupName: null,
       previewIsEnable: false,
       openModal(event) {
+        this.groupName = event.detail.groupName;
         this.comment = event.detail.comment;
         this.modal.isOpen = true;
 
@@ -27,7 +28,7 @@
       },
       submitModal() {
         this.$wire.form.body = this.comment.body;
-        this.$wire.save(this.comment.id, this.comment.groupName);
+        this.$wire.save(this.comment.id, this.groupName);
       },
       tabToFourSpaces,
       bodyIsEmpty() {
