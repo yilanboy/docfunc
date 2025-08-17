@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('user_id')->index()->constrained()->onDelete('cascade');
-            // This line is equivalent to the following two line in MySQL.
+            // This line is equivalent to the following two lines in MySQL.
             // $table->bigInteger('user_id')->unsigned()->index();
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // In Postgresql, foreign key won't create index by default.

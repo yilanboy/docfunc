@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\GeneratePasskeyAuthenticationOptionsController;
 use App\Http\Controllers\Api\GeneratePasskeyRegisterOptionsController;
 use App\Http\Controllers\Api\ShowAllTagsController;
+use App\Http\Controllers\Api\ShowLatestPostController;
 use App\Http\Controllers\Api\TwitterOembedController;
 use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ Route::get('/passkeys/authentication-options', GeneratePasskeyAuthenticationOpti
 Route::middleware('auth:sanctum')
     ->post('images/upload', UploadImageController::class)
     ->name('images.store');
+
+Route::get('posts', ShowLatestPostController::class)->name('api.posts');
 
 Route::get('tags', ShowAllTagsController::class)->name('api.tags');
 
