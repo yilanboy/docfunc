@@ -14,7 +14,7 @@
 use App\Models\User;
 
 pest()->extend(Tests\TestCase::class)
-    ->in('Feature');
+    ->in('Feature', 'Browser');
 
 /*
 |--------------------------------------------------------------------------

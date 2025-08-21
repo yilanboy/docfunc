@@ -17,6 +17,7 @@
         "highlight.js": "^11.11.1",
         "highlight.svelte": "^0.1.2",
         "laravel-vite-plugin": "^2.0.0",
+        "playwright": "^1.55.0",
         "prettier": "^3.4.1",
         "tailwindcss": "^4.0.0",
         "typescript": "^5.7.2",
