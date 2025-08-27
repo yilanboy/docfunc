@@ -48,11 +48,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate vite manifest
-        run: |
-          npm ci
-          npm run build
-
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup php
         uses: shivammathur/setup-php@v2
@@ -77,6 +72,11 @@ jobs:
       - name: Install composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+      - name: Generate vite manifest
+        run: |
+          npm ci
+          npm run build
+
       - name: Prepare the application
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -86,7 +86,9 @@ jobs:
         run: vendor/bin/phpstan analyse --memory-limit=2G
 
       - name: Test with pest
-        run: vendor/bin/pest --coverage-clover ./coverage.xml
+        run: |
+          npx playwright install
+          vendor/bin/pest --coverage-clover ./coverage.xml
         env:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
