@@ -90,8 +90,8 @@ jobs:
         env:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
-      - name: Upload to codecov
-        uses: codecov/codecov-action@v2
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          files: ./coverage.xml
-          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: yilanboy/docfunc
