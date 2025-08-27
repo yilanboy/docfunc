@@ -37,12 +37,12 @@ class EditLinkCommand extends Command
             label: 'Search for the tag that should be edited',
             options: fn (string $value) => strlen($value) > 0
                 ? Link::where('title', 'like', "%{$value}%")
-                    ->orWhere('link', 'like', "%{$value}%")
+                    ->orWhere('url', 'like', "%{$value}%")
                     ->pluck('title', 'id')->all()
                 : []
         );
 
-        $link = Link::find($id, ['id', 'title', 'link']);
+        $link = Link::find($id, ['id', 'title', 'url']);
 
         $title = text(
             label: 'What is the link display title?',
@@ -60,8 +60,8 @@ class EditLinkCommand extends Command
 
         $url = text(
             label: 'What is the link url?',
-            placeholder: $link?->link,
-            default: $link?->link,
+            placeholder: $link?->url,
+            default: $link?->url,
             required: 'link url is required',
             validate: fn (string $value) => match (true) {
                 strlen($value) < 3 => 'The url must be at least 3 characters.',
@@ -74,13 +74,13 @@ class EditLinkCommand extends Command
         $url = Str::of($url)->trim();
 
         $this->warn('Origin title: '.$link->title);
-        $this->warn('Origin url  : '.$link->link);
+        $this->warn('Origin url  : '.$link->url);
         $this->info('New title: '.$title);
         $this->info('New url  : '.$url);
 
         if (confirm('Do you want to save this link?')) {
             $link->title = $title;
-            $link->link = $url;
+            $link->url = $url;
             $link->save();
 
             $this->info('Link updated successfully');
