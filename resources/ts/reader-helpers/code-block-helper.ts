@@ -165,8 +165,8 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         codeHelperGroup.appendChild(copyButton);
         codeHelperGroup.appendChild(expandCodeButton);
 
-        // remove these new element that create in this script when the
-        //  user wants to navigate to the next page...
+        // remove these new element that create in this script
+        // when the user wants to navigate to the next page...
         document.addEventListener(
             'livewire:navigating',
             () => {

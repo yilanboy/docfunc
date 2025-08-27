@@ -131,7 +131,7 @@ export class Modal {
     }
 
     private setupCloseHandlers() {
-        // Close by clicking backdrop
+        // Close by clicking the backdrop
         this.element.addEventListener('click', () => this.close(), {
             signal: this.abortController.signal,
         });
@@ -172,10 +172,7 @@ export class Modal {
                     document.documentElement.style.paddingRight = '';
                 }
             },
-            {
-                once: true,
-                signal: this.abortController.signal,
-            },
+            { once: true },
         );
 
         this.backgroundBackdrop.classList.remove(
