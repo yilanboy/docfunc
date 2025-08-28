@@ -26,7 +26,7 @@
         this.modal.isOpen = false;
         this.previewIsEnable = false;
       },
-      submitModal() {
+      submit() {
         this.$wire.form.body = this.comment.body;
         this.$wire.save(this.comment.id, this.groupName);
       },
@@ -113,7 +113,7 @@
 
       <form
         class="space-y-6"
-        x-on:submit.prevent="submitModal"
+        x-on:submit.prevent="submit"
       >
         <x-auth-validation-errors :errors="$errors" />
 
@@ -168,7 +168,7 @@
           </x-toggle-switch>
 
           <x-button>
-            <x-icons.reply-fill class="w-5" />
+            <x-icons.save class="w-5" />
             <span class="ml-2">更新</span>
           </x-button>
         </div>

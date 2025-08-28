@@ -31,7 +31,7 @@
         this.modal.isOpen = false;
         this.previewIsEnable = false;
       },
-      submitModal() {
+      submit() {
         this.$wire.form.parent_id = this.comment.parentId;
         this.$wire.form.body = this.comment.body;
         this.$wire.save();
@@ -153,7 +153,7 @@
 
       <form
         class="space-y-6"
-        x-on:submit.prevent="submitModal"
+        x-on:submit.prevent="submit"
       >
         <x-auth-validation-errors :errors="$errors" />
 
