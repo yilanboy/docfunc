@@ -19,7 +19,8 @@ class PasskeyFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'owner_id' => User::factory(),
+            'owner_type' => User::class,
             'name' => fake()->word,
             'credential_id' => Str::random(),
             'data' => ['transports' => ['internal']],

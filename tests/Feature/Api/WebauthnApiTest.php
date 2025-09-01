@@ -23,12 +23,12 @@ describe('webauthn api test', function () {
                 'pubKeyCredParams' => [],
                 'rp' => [
                     'id',
-                    'name'
+                    'name',
                 ],
                 'user' => [
                     'id',
                     'name',
-                    'displayName'
+                    'displayName',
                 ],
             ]);
     });

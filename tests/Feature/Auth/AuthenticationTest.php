@@ -89,7 +89,7 @@ test("users can't login if they has a passkey", function () {
     ]);
 
     Passkey::factory()
-        ->create(['user_id' => $user->id]);
+        ->create(['owner_id' => $user->id]);
 
     livewire(LoginPage::class)
         ->set('email', $user->email)
@@ -99,3 +99,7 @@ test("users can't login if they has a passkey", function () {
 
     $this->assertGuest();
 });
+
+test('users can authenticate using passkey', function () {
+//
+})->skip('This test is not working yet.');

@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -87,8 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail
         )->shouldCache();
     }
 
-    public function passkeys(): HasMany
+    public function passkeys(): MorphMany
     {
-        return $this->hasMany(Passkey::class);
+        return $this->morphMany(Passkey::class, 'owner');
     }
 }

@@ -7,6 +7,7 @@ namespace App\Livewire\Pages\Auth;
 ini_set('json.exceptions', '1');
 
 use App\Models\Passkey;
+use App\Models\User;
 use App\Services\Serializer;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
@@ -98,7 +99,10 @@ class LoginPage extends Component
 
         $rawId = json_decode($data['answer'], true)['rawId'];
 
-        $passkey = Passkey::firstWhere('credential_id', $rawId);
+        $passkey = Passkey::query()
+            ->where('credential_id', $rawId)
+            ->where('owner_type', User::class)
+            ->first();
 
         if (! $passkey) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
@@ -142,7 +146,7 @@ class LoginPage extends Component
             'last_used_at' => now(),
         ]);
 
-        Auth::loginUsingId(id: $passkey->user_id, remember: true);
+        Auth::loginUsingId(id: $passkey->owner_id, remember: true);
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
