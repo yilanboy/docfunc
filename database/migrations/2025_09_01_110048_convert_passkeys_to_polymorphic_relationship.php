@@ -20,7 +20,7 @@ return new class extends Migration
             $table->renameColumn('user_id', 'owner_id');
 
             // Add an owner_type column
-            $table->string('owner_type')->after('owner_id');
+            $table->string('owner_type')->nullable()->after('owner_id');
         });
 
         // Set all existing records to a User type
