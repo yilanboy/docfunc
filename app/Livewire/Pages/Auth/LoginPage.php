@@ -26,7 +26,6 @@ use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
 
-
 #[Title('登入')]
 class LoginPage extends Component
 {
@@ -49,7 +48,7 @@ class LoginPage extends Component
     public function login(): void
     {
         $this->validate([
-            'email' => ['required', 'string', 'email'],
+            'email'    => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
 

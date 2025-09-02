@@ -85,10 +85,13 @@ jobs:
       - name: Run the static analysis
         run: vendor/bin/phpstan analyse --memory-limit=2G
 
+      - name: Run Laravel pint
+        run: vendor/bin/pint --test
+
       - name: Test with pest
         run: |
           npx playwright install
-          vendor/bin/pest --coverage-clover ./coverage.xml
+          vendor/bin/pest --parallel --coverage-clover ./coverage.xml
         env:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
