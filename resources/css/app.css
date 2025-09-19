@@ -77,6 +77,8 @@
     prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
     /* figure */
     prose-figure:table prose-figure:w-full prose-figure:mx-auto
+    /* figure table */
+    prose-figure:has-[table]:p-4 prose-figure:has-[table]:border prose-figure:has-[table]:border-zinc-300 dark:prose-figure:has-[table]:border-zinc-600 prose-figure:has-[table]:rounded-xl
     /* image */
     prose-img:w-full prose-img:rounded-xl
     /* figcaption */
