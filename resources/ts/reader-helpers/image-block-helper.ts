@@ -60,17 +60,17 @@ window.imageBlockHelper = function (element: HTMLElement): void {
             return;
         }
 
-        figureTag.classList.add(
-            'image-block-helper-added',
-            'group',
-            'relative',
-        );
-
         const images = figureTag.getElementsByTagName('img');
 
         if (images.length === 0) {
             continue;
         }
+
+        figureTag.classList.add(
+            'image-block-helper-added',
+            'group',
+            'relative',
+        );
 
         const image: HTMLImageElement = images[0];
 
