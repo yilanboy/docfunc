@@ -11,16 +11,18 @@ use Livewire\Component;
 class ShowPage extends Component
 {
     /**
-     * @var Post get the post id from url path
+     * @var Post get the post id from a url path
      *
      * Why not using implicit model binding?
      *
-     * User can delete post in side menu, but there is a problem if you use implicit binding.
+     * User can delete a post in a side menu, but there is a problem if you use implicit binding.
      * Although the page will redirect after deleting the post,
      * but livewire will still try to hydrate the component before jumping.
      * At this time, post model 404 not found errors will occasionally occur.
      */
     public Post $post;
+
+    public int $readTime = 0;
 
     public function mount(int $id): void
     {
@@ -37,6 +39,10 @@ class ShowPage extends Component
         if ($this->post->slug && $this->post->slug !== request()->slug) {
             redirect()->to($this->post->link_with_slug);
         }
+
+        $body = strip_tags(html_entity_decode($this->post->body));
+        $body = preg_replace('/\s/u', '', $body);
+        $this->readTime = intval(mb_strlen($body) / 250);
     }
 
     public function render(): View

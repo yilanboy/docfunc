@@ -124,6 +124,14 @@
 
                 <div class="hidden md:block">&bull;</div>
 
+                <div class="hidden items-center md:flex">
+                  <x-icons.book-half class="w-4" />
+
+                  <span class="ml-2">{{ $readTime }} 分鐘</span>
+                </div>
+
+                <div class="hidden md:block">&bull;</div>
+
                 {{-- comments count --}}
                 <div class="hidden md:flex md:items-center">
                   <x-icons.chat-square-text class="w-4" />
