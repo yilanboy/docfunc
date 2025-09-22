@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Pages\Posts;
 
 use App\Models\Post;
+use App\Services\ContentService;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -40,9 +41,7 @@ class ShowPage extends Component
             redirect()->to($this->post->link_with_slug);
         }
 
-        $body = strip_tags(html_entity_decode($this->post->body));
-        $body = preg_replace('/\s/u', '', $body);
-        $this->readTime = intval(mb_strlen($body) / 250);
+        $this->readTime = ContentService::getReadTime($this->post->body);
     }
 
     public function render(): View

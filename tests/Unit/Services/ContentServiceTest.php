@@ -99,3 +99,114 @@ it('will return empty array if no images in the post body', function () {
         ->toBeArray()
         ->toBeEmpty();
 });
+
+it('returns at least 1 minute for empty content', function () {
+    expect(ContentService::getReadTime(''))->toBe(1)
+        ->and(ContentService::getReadTime('   '))->toBe(1)
+        ->and(ContentService::getReadTime('<p></p>'))->toBe(1);
+});
+
+it('calculates read time for English only content', function () {
+    $englishContent = str_repeat('word ', 200); // 200 words
+
+    expect(ContentService::getReadTime($englishContent))->toBe(1); // 200 words / 200 WPM = 1 minute
+});
+
+it('calculates read time for Chinese only content', function () {
+    $chineseContent = str_repeat('中', 300); // 300 Chinese characters
+
+    expect(ContentService::getReadTime($chineseContent))->toBe(1); // 300 chars / 300 CPM = 1 minute
+});
+
+it('calculates read time for mixed English and Chinese content', function () {
+    $mixedContent = str_repeat('word ', 100).str_repeat('中', 150); // 100 English words + 150 Chinese chars
+
+    // 100/200 + 150/300 = 0.5 + 0.5 = 1 minute
+    expect(ContentService::getReadTime($mixedContent))->toBe(1);
+});
+
+it('calculates read time for programming content with technical terms', function () {
+    $programmingContent = <<<'CONTENT'
+        function getUserData() {
+            const user_name = "john_doe";
+            const userId = get-user-id();
+            return fetch('/api/users/' + userId);
+        }
+
+        CSS classes like .btn-primary and #nav-bar are common.
+        Variables like $variable_name and function_name() should be counted.
+    CONTENT;
+
+    // Should count programming terms correctly
+    expect(ContentService::getReadTime($programmingContent))->toBeGreaterThan(0);
+});
+
+it('handles HTML content by stripping tags', function () {
+    $htmlContent = <<<'HTML'
+        <div>
+            <h1>Title with HTML</h1>
+            <p>This is a <strong>paragraph</strong> with <em>formatting</em>.</p>
+            <code>const variable = "value";</code>
+        </div>
+    HTML;
+
+    // Should strip HTML and count only the text content
+    expect(ContentService::getReadTime($htmlContent))->toBeGreaterThan(0);
+});
+
+it('handles HTML entities correctly', function () {
+    $contentWithEntities = 'This &amp; that &lt;tag&gt; &quot;quotes&quot; &#39;apostrophe&#39;';
+
+    // Should decode entities before counting
+    expect(ContentService::getReadTime($contentWithEntities))->toBeGreaterThan(0);
+});
+
+it('rounds up partial minutes', function () {
+    // 50 words should give 50/200 = 0.25 minutes, rounded up to 1
+    $shortContent = str_repeat('word ', 50);
+
+    expect(ContentService::getReadTime($shortContent))->toBe(1);
+});
+
+it('calculates longer read times correctly', function () {
+    // 800 English words should give 800/200 = 4 minutes
+    $longContent = str_repeat('word ', 800);
+
+    expect(ContentService::getReadTime($longContent))->toBe(4);
+});
+
+it('handles real blog content with code examples', function () {
+    $blogContent = <<<'CONTENT'
+        # Laravel Blade Components
+
+        Laravel Blade components provide a convenient way to create reusable UI elements.
+
+        ```php
+        class AlertComponent extends Component
+        {
+            public function __construct(
+                public string $type = 'info',
+                public string $message = ''
+            ) {}
+
+            public function render()
+            {
+                return view('components.alert');
+            }
+        }
+        ```
+
+        To use this component in your blade templates:
+
+        ```blade
+        <x-alert type="success" message="Operation completed successfully!" />
+        ```
+
+        這是一個中文段落，用來測試混合語言的閱讀時間計算。程式碼範例包含了 PHP 和 Blade 的語法。
+    CONTENT;
+
+    $readTime = ContentService::getReadTime($blogContent);
+
+    expect($readTime)->toBeGreaterThan(0)
+        ->and($readTime)->toBeLessThan(10); // Should be reasonable for this content
+});

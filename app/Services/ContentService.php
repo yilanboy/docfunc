@@ -83,4 +83,40 @@ class ContentService
         // ]
         return $imageList;
     }
+
+
+    /**
+     * Get read time of the article, article may mix with Chinese characters and English words,
+     * so I count Chinese characters and English words separately. The read time is calculated by
+     * dividing the total number of words by different reading speeds for each language.
+     */
+    public static function getReadTime(string $body): int
+    {
+        if (empty(trim($body))) {
+            return 1;
+        }
+
+        $body = html_entity_decode($body);
+        $body = strip_tags($body);
+        $body = trim($body);
+
+        // English words including programming terms (variables, functions, CSS classes, etc.)
+        $englishWordPattern = '/[\w\'-]+/';
+        preg_match_all($englishWordPattern, $body, $matches);
+        $englishWordCount = count($matches[0]);
+
+        // Chinese characters pattern
+        $chineseWordPattern = '/\p{Han}/u';
+        preg_match_all($chineseWordPattern, $body, $matches);
+        $chineseWordCount = count($matches[0]);
+
+        // Different reading speeds: English 200 WPM, Chinese 300 characters per minute
+        $englishReadTime = $englishWordCount / 200;
+        $chineseReadTime = $chineseWordCount / 300;
+
+        $totalMinutes = $englishReadTime + $chineseReadTime;
+
+        // Always return at least 1 minute
+        return max(1, intval(ceil($totalMinutes)));
+    }
 }
