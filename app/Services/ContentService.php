@@ -84,7 +84,6 @@ class ContentService
         return $imageList;
     }
 
-
     /**
      * Get read time of the article, article may mix with Chinese characters and English words,
      * so I count Chinese characters and English words separately. The read time is calculated by
