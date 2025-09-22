@@ -127,7 +127,7 @@
                 <div class="hidden items-center md:flex">
                   <x-icons.book-half class="w-4" />
 
-                  <span class="ml-2">{{ $readTime }} 分鐘</span>
+                  <span class="ml-2">{{ $this->readTime }} 分鐘</span>
                 </div>
 
                 <div class="hidden md:block">&bull;</div>

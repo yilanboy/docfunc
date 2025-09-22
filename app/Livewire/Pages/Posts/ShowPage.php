@@ -7,6 +7,7 @@ namespace App\Livewire\Pages\Posts;
 use App\Models\Post;
 use App\Services\ContentService;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class ShowPage extends Component
@@ -23,8 +24,6 @@ class ShowPage extends Component
      */
     public Post $post;
 
-    public int $readTime = 0;
-
     public function mount(int $id): void
     {
         $this->post = Post::query()
@@ -40,8 +39,12 @@ class ShowPage extends Component
         if ($this->post->slug && $this->post->slug !== request()->slug) {
             redirect()->to($this->post->link_with_slug);
         }
+    }
 
-        $this->readTime = ContentService::getReadTime($this->post->body);
+    #[Computed]
+    public function readTime(): int
+    {
+        return ContentService::getReadTime($this->post->body);
     }
 
     public function render(): View
