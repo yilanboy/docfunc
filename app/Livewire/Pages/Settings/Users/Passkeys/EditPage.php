@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Settings\Users\Passkeys;
 
+use App\Mail\CreatePasskeyMail;
 use App\Models\User;
 use App\Services\CustomCounterChecker;
 use App\Services\Serializer;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -39,7 +41,7 @@ class EditPage extends Component
     public function store(): void
     {
         $data = $this->validate([
-            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'name'    => ['required', 'string', 'min:3', 'max:255'],
             'passkey' => ['required', 'json'],
         ]);
 
@@ -89,12 +91,14 @@ class EditPage extends Component
         );
 
         request()->user()->passkeys()->create([
-            'name' => $data['name'],
+            'name'          => $data['name'],
             'credential_id' => $publicKeyCredentialSourceArray['publicKeyCredentialId'],
-            'data' => $publicKeyCredentialSourceArray,
+            'data'          => $publicKeyCredentialSourceArray,
         ]);
 
         $this->reset('name', 'passkey');
+
+        Mail::to($this->user)->queue(new CreatePasskeyMail);
 
         $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
         $this->dispatch('reset-passkey-name');
