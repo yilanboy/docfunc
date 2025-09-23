@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Settings\Users\DestroyPage as UsersDestroyPage;
-use App\Mail\DestroyUser;
+use App\Mail\DestroyUserMail;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -54,7 +54,7 @@ describe('destroy user', function () {
             ->call('sendDestroyEmail', user: $user)
             ->assertDispatched('toast', status: 'success', message: '已寄出信件！');
 
-        Mail::assertQueued(DestroyUser::class);
+        Mail::assertQueued(DestroyUserMail::class);
     });
 
     test('users can destroy their accounts', function () {

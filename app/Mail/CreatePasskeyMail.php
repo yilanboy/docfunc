@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -13,7 +15,9 @@ class CreatePasskeyMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct() {}
+    public function __construct(
+        public string $passkeyName
+    ) {}
 
     public function envelope(): Envelope
     {

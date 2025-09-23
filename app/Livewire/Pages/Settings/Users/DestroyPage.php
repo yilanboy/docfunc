@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Settings\Users;
 
-use App\Mail\DestroyUser;
+use App\Mail\DestroyUserMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -34,7 +34,7 @@ class DestroyPage extends Component
             ['user' => $user->id]
         );
 
-        Mail::to($user)->queue(new DestroyUser($destroyUserLink));
+        Mail::to($user)->queue(new DestroyUserMail($destroyUserLink));
 
         $this->dispatch('toast', status: 'success', message: '已寄出信件！');
     }

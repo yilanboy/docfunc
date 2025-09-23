@@ -98,7 +98,7 @@ class EditPage extends Component
 
         $this->reset('name', 'passkey');
 
-        Mail::to($this->user)->queue(new CreatePasskeyMail);
+        Mail::to($this->user)->queue(new CreatePasskeyMail(passkeyName: $data['name']));
 
         $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
         $this->dispatch('reset-passkey-name');

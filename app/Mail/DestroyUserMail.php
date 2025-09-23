@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DestroyUser extends Mailable implements ShouldQueue
+class DestroyUserMail extends Mailable implements ShouldQueue
 {
     use Queueable;
     use SerializesModels;
