@@ -8,9 +8,6 @@
           this.$refs.searchBar.focus();
         });
       },
-      closeSearchBar() {
-        this.searchBarIsOpen = false;
-      },
       setShortcutKeyDisplayByOS() {
         let userAgentInfo = navigator.userAgent.toLowerCase();
 
@@ -36,7 +33,7 @@
     x-on:click="openSearchBar"
     x-on:keydown.window.prevent.cmd.k="openSearchBar"
     x-on:keydown.window.prevent.ctrl.k="openSearchBar"
-    x-on:keydown.window.escape="closeSearchBar"
+    x-on:keydown.window.escape="searchBarIsOpen = false"
   >
     <x-icons.search class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
 
@@ -85,7 +82,7 @@
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-on:click.outside="closeSearchBar"
+            x-on:click.outside="searchBarIsOpen = false"
             x-trap.noscroll="searchBarIsOpen"
           >
             {{-- search form --}}

@@ -33,21 +33,6 @@
         document.startViewTransition(() => {
           updateTheme()
         });
-      },
-      toggleDropdownMenu() {
-        this.dropdownMenuIsOpen = !this.dropdownMenuIsOpen;
-      },
-      dropdownMenuIsClose() {
-        return this.dropdownMenuIsOpen !== true;
-      },
-      closeDropdownMenu() {
-        this.dropdownMenuIsOpen = false;
-      },
-      toggleProfileMenu() {
-        this.profileMenuIsOpen = !this.profileMenuIsOpen;
-      },
-      closeProfileMenu() {
-        this.profileMenuIsOpen = false;
       }
     }));
   </script>
@@ -171,8 +156,8 @@
               class="focus:outline-hidden flex cursor-pointer rounded-full bg-zinc-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400"
               id="desktop-user-menu-button"
               type="button"
-              x-on:click="toggleProfileMenu"
-              x-on:keydown.escape.window="closeProfileMenu"
+              x-on:click="profileMenuIsOpen = !profileMenuIsOpen"
+              x-on:keydown.escape.window="profileMenuIsOpen = false"
             >
               <span class="sr-only">Open user menu</span>
               <img
@@ -188,7 +173,7 @@
             class="absolute right-0 top-16"
             x-cloak=""
             x-show="profileMenuIsOpen"
-            x-on:click.outside="closeProfileMenu"
+            x-on:click.outside="profileMenuIsOpen = false"
             x-transition.origin.top.right=""
           >
             <x-dropdown.link href="{{ route('posts.create') }}">
@@ -232,14 +217,14 @@
             type="button"
             aria-controls="mobile-menu"
             aria-expanded="false"
-            x-on:click="toggleDropdownMenu"
+            x-on:click="dropdownMenuIsOpen = !dropdownMenuIsOpen"
           >
             <span class="sr-only">Open main menu</span>
             {{-- close category dropdown menu icon --}}
             <div
               class="text-3xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               x-cloak
-              x-show="dropdownMenuIsClose"
+              x-show="!dropdownMenuIsOpen"
             >
               <x-icons.list class="w-7" />
             </div>
@@ -331,8 +316,8 @@
                   type="button"
                   aria-expanded="false"
                   aria-haspopup="true"
-                  x-on:click="toggleProfileMenu"
-                  x-on:keydown.escape.window="closeProfileMenu"
+                  x-on:click="profileMenuIsOpen = !profileMenuIsOpen"
+                  x-on:keydown.escape.window="profileMenuIsOpen = false"
                 >
                   <span class="sr-only">Open user menu</span>
                   <img
@@ -348,7 +333,7 @@
                 class="absolute right-0 top-12"
                 x-cloak=""
                 x-show="profileMenuIsOpen"
-                x-on:click.outside="closeProfileMenu"
+                x-on:click.outside="profileMenuIsOpen = false"
                 x-transition.origin.top.right=""
               >
                 <x-dropdown.link href="{{ route('posts.create') }}">
