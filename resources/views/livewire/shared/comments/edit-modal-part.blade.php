@@ -31,12 +31,6 @@
         this.$wire.save(this.comment.id, this.groupName);
       },
       tabToFourSpaces,
-      bodyIsEmpty() {
-        return this.comment.body === '';
-      },
-      previewIsDisable() {
-        return this.previewIsEnable === false;
-      },
       previewChanged(event) {
         if (event.target.checked) {
           this.$wire.$set('form.body', this.comment.body, true);
@@ -143,7 +137,7 @@
 
         <div
           x-cloak
-          x-show="previewIsDisable"
+          x-show="!previewIsEnable"
         >
           <x-floating-label-textarea
             class="font-jetbrains-mono"
@@ -162,7 +156,7 @@
             id="edit-comment-modal-preview"
             x-model="previewIsEnable"
             x-on:change="previewChanged"
-            x-bind:disabled="bodyIsEmpty"
+            x-bind:disabled="comment.body === ''"
           >
             預覽
           </x-toggle-switch>

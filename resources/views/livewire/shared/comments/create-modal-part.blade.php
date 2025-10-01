@@ -37,23 +37,8 @@
         this.$wire.save();
       },
       tabToFourSpaces,
-      bodyIsEmpty() {
-        return this.comment.body === '';
-      },
-      submitIsDisabled() {
-        return this.modal.isSubmitEnabled === false;
-      },
-      informationOnSubmitButton() {
-        return this.modal.isSubmitEnabled ? '回覆' : '驗證中';
-      },
-      showReplyToLabel() {
-        return this.modal.replyTo !== '';
-      },
       replyToLabel() {
-        return '回覆 ' + this.modal.replyTo + ' 的留言';
-      },
-      previewIsDisable() {
-        return this.previewIsEnable === false;
+        return `回覆 ${this.modal.replyTo} 的留言`;
       },
       previewChanged(event) {
         if (event.target.checked) {
@@ -147,7 +132,7 @@
       <div
         class="w-full rounded-lg bg-zinc-200/60 px-4 py-2 dark:bg-zinc-700/60 dark:text-zinc-50"
         x-cloak
-        x-show="showReplyToLabel"
+        x-show="modal.replyTo !== ''"
         x-text="replyToLabel"
       ></div>
 
@@ -184,7 +169,7 @@
 
         <div
           x-cloak
-          x-show="previewIsDisable"
+          x-show="!previewIsEnable"
         >
           <x-floating-label-textarea
             class="font-jetbrains-mono"
@@ -210,12 +195,12 @@
             id="create-comment-modal-preview"
             x-model="previewIsEnable"
             x-on:change="previewChanged"
-            x-bind:disabled="bodyIsEmpty"
+            x-bind:disabled="comment.body === ''"
           >
             預覽
           </x-toggle-switch>
 
-          <x-button x-bind:disabled="submitIsDisabled">
+          <x-button x-bind:disabled="modal.isSubmitEnabled === false">
             <x-icons.reply-fill
               class="mr-2 w-5"
               x-cloak
@@ -224,9 +209,9 @@
             <x-icons.animate-spin
               class="mr-2 h-5 w-5 text-zinc-50"
               x-cloak
-              x-show="submitIsDisabled"
+              x-show="modal.isSubmitEnabled === false"
             />
-            <span x-text="informationOnSubmitButton"></span>
+            <span x-text="modal.isSubmitEnabled ? '回覆' : '驗證中'"></span>
           </x-button>
         </div>
       </form>

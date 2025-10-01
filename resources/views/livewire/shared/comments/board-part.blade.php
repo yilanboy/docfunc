@@ -2,12 +2,6 @@
   <script>
     Alpine.data('commentsBoardPart', () => ({
       orderDropdownIsOpen: false,
-      openOrderDropdown() {
-        this.orderDropdownIsOpen = true;
-      },
-      closeOrderDropdown() {
-        this.orderDropdownIsOpen = false;
-      },
       changeOrder() {
         this.$wire.changeOrder(this.$el.dataset.order);
         this.orderDropdownIsOpen = false;
@@ -43,7 +37,7 @@
           <button
             class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-zinc-900 dark:text-zinc-50"
             type="button"
-            x-on:click="openOrderDropdown"
+            x-on:click="orderDropdownIsOpen = true"
           >
             <x-icons.animate-spin
               class="size-5"
@@ -67,7 +61,7 @@
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            x-on:click.outside="closeOrderDropdown"
+            x-on:click.outside="orderDropdownIsOpen = false"
           >
             <div class="w-full py-1">
               @foreach (CommentOrderOptions::cases() as $commentOrder)
