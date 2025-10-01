@@ -56,7 +56,7 @@ describe('create post', function () {
             ->call('save')
             ->assertHasNoErrors()
             ->assertRedirect(route('posts.show', [
-                'id' => 1,
+                'id'   => 1,
                 'slug' => $contentService->makeSlug($title),
             ]))
             ->assertDispatched('toast', status: 'success', message: '成功新增文章！');
@@ -155,7 +155,7 @@ describe('create post', function () {
         livewire(UploadPreviewImagePart::class)
             ->set('image', $image)
             ->assertHasNoErrors()
-            ->assertSeeHtml('id="upload-image"');
+            ->assertSeeHtml('id="image-url"');
 
         expect(Storage::disk()->allFiles())->not->toBeEmpty();
     });
@@ -216,11 +216,11 @@ describe('create post', function () {
             // it will compare the order of the arrangement
             ->toBe([
                 'category_id' => $categoryId,
-                'is_private' => false, // default value
+                'is_private'  => false, // default value
                 'preview_url' => null,
-                'title' => $title,
-                'tags' => $tags,
-                'body' => $body,
+                'title'       => $title,
+                'tags'        => $tags,
+                'body'        => $body,
             ]);
     });
 
@@ -249,11 +249,11 @@ describe('create post', function () {
             $autoSaveKey,
             json_encode([
                 'category_id' => $categoryId,
-                'is_private' => false,
+                'is_private'  => false,
                 'preview_url' => null,
-                'title' => $title,
-                'tags' => $tags,
-                'body' => $body,
+                'title'       => $title,
+                'tags'        => $tags,
+                'body'        => $body,
             ], JSON_UNESCAPED_UNICODE),
             now()->addDays(7)
         );
