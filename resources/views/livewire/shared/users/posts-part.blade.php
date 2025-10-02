@@ -1,7 +1,7 @@
 @script
   <script>
     Alpine.data('usersPostsPart', () => ({
-      currentYear: @entangle('currentPostsYear').live,
+      currentYear: $wire.entangle('currentPostsYear').live,
       dropdownIsOpen: false,
       showCurrentYearText() {
         return `${this.currentYear} 年的文章`;

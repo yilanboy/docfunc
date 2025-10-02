@@ -45,8 +45,8 @@
       tagsListUrl: @js(route('api.tags')),
       bodyMaxCharacters: @js($this->form::BODY_MAX_CHARACTER),
       ClassNameToAddOnEditorContent: @js(['rich-text']),
-      tags: @entangle('form.tags'),
-      body: @entangle('form.body'),
+      tags: $wire.entangle('form.tags'),
+      body: $wire.entangle('form.body'),
       debounce(callback, delay) {
         let timeoutId;
         clearTimeout(timeoutId);
