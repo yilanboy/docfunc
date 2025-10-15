@@ -11,16 +11,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
 use Webauthn\AuthenticatorSelectionCriteria;
-use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 class GeneratePasskeyRegisterOptionsController extends Controller
 {
-    /**
-     * @throws InvalidDataException
-     */
     public function __invoke(Request $request): string
     {
         // 建立一個信賴方實體
@@ -45,6 +41,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
         // 目前可探索的憑證已經是主流，如果這裡沒有強制要求，你的 YubiKey 會無法使用
         $authenticatorSelectionCriteria = AuthenticatorSelectionCriteria::create(
             authenticatorAttachment: AuthenticatorSelectionCriteria::AUTHENTICATOR_ATTACHMENT_NO_PREFERENCE,
+            userVerification: AuthenticatorSelectionCriteria::USER_VERIFICATION_REQUIREMENT_REQUIRED,
             residentKey: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED,
         );
 
