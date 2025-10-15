@@ -1,3 +1,31 @@
+@assets
+  <style>
+    /* view transition */
+    ::view-transition-old(root) {
+      animation-delay: 1s;
+    }
+
+    ::view-transition-new(root) {
+      animation: circle-in 1s;
+    }
+
+    :root {
+      --circle-in-start-x: right;
+      --circle-in-start-y: top;
+    }
+
+    @keyframes circle-in {
+      from {
+        clip-path: circle(0% at var(--circle-in-start-x) var(--circle-in-start-y));
+      }
+
+      to {
+        clip-path: circle(100% at 50% 50%);
+      }
+    }
+  </style>
+@endassets
+
 @script
   <script>
     Alpine.data('headerPart', () => ({
