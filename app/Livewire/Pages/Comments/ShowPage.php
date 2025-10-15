@@ -35,7 +35,7 @@ class ShowPage extends Component
     {
         $comment = Comment::find(id: $id, columns: ['id', 'user_id', 'post_id']);
 
-        // Check comment is not deleted
+        // Check a comment is not deleted
         if (is_null($comment)) {
             $this->dispatch(event: 'toast', status: 'danger', message: '該留言已被刪除！');
 

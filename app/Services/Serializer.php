@@ -28,6 +28,9 @@ class Serializer
         protected SerializerInterface|NormalizerInterface $serializer,
     ) {}
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function toJson(mixed $value): string
     {
         return $this->serializer->serialize(
@@ -35,11 +38,14 @@ class Serializer
             'json',
             [
                 AbstractObjectNormalizer::SKIP_NULL_VALUES => true, // Highly recommended!
-                JsonEncode::OPTIONS => JSON_THROW_ON_ERROR, // Optional
+                JsonEncode::OPTIONS                        => JSON_THROW_ON_ERROR, // Optional
             ]
         );
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function fromJson(string $value, string $desiredClass)
     {
         return $this
