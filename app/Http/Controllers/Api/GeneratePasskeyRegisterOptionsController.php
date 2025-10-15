@@ -10,13 +10,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Webauthn\AuthenticatorSelectionCriteria;
+use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
 class GeneratePasskeyRegisterOptionsController extends Controller
 {
+    /**
+     * @throws ExceptionInterface
+     * @throws InvalidDataException
+     */
     public function __invoke(Request $request): string
     {
         // 建立一個信賴方實體

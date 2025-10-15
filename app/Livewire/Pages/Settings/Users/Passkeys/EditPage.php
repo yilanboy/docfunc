@@ -8,11 +8,11 @@ use App\Mail\CreatePasskeyMail;
 use App\Models\User;
 use App\Services\CustomCounterChecker;
 use App\Services\Serializer;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Throwable;
 use Webauthn\AuthenticatorAttestationResponse;
 use Webauthn\AuthenticatorAttestationResponseValidator;
@@ -39,6 +39,9 @@ class EditPage extends Component
         $this->authorize('update', $this->user);
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function store(): void
     {
         $data = $this->validate([
@@ -48,15 +51,8 @@ class EditPage extends Component
 
         $serializer = Serializer::make();
 
-        try {
-            $publicKeyCredential = $serializer
-                ->fromJson($data['passkey'], PublicKeyCredential::class);
-        } catch (Throwable $error) {
-            Log::error($error->getMessage());
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
+        $publicKeyCredential = $serializer
+            ->fromJson($data['passkey'], PublicKeyCredential::class);
 
         if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
@@ -72,17 +68,10 @@ class EditPage extends Component
             return;
         }
 
-        try {
-            $publicKeyCredentialCreationOptions = $serializer->fromJson(
-                $options,
-                PublicKeyCredentialCreationOptions::class,
-            );
-        } catch (Throwable $error) {
-            Log::error($error->getMessage());
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
+        $publicKeyCredentialCreationOptions = $serializer->fromJson(
+            $options,
+            PublicKeyCredentialCreationOptions::class,
+        );
 
         $csmFactory = new CeremonyStepManagerFactory;
         $csmFactory->setCounterChecker(new CustomCounterChecker);
@@ -101,16 +90,9 @@ class EditPage extends Component
             return;
         }
 
-        try {
-            $publicKeyCredentialSourceArray = $serializer->toArray(
-                $publicKeyCredentialSource
-            );
-        } catch (Throwable $error) {
-            Log::error($error->getMessage());
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
+        $publicKeyCredentialSourceArray = $serializer->toArray(
+            $publicKeyCredentialSource
+        );
 
         request()->user()->passkeys()->create([
             'name'          => $data['name'],
