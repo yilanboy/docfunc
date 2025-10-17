@@ -1,22 +1,23 @@
 @assets
   <style>
-    /* view transition */
-    ::view-transition-old(root) {
-      animation-delay: 1s;
-    }
-
-    ::view-transition-new(root) {
-      animation: circle-in 1s;
-    }
-
     :root {
+      --animation-duration: 1s;
       --circle-in-start-x: right;
       --circle-in-start-y: top;
     }
 
+    /* view transition */
+    ::view-transition-old(root) {
+      animation-delay: var(--animation-duration);
+    }
+
+    ::view-transition-new(root) {
+      animation: circle-in var(--animation-duration);
+    }
+
     @keyframes circle-in {
       from {
-        clip-path: circle(0% at var(--circle-in-start-x) var(--circle-in-start-y));
+        clip-path: circle(5% at var(--circle-in-start-x) var(--circle-in-start-y));
       }
 
       to {
@@ -55,6 +56,7 @@
 
         if (!document.startViewTransition) {
           updateTheme()
+
           return
         }
 
