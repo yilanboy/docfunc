@@ -31,6 +31,7 @@ import yaml from 'highlight.js/lib/languages/yaml';
 declare global {
     interface Window {
         hljs: typeof hljs;
+        highlightObserver: (element: HTMLElement) => MutationObserver;
     }
 }
 
@@ -66,3 +67,26 @@ hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('yaml', yaml);
 
 window.hljs = hljs;
+
+function highlightObserver(htmlElement: HTMLElement): MutationObserver {
+    let observer = new MutationObserver(() => {
+        let codeElements = htmlElement.querySelectorAll(
+            'pre code:not(.hljs)',
+        ) as NodeListOf<HTMLElement>;
+
+        codeElements.forEach((codeElement) => {
+            hljs.highlightElement(codeElement);
+        });
+    });
+
+    observer.observe(htmlElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: false,
+    });
+
+    return observer;
+}
+
+window.highlightObserver = highlightObserver;

@@ -9,13 +9,6 @@
   <script>
     Alpine.data('commentsShowPage', () => ({
       observers: [],
-      highlightCodeInCommentCard() {
-        this.$root
-          .querySelectorAll('pre code:not(.hljs)')
-          .forEach((element) => {
-            hljs.highlightElement(element);
-          });
-      },
       openEditCommentModal() {
         this.$dispatch('open-edit-comment-modal', {
           comment: {
@@ -32,19 +25,10 @@
         });
       },
       init() {
-        let commentsObserver = new MutationObserver(() => {
-          this.highlightCodeInCommentCard();
-        });
-
-        commentsObserver.observe(this.$root, {
-          childList: true,
-          subtree: true,
-          attributes: true
-        });
-
+        let commentsObserver = highlightObserver(this.$root)
         this.observers.push(commentsObserver);
 
-        this.highlightCodeInCommentCard();
+        hljs.highlightAll();
       },
       destroy() {
         this.observers.forEach((observer) => {

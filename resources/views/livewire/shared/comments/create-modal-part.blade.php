@@ -63,21 +63,7 @@
           this.comment.body = '';
         });
 
-        let previewObserver = new MutationObserver(() => {
-          this.$refs.createCommentModal
-            .querySelectorAll('pre code:not(.hljs)')
-            .forEach((element) => {
-              hljs.highlightElement(element);
-            });
-        });
-
-        previewObserver.observe(this.$refs.createCommentModal, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          characterData: false
-        });
-
+        let previewObserver = highlightObserver(this.$refs.createCommentModal)
         this.observers.push(previewObserver);
       },
       destroy() {

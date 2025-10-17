@@ -39,21 +39,7 @@
         }
       },
       init() {
-        let previewObserver = new MutationObserver(() => {
-          this.$refs.editCommentModal
-            .querySelectorAll('pre code:not(.hljs)')
-            .forEach((element) => {
-              hljs.highlightElement(element);
-            });
-        });
-
-        previewObserver.observe(this.$refs.editCommentModal, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          characterData: false
-        });
-
+        let previewObserver = highlightObserver(this.$refs.editCommentModal)
         this.observers.push(previewObserver);
       },
       destroy() {
