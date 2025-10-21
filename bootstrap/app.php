@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Webauthn\Exception\InvalidDataException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,7 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->report(function (Throwable $e) {
-            Log::error($e->getMessage());
+        // Symfony serializer error
+        $exceptions->report(function (ExceptionInterface $e) {
+            Log::error('A Symfony serializer happened: '.$e->getMessage());
+        });
+
+        // Passkey InvalidDataException
+        $exceptions->report(function (InvalidDataException $e) {
+            Log::error('Invalid data for generating passkey options: '.$e->getMessage());
         });
     })->create();

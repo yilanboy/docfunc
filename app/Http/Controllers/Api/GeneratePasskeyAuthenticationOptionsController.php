@@ -9,12 +9,14 @@ use App\Services\Serializer;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 class GeneratePasskeyAuthenticationOptionsController extends Controller
 {
     /**
+     * @throws ExceptionInterface
      * @throws InvalidDataException
      */
     public function __invoke(): string
