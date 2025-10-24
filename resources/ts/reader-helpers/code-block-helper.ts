@@ -131,8 +131,6 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         const code: HTMLElement = codes[0];
 
-        code.classList.add('font-jetbrains-mono', 'text-lg', 'font-semibold');
-
         // to get language from code class name, the class name is like "language-JavaScript"
         // we need to get the last part of the class name
 

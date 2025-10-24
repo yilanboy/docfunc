@@ -139,11 +139,6 @@ export const languageSettings: { [Name: string]: LanguagesSetting } = {
         backgroundColor: '#ce412b',
         color: 'white',
     },
-    shell: {
-        label: 'Shell',
-        backgroundColor: '#e95420',
-        color: 'white',
-    },
     svelte: {
         label: 'Svelte',
         backgroundColor: '#f73c00',

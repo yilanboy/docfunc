@@ -90,7 +90,7 @@
     /* code */
     prose-code:before:content-none prose-code:after:content-none prose-code:font-jetbrains-mono prose-code:font-medium
     /* pre */
-    prose-pre:p-0 prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
+    prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
     /* blockquote before */
     prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded-sm prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
     /* blockquote */
@@ -140,22 +140,6 @@
     .dark & blockquote {
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%232a547e60" d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M7.194 6.766a1.7 1.7 0 0 0-.227-.272 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 5.734 6C4.776 6 4 6.746 4 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.5 2.5 0 0 0-.227-.4zM11 9.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.5 2.5 0 0 0-.228-.4 1.7 1.7 0 0 0-.227-.273 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 10.07 6c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z"/></svg>');
     }
-
-    & pre code.hljs {
-        overflow-x: auto !important;
-    }
-}
-
-.hljs {
-    background: var(--color-neutral-800) !important;
-}
-
-.dark .hljs {
-    background: var(--color-neutral-900) !important;
-}
-
-#edit-post pre {
-    padding: 1rem;
 }
 
 #edit-post pre > code {
@@ -163,13 +147,28 @@
     overflow-x: auto;
 }
 
-#create-post pre {
-    padding: 1rem;
-}
-
 #create-post pre > code {
     display: block;
     overflow-x: auto;
+}
+
+/* highlight.js */
+pre:has(code.hljs) {
+    padding: 0 !important;
+    border-radius: 0.75rem !important;
+}
+
+pre > code.hljs {
+    font-family: var(--font-jetbrains-mono), sans-serif !important;
+    font-size: var(--text-lg) !important;
+    line-height: var(--text-lg--line-height) !important;
+    font-weight: 600 !important;
+    overflow-x: auto !important;
+    background: var(--color-neutral-800) !important;
+}
+
+.dark pre > code.hljs {
+    background: var(--color-neutral-900) !important;
 }
 
 /* Alpine.js */
