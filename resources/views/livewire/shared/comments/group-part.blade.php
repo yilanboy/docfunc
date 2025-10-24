@@ -21,7 +21,7 @@
         let commentsObserver = highlightObserver(this.$root)
         this.observers.push(commentsObserver);
 
-        hljs.highlightAll();
+        highlightAllInElement(this.$root);
       },
       destroy() {
         this.observers.forEach((observer) => {

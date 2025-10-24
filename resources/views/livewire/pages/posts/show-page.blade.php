@@ -30,16 +30,16 @@
   <script>
     Alpine.data('showPostPage', () => ({
       init() {
-        window.setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
-        window.hljs.highlightAll();
-        window.codeBlockHelper(this.$refs.postBody);
-        window.imageBlockHelper(this.$refs.postBody);
-        window.processYoutubeOembeds();
-        window.processTwitterOembeds(this.$refs.postBody);
-        window.setupProgressBar(this.$refs.postCard, this.$refs.progressBar);
-        window.setupScrollToTopButton(this.$refs.scrollToTopBtn);
-        window.setupSharer();
-        window.scrollToAnchor();
+        setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
+        highlightAllInElement(this.$refs.postBody);
+        codeBlockHelper(this.$refs.postBody);
+        imageBlockHelper(this.$refs.postBody);
+        processYoutubeOembeds();
+        processTwitterOembeds(this.$refs.postBody);
+        setupProgressBar(this.$refs.postCard, this.$refs.progressBar);
+        setupScrollToTopButton(this.$refs.scrollToTopBtn);
+        setupSharer();
+        scrollToAnchor();
       }
     }));
   </script>
