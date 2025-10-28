@@ -136,7 +136,7 @@
           :current-level="$currentLevel + 1"
           :parent-id="$comment['id']"
           :comment-group-name="$comment['id'] . '-new-comment-group'"
-          :key="$comment['id'] . '-new-comment-group'"
+          :key="$comment['id'] . '-new-comment-group-' . uniqid()"
         />
 
         {{-- If this comment has no sub-messages,
