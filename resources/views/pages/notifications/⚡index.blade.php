@@ -15,8 +15,7 @@ new class extends Component {
 
         auth()->user()->unreadNotifications->markAsRead();
 
-        // TODO: Livewire 4 bug here
-        return $this->view(compact('notifications'))->title('我的通知');
+        return $this->view()->with(compact('notifications'))->title('我的通知');
     }
 };
 ?>

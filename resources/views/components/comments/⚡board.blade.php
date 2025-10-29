@@ -1,3 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Enums\CommentOrderOptions;
+use App\Models\Comment;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+new class extends Component {
+    #[Locked]
+    public int $postId;
+
+    #[Locked]
+    public int $postUserId;
+
+    #[Locked]
+    public int $commentCounts;
+
+    #[Locked]
+    public CommentOrderOptions $order = CommentOrderOptions::POPULAR;
+
+    #[On('update-comments-count')]
+    public function updateCommentsCount(): void
+    {
+        $this->commentCounts = Comment::query()->where('post_id', $this->postId)->count();
+    }
+
+    public function changeOrder(CommentOrderOptions $order): void
+    {
+        $this->order = $order;
+    }
+};
+?>
+
 @script
   <script>
     Alpine.data('commentsBoardPart', () => ({
@@ -15,10 +51,6 @@
     }));
   </script>
 @endscript
-
-@php
-  use App\Enums\CommentOrderOptions;
-@endphp
 
 <div
   class="w-full"
@@ -104,7 +136,7 @@
   </div>
 
   {{-- new root comment will show here --}}
-  <livewire:shared.comments.group-part
+  <livewire:comments.group
     :post-id="$postId"
     :post-user-id="$postUserId"
     :comment-group-name="'root-new-comment-group'"
@@ -112,7 +144,7 @@
   />
 
   {{-- root comment list --}}
-  <livewire:shared.comments.list-part
+  <livewire:comments.list
     :post-id="$postId"
     :post-user-id="$postUserId"
     :order="$order"
@@ -120,10 +152,10 @@
   />
 
   {{-- create comment modal --}}
-  <livewire:shared.comments.create-modal-part :post-id="$postId" />
+  <livewire:comments.create-modal :post-id="$postId" />
 
   @auth
     {{-- edit comment modal --}}
-    <livewire:shared.comments.edit-modal-part />
+    <livewire:comments.edit-modal />
   @endauth
 </div>

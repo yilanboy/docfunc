@@ -1,3 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\Link;
+use App\Models\Tag;
+use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
+
+new class extends Component {
+    public function render()
+    {
+        $popularTags = Cache::remember('popularTags', now()->addDay(), function () {
+            // 取出標籤使用次數前 20 名
+            return Tag::withCount('posts')->orderByDesc('posts_count')->limit(20)->get();
+        });
+
+        $links = Cache::remember('links', now()->addDay(), function () {
+            return Link::all();
+        });
+
+        return $this->view()->with(compact('popularTags', 'links'));
+    }
+};
+?>
+
 @script
   <script>
     Alpine.data('homeSideMenuPart', () => ({

@@ -1,3 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\User;
+use Livewire\Component;
+
+new class extends Component {
+    public string $userId;
+
+    public function render()
+    {
+        $user = User::find($this->userId)->loadCount([
+            'posts as posts_count_in_this_year' => function ($query) {
+                $query->whereYear('created_at', date('Y'));
+            },
+        ]);
+
+        $commentCountsInAllPosts = Comment::query()->join('posts', 'comments.post_id', '=', 'posts.id')->where('posts.user_id', $user->id)->count();
+
+        $categories = Category::with([
+            'posts' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            },
+        ])->get();
+
+        return $this->view()->with(compact('user', 'categories', 'commentCountsInAllPosts'));
+    }
+};
+?>
+
 @script
   <script>
     Alpine.data('usersInfoCardsPart', () => ({

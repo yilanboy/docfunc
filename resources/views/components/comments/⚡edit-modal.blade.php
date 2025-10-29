@@ -1,45 +1,71 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Livewire\Forms\CommentForm;
+use App\Models\Comment;
+use App\Traits\MarkdownConverter;
+use Illuminate\Auth\Access\AuthorizationException;
+use Livewire\Component;
+
+new class extends Component {
+    use MarkdownConverter;
+
+    public CommentForm $form;
+
+    public function mount(): void
+    {
+        if (!auth()->check()) {
+            throw new Exception(message: 'Edit modal part component requires authentication.');
+        }
+    }
+
+    public function save(Comment $comment, string $groupName): void
+    {
+        $this->authorize('update', $comment);
+
+        $this->form->update($comment);
+
+        $this->dispatch(event: 'close-edit-comment-modal');
+
+        $this->dispatch(event: 'update-comment-in-' . $groupName, id: $comment->id, body: $comment->body, updatedAt: $comment->updated_at);
+    }
+};
+?>
+
 @assets
   @vite('resources/ts/markdown-helper.ts')
 @endassets
 
 @script
   <script>
-    Alpine.data('commentsCreateModalPart', () => ({
+    Alpine.data('commentsEditModalPart', () => ({
       observers: [],
       modal: {
-        isOpen: false,
-        isSubmitEnabled: false,
-        replyTo: '',
+        isOpen: false
       },
       comment: {
-        parentId: null,
+        id: null,
         body: ''
       },
-      captcha: {
-        siteKey: @js(config('services.captcha.site_key')),
-      },
+      groupName: null,
       previewIsEnable: false,
       openModal(event) {
-        this.comment.parentId = event.detail.parentId;
-
-        this.modal.replyTo = event.detail.replyTo;
+        this.groupName = event.detail.groupName;
+        this.comment = event.detail.comment;
         this.modal.isOpen = true;
 
-        this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
+        this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
       },
       closeModal() {
         this.modal.isOpen = false;
         this.previewIsEnable = false;
       },
       submit() {
-        this.$wire.form.parent_id = this.comment.parentId;
         this.$wire.form.body = this.comment.body;
-        this.$wire.save();
+        this.$wire.save(this.comment.id, this.groupName);
       },
       tabToFourSpaces,
-      replyToLabel() {
-        return `回覆 ${this.modal.replyTo} 的留言`;
-      },
       previewChanged(event) {
         if (event.target.checked) {
           this.$wire.$set('form.body', this.comment.body, true);
@@ -48,22 +74,7 @@
         }
       },
       init() {
-        turnstile.ready(() => {
-          turnstile.render(this.$refs.turnstileBlock, {
-            sitekey: this.captcha.siteKey,
-            callback: (token) => {
-              this.$wire.captchaToken = token;
-              this.modal.isSubmitEnabled = true;
-            }
-          });
-        });
-
-        this.$wire.on('reset-form-in-create-comment-modal', () => {
-          this.comment.parentId = null;
-          this.comment.body = '';
-        });
-
-        let previewObserver = highlightObserver(this.$refs.createCommentModal)
+        let previewObserver = highlightObserver(this.$refs.editCommentModal)
         this.observers.push(previewObserver);
       },
       destroy() {
@@ -78,11 +89,11 @@
 <div
   class="fixed inset-0 z-30 flex min-h-screen items-end justify-center"
   x-cloak
-  x-data="commentsCreateModalPart"
-  x-ref="createCommentModal"
+  x-data="commentsEditModalPart"
+  x-ref="editCommentModal"
   x-show="modal.isOpen"
-  x-on:open-create-comment-modal.window="openModal"
-  x-on:close-create-comment-modal.window="closeModal"
+  x-on:open-edit-comment-modal.window="openModal"
+  x-on:close-edit-comment-modal.window="closeModal"
   x-on:keydown.escape.window="closeModal"
 >
   {{-- gray background --}}
@@ -112,15 +123,8 @@
     <div class="flex flex-col gap-5">
       <div class="flex items-center justify-center space-x-2 text-2xl text-zinc-900 dark:text-zinc-50">
         <x-icons.chat-dots class="w-8" />
-        <span>新增留言</span>
+        <span>編輯留言</span>
       </div>
-
-      <div
-        class="w-full rounded-lg bg-zinc-200/60 px-4 py-2 dark:bg-zinc-700/60 dark:text-zinc-50"
-        x-cloak
-        x-show="modal.replyTo !== ''"
-        x-text="replyToLabel"
-      ></div>
 
       <form
         class="space-y-6"
@@ -129,16 +133,15 @@
         <x-auth-validation-errors :errors="$errors" />
 
         <div
-          class="space-y-2"
+          class="relative space-y-2"
           x-cloak
           x-show="previewIsEnable"
         >
-          <div class="relative space-x-4">
-            <span class="font-semibold dark:text-zinc-50">
-              {{ auth()->check() ? auth()->user()->name : '訪客' }}
-            </span>
+          <div class="space-x-4">
+            <span class="font-semibold dark:text-zinc-50"> {{ auth()->user()->name }}</span>
             <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
           </div>
+
           <div
             class="rich-text h-80 overflow-auto"
             x-ref="convertedBody"
@@ -159,9 +162,8 @@
         >
           <x-floating-label-textarea
             class="font-jetbrains-mono"
-            id="create-comment-body"
-            x-ref="createCommentTextarea"
-            {{-- change tab into 4 spaces --}}
+            id="edit-comment-body"
+            x-ref="editCommentTextarea"
             x-on:keydown.tab.prevent="tabToFourSpaces"
             x-model="comment.body"
             rows="12"
@@ -170,15 +172,9 @@
           />
         </div>
 
-        <div
-          class="hidden"
-          x-ref="turnstileBlock"
-          wire:ignore
-        ></div>
-
         <div class="flex items-center justify-between space-x-3">
           <x-toggle-switch
-            id="create-comment-modal-preview"
+            id="edit-comment-modal-preview"
             x-model="previewIsEnable"
             x-on:change="previewChanged"
             x-bind:disabled="comment.body === ''"
@@ -186,18 +182,9 @@
             預覽
           </x-toggle-switch>
 
-          <x-button x-bind:disabled="modal.isSubmitEnabled === false">
-            <x-icons.reply-fill
-              class="mr-2 w-5"
-              x-cloak
-              x-show="modal.isSubmitEnabled"
-            />
-            <x-icons.animate-spin
-              class="mr-2 h-5 w-5 text-zinc-50"
-              x-cloak
-              x-show="modal.isSubmitEnabled === false"
-            />
-            <span x-text="modal.isSubmitEnabled ? '回覆' : '驗證中'"></span>
+          <x-button>
+            <x-icons.save class="w-5" />
+            <span class="ml-2">更新</span>
           </x-button>
         </div>
       </form>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\User;
 use Livewire\Component;
+use App\Enums\UserInfoOptions;
 
 new class extends Component {
     public User $user;
@@ -19,8 +20,6 @@ new class extends Component {
     }
 };
 ?>
-
-@use('App\Enums\UserInfoOptions')
 
 @assets
   {{-- highlight code block style --}}

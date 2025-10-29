@@ -1,3 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\Post;
+use Livewire\Attributes\Locked;
+use Livewire\Component;
+
+new class extends Component {
+    #[Locked]
+    public int $postId;
+
+    public string $postTitle;
+
+    #[Locked]
+    public int $authorId;
+
+    public function destroy(Post $post): void
+    {
+        $this->authorize('destroy', $post);
+
+        $post->withoutTimestamps(fn() => $post->delete());
+
+        $this->dispatch('toast', status: 'success', message: '成功刪除文章！');
+
+        $this->redirectRoute(
+            name: 'users.show',
+            parameters: [
+                'id' => auth()->id(),
+                'tab' => 'posts',
+                'current-posts-year' => $post->created_at->format('Y'),
+            ],
+            // @pest-mutate-ignore
+            navigate: true,
+        );
+    }
+};
+?>
+
 <div class="sticky top-1/2 flex -translate-y-1/2 flex-col space-y-2">
   {{-- Home --}}
   <x-tooltip

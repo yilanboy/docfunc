@@ -17,7 +17,7 @@
   {{-- Primary Meta Tags --}}
   <meta name="title" content="{{ $title ?? config('app.name') }}">
   <meta name="description" content="@yield('description', config('app.name'))">
-  <x-sharing-meta-tags :title="$title ?? config('app.name')" />
+  <x-layouts.sharing-meta-tags :title="$title ?? config('app.name')" />
 
   {{-- Ｗeb Feed --}}
   @include('feed::links')

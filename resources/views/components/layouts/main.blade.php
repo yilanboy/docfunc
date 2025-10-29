@@ -5,7 +5,7 @@
   <x-layouts.background />
 
   <div class="flex min-h-screen flex-col">
-    <livewire:shared.header-part />
+    <livewire:layouts.header />
 
     {{ $slot }}
   </div>

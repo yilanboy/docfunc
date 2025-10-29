@@ -101,9 +101,9 @@ new class extends Component {
     class="relative grow"
     x-data="showPostPage"
   >
-    <x-porgress-bar x-ref="progressBar" />
+    <x-posts.progress-bar x-ref="progressBar" />
 
-    <x-scroll-to-top-button x-ref="scrollToTopBtn" />
+    <x-posts.scroll-to-top-button x-ref="scrollToTopBtn" />
 
     <div class="container mx-auto">
       <div class="animate-fade-in flex items-stretch justify-center lg:space-x-4">
@@ -118,7 +118,7 @@ new class extends Component {
         <div class="flex w-full max-w-3xl flex-col items-center justify-start px-2 xl:px-0">
           {{-- mobile menu --}}
           @if (auth()->id() === $post->user_id)
-            <livewire:shared.posts.mobile-menu-part :post-id="$post->id" />
+            <livewire:posts.mobile-menu :post-id="$post->id" />
           @endif
 
           <x-card
@@ -235,7 +235,7 @@ new class extends Component {
             </div>
           </x-card>
 
-          <livewire:shared.comments.board-part
+          <livewire:comments.board
             :post-id="$post->id"
             :post-user-id="$post->user_id"
             :comment-counts="$post->comments_count"
@@ -244,7 +244,7 @@ new class extends Component {
 
         <div class="hidden xl:block xl:w-1/5">
           {{-- desktop side menu --}}
-          <livewire:shared.posts.desktop-menu-part
+          <livewire:posts.desktop-menu
             :post-id="$post->id"
             :post-title="$post->title"
             :author-id="$post->user_id"

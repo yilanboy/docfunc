@@ -1,6 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Models\Post;
+use Livewire\Component;
+
+new class extends Component {
+    public string $search = '';
+
+    public function render()
+    {
+        $results = collect();
+
+        if (strlen($this->search) >= 2) {
+            $results = Post::search($this->search)->take(10)->get();
+        }
+
+        return $this->view()->with([
+            'results' => $results,
+        ]);
+    }
+};
+?>
+
 @script
   <script>
-    Alpine.data('searchPart', () => ({
+    Alpine.data('search', () => ({
       searchBarIsOpen: false,
       openSearchBar() {
         this.searchBarIsOpen = true;
@@ -24,7 +49,7 @@
   </script>
 @endscript
 
-<search x-data="searchPart">
+<search x-data="search">
   {{-- 搜尋按鈕 --}}
   <button
     class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-zinc-200 p-2 text-sm text-zinc-500 xl:flex dark:bg-zinc-600 dark:text-zinc-400"

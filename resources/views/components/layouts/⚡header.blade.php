@@ -1,3 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Shared;
+
+use App\Livewire\Actions\Logout;
+use App\Models\Category;
+use App\Services\SettingService;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
+
+new class extends Component {
+    public Collection $categories;
+
+    public bool $showRegisterButton;
+
+    public function mount(): void
+    {
+        $this->categories = Cache::remember('categories', now()->addDay(), function () {
+            return Category::all(['id', 'name', 'icon']);
+        });
+
+        $this->showRegisterButton = SettingService::isRegisterAllowed();
+    }
+
+    public function logout(Logout $logout): void
+    {
+        $logout();
+
+        $this->dispatch('toast', status: 'success', message: '成功登出！');
+
+        $this->redirect(route('login'), navigate: true);
+    }
+};
+?>
+
 @assets
   <style>
     :root {
@@ -29,7 +67,7 @@
 
 @script
   <script>
-    Alpine.data('headerPart', () => ({
+    Alpine.data('header', () => ({
       html: document.documentElement,
       // the dropdown only shows in mobile
       dropdownMenuIsOpen: false,
@@ -71,7 +109,7 @@
 <header
   class="z-20 mb-6"
   id="header"
-  x-data="headerPart"
+  x-data="header"
 >
   <div
     class="relative hidden h-20 w-full items-center justify-center bg-zinc-50 transition-all duration-300 lg:flex dark:bg-zinc-800"
@@ -120,7 +158,7 @@
     <div class="absolute inset-y-1/2 right-6 flex items-center space-x-5">
 
       {{-- search --}}
-      <livewire:shared.search-part />
+      <livewire:search />
 
       {{-- light / dark mode toggle --}}
       <button
