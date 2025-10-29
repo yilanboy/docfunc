@@ -1,7 +1,5 @@
 <?php
 
-use App\Livewire\Pages\Posts\CreatePage as PostsCreatePage;
-use App\Livewire\Shared\Posts\UploadPreviewImagePart;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
@@ -11,7 +9,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 // covers(CreatePostPage::class);
 
@@ -40,12 +37,12 @@ describe('create post', function () {
         $tagCollection = Tag::factory()->count(3)->create();
 
         $tagsJson = $tagCollection
-            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         $contentService = app(ContentService::class);
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', $title)
@@ -64,7 +61,7 @@ describe('create post', function () {
         $post = Post::latest()->first();
 
         $tagIdsArray = $tagCollection
-            ->map(fn ($item) => $item->id)
+            ->map(fn($item) => $item->id)
             ->all();
 
         expect(Cache::has('auto_save_user_'.$user->id.'_create_post'))->toBeFalse()
@@ -82,7 +79,7 @@ describe('create post', function () {
     test('title at least 4 characters', function () {
         loginAsUser();
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(3))
@@ -95,7 +92,7 @@ describe('create post', function () {
     test('title at most 50 characters', function () {
         loginAsUser();
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(51))
@@ -108,7 +105,7 @@ describe('create post', function () {
     test('body at least 500 characters', function () {
         loginAsUser();
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(4))
@@ -121,7 +118,7 @@ describe('create post', function () {
     test('body at most 20000 characters', function () {
         loginAsUser();
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', str()->random(4))
@@ -134,7 +131,7 @@ describe('create post', function () {
     it('can check image type', function () {
         $file = UploadedFile::fake()->create('document.pdf', 512);
 
-        livewire(UploadPreviewImagePart::class)
+        Livewire::test('posts.upload-preview-image')
             ->set('image', $file)
             ->assertHasErrors('image');
     });
@@ -142,7 +139,7 @@ describe('create post', function () {
     it('can check image size', function () {
         $file = UploadedFile::fake()->image('image.jpg')->size(1025);
 
-        livewire(UploadPreviewImagePart::class)
+        Livewire::test('posts.upload-preview-image')
             ->set('image', $file)
             ->assertHasErrors('image');
     });
@@ -152,7 +149,7 @@ describe('create post', function () {
 
         $image = UploadedFile::fake()->image('fake_image.jpg');
 
-        livewire(UploadPreviewImagePart::class)
+        Livewire::test('posts.upload-preview-image')
             ->set('image', $image)
             ->assertHasNoErrors()
             ->assertSeeHtml('id="image-url"');
@@ -165,7 +162,7 @@ describe('create post', function () {
 
         $file = UploadedFile::fake()->create('document.pdf', 512);
 
-        livewire(UploadPreviewImagePart::class)
+        Livewire::test('posts.upload-preview-image')
             ->set('image', $file)
             ->assertHasErrors('image')
             ->assertDontSeeHtml('id="upload-image"');
@@ -176,7 +173,7 @@ describe('create post', function () {
 
         $this->actingAs($user);
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])->assertSet('autoSaveKey', 'auto_save_user_'.$user->id.'_create_post');
     });
@@ -186,7 +183,7 @@ describe('create post', function () {
 
         $autoSaveKey = 'auto_save_user_'.$user->id.'_create_post';
 
-        // clean the redis data, like refresh database
+        // clean the redis data, like a refresh database
         if (Cache::has($autoSaveKey)) {
             Cache::pull($autoSaveKey);
         }
@@ -198,11 +195,11 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->set('form.title', $title)
@@ -229,7 +226,7 @@ describe('create post', function () {
 
         $autoSaveKey = 'auto_save_user_'.$user->id.'_create_post';
 
-        // clean the redis data, like refresh database
+        // clean the redis data, like a refresh database
         if (Cache::has($autoSaveKey)) {
             Cache::pull($autoSaveKey);
         }
@@ -241,7 +238,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -258,7 +255,7 @@ describe('create post', function () {
             now()->addDays(7)
         );
 
-        livewire(PostsCreatePage::class, [
+        Livewire::test('pages::posts.create', [
             'categories' => Category::all(['id', 'name']),
         ])
             ->assertSet('form.title', $title)

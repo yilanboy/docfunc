@@ -1,13 +1,8 @@
 <?php
 
-use App\Livewire\Shared\Posts\DesktopMenuPart;
-use App\Livewire\Shared\Posts\MobileMenuPart;
-use App\Livewire\Shared\Users\GroupPostsByYearPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-
-use function Pest\Livewire\livewire;
 
 // covers(MobileMenuPart::class, DesktopMenuPart::class, GroupPostsByYearPart::class);
 
@@ -17,16 +12,16 @@ describe('destroy post', function () {
 
         $this->actingAs(User::find($post->user_id));
 
-        livewire(DesktopMenuPart::class, [
-            'postId' => $post->id,
+        Livewire::test('posts.desktop-menu', [
+            'postId'    => $post->id,
             'postTitle' => $post->title,
-            'authorId' => $post->user_id,
+            'authorId'  => $post->user_id,
         ])
             ->call('destroy', $post->id)
             ->assertDispatched('toast', status: 'success', message: '成功刪除文章！')
             ->assertRedirect(route('users.show', [
-                'id' => $post->user_id,
-                'tab' => 'posts',
+                'id'                 => $post->user_id,
+                'tab'                => 'posts',
                 'current-posts-year' => $post->created_at->format('Y'),
             ]));
 
@@ -36,10 +31,10 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in desktop show post page', function () {
         $post = Post::factory()->create();
 
-        livewire(DesktopMenuPart::class, [
-            'postId' => $post->id,
+        Livewire::test('posts.desktop-menu', [
+            'postId'    => $post->id,
             'postTitle' => $post->title,
-            'authorId' => $post->user_id,
+            'authorId'  => $post->user_id,
         ])
             ->call('destroy', $post->id)
             ->assertForbidden();
@@ -53,10 +48,10 @@ describe('destroy post', function () {
         // Login as another user
         loginAsUser();
 
-        livewire(DesktopMenuPart::class, [
-            'postId' => $post->id,
+        Livewire::test('posts.desktop-menu', [
+            'postId'    => $post->id,
             'postTitle' => $post->title,
-            'authorId' => $post->user_id,
+            'authorId'  => $post->user_id,
         ])
             ->call('destroy', $post->id)
             ->assertForbidden();
@@ -69,12 +64,12 @@ describe('destroy post', function () {
 
         loginAsUser(User::find($post->user_id));
 
-        livewire(MobileMenuPart::class, ['postId' => $post->id])
+        Livewire::test('posts.mobile-menu', ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertDispatched('toast', status: 'success', message: '成功刪除文章！')
             ->assertRedirect(route('users.show', [
-                'id' => $post->user_id,
-                'tab' => 'posts',
+                'id'                 => $post->user_id,
+                'tab'                => 'posts',
                 'current-posts-year' => $post->created_at->format('Y'),
             ]));
 
@@ -84,7 +79,7 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in mobile show post page', function () {
         $post = Post::factory()->create();
 
-        livewire(MobileMenuPart::class, ['postId' => $post->id])
+        Livewire::test('posts.mobile-menu', ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertForbidden();
 
@@ -96,7 +91,7 @@ describe('destroy post', function () {
 
         loginAsUser();
 
-        livewire(MobileMenuPart::class, ['postId' => $post->id])
+        Livewire::test('posts.mobile-menu', ['postId' => $post->id])
             ->call('destroy', $post->id)
             ->assertForbidden();
 
@@ -108,10 +103,10 @@ describe('destroy post', function () {
 
         loginAsUser(User::find($post->user_id));
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $post->user_id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('destroy', $post->id)
             ->assertDispatched('toast', status: 'success', message: '文章已刪除');
@@ -122,10 +117,10 @@ describe('destroy post', function () {
     test('guest cannot delete others\' post in user information post card', function () {
         $post = Post::factory()->create();
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $post->user_id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('destroy', $post->id)
             ->assertForbidden();
@@ -138,10 +133,10 @@ describe('destroy post', function () {
 
         loginAsUser();
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $post->user_id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('destroy', $post->id)
             ->assertForbidden();
@@ -153,18 +148,18 @@ describe('destroy post', function () {
         $user = loginAsUser();
 
         $post = Post::factory()->create([
-            'title' => 'This is a test post title',
-            'user_id' => $user->id,
+            'title'       => 'This is a test post title',
+            'user_id'     => $user->id,
             'category_id' => 1,
-            'deleted_at' => now(),
+            'deleted_at'  => now(),
         ]);
 
         $this->assertSoftDeleted('posts', ['id' => $post->id]);
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $post->user_id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('restore', $post->id)
             ->assertDispatched('toast', status: 'success', message: '文章已恢復');
@@ -176,18 +171,18 @@ describe('destroy post', function () {
         $user = loginAsUser();
 
         $post = Post::factory()->create([
-            'title' => 'This is a test post title',
-            'user_id' => $user->id,
+            'title'       => 'This is a test post title',
+            'user_id'     => $user->id,
             'category_id' => 1,
-            'deleted_at' => now(),
+            'deleted_at'  => now(),
         ]);
 
         $oldUpdatedAt = $post->updated_at;
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $post->user_id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('restore', $post->id);
 
@@ -204,16 +199,16 @@ describe('destroy post', function () {
         $author = User::factory()->create();
 
         $post = Post::factory()->create([
-            'title' => 'This is a test post title',
-            'user_id' => $author->id,
+            'title'       => 'This is a test post title',
+            'user_id'     => $author->id,
             'category_id' => 1,
-            'deleted_at' => now(),
+            'deleted_at'  => now(),
         ]);
 
-        livewire(GroupPostsByYearPart::class, [
-            'posts' => [$post],
+        Livewire::test('users.group-posts-by-year', [
+            'posts'  => [$post],
             'userId' => $user->id,
-            'year' => $post->created_at->format('Y'),
+            'year'   => $post->created_at->format('Y'),
         ])
             ->call('restore', $post->id)
             ->assertForbidden();
@@ -225,15 +220,15 @@ describe('destroy post', function () {
         $user = User::factory()->create();
 
         Post::factory()->create([
-            'title' => 'This is a stale post',
-            'user_id' => $user->id,
+            'title'       => 'This is a stale post',
+            'user_id'     => $user->id,
             'category_id' => 1,
-            'deleted_at' => now()->subDays(31),
+            'deleted_at'  => now()->subDays(31),
         ]);
 
         Post::factory()->create([
-            'title' => 'This is a normal post',
-            'user_id' => $user->id,
+            'title'       => 'This is a normal post',
+            'user_id'     => $user->id,
             'category_id' => 1,
         ]);
 
@@ -241,7 +236,7 @@ describe('destroy post', function () {
 
         $this->assertDatabaseCount('posts', 1);
         $this->assertDatabaseHas('posts', [
-            'title' => 'This is a normal post',
+            'title'       => 'This is a normal post',
             'category_id' => 1,
         ]);
     });

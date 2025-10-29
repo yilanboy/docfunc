@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\PostOrderOptions;
-use App\Livewire\Shared\Posts\ListPart;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
@@ -11,7 +10,6 @@ use Livewire\Livewire;
 
 use function Pest\Faker\fake;
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 // covers(Posts::class);
 
@@ -25,12 +23,12 @@ describe('home page', function () {
 
         Post::factory(10)->create([
             'category_id' => rand(1, 3),
-            'user_id' => $user->id,
+            'user_id'     => $user->id,
         ]);
 
         get(route('posts.index'))
             ->assertStatus(200)
-            ->assertSeeLivewire(ListPart::class);
+            ->assertSeeLivewire('posts.list');
     });
 
     it('will be redirect if slug is not in the url', function () {
@@ -44,17 +42,17 @@ describe('home page', function () {
 
     test('category can filter posts', function () {
         Post::factory()->create([
-            'title' => 'this post belongs to category one',
+            'title'       => 'this post belongs to category one',
             'category_id' => 1,
         ]);
 
-        livewire(ListPart::class, [
+        Livewire::test('posts.list', [
             'categoryId' => 1,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 1;
         });
 
-        livewire(ListPart::class, [
+        Livewire::test('posts.list', [
             'categoryId' => 2,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 0;
@@ -67,20 +65,20 @@ describe('home page', function () {
         $tagOneJsonString = Tag::query()
             ->where('id', 1)
             ->get()
-            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
 
         $tagOnePost->tags()->attach(
             app(FormatTransferService::class)->tagsJsonToTagIdsArray($tagOneJsonString)
         );
 
-        livewire(ListPart::class, [
+        Livewire::test('posts.list', [
             'tagId' => 1,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 1;
         });
 
-        livewire(ListPart::class, [
+        Livewire::test('posts.list', [
             'tagId' => 2,
         ])->assertViewHas('posts', function ($posts) {
             return $posts->count() === 0;
@@ -91,15 +89,15 @@ describe('home page', function () {
         $user = User::factory()->create();
 
         Post::factory()->create([
-            'title' => 'this post is updated recently',
-            'user_id' => $user->id,
+            'title'      => 'this post is updated recently',
+            'user_id'    => $user->id,
             'created_at' => now()->subDays(20),
             'updated_at' => now(),
         ]);
 
         Post::factory()->create([
-            'title' => 'this post is the latest',
-            'user_id' => $user->id,
+            'title'      => 'this post is the latest',
+            'user_id'    => $user->id,
             'created_at' => now()->subDays(10),
             'updated_at' => now()->subDays(5),
         ]);
@@ -107,14 +105,14 @@ describe('home page', function () {
         Post::factory()
             ->has(Comment::factory()->count(5))
             ->create([
-                'title' => 'this post has the most comments',
-                'user_id' => $user->id,
+                'title'      => 'this post has the most comments',
+                'user_id'    => $user->id,
                 'created_at' => now()->subDays(15),
                 'updated_at' => now()->subDays(15),
             ]);
 
         Livewire::withQueryParams(['order' => $queryString])
-            ->test(ListPart::class)
+            ->test('posts.list')
             ->assertViewHas('posts', function ($posts) use ($title) {
                 return $posts->first()->title === $title;
             });
@@ -128,15 +126,15 @@ describe('home page', function () {
         $user = User::factory()->create();
 
         Post::factory()->create([
-            'title' => 'this post is updated recently',
-            'user_id' => $user->id,
+            'title'      => 'this post is updated recently',
+            'user_id'    => $user->id,
             'created_at' => now()->subDays(20),
             'updated_at' => now(),
         ]);
 
         Post::factory()->create([
-            'title' => 'this post is the latest',
-            'user_id' => $user->id,
+            'title'      => 'this post is the latest',
+            'user_id'    => $user->id,
             'created_at' => now()->subDays(10),
             'updated_at' => now()->subDays(5),
         ]);
@@ -144,13 +142,13 @@ describe('home page', function () {
         Post::factory()
             ->has(Comment::factory()->count(5))
             ->create([
-                'title' => 'this post has the most comments',
-                'user_id' => $user->id,
+                'title'      => 'this post has the most comments',
+                'user_id'    => $user->id,
                 'created_at' => now()->subDays(15),
                 'updated_at' => now()->subDays(15),
             ]);
 
-        Livewire::test(ListPart::class, ['categoryId' => 0, 'tagId' => 0])
+        Livewire::test('posts.list', ['categoryId' => 0, 'tagId' => 0])
             ->call('changeOrder', $order)
             ->assertViewHas('posts', function ($posts) use ($title) {
                 return $posts->first()->title === $title;
@@ -165,7 +163,7 @@ describe('home page', function () {
         $user = User::factory()->create();
 
         $post = Post::factory()->make([
-            'user_id' => $user->id,
+            'user_id'    => $user->id,
             'is_private' => true,
         ]);
 
@@ -276,7 +274,7 @@ describe('home page', function () {
             'updated_at' => now(),
         ]);
 
-        livewire(ListPart::class)
+        Livewire::test('posts.list')
             ->set('order', PostOrderOptions::LATEST->value)
             ->assertSee($latestPost->title)
             ->assertDontSee($latestUpdatedPost->title)
