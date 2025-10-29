@@ -13,7 +13,7 @@ use Livewire\Form;
 
 class PostForm extends Form
 {
-    const int BODY_MAX_CHARACTER = 20_000;
+    public const int BODY_MAX_CHARACTER = 20_000;
 
     public int $user_id;
 
@@ -37,30 +37,30 @@ class PostForm extends Form
     {
         Validator::make(
             [
-                'user_id' => $this->user_id,
-                'title' => $this->title,
+                'user_id'     => $this->user_id,
+                'title'       => $this->title,
                 'category_id' => $this->category_id,
                 // validate body text character count
-                'body' => preg_replace('/[\r\n]/u', '', strip_tags($this->body)),
+                'body'        => preg_replace('/[\r\n]/u', '', strip_tags($this->body)),
             ],
             [
-                'user_id' => ['required', 'numeric'],
-                'title' => ['required', 'min:4', 'max:50'],
+                'user_id'     => ['required', 'numeric'],
+                'title'       => ['required', 'min:4', 'max:50'],
                 'category_id' => ['required', 'numeric', 'exists:categories,id'],
-                'body' => ['required', 'min:500', 'max:'.self::BODY_MAX_CHARACTER],
+                'body'        => ['required', 'min:500', 'max:'.self::BODY_MAX_CHARACTER],
             ],
             [
-                'user_id.required' => '請登入後再發布文章',
-                'user_id.numeric' => '使用者資料錯誤',
-                'title.required' => '請填寫標題',
-                'title.min' => '標題至少 4 個字元',
-                'title.max' => '標題至多 50 個字元',
+                'user_id.required'     => '請登入後再發布文章',
+                'user_id.numeric'      => '使用者資料錯誤',
+                'title.required'       => '請填寫標題',
+                'title.min'            => '標題至少 4 個字元',
+                'title.max'            => '標題至多 50 個字元',
                 'category_id.required' => '請選擇文章分類',
-                'category_id.numeric' => '分類資料錯誤',
-                'category_id.exists' => '分類不存在',
-                'body.required' => '請填寫文章內容',
-                'body.min' => '文章內容至少 500 個字元',
-                'body.max' => '文章內容字數已超過 '.self::BODY_MAX_CHARACTER.' 個字元',
+                'category_id.numeric'  => '分類資料錯誤',
+                'category_id.exists'   => '分類不存在',
+                'body.required'        => '請填寫文章內容',
+                'body.min'             => '文章內容至少 500 個字元',
+                'body.max'             => '文章內容字數已超過 '.self::BODY_MAX_CHARACTER.' 個字元',
             ]
         )->validate();
     }
@@ -71,11 +71,11 @@ class PostForm extends Form
             $key,
             json_encode([
                 'category_id' => $this->category_id,
-                'is_private' => $this->is_private,
+                'is_private'  => $this->is_private,
                 'preview_url' => $this->preview_url,
-                'title' => $this->title,
-                'tags' => $this->tags,
-                'body' => $this->body,
+                'title'       => $this->title,
+                'tags'        => $this->tags,
+                'body'        => $this->body,
             ], JSON_UNESCAPED_UNICODE),
             now()->addDays(7)
         );
@@ -141,7 +141,7 @@ class PostForm extends Form
             $this->except('tags')
         );
 
-        // create new tags relation with post in database
+        // create new tags relation with post in a database
         $post->tags()->attach(
             app(FormatTransferService::class)->tagsJsonToTagIdsArray($this->tags)
         );
@@ -161,7 +161,7 @@ class PostForm extends Form
             $this->except('tags')
         );
 
-        // update tags relation with post in database
+        // update tags relation with post in a database
         $post->tags()->sync(
             app(FormatTransferService::class)->tagsJsonToTagIdsArray($this->tags)
         );
