@@ -1,18 +1,16 @@
 <?php
 
-use App\Livewire\Shared\Comments\EditModalPart;
 use App\Models\Comment;
 use App\Models\User;
 
-use function Pest\Livewire\livewire;
 
 test('edit comment modal part will throw an error if not logged in', function () {
-    livewire(EditModalPart::class);
+    Livewire::test('comments.edit-modal');
 })->throws(Exception::class);
 
 test('edit comment modal part can be rendered by logged in users', function () {
     loginAsUser();
-    livewire(EditModalPart::class);
+    Livewire::test('comments.edit-modal');
 })->throwsNoExceptions();
 
 test('logged-in users can update their comments', function () {
@@ -27,7 +25,7 @@ test('logged-in users can update their comments', function () {
 
     $body = 'new comment';
 
-    livewire(EditModalPart::class)
+    Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertDispatched('close-edit-comment-modal')
@@ -48,7 +46,7 @@ test('the updated message must be at least 5 characters long', function () {
 
     $body = str()->random(4);
 
-    livewire(EditModalPart::class)
+    Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'min:5'])
@@ -69,7 +67,7 @@ test('the updated message must be less than 2000 characters', function () {
 
     $body = str()->random(2001);
 
-    livewire(EditModalPart::class)
+    Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertHasErrors(['form.body' => 'max:2000'])
@@ -86,7 +84,7 @@ test('users can\'t update others\' comments', function () {
 
     $body = 'new comment';
 
-    livewire(EditModalPart::class)
+    Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentGroupName)
         ->assertForbidden();
@@ -112,7 +110,7 @@ it('can see the comment preview', function () {
     - item 3
     MARKDOWN;
 
-    livewire(EditModalPart::class)
+    Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->assertSeeHtmlInOrder([
             '<p>Title</p>',

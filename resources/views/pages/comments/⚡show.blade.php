@@ -204,7 +204,7 @@ new class extends Component {
             class="relative w-full pl-4 before:absolute before:bottom-0 before:left-0 before:top-6 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
           >
             {{-- new root comment will show here --}}
-            <livewire:shared.comments.group-part
+            <livewire:comments.group
               :post-id="$comment->post->id"
               :post-user-id="$comment->post->user_id"
               :parent-id="$comment->id"
@@ -214,7 +214,7 @@ new class extends Component {
 
             @if ($comment->children->count() > 0)
               {{-- root comment list --}}
-              <livewire:shared.comments.list-part
+              <livewire:comments.list
                 :post-id="$comment->post->id"
                 :post-user-id="$comment->post->user_id"
                 :parent-id="$comment->id"
@@ -228,12 +228,12 @@ new class extends Component {
 
       @if ($comment->hierarchy->level < config('comments.max_level'))
         {{-- create comment modal --}}
-        <livewire:shared.comments.create-modal-part :post-id="$comment->post->id" />
+        <livewire:comments.create-modal :post-id="$comment->post->id" />
       @endif
 
       @auth
         {{-- edit comment modal --}}
-        <livewire:shared.comments.edit-modal-part />
+        <livewire:comments.edit-modal />
       @endauth
     </div>
   </div>
