@@ -1,10 +1,8 @@
 <?php
 
-use App\Livewire\Pages\Settings\Users\Password\EditPage as PasswordEditPage;
 use App\Models\User;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 describe('user password', function () {
     test('non-logged-in users cannot access the update password page', function () {
@@ -41,7 +39,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(PasswordEditPage::class, ['id' => $user->id])
+        Livewire::test('pages::settings.users.password.edit', ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -62,7 +60,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(PasswordEditPage::class, ['id' => $user->id])
+        Livewire::test('pages::settings.users.password.edit', ['id' => $user->id])
             ->set('current_password', $wrongPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $newPassword)
@@ -83,7 +81,7 @@ describe('user password', function () {
 
         $this->actingAs($user);
 
-        livewire(PasswordEditPage::class, ['id' => $user->id])
+        Livewire::test('pages::settings.users.password.edit', ['id' => $user->id])
             ->set('current_password', $oldPassword)
             ->set('new_password', $newPassword)
             ->set('new_password_confirmation', $wrongNewPasswordConfirmation)

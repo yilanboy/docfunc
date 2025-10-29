@@ -1,14 +1,11 @@
 <?php
 
-use App\Livewire\Pages\Notifications\IndexPage as NotificationsIndexPage;
-use App\Livewire\Shared\Comments\CreateModalPart;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\NewComment;
 
 use function Pest\Faker\fake;
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 test("guest can't visit notification page", function () {
     get(route('notifications.index'))->assertRedirectToRoute('login');
@@ -23,7 +20,7 @@ test('you will receive a notification when there is a comment on your post', fun
 
     $this->actingAs($user);
 
-    livewire(CreateModalPart::class, ['postId' => $post->id])
+    Livewire::test('comments.create-modal', ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -44,7 +41,7 @@ test('you will see a red ping animation on notification icon when there is a com
 
     $this->actingAs($user);
 
-    livewire(CreateModalPart::class, ['postId' => $post->id])
+    Livewire::test('comments.create-modal', ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -77,7 +74,7 @@ test('if you reply to your own post, there will be no notification', function ()
 
     $this->actingAs($author);
 
-    livewire(CreateModalPart::class, ['postId' => $post->id])
+    Livewire::test('comments.create-modal', ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -94,7 +91,7 @@ test('you can clear unread notifications if you visit the notification page', fu
 
     $this->actingAs($user);
 
-    livewire(CreateModalPart::class, ['postId' => $post->id])
+    Livewire::test('comments.create-modal', ['postId' => $post->id])
         ->set('form.body', fake()->realText(100))
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save');
@@ -105,7 +102,7 @@ test('you can clear unread notifications if you visit the notification page', fu
 
     $comment = $post->comments->first();
 
-    livewire(NotificationsIndexPage::class)
+    Livewire::test('pages::notifications.index')
         ->assertSee(route('comments.show', ['id' => $comment->id]));
 
     $author->refresh();

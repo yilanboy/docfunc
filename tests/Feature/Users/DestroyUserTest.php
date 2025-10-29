@@ -1,13 +1,11 @@
 <?php
 
-use App\Livewire\Pages\Settings\Users\DestroyPage as UsersDestroyPage;
 use App\Mail\DestroyUserMail;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 // covers(DestroyUserPage::class);
 
@@ -50,7 +48,7 @@ describe('destroy user', function () {
 
         $this->actingAs($user);
 
-        livewire(UsersDestroyPage::class, ['id' => $user->id])
+        Livewire::test('pages::settings.users.destroy', ['id' => $user->id])
             ->call('sendDestroyEmail', user: $user)
             ->assertDispatched('toast', status: 'success', message: '已寄出信件！');
 
