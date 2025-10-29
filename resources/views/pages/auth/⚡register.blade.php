@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Pages\Auth;
-
 use App\Models\User;
 use App\Rules\Captcha;
 use App\Services\SettingService;

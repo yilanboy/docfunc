@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Pages\Posts;
-
 use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;

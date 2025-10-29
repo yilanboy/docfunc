@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Pages\Auth;
-
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Title;
 use Livewire\Component;

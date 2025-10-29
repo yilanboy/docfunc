@@ -1,5 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+new class extends Component {
+    use WithPagination;
+
+    public function render()
+    {
+        $notifications = auth()->user()->notifications()->paginate(20);
+
+        auth()->user()->unreadNotifications->markAsRead();
+
+        // TODO: Livewire 4 bug here
+        return $this->view(compact('notifications'))->title('我的通知');
+    }
+};
+?>
+
 {{-- 通知列表 --}}
-<x-layouts.layout-main>
+<x-layouts.main>
   <div class="container mx-auto grow">
     <div class="flex items-start justify-center px-4 xl:px-0">
 
@@ -12,7 +35,10 @@
 
         {{-- 通知列表 --}}
         @forelse ($notifications as $notification)
-          <x-card class="flex w-full cursor-pointer flex-col justify-between md:flex-row">
+          <x-card
+            class="flex w-full cursor-pointer flex-col justify-between md:flex-row"
+            wire:key="notification-{{ $notification->id }}"
+          >
             {{-- 通知內容 --}}
             <div class="flex w-full flex-col justify-between">
               {{-- 文章標題 --}}
@@ -56,4 +82,4 @@
 
     </div>
   </div>
-</x-layouts.layout-main>
+</x-layouts.main>

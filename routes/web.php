@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\User\DestroyUserController;
-use App\Livewire\Pages;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +21,7 @@ require __DIR__.'/auth.php';
 
 // 會員相關頁面
 Route::middleware('auth')->prefix('/users')->group(function () {
-    Route::get('/{id}', Pages\Users\ShowPage::class)
+    Route::livewire('/{id}', 'pages::users.show')
         ->name('users.show')
         ->withoutMiddleware('auth');
 
@@ -32,15 +31,13 @@ Route::middleware('auth')->prefix('/users')->group(function () {
 });
 
 Route::middleware('auth')->prefix('/settings/users')->group(function () {
-    Route::get('/{id}/edit', Pages\Settings\Users\EditPage::class)
-        ->name('settings.users.edit');
-    Route::get('/{id}/destroy', Pages\Settings\Users\DestroyPage::class)
-        ->name('settings.users.destroy');
+    Route::livewire('/{id}/edit', 'pages::settings.users.edit')->name('settings.users.edit');
+    Route::livewire('/{id}/destroy', 'pages::settings.users.destroy')->name('settings.users.destroy');
 
-    Route::get('/{id}/password/edit', Pages\Settings\Users\Password\EditPage::class)
+    Route::livewire('/{id}/password/edit', 'pages::settings.users.password.edit')
         ->name('settings.users.password.edit');
 
-    Route::get('/{id}/passkeys/edit', Pages\Settings\Users\Passkeys\EditPage::class)
+    Route::livewire('/{id}/passkeys/edit', 'pages::settings.users.passkeys.edit')
         ->name('settings.users.passkeys.edit');
 });
 
@@ -58,19 +55,19 @@ Route::prefix('/posts')->group(function () {
 });
 
 // 通知列表
-Route::get('/notifications', Pages\Notifications\IndexPage::class)
+Route::livewire('/notifications', 'pages::notifications.index')
     ->middleware('auth')
     ->name('notifications.index');
 
 // 文章分類
-Route::get('/categories/{id}/{name?}', Pages\Categories\ShowPage::class)
+Route::livewire('/categories/{id}/{name?}', 'pages::categories.show')
     ->name('categories.show');
 
 // 文章標籤
-Route::get('/tags/{id}', Pages\Tags\ShowPage::class)
+Route::livewire('/tags/{id}', 'pages::tags.show')
     ->name('tags.show');
 
-Route::get('/comments/{id}', Pages\Comments\ShowPage::class)
+Route::livewire('/comments/{id}', 'pages::comments.show')
     ->name('comments.show');
 
 // Web Feed

@@ -1,6 +1,26 @@
-@php
-  use App\Enums\UserInfoOptions;
-@endphp
+<?php
+
+declare(strict_types=1);
+
+use App\Models\User;
+use Livewire\Component;
+
+new class extends Component {
+    public User $user;
+
+    public function mount(int $id): void
+    {
+        $this->user = User::findOrFail($id);
+    }
+
+    public function render()
+    {
+        return $this->view()->title($this->user->name . ' 的個人資訊');
+    }
+};
+?>
+
+@use('App\Enums\UserInfoOptions')
 
 @assets
   {{-- highlight code block style --}}
@@ -46,7 +66,7 @@
 @endscript
 
 {{-- user information page --}}
-<x-layouts.layout-main>
+<x-layouts.main>
   <div
     class="container mx-auto grow"
     x-data="showUserPage"
@@ -93,4 +113,4 @@
       </div>
     </div>
   </div>
-</x-layouts.layout-main>
+</x-layouts.main>

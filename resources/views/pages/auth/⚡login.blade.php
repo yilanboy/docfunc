@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Pages\Auth;
-
 ini_set('json.exceptions', '1');
 
 use App\Models\Passkey;
@@ -22,7 +20,6 @@ use Webauthn\AuthenticatorAssertionResponse;
 use Webauthn\AuthenticatorAssertionResponseValidator;
 use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use Webauthn\Exception\AuthenticatorResponseVerificationException;
-use Webauthn\Exception\WebauthnException;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
@@ -118,7 +115,7 @@ new #[Title('登入')] class extends Component {
 
         try {
             AuthenticatorAssertionResponseValidator::create(new CeremonyStepManagerFactory()->requestCeremony())->check(publicKeyCredentialSource: $publicKeyCredentialSource, authenticatorAssertionResponse: $publicKeyCredential->response, publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions, host: request()->getHost(), userHandle: null);
-        } catch (WebauthnException) {
+        } catch (Throwable) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;

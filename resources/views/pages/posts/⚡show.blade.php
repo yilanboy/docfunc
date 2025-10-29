@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Pages\Posts;
-
 use App\Models\Post;
 use App\Services\ContentService;
 use Illuminate\View\View;

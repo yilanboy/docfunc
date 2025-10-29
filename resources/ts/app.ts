@@ -21,7 +21,7 @@ document.addEventListener('livewire:init', () => {
                 });
 
                 component.$wire.$hook('morph.updated', () => {
-                    // make sure scroll position will update after dom updated
+                    // make sure the scroll position will update after dom updated
                     queueMicrotask(() => {
                         window.scrollTo({
                             top: currentScrollY,
