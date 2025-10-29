@@ -1,12 +1,10 @@
 <?php
 
-use App\Livewire\Pages\Auth\VerifyEmailPage;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 
-use function Pest\Livewire\livewire;
 
 test('email verification screen can be rendered', function () {
     $user = User::factory()->create([
@@ -95,7 +93,7 @@ test('user can ask to resend verified email', function () {
 
     $this->actingAs($user);
 
-    livewire(VerifyEmailPage::class)
+    Livewire::test('pages::auth.verify-email')
         ->call('sendVerification');
 
     Event::assertNotDispatched(Verified::class);

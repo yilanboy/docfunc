@@ -1,12 +1,9 @@
 <?php
 
-use App\Livewire\Pages\Auth\LoginPage;
-use App\Livewire\Shared\HeaderPart;
 use App\Models\Passkey;
 use App\Models\User;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 test('login screen can be rendered', function () {
     get('/login')
@@ -23,7 +20,7 @@ test('users can authenticate using the login screen', function () {
 
     // use request() will cause livewire tests fail
     // https://github.com/livewire/livewire/issues/936
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', $user->email)
         ->set('password', $password)
         ->call('login')
@@ -36,7 +33,7 @@ test('users can authenticate using the login screen', function () {
 test('email is required', function () {
     User::factory()->create();
 
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', '')
         ->set('password', 'Password101')
         ->call('login')
@@ -46,7 +43,7 @@ test('email is required', function () {
 test('password is required', function () {
     User::factory()->create();
 
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', 'email@examle.com')
         ->set('password', '')
         ->call('login')
@@ -54,7 +51,7 @@ test('password is required', function () {
 });
 
 test('email must be a valid email address', function () {
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', 'wrongEmail')
         ->set('password', 'Password101')
         ->call('login')
@@ -66,7 +63,7 @@ test('users can not authenticate with invalid password', function () {
         'password' => bcrypt('correctPassword101'),
     ]);
 
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', $user->email)
         ->set('password', 'wrongPassword101')
         ->call('login');
@@ -77,7 +74,7 @@ test('users can not authenticate with invalid password', function () {
 test('login user can logout', function () {
     loginAsUser();
 
-    livewire(HeaderPart::class)
+    Livewire::test('layouts.header')
         ->call('logout');
 
     $this->assertGuest();
@@ -91,7 +88,7 @@ test("users can't login if they has a passkey", function () {
     Passkey::factory()
         ->create(['owner_id' => $user->id]);
 
-    livewire(LoginPage::class)
+    Livewire::test('pages::auth.login')
         ->set('email', $user->email)
         ->set('password', 'correctPassword101')
         ->call('login')

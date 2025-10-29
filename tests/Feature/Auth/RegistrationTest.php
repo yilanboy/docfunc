@@ -1,12 +1,9 @@
 <?php
 
-use App\Livewire\Pages\Auth\RegisterPage;
-use App\Livewire\Shared\HeaderPart;
 use App\Models\Setting;
 use App\Models\User;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 beforeEach(function () {
     Setting::query()
@@ -26,7 +23,7 @@ test('registration screen can be rendered', function () {
 });
 
 test('guest can register', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -38,13 +35,13 @@ test('guest can register', function () {
     $this->assertAuthenticated();
 
     $this->assertDatabaseHas('users', [
-        'name' => 'Test User',
+        'name'  => 'Test User',
         'email' => 'test@example.com',
     ]);
 });
 
 test('password will be hashed', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -63,7 +60,7 @@ test('password will be hashed', function () {
 });
 
 test('name is required', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', '')
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -79,7 +76,7 @@ test('name must be unique', function () {
         'name' => 'Test User',
     ]);
 
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', $user->name)
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -90,7 +87,7 @@ test('name must be unique', function () {
 });
 
 test('the number of characters in the name must be between 3 and 25.', function (string $name) {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', $name)
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -105,7 +102,7 @@ test('the number of characters in the name must be between 3 and 25.', function 
 
 // name must be alphanumeric, '-' and '_'
 test('name must be alphanumeric, \'-\' and \'_\'', function (string $name) {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', $name)
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -124,7 +121,7 @@ test('name must be alphanumeric, \'-\' and \'_\'', function (string $name) {
 
 // name input will be trimmed
 test('name input will be trimmed', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', ' Test User ')
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -138,7 +135,7 @@ test('name input will be trimmed', function () {
 });
 
 test('email is required', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User')
         ->set('email', '')
         ->set('password', 'Password101')
@@ -149,7 +146,7 @@ test('email is required', function () {
 });
 
 test('email must be valid', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User')
         ->set('email', 'wrongEmail')
         ->set('password', 'Password101')
@@ -161,11 +158,11 @@ test('email must be valid', function () {
 
 test('email must be unique', function () {
     $user = User::factory()->create([
-        'name' => 'Test User',
+        'name'  => 'Test User',
         'email' => 'test@example.com',
     ]);
 
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User 2')
         ->set('email', $user->email)
         ->set('password', 'Password101')
@@ -176,7 +173,7 @@ test('email must be unique', function () {
 });
 
 test('password is required', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
         ->set('password', '')
@@ -187,7 +184,7 @@ test('password is required', function () {
 });
 
 test('password must be confirmed', function () {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Allen')
         ->set('email', 'test@example.com')
         ->set('password', 'Password101')
@@ -198,7 +195,7 @@ test('password must be confirmed', function () {
 });
 
 test('password must be at least 8 characters, mixed case, numbers and letters', function (string $password) {
-    livewire(RegisterPage::class)
+    Livewire::test('pages::auth.register')
         ->set('name', 'Allen')
         ->set('email', 'test@example.com')
         ->set('password', $password)
@@ -226,5 +223,5 @@ test('guest can not see register button', function () {
         ->firstOrFail()
         ->update(['value' => false]);
 
-    livewire(HeaderPart::class)->assertDontSeeText('註冊');
+    Livewire::test('layouts.header')->assertDontSeeText('註冊');
 });

@@ -1,18 +1,15 @@
 <?php
 
-use App\Livewire\Pages\Auth\ForgotPasswordPage;
-use App\Livewire\Pages\Auth\ResetPasswordPage;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 
 use function Pest\Laravel\get;
-use function Pest\Livewire\livewire;
 
 test('reset password link screen can be rendered', function () {
     get('/forgot-password')
-        ->assertSeeLivewire(ForgotPasswordPage::class)
+        ->assertSeeLivewire('pages::auth.forgot-password')
         ->assertStatus(200);
 });
 
@@ -21,7 +18,7 @@ test('reset password link can be requested', function () {
 
     $user = User::factory()->create();
 
-    livewire(ForgotPasswordPage::class)
+    Livewire::test('pages::auth.forgot-password')
         ->set('email', $user->email)
         ->call('sendPasswordResetLink')
         ->assertHasNoErrors();
@@ -41,7 +38,7 @@ test('reset password screen can be rendered, but url must be correct', function 
             'token' => $notification->token,
             'email' => $user->email,
         ]))
-            ->assertSeeLivewire(ResetPasswordPage::class)
+            ->assertSeeLivewire('pages::auth.reset-password')
             ->assertStatus(200);
 
         return true;
@@ -58,7 +55,7 @@ test('password can be reset with valid token', function () {
 
     Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
         Livewire::withQueryParams(['email' => $user->email])
-            ->test(ResetPasswordPage::class, ['token' => $notification->token])
+            ->test('pages::auth.reset-password', ['token' => $notification->token])
             ->set('password', 'Banana101!')
             ->set('password_confirmation', 'Banana101!')
             ->call('resetPassword');
