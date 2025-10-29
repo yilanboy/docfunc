@@ -1,3 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Pages\Posts;
+
+use App\Livewire\Forms\PostForm;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\View\View;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+
+new class extends Component {
+    use WithFileUploads;
+
+    public PostForm $form;
+
+    public string $autoSaveKey;
+
+    public Collection $categories;
+
+    public function mount(): void
+    {
+        $this->autoSaveKey = 'auto_save_user_' . auth()->id() . '_create_post';
+
+        $this->form->user_id = auth()->id();
+
+        $this->categories = Category::all(['id', 'name']);
+
+        $this->form->setDataFromAutoSave($this->autoSaveKey);
+    }
+
+    // when data update, auto save it to redis
+    public function updated(): void
+    {
+        $this->form->autoSave($this->autoSaveKey);
+    }
+
+    public function save(): void
+    {
+        $post = $this->form->store();
+
+        $this->form->clearAutoSave($this->autoSaveKey);
+
+        $this->dispatch('toast', status: 'success', message: '成功新增文章！');
+
+        $this->redirect($post->link_with_slug, navigate: true);
+    }
+
+    public function render()
+    {
+        return $this->view()->title('新增文章');
+    }
+};
+?>
+
 @assets
   {{-- CKEditor --}}
   @vite('resources/ts/ckeditor/ckeditor.ts')
@@ -38,15 +96,15 @@
 
 @script
   <script>
-    Alpine.data('editPostPage', () => ({
+    Alpine.data('createPostPage', () => ({
       showPage: false,
       csrfToken: @js(csrf_token()),
       imageUploadUrl: @js(route('images.store')),
       tagsListUrl: @js(route('api.tags')),
       bodyMaxCharacters: @js($this->form::BODY_MAX_CHARACTER),
       ClassNameToAddOnEditorContent: @js(['rich-text']),
-      tags: $wire.entangle('form.tags'),
-      body: $wire.entangle('form.body'),
+      tags: $wire.entangle('form.tags').live,
+      body: $wire.entangle('form.body').live,
       debounce(callback, delay) {
         let timeoutId;
         clearTimeout(timeoutId);
@@ -55,7 +113,7 @@
         }, delay);
       },
       async init() {
-        // init the create post page
+        // init the creation post-page
         const ckeditor = await window.createClassicEditor(
           this.$refs.editor,
           this.bodyMaxCharacters,
@@ -99,17 +157,18 @@
           once: true
         });
 
+        // After loading page is finished, show the page
         this.showPage = true;
       }
     }));
   </script>
 @endscript
 
-{{-- edit post --}}
-<x-layouts.layout-main>
+{{-- create new post --}}
+<x-layouts.main>
   <div
     class="container mx-auto grow"
-    x-data="editPostPage"
+    x-data="createPostPage"
     x-cloak
     x-show="showPage"
   >
@@ -120,8 +179,8 @@
         <div class="flex w-full flex-col items-center justify-center space-y-6">
           {{-- title --}}
           <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
-            <x-icons.pencil-square class="w-6" />
-            <span class="ml-4">編輯文章</span>
+            <x-icons.pencil class="w-6" />
+            <span class="ml-4">新增文章</span>
           </div>
 
           {{-- editor --}}
@@ -133,8 +192,8 @@
             />
 
             <form
-              id="edit-post"
-              wire:submit="save({{ $post->id }})"
+              id="create-post"
+              wire:submit="save"
             >
               <div class="grid grid-cols-2 gap-5">
                 {{-- post preview image --}}
@@ -245,7 +304,7 @@
         </div>
       </div>
 
-      <x-posts.editor-desktop-side-menu :form-id="'edit-post'" />
+      <x-posts.editor-desktop-side-menu :form-id="'create-post'" />
     </div>
   </div>
-</x-layouts.layout-main>
+</x-layouts.main>

@@ -1,5 +1,21 @@
-{{-- 文章列表 --}}
-<x-layouts.layout-main>
+<?php
+
+declare(strict_types=1);
+
+use Livewire\Component;
+
+new class extends Component {
+    public function render()
+    {
+        $title = Route::currentRouteName() === 'root' ? config('app.name') : '所有文章';
+
+        return $this->view()->title($title);
+    }
+};
+?>
+
+<x-layouts.main>
+  {{-- 文章列表 --}}
   <div class="container mx-auto grow">
     <div class="mx-auto grid max-w-3xl grid-cols-3 gap-6 px-2 lg:px-0 xl:max-w-5xl">
       <div class="col-span-3 xl:col-span-2">
@@ -13,4 +29,4 @@
       </div>
     </div>
   </div>
-</x-layouts.layout-main>
+</x-layouts.main>

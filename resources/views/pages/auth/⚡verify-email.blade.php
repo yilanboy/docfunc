@@ -1,4 +1,41 @@
-<x-layouts.layout-auth>
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Pages\Auth;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+
+new #[Title('驗證電子郵件')] class extends Component {
+    public function mount(): void
+    {
+        if (Auth::user()->hasVerifiedEmail()) {
+            $this->redirectIntended(default: route('root', absolute: false), navigate: true);
+        }
+    }
+
+    /**
+     * Send an email verification notification to the user.
+     */
+    public function sendVerification(): void
+    {
+        if (Auth::user()->hasVerifiedEmail()) {
+            $this->redirectIntended(default: route('root', absolute: false), navigate: true);
+
+            return;
+        }
+
+        Auth::user()->sendEmailVerificationNotification();
+
+        Session::flash('status', 'verification-link-sent');
+    }
+};
+?>
+
+<x-layouts.auth>
   <div class="fixed left-5 top-5">
     <a
       class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
@@ -50,4 +87,4 @@
     </div>
 
   </div>
-</x-layouts.layout-auth>
+</x-layouts.auth>

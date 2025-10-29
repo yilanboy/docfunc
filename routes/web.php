@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 // 首頁
-Route::get('/', Pages\Posts\IndexPage::class)->name('root');
+Route::livewire('/', 'pages::posts.index')->name('root');
 
 require __DIR__.'/auth.php';
 
@@ -46,18 +46,15 @@ Route::middleware('auth')->prefix('/settings/users')->group(function () {
 
 // 文章列表與內容
 Route::prefix('/posts')->group(function () {
-    Route::get('/', Pages\Posts\IndexPage::class)->name('posts.index');
+    Route::livewire('/', 'pages::posts.index')->name('posts.index');
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/create', Pages\Posts\CreatePage::class)
-            ->name('posts.create');
-        Route::get('/{id}/edit', Pages\Posts\EditPage::class)
-            ->name('posts.edit');
+        Route::livewire('/create', 'pages::posts.create')->name('posts.create');
+        Route::livewire('/{id}/edit', 'pages::posts.edit')->name('posts.edit');
     });
 
     // {slug?} 當中的問號代表參數為選擇性
-    Route::get('/{id}/{slug?}', Pages\Posts\ShowPage::class)
-        ->name('posts.show');
+    Route::livewire('/{id}/{slug?}', 'pages::posts.show')->name('posts.show');
 });
 
 // 通知列表

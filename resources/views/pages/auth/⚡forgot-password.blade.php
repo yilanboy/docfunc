@@ -1,4 +1,30 @@
-<x-layouts.layout-auth>
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Pages\Auth;
+
+use Illuminate\Support\Facades\Password;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+
+new #[Title('忘記密碼')] class extends Component {
+    public string $email = '';
+
+    public function sendPasswordResetLink(): void
+    {
+        $this->validate([
+            'email' => ['required', 'string', 'email'],
+        ]);
+
+        Password::sendResetLink($this->only('email'));
+
+        session()->flash('status', __('A reset link will be sent if the account exists.'));
+    }
+};
+?>
+
+<x-layouts.auth>
   <div class="fixed left-5 top-5">
     <a
       class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
@@ -51,4 +77,4 @@
       </x-card>
     </div>
   </div>
-</x-layouts.layout-auth>
+</x-layouts.auth>
