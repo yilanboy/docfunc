@@ -16,7 +16,7 @@ document.addEventListener('livewire:init', () => {
             function onClick() {
                 let currentScrollY = 0;
 
-                component.$wire.$hook('commit.prepare', () => {
+                component.$wire.$hook('morph.updating', () => {
                     currentScrollY = window.scrollY;
                 });
 
