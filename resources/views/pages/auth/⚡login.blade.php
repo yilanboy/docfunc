@@ -115,7 +115,7 @@ new #[Title('登入')] class extends Component {
 
         try {
             AuthenticatorAssertionResponseValidator::create(new CeremonyStepManagerFactory()->requestCeremony())->check(publicKeyCredentialSource: $publicKeyCredentialSource, authenticatorAssertionResponse: $publicKeyCredential->response, publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions, host: request()->getHost(), userHandle: null);
-        } catch (Throwable) {
+        } catch (AuthenticatorResponseVerificationException) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;
@@ -166,7 +166,7 @@ new #[Title('登入')] class extends Component {
 
 @script
   <script>
-    Alpine.data('login', () => ({
+    Alpine.data('authLoginPage', () => ({
       passkey: {
         optionEndpoint: $wire.optionEndpoint,
       },
@@ -203,7 +203,7 @@ new #[Title('登入')] class extends Component {
   </script>
 @endscript
 
-<x-layouts.auth x-data="login">
+<x-layouts.auth x-data="authLoginPage">
   <div class="fixed left-5 top-5">
     <a
       class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"

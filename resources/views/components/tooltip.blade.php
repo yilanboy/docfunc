@@ -6,7 +6,7 @@
 
 @script
   <script>
-    Alpine.data('tooltip', () => ({
+    Alpine.data('uiTooltip', () => ({
       tooltipVisible: false,
       tooltipText: '',
       clickText: '',
@@ -77,7 +77,7 @@
   data-click-text="{{ $clickText }}"
   data-tooltip-position="{{ $tooltipPosition }}"
   {{ $attributes->merge(['class' => 'relative w-fit h-fit']) }}
-  x-data="tooltip"
+  x-data="uiTooltip"
 >
   <div
     class="absolute w-auto text-sm"

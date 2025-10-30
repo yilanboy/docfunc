@@ -1,6 +1,6 @@
 <script>
   document.addEventListener('alpine:init', () => {
-    Alpine.data('toast', () => ({
+    Alpine.data('uiToast', () => ({
       isShow: false,
       backgroundColor: '',
       message: '',
@@ -50,7 +50,7 @@
 <div
   class="fixed bottom-0 left-0"
   x-cloak
-  x-data="toast"
+  x-data="uiToast"
   x-on:toast.window="toastDispatched"
   x-show="isShow"
   x-transition:enter="transition ease-out duration-300"

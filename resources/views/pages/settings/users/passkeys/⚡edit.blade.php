@@ -111,7 +111,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('updatePasskeyPage', () => ({
+    Alpine.data('settingsUsersPasskeysEditPage', () => ({
       passkey: {
         optionEndpoint: $wire.optionEndpoint,
       },
@@ -164,7 +164,7 @@ new class extends Component {
   </script>
 @endscript
 
-<x-layouts.main x-data="updatePasskeyPage">
+<x-layouts.main x-data="settingsUsersPasskeysEditPage">
   <div class="container mx-auto grow">
     <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
       <x-users.member-center-side-menu />

@@ -79,7 +79,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('showPostPage', () => ({
+    Alpine.data('postsShowPage', () => ({
       init() {
         setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
         highlightAllInElement(this.$refs.postBody);
@@ -99,7 +99,7 @@ new class extends Component {
 <x-layouts.main>
   <div
     class="relative grow"
-    x-data="showPostPage"
+    x-data="postsShowPage"
   >
     <x-posts.progress-bar x-ref="progressBar" />
 

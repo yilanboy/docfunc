@@ -26,7 +26,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('homeSideMenuPart', () => ({
+    Alpine.data('postsHomeSidebarPart', () => ({
       rssLinkLabel: '訂閱 RSS',
       copyWebFeedUrl() {
         navigator.clipboard.writeText(this.$el.getAttribute('href')).then(
@@ -42,7 +42,7 @@ new class extends Component {
 
 <div
   class="space-y-6"
-  x-data="homeSideMenuPart"
+  x-data="postsHomeSidebarPart"
 >
   {{-- 介紹 --}}
   <x-card class="group dark:text-zinc-50">

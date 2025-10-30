@@ -67,7 +67,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('header', () => ({
+    Alpine.data('layoutsHeaderPart', () => ({
       html: document.documentElement,
       // the dropdown only shows in mobile
       dropdownMenuIsOpen: false,
@@ -109,7 +109,7 @@ new class extends Component {
 <header
   class="z-20 mb-6"
   id="header"
-  x-data="header"
+  x-data="layoutsHeaderPart"
 >
   <div
     class="relative hidden h-20 w-full items-center justify-center bg-zinc-50 transition-all duration-300 lg:flex dark:bg-zinc-800"

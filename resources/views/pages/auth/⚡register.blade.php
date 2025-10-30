@@ -52,7 +52,7 @@ new #[Title('註冊')] class extends Component {
 
 @script
   <script>
-    Alpine.data('register', () => ({
+    Alpine.data('authRegisterPage', () => ({
       submitIsEnabled: false,
       captchaSiteKey: @js(config('services.captcha.site_key')),
       submitIsDisabled() {
@@ -76,7 +76,7 @@ new #[Title('註冊')] class extends Component {
   </script>
 @endscript
 
-<x-layouts.auth x-data="register">
+<x-layouts.auth x-data="authRegisterPage">
   <div class="fixed left-5 top-5">
     <a
       class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"

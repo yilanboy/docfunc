@@ -31,7 +31,7 @@ new class extends Component {
 @script
   <script>
     // tab can only be 'information', 'posts', 'comments'
-    Alpine.data('showUserPage', () => ({
+    Alpine.data('usersShowPage', () => ({
       tab: '',
       contentIsActive(content) {
         return this.tab === content.id.replace('-content', '');
@@ -68,7 +68,7 @@ new class extends Component {
 <x-layouts.main>
   <div
     class="container mx-auto grow"
-    x-data="showUserPage"
+    x-data="usersShowPage"
   >
     <div class="animate-fade-in flex flex-col items-center justify-start px-4">
       {{-- user information, posts and comments --}}

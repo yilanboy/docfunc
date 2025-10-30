@@ -92,7 +92,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('commentGroup', () => ({
+    Alpine.data('commentsGroupPart', () => ({
       observers: [],
       openEditCommentModal() {
         this.$dispatch('open-edit-comment-modal', {
@@ -130,7 +130,7 @@ new class extends Component {
 
 <div
   class="w-full"
-  x-data="commentGroup"
+  x-data="commentsGroupPart"
 >
   @foreach ($comments as $comment)
     <x-dashed-card

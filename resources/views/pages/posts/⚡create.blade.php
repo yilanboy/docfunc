@@ -94,7 +94,7 @@ new class extends Component {
 
 @script
   <script>
-    Alpine.data('createPostPage', () => ({
+    Alpine.data('postsCreatePage', () => ({
       showPage: false,
       csrfToken: @js(csrf_token()),
       imageUploadUrl: @js(route('images.store')),
@@ -166,7 +166,7 @@ new class extends Component {
 <x-layouts.main>
   <div
     class="container mx-auto grow"
-    x-data="createPostPage"
+    x-data="postsCreatePage"
     x-cloak
     x-show="showPage"
   >
