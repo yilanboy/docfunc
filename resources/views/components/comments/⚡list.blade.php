@@ -149,8 +149,8 @@ new class extends Component {
       <button
         class="shadow-xs cursor-pointer rounded-lg bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-600 hover:bg-emerald-100 dark:bg-gray-700 dark:text-zinc-50 dark:hover:bg-gray-600"
         type="button"
-        wire:click="showMoreComments"
-        wire:retain
+        {{-- TODO: perserve-scroll will be implement in the future --}}
+        wire:click.preserve-scroll="showMoreComments"
       >
         <x-icons.animate-spin
           class="mr-2 size-5"
