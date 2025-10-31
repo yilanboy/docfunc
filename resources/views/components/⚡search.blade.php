@@ -26,9 +26,11 @@ new class extends Component {
 @script
   <script>
     Alpine.data('globalSearchPart', () => ({
-      searchBarIsOpen: false,
+      searchBar: {
+        isOpen: false
+      },
       openSearchBar() {
-        this.searchBarIsOpen = true;
+        this.searchBar.isOpen = true;
         this.$nextTick(() => {
           this.$refs.searchBar.focus();
         });
@@ -58,7 +60,7 @@ new class extends Component {
     x-on:click="openSearchBar"
     x-on:keydown.window.prevent.cmd.k="openSearchBar"
     x-on:keydown.window.prevent.ctrl.k="openSearchBar"
-    x-on:keydown.window.escape="searchBarIsOpen = false"
+    x-on:keydown.window.escape="searchBar.isOpen = false"
   >
     <x-icons.search class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
 
@@ -78,14 +80,14 @@ new class extends Component {
     aria-labelledby="modal-title"
     aria-modal="true"
     x-cloak
-    x-show="searchBarIsOpen"
+    x-show="searchBar.isOpen"
   >
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 
       {{-- modal --}}
       <div
         class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity"
-        x-show="searchBarIsOpen"
+        x-show="searchBar.isOpen"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -100,15 +102,15 @@ new class extends Component {
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-start sm:p-0">
           <div
             class="mt-16 inline-block w-full max-w-md transition-all"
-            x-show="searchBarIsOpen"
+            x-show="searchBar.isOpen"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-on:click.outside="searchBarIsOpen = false"
-            x-trap.noscroll="searchBarIsOpen"
+            x-on:click.outside="searchBar.isOpen = false"
+            x-trap.noscroll="searchBar.isOpen"
           >
             {{-- search form --}}
             <div class="relative">
@@ -149,7 +151,7 @@ new class extends Component {
 
                   <ul>
                     @foreach ($results as $result)
-                      <li>
+                      <li wire:key="search-result-{{ $result->id }}">
                         <a
                           class="flex items-start rounded-md p-2 text-left hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-600"
                           href="{{ $result->link_with_slug }}"
