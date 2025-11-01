@@ -28,14 +28,14 @@ new class extends Component {
             ->paginate(10, ['*'], 'comments-page')
             ->withQueryString();
 
-        // convert the body from markdown to html
+        // convert the body from Markdown to HTML
         $comments->getCollection()->transform(function ($comment) {
             $comment->body = $this->convertToHtml($comment->body);
 
             return $comment;
         });
 
-        return $this->view()->with(['comments' => $comments]);
+        return $this->view(compact('comments'));
     }
 };
 ?>

@@ -22,7 +22,7 @@
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "livewire/livewire": "^4.0@beta",
+        "livewire/livewire": "^v4.0@beta",
         "spatie/laravel-feed": "^4.1",
         "symfony/html-sanitizer": "^7.3",
         "web-auth/webauthn-lib": "^5.2"

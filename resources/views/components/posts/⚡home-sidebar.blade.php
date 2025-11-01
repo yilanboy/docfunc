@@ -19,7 +19,7 @@ new class extends Component {
             return Link::all();
         });
 
-        return $this->view()->with(compact('popularTags', 'links'));
+        return $this->view(compact('popularTags', 'links'));
     }
 };
 ?>

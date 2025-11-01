@@ -26,7 +26,7 @@ new class extends Component {
             },
         ])->get();
 
-        return $this->view()->with(compact('user', 'categories', 'commentCountsInAllPosts'));
+        return $this->view(compact('user', 'categories', 'commentCountsInAllPosts'));
     }
 };
 ?>
