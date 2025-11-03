@@ -98,5 +98,50 @@ test("users can't login if they has a passkey", function () {
 });
 
 test('users can authenticate using passkey', function () {
-//
-})->skip('This test is not working yet.');
+    $user = User::factory()->create([
+        'name' => 'Allen',
+    ]);
+
+    $user->passkeys()->create([
+        'name'          => 'passkey-1',
+        'credential_id' => 'VJzplgZvT6WiyhirG1BR0g',
+        'data'          => [
+            'publicKeyCredentialId' => 'VJzplgZvT6WiyhirG1BR0g',
+            'type'                  => 'public-key',
+            'transports'            => ['internal', 'hybrid'],
+            'attestationType'       => 'none',
+            'trustPath'             => [],
+            'aaguid'                => 'd548826e-79b4-db40-a3d8-11116f7e8349',
+            'credentialPublicKey'   => 'pQECAyYgASFYIDmVeb2lam-IwR_x-0t93x_2abq32kmh9AJotixqT06hIlggDOCXVrQQC7yV2AGW1uSbx3gQTrFidMx5YW9ERQfkyLE',
+            'userHandle'            => 'MQ',
+            'counter'               => 0,
+            'backupEligible'        => true,
+            'backupStatus'          => true,
+            'uvInitialized'         => true,
+        ],
+    ]);
+
+    Session::flash('passkey-authentication-options', json_encode([
+        'challenge'        => 'OWZrbjlQR3FmMklJS3ZkYg',
+        'rpId'             => Uri::of(config('app.url'))->host(),
+        'allowCredentials' => [],
+    ]));
+
+    Livewire::test('pages::auth.login', [
+        'answer' => json_encode([
+            'id'                      => 'VJzplgZvT6WiyhirG1BR0g',
+            'rawId'                   => 'VJzplgZvT6WiyhirG1BR0g',
+            'response'                => [
+                'authenticatorData' => 'a9ml1beJcKvWG7RE0SDYK4T4BGHPjPXzV-lTEeVjiGYdAAAAAA',
+                'clientDataJSON'    => 'eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiT1dacmJqbFFSM0ZtTWtsSlMzWmtZZyIsIm9yaWdpbiI6Imh0dHBzOi8vZG9jZnVuYy50ZXN0IiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ',
+                'signature'         => 'MEUCIQD_JBxx5UnwFrsML3wOgo6Pfe5bZh2DTEtBg148k-z4mQIgJ6HGBTtLJwy2IVkIXB4X2MWhKq5l4HjVNx4PQ3dLDFk',
+                'userHandle'        => 'MQ',
+            ],
+            'type'                    => 'public-key',
+            'clientExtensionResults'  => [],
+            'authenticatorAttachment' => 'platform',
+        ]),
+    ])
+        ->call('loginWithPasskey')
+        ->assertDispatched('toast', status: 'success', message: '登入成功！');
+});

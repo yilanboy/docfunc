@@ -280,7 +280,10 @@ new class extends Component {
             預覽
           </x-toggle-switch>
 
-          <x-button x-bind:disabled="modal.isSubmitEnabled === false">
+          <x-button
+            id="create-comment-submit-button"
+            x-bind:disabled="modal.isSubmitEnabled === false"
+          >
             <x-icons.reply-fill
               class="mr-2 w-5"
               x-cloak
