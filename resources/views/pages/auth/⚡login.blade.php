@@ -173,7 +173,7 @@ new #[Title('登入')] class extends Component {
       browserSupportsWebAuthn,
       async loginWithPasskey() {
         if (!this.browserSupportsWebAuthn()) {
-          this.$wire.dispatch('toast', {
+          $wire.dispatch('toast', {
             status: 'danger',
             message: '不支援 WebAuthn'
           });
@@ -185,11 +185,11 @@ new #[Title('登入')] class extends Component {
         const optionsJSON = await response.json();
 
         try {
-          this.$wire.answer = JSON.stringify(await startAuthentication({
+          $wire.answer = JSON.stringify(await startAuthentication({
             optionsJSON
           }))
         } catch (error) {
-          this.$wire.dispatch('toast', {
+          $wire.dispatch('toast', {
             status: 'danger',
             message: '登入失敗，請稍後再試'
           });
@@ -197,7 +197,7 @@ new #[Title('登入')] class extends Component {
           return;
         }
 
-        this.$wire.loginWithPasskey()
+        $wire.loginWithPasskey()
       }
     }));
   </script>

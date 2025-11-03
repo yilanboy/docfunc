@@ -126,9 +126,9 @@ new class extends Component {
         this.previewIsEnable = false;
       },
       submit() {
-        this.$wire.form.parent_id = this.comment.parentId;
-        this.$wire.form.body = this.comment.body;
-        this.$wire.save();
+        $wire.form.parent_id = this.comment.parentId;
+        $wire.form.body = this.comment.body;
+        $wire.save();
       },
       tabToFourSpaces,
       replyToLabel() {
@@ -136,7 +136,7 @@ new class extends Component {
       },
       previewChanged(event) {
         if (event.target.checked) {
-          this.$wire.$set('form.body', this.comment.body, true);
+          $wire.$set('form.body', this.comment.body, true);
         } else {
           this.$refs.convertedBody.innerHTML = '';
         }
@@ -146,13 +146,13 @@ new class extends Component {
           turnstile.render(this.$refs.turnstileBlock, {
             sitekey: this.captcha.siteKey,
             callback: (token) => {
-              this.$wire.captchaToken = token;
+              $wire.captchaToken = token;
               this.modal.isSubmitEnabled = true;
             }
           });
         });
 
-        this.$wire.on('reset-form-in-create-comment-modal', () => {
+        $wire.on('reset-form-in-create-comment-modal', () => {
           this.comment.parentId = null;
           this.comment.body = '';
         });

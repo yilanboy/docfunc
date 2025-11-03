@@ -69,7 +69,7 @@ new class extends Component {
       },
       removePreviewUrl() {
         if (confirm('你確定要刪除預覽圖嗎？')) {
-          this.$wire.set('imageUrl', null);
+          $wire.set('imageUrl', null);
         }
       }
     }));

@@ -39,7 +39,7 @@ new class extends Component {
     Alpine.data('commentsBoardPart', () => ({
       orderDropdownIsOpen: false,
       changeOrder() {
-        this.$wire.changeOrder(this.$el.dataset.order);
+        $wire.changeOrder(this.$el.dataset.order);
         this.orderDropdownIsOpen = false;
       },
       openCreateCommentModal() {

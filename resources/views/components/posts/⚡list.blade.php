@@ -60,7 +60,7 @@ new class extends Component {
         this.tabRepositionMarker(tabButton);
         this.order = tabButton.id.replace('-tab-button', '');
 
-        this.$wire.changeOrder(this.order);
+        $wire.changeOrder(this.order);
       },
       tabRepositionMarker(tabButton) {
         this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';

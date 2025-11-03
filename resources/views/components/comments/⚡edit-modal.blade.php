@@ -62,13 +62,13 @@ new class extends Component {
         this.previewIsEnable = false;
       },
       submit() {
-        this.$wire.form.body = this.comment.body;
-        this.$wire.save(this.comment.id, this.groupName);
+        $wire.form.body = this.comment.body;
+        $wire.save(this.comment.id, this.groupName);
       },
       tabToFourSpaces,
       previewChanged(event) {
         if (event.target.checked) {
-          this.$wire.$set('form.body', this.comment.body, true);
+          $wire.$set('form.body', this.comment.body, true);
         } else {
           this.$refs.convertedBody.innerHTML = '';
         }
