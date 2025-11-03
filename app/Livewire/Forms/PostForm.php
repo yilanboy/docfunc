@@ -106,17 +106,17 @@ class PostForm extends Form
 
     public function setSlug(): void
     {
-        $this->slug = ContentService::makeSlug($this->title);
+        $this->slug = ContentService::getSlug($this->title);
     }
 
     public function setBody(): void
     {
-        $this->body = ContentService::htmlPurifier($this->body);
+        $this->body = ContentService::getPurifiedBody($this->body);
     }
 
     public function setExcerpt(): void
     {
-        $this->excerpt = ContentService::makeExcerpt($this->body);
+        $this->excerpt = ContentService::getExcerpt($this->body);
     }
 
     public function setPost(Post $post): void

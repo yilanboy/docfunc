@@ -37,7 +37,7 @@ describe('create post', function () {
         $tagCollection = Tag::factory()->count(3)->create();
 
         $tagsJson = $tagCollection
-            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         $contentService = app(ContentService::class);
@@ -54,14 +54,14 @@ describe('create post', function () {
             ->assertHasNoErrors()
             ->assertRedirect(route('posts.show', [
                 'id'   => 1,
-                'slug' => $contentService->makeSlug($title),
+                'slug' => $contentService->getSlug($title),
             ]))
             ->assertDispatched('toast', status: 'success', message: '成功新增文章！');
 
         $post = Post::latest()->first();
 
         $tagIdsArray = $tagCollection
-            ->map(fn($item) => $item->id)
+            ->map(fn ($item) => $item->id)
             ->all();
 
         expect(Cache::has('auto_save_user_'.$user->id.'_create_post'))->toBeFalse()
@@ -70,8 +70,8 @@ describe('create post', function () {
             ->body->toBe($body)
             ->category_id->toBe($categoryId)
             ->user_id->toBe($user->id)
-            ->slug->toBe($contentService->makeSlug($title))
-            ->excerpt->toBe($contentService->makeExcerpt($body))
+            ->slug->toBe($contentService->getSlug($title))
+            ->excerpt->toBe($contentService->getExcerpt($body))
             ->is_private->toBe($privateStatus)
             ->and($post->tags->pluck('id')->toArray())->toBe($tagIdsArray);
     })->with('defaultCategoryIds');
@@ -195,7 +195,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -238,7 +238,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 

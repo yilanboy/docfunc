@@ -15,7 +15,7 @@ class ContentService
      *
      * @param  string  $title  標題
      */
-    public static function makeSlug(string $title): string
+    public static function getSlug(string $title): string
     {
         // 去掉特殊字元，只留中文與英文
         $title = preg_replace('/[^A-Za-z0-9 \p{Han}]+/u', '', $title);
@@ -31,7 +31,7 @@ class ContentService
     /**
      * 過濾 html 格式的文章內容，避免 XSS 攻擊
      */
-    public static function htmlPurifier(string $html): string
+    public static function getPurifiedBody(string $html): string
     {
         $htmlSanitizer = new HtmlSanitizer(
             new HtmlSanitizerConfig()
@@ -51,7 +51,7 @@ class ContentService
     /**
      * 生成文章內容的摘錄
      */
-    public static function makeExcerpt(string $body, int $length = 200): string
+    public static function getExcerpt(string $body, int $length = 200): string
     {
         return (string) str(strip_tags($body))->limit($length);
     }
@@ -59,7 +59,7 @@ class ContentService
     /**
      * 取得文章中的圖片連結
      */
-    public static function imagesInContent(string $body): array
+    public static function getImagesInContent(string $body): array
     {
         $dom = HTMLDocument::createFromString($body, LIBXML_NOERROR);
 

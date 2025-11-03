@@ -35,7 +35,7 @@ class ClearUnusedImageCommand extends Command
         Post::select(['id', 'body', 'preview_url'])
             ->chunkById(200, function ($posts) use (&$imagesInPosts, $contentService) {
                 foreach ($posts as $post) {
-                    array_push($imagesInPosts, ...$contentService->imagesInContent($post->body));
+                    array_push($imagesInPosts, ...$contentService->getImagesInContent($post->body));
 
                     if (! empty($post->preview_url)) {
                         $imagesInPosts[] = basename($post->preview_url);

@@ -23,7 +23,7 @@ it('can filter the dangerous HTML element', function () {
         </body>
     HTML;
 
-    expect($this->contentService->htmlPurifier($body))
+    expect($this->contentService->getPurifiedBody($body))
         ->not->toContain('<body onload="alert(\'this a xss attack\')">')
         ->not->toContain('<script>alert(\'this a xss attack\');</script>')
         ->not->toContain('<IMG SRC=j&#X41vascript:alert(\'test2\')>')
@@ -52,7 +52,7 @@ it('can keep the custom HTML elements we want', function () {
         </body>
     HTML;
 
-    expect($this->contentService->htmlPurifier($body))
+    expect($this->contentService->getPurifiedBody($body))
         ->toContain('<p style="text-align:right;">by my friend</p>')
         ->toContain('<span class="text-tiny">Could you keep it down, please?</span>')
         ->toContain('<pre data-language="Bash" spellcheck="false">')
@@ -80,7 +80,7 @@ it('can find all images in the post body', function () {
 
     $post = Post::factory()->create(['body' => $body]);
 
-    expect($this->contentService->imagesInContent($post->body))
+    expect($this->contentService->getImagesInContent($post->body))
         ->toBeArray()
         ->not->toBeEmpty()
         ->toBe($fakeImageNames);
@@ -95,7 +95,7 @@ it('will return empty array if no images in the post body', function () {
 
     $post = Post::factory()->create(['body' => $body]);
 
-    expect($this->contentService->imagesInContent($post->body))
+    expect($this->contentService->getImagesInContent($post->body))
         ->toBeArray()
         ->toBeEmpty();
 });

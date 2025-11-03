@@ -27,18 +27,18 @@ class PostSeeder extends Seeder
         for ($i = 1; $i <= self::POST_COUNT; $i++) {
             $title = fake()->text(30);
             $body = fake()->paragraph(50);
-            $excerpt = $contentService->makeExcerpt($body);
-            $slug = $contentService->makeSlug($title);
+            $excerpt = $contentService->getExcerpt($body);
+            $slug = $contentService->getSlug($title);
 
             $data[] = [
-                'title' => $title,
-                'body' => $body,
-                'slug' => $slug,
-                'excerpt' => $excerpt,
+                'title'       => $title,
+                'body'        => $body,
+                'slug'        => $slug,
+                'excerpt'     => $excerpt,
                 'category_id' => fake()->numberBetween(1, 3),
-                'user_id' => random_int(1, $userCount),
-                'created_at' => fake()->dateTimeBetween(startDate: '-3 years'),
-                'updated_at' => now(),
+                'user_id'     => random_int(1, $userCount),
+                'created_at'  => fake()->dateTimeBetween(startDate: '-3 years'),
+                'updated_at'  => now(),
             ];
 
             if ($i % self::CHUNK === 0) {

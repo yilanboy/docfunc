@@ -44,7 +44,7 @@ describe('edit post', function () {
         $newTagCollection = Tag::factory()->count(3)->create();
 
         $newTagsJson = $newTagCollection
-            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         Livewire::test('pages::posts.edit', ['id' => $post->id])
@@ -61,15 +61,15 @@ describe('edit post', function () {
         $contentService = app(ContentService::class);
 
         $newTagIdsArray = $newTagCollection
-            ->map(fn($item) => $item->id)
+            ->map(fn ($item) => $item->id)
             ->all();
 
         expect($post)
             ->title->toBe($newTitle)
-            ->slug->toBe($contentService->makeSlug($newTitle))
+            ->slug->toBe($contentService->getSlug($newTitle))
             ->category_id->toBe($categoryId)
             ->body->toBe($newBody)
-            ->excerpt->toBe($contentService->makeExcerpt($newBody))
+            ->excerpt->toBe($contentService->getExcerpt($newBody))
             ->is_private->toBe($newPrivateStatus)
             ->and($post->tags->pluck('id')->toArray())->toBe($newTagIdsArray);
     })->with('defaultCategoryIds');
