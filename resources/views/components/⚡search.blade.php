@@ -118,6 +118,7 @@ new class extends Component {
                 class="hidden"
                 for="searchBox"
               >搜尋</label>
+
               <input
                 class="outline-hidden focus:ring-3 w-full rounded-xl border border-zinc-400 bg-zinc-50 px-10 py-2 text-xl placeholder-zinc-400 focus:border-indigo-300 focus:ring-indigo-200/50 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder-white"
                 id="searchBox"
@@ -141,7 +142,7 @@ new class extends Component {
             {{-- 搜尋結果列表 --}}
             @if (strlen($search) >= 2)
               <div
-                class="mt-4 w-full rounded-xl bg-zinc-50 p-2 ring-1 ring-black/20 dark:bg-zinc-800 dark:text-zinc-50"
+                class="mt-4 w-full rounded-xl bg-zinc-50 p-2 dark:bg-zinc-800 dark:text-zinc-50"
                 wire:transition
               >
                 @if ($results->count() > 0)
