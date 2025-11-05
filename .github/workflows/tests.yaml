@@ -22,6 +22,8 @@ jobs:
         php:
           - 8.4
     env:
+      APP_NAME: DocFunc
+      APP_URL: "https://docfunc.test"
       DB_CONNECTION: sqlite
       DB_DATABASE: ":memory:"
       BROADCAST_DRIVER: log
