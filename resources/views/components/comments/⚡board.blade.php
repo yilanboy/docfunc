@@ -135,14 +135,6 @@ new class extends Component {
     </div>
   </div>
 
-  {{-- new root comment will show here --}}
-  <livewire:comments.group
-    :post-id="$postId"
-    :post-user-id="$postUserId"
-    :comment-group-name="'root-new-comment-group'"
-    :key="'root-new-comment-group-order-by-' . $order->value"
-  />
-
   {{-- root comment list --}}
   <livewire:comments.list
     :post-id="$postId"
