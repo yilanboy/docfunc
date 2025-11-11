@@ -157,7 +157,7 @@ describe('create post', function () {
         expect(Storage::disk()->allFiles())->not->toBeEmpty();
     });
 
-    it('can\'t upload non image', function () {
+    it('can\'t upload a non-image', function () {
         Storage::fake();
 
         $file = UploadedFile::fake()->create('document.pdf', 512);

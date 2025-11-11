@@ -2,7 +2,7 @@
 
 use function Pest\Laravel\get;
 
-describe('webauthn api test', function () {
+describe('WebAuthn API tests', function () {
     test("you can't get webauthn register options, if you are a guest", function () {
         get(route('passkeys.register-options'))
             ->assertStatus(302);

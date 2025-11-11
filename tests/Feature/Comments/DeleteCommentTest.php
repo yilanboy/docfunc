@@ -4,17 +4,14 @@ use App\Models\Comment;
 use App\Models\User;
 
 
-test('the author can delete his comment', function () {
+test('the author can delete their comment', function () {
     $comment = Comment::factory()->create();
 
     Livewire::actingAs(User::find($comment->user_id));
 
-    Livewire::test('comments.group', [
-        'postId'           => $comment->post_id,
-        'postUserId'       => $comment->post->user_id,
-        'maxLayer'         => 2,
-        'currentLayer'     => 1,
-        'commentGroupName' => 1,
+    Livewire::test('comments.list', [
+        'postId'     => $comment->post_id,
+        'postUserId' => $comment->post->user_id,
     ])
         ->call('destroyComment', id: $comment->id)
         ->assertDispatched('update-comments-count')
@@ -31,12 +28,9 @@ test('post author can delete other users comment', function () {
 
     Livewire::actingAs(User::find($comment->post->user_id));
 
-    Livewire::test('comments.group', [
-        'postId'           => $comment->post_id,
-        'postUserId'       => $comment->post->user_id,
-        'maxLayer'         => 2,
-        'currentLayer'     => 1,
-        'commentGroupName' => 1,
+    Livewire::test('comments.list', [
+        'postId'     => $comment->post_id,
+        'postUserId' => $comment->post->user_id,
     ])
         ->call('destroyComment', id: $comment->id)
         ->assertDispatched('update-comments-count')
@@ -56,12 +50,9 @@ it('will show alert when user want to delete the deleted comment', function () {
 
     $comment->delete();
 
-    Livewire::test('comments.group', [
-        'postId'           => $postId,
-        'postUserId'       => $postAuthorId,
-        'maxLayer'         => 2,
-        'currentLayer'     => 1,
-        'commentGroupName' => 1,
+    Livewire::test('comments.list', [
+        'postId'     => $postId,
+        'postUserId' => $postAuthorId,
     ])
         ->call('destroyComment', id: $commentId)
         ->assertDispatched('toast', status: 'danger', message: '該留言已被刪除！');

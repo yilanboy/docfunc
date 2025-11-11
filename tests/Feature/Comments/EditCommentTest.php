@@ -15,7 +15,7 @@ test('edit comment modal part can be rendered by logged in users', function () {
 
 test('logged-in users can update their comments', function () {
     $oldBody = 'old comment';
-    $commentGroupName = '1-comment-group';
+    $commentListName = 'root-list';
 
     $comment = Comment::factory()->create(['body' => $oldBody]);
 
@@ -27,16 +27,16 @@ test('logged-in users can update their comments', function () {
 
     Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
-        ->call('save', $comment->id, $commentGroupName)
+        ->call('save', $comment->id, $commentListName)
         ->assertDispatched('close-edit-comment-modal')
-        ->assertDispatched('update-comment-in-'.$commentGroupName);
+        ->assertDispatched('update-comment-in-'.$commentListName);
 
     $this->assertDatabaseHas('comments', ['body' => $body]);
 });
 
 test('the updated message must be at least 5 characters long', function () {
     $oldBody = 'old comment';
-    $commentGroupName = '1-comment-group';
+    $commentListName = 'comment-1-children-list';
 
     $comment = Comment::factory()->create(['body' => $oldBody]);
 
@@ -48,7 +48,7 @@ test('the updated message must be at least 5 characters long', function () {
 
     Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
-        ->call('save', $comment->id, $commentGroupName)
+        ->call('save', $comment->id, $commentListName)
         ->assertHasErrors(['form.body' => 'min:5'])
         ->assertSeeText('留言內容至少 5 個字元');
 
@@ -57,7 +57,7 @@ test('the updated message must be at least 5 characters long', function () {
 
 test('the updated message must be less than 2000 characters', function () {
     $oldBody = 'old comment';
-    $commentGroupName = '1-comment-group';
+    $commentListName = 'comment-1-children-list';
 
     $comment = Comment::factory()->create(['body' => $oldBody]);
 
@@ -69,7 +69,7 @@ test('the updated message must be less than 2000 characters', function () {
 
     Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
-        ->call('save', $comment->id, $commentGroupName)
+        ->call('save', $comment->id, $commentListName)
         ->assertHasErrors(['form.body' => 'max:2000'])
         ->assertSeeText('留言內容最多 2000 個字元');
 
@@ -78,7 +78,7 @@ test('the updated message must be less than 2000 characters', function () {
 
 test('users can\'t update others\' comments', function () {
     $comment = Comment::factory()->create();
-    $commentGroupName = '1-comment-group';
+    $commentListName = 'comment-1-children-list';
 
     loginAsUser();
 
@@ -86,7 +86,7 @@ test('users can\'t update others\' comments', function () {
 
     Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
-        ->call('save', $comment->id, $commentGroupName)
+        ->call('save', $comment->id, $commentListName)
         ->assertForbidden();
 
     expect(Comment::find($comment->id, ['body']))

@@ -25,7 +25,7 @@ describe('comment tests', function () {
             ->assertStatus(200);
     });
 
-    test('user can view a post with comments ans its children', function () {
+    test('user can view a post with comments and their replies', function () {
         $user = loginAsUser();
         $post = Post::factory()->create();
 
@@ -40,7 +40,7 @@ describe('comment tests', function () {
             ->assertStatus(200);
     });
 
-    test('guest can view a post with comments ans its children', function () {
+    test('guest can view a post with comments and their replies', function () {
         $post = Post::factory()->create();
 
         $comment = Comment::factory()->create(['post_id' => $post->id, 'user_id' => null]);
@@ -54,7 +54,7 @@ describe('comment tests', function () {
             ->assertStatus(200);
     });
 
-    test('user can visit comments show page', function () {
+    test('a user can visit the comment show page', function () {
         $user = loginAsUser();
         $post = Post::factory()->create();
 
@@ -65,7 +65,7 @@ describe('comment tests', function () {
             ->assertSee($comment->body);
     });
 
-    test('user can anonymous visit comments show page', function () {
+    test('a user can visit the comment show page anonymously', function () {
         $post = Post::factory()->create();
 
         $comment = Comment::factory()->create(['post_id' => $post->id, 'user_id' => null]);

@@ -208,7 +208,7 @@ test('password must be at least 8 characters, mixed case, numbers and letters', 
     'PASSWORD101', '12345678', 'abcdefgh',
 ]);
 
-test('guest can not visit register page when register is not allowed', function () {
+test('guests cannot visit the registration page when registration is not allowed', function () {
     Setting::query()
         ->where('key', 'allow_register')
         ->firstOrFail()
@@ -217,7 +217,7 @@ test('guest can not visit register page when register is not allowed', function 
     get(route('register'))->assertStatus(503);
 });
 
-test('guest can not see register button', function () {
+test('guests cannot see the register button', function () {
     Setting::query()
         ->where('key', 'allow_register')
         ->firstOrFail()

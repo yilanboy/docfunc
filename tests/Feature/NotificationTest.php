@@ -7,7 +7,7 @@ use App\Notifications\NewComment;
 use function Pest\Faker\fake;
 use function Pest\Laravel\get;
 
-test("guest can't visit notification page", function () {
+test('guests cannot visit the notifications page', function () {
     get(route('notifications.index'))->assertRedirectToRoute('login');
 });
 

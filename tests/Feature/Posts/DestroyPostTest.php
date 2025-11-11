@@ -98,7 +98,7 @@ describe('destroy post', function () {
         $this->assertNotSoftDeleted('posts', ['id' => $post->id]);
     });
 
-    test('author can soft delete own post in user information post card', function () {
+    test('the author can soft-delete their own post in the user information post card', function () {
         $post = Post::factory()->create();
 
         loginAsUser(User::find($post->user_id));

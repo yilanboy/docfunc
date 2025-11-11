@@ -31,7 +31,7 @@ describe('home page', function () {
             ->assertSeeLivewire('posts.list');
     });
 
-    it('will be redirect if slug is not in the url', function () {
+    it('will be redirected if the slug is not in the URL', function () {
         $post = Post::factory()->create([
             'slug' => fake()->word(),
         ]);

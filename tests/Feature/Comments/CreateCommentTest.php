@@ -7,7 +7,7 @@ use App\Models\User;
 use function Pest\Faker\fake;
 use function Pest\Laravel\get;
 
-test('non-logged-in users can leave a anonymous comment', function () {
+test('non-logged-in users can leave an anonymous comment', function () {
     $post = Post::factory()->create();
 
     $body = fake()->words(5, true);
@@ -16,8 +16,7 @@ test('non-logged-in users can leave a anonymous comment', function () {
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
-        ->assertDispatched('create-new-comment-to-root-new-comment-group')
-        ->assertDispatched('append-new-id-to-root-comment-list')
+        ->assertDispatched('create-comment-in-root-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
@@ -44,8 +43,7 @@ test('logged-in users can leave a comment', function () {
         ->set('form.body', $body)
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
-        ->assertDispatched('create-new-comment-to-root-new-comment-group')
-        ->assertDispatched('append-new-id-to-root-comment-list')
+        ->assertDispatched('create-comment-in-root-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
@@ -131,7 +129,7 @@ it('can see the comment preview', function () {
         ]);
 });
 
-it('can reply to others comment', function () {
+it('can reply to another user\'s comment', function () {
     $this->actingAs(User::factory()->create());
 
     $post = Post::factory()->create();
@@ -142,8 +140,7 @@ it('can reply to others comment', function () {
         ->set('form.body', 'Hello World!')
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
-        ->assertDispatched('create-new-comment-to-'.$comment->id.'-new-comment-group')
-        ->assertDispatched('append-new-id-to-'.$comment->id.'-comment-list')
+        ->assertDispatched('create-comment-in-comment-'.$comment->id.'-children-list')
         ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
@@ -152,7 +149,7 @@ it('can reply to others comment', function () {
         );
 });
 
-it('will show alert, when user want to reply to deleted post', function () {
+it('shows an alert when the user tries to reply to a deleted post', function () {
     $this->actingAs(User::factory()->create());
 
     $post = Post::factory()->create();

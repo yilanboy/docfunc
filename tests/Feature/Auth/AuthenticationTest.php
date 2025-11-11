@@ -58,7 +58,7 @@ test('email must be a valid email address', function () {
         ->assertHasErrors(['email' => 'email']);
 });
 
-test('users can not authenticate with invalid password', function () {
+test('users cannot authenticate with an invalid password', function () {
     $user = User::factory()->create([
         'password' => bcrypt('correctPassword101'),
     ]);
@@ -71,7 +71,7 @@ test('users can not authenticate with invalid password', function () {
     $this->assertGuest();
 });
 
-test('login user can logout', function () {
+test('a logged-in user can log out', function () {
     loginAsUser();
 
     Livewire::test('layouts.header')
@@ -80,7 +80,7 @@ test('login user can logout', function () {
     $this->assertGuest();
 });
 
-test("users can't login if they has a passkey", function () {
+test('users cannot log in if they have a passkey', function () {
     $user = User::factory()->create([
         'password' => bcrypt('correctPassword101'),
     ]);
