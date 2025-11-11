@@ -133,7 +133,7 @@ new class extends Component {
 ?>
 
 <div
-  class="relative w-full pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
+  class="relative pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
 >
   @foreach ($comments as $comment)
     <x-dashed-card

@@ -200,12 +200,14 @@ new class extends Component {
         </x-dashed-card>
 
         @if ($comment->parent_id === null)
-          <livewire:comments.children-list
-            :parent-id="$comment->id"
-            :post-user-id="$comment->post->user_id"
-            :children-count="$comment->children->count()"
-            :key="$comment->id . '-comment-children'"
-          />
+          <div class="w-full">
+            <livewire:comments.children-list
+              :parent-id="$comment->id"
+              :post-user-id="$comment->post->user_id"
+              :children-count="$comment->children->count()"
+              :key="$comment->id . '-comment-children'"
+            />
+          </div>
         @endif
       </div>
 
