@@ -136,7 +136,7 @@ new class extends Component {
     :post-id="$postId"
     :post-user-id="$postUserId"
     :order="$order"
-    :key="'root-comment-list-order-by-' . $order->value"
+    :key="'comments-order-by-' . $order->value"
   />
 
   {{-- create comment modal --}}

@@ -124,7 +124,11 @@ new class extends Component {
       submit() {
         $wire.form.parent_id = this.comment.parentId;
         $wire.form.body = this.comment.body;
-        $wire.save();
+        $wire.save().then(() => {
+          this.comment.parentId = null;
+          this.comment.body = '';
+          this.closeModal()
+        });
       },
       tabToFourSpaces,
       replyToLabel() {
@@ -147,16 +151,6 @@ new class extends Component {
             }
           });
         });
-
-        $wire.intercept('save', ({
-          onSuccess,
-        }) => {
-          onSuccess(() => {
-            this.comment.parentId = null;
-            this.comment.body = '';
-            this.closeModal()
-          })
-        })
 
         let previewObserver = highlightObserver(this.$refs.createCommentModal)
         this.observers.push(previewObserver);

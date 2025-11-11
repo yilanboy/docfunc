@@ -62,7 +62,9 @@ new class extends Component {
       },
       submit() {
         $wire.form.body = this.comment.body;
-        $wire.save(this.comment.id, this.listName);
+        $wire.save(this.comment.id, this.listName).then(() => {
+          this.closeModal();
+        });
       },
       tabToFourSpaces,
       previewChanged(event) {
@@ -73,14 +75,6 @@ new class extends Component {
         }
       },
       init() {
-        $wire.intercept('save', ({
-          onSuccess,
-        }) => {
-          onSuccess(() => {
-            this.closeModal();
-          })
-        })
-
         let previewObserver = highlightObserver(this.$refs.editCommentModal)
         this.observers.push(previewObserver);
       },
