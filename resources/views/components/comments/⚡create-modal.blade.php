@@ -65,8 +65,10 @@ new class extends Component {
         // Notify the article author of new comments.
         $post->user->notifyNewComment(new NewComment($comment));
 
+        $listName = $comment->parent_id === null ? 'root-list' : 'comment-' . $comment->parent_id . '-children-list';
+
         $this->dispatch(
-            event: 'create-new-comment-to-' . ($comment->parent_id ?? 'root') . '-new-comment-group',
+            event: 'create-comment-in-' . $listName,
             comment: [
                 'id' => $comment->id,
                 'user_id' => $comment->user_id,
@@ -78,8 +80,6 @@ new class extends Component {
                 'children_count' => 0,
             ],
         );
-
-        $this->dispatch(event: 'append-new-id-to-' . ($comment->parent_id ?? 'root') . '-comment-list', id: $comment->id);
 
         $this->dispatch(event: 'close-create-comment-modal');
 

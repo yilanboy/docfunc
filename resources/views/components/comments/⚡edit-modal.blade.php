@@ -20,7 +20,7 @@ new class extends Component {
         }
     }
 
-    public function save(Comment $comment, string $groupName): void
+    public function save(Comment $comment, string $listName): void
     {
         $this->authorize('update', $comment);
 
@@ -28,7 +28,7 @@ new class extends Component {
 
         $this->dispatch(event: 'close-edit-comment-modal');
 
-        $this->dispatch(event: 'update-comment-in-' . $groupName, id: $comment->id, body: $comment->body, updatedAt: $comment->updated_at);
+        $this->dispatch(event: 'update-comment-in-' . $listName, id: $comment->id, body: $comment->body, updatedAt: $comment->updated_at);
     }
 };
 ?>
@@ -48,11 +48,12 @@ new class extends Component {
         id: null,
         body: ''
       },
-      groupName: null,
+      listName: null,
       previewIsEnable: false,
       openModal(event) {
-        this.groupName = event.detail.groupName;
-        this.comment = event.detail.comment;
+        this.listName = event.detail.listName;
+        this.comment.id = event.detail.id;
+        this.comment.body = event.detail.body;
         this.modal.isOpen = true;
 
         this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
@@ -63,7 +64,7 @@ new class extends Component {
       },
       submit() {
         $wire.form.body = this.comment.body;
-        $wire.save(this.comment.id, this.groupName);
+        $wire.save(this.comment.id, this.listName);
       },
       tabToFourSpaces,
       previewChanged(event) {

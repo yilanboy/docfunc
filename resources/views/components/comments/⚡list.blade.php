@@ -14,17 +14,13 @@ use Livewire\Component;
 new class extends Component {
     use MarkdownConverter;
 
+    private const int PER_PAGE = 10;
+
     #[Locked]
     public int $postId;
 
     #[Locked]
     public int $postUserId;
-
-    #[Locked]
-    public ?int $parentId = null;
-
-    #[Locked]
-    public int $perPage = 10;
 
     #[Locked]
     public CommentOrderOptions $order = CommentOrderOptions::LATEST;
@@ -43,9 +39,9 @@ new class extends Component {
      *     'user_gravatar_url': string|null,
      * }>
      */
-    public array $rootComments = [];
+    public array $comments = [];
 
-    public bool $showMoreButtonIsActive = true;
+    public bool $showMoreLabelIsActive = true;
 
     public function mount(): void
     {
@@ -71,13 +67,13 @@ new class extends Component {
             })
             // Don't show new comments, avoid showing duplicate comments,
             // New comments have already showed in a new comment group.
-            ->whereNotIn('comments.id', array_keys($this->rootComments))
+            ->whereNotIn('comments.id', array_keys($this->comments))
             ->where('comments.post_id', $this->postId)
             // When parent id is not null,
             // it means this comment list is children of another comment.
-            ->where('comments.parent_id', $this->parentId)
+            ->where('comments.parent_id', null)
             // Plus-one is needed here because we need to determine whether there is a next page.
-            ->limit($this->perPage + 1)
+            ->limit(self::PER_PAGE + 1)
             ->get()
             ->keyBy('id')
             ->toArray();
@@ -93,10 +89,10 @@ new class extends Component {
         return array_map($callback, $comments);
     }
 
-    private function updateShowMoreButtonStatus(array $comments): void
+    private function updateShowMoreLabelStatus(array $comments): void
     {
-        if (count($comments) <= $this->perPage) {
-            $this->showMoreButtonIsActive = false;
+        if (count($comments) <= self::PER_PAGE) {
+            $this->showMoreLabelIsActive = false;
         }
     }
 
@@ -104,25 +100,82 @@ new class extends Component {
     {
         $comments = $this->getComments();
 
-        $this->updateShowMoreButtonStatus($comments);
+        $this->updateShowMoreLabelStatus($comments);
 
-        $comments = array_slice($comments, 0, $this->perPage, true);
+        $comments = array_slice($comments, 0, self::PER_PAGE, true);
 
-        $this->rootComments = $this->rootComments + $comments;
+        $this->comments = $this->comments + $comments;
+    }
+
+    #[On('create-comment-in-root-list')]
+    public function createComment(array $comment): void
+    {
+        $this->comments = [$comment['id'] => $comment] + $this->comments;
+    }
+
+    #[On('update-comment-in-root-list')]
+    public function updateComment(int $id, string $body, string $updatedAt): void
+    {
+        $this->comments[$id]['body'] = $body;
+        $this->comments[$id]['updated_at'] = $updatedAt;
+    }
+
+    public function destroyComment(int $id): void
+    {
+        $comment = Comment::find(id: $id, columns: ['id', 'user_id', 'post_id']);
+
+        // Check the comment is not deleted
+        if ($comment === null) {
+            $this->dispatch(event: 'toast', status: 'danger', message: '該留言已被刪除！');
+
+            return;
+        }
+
+        $this->authorize('destroy', $comment);
+
+        $comment->delete();
+
+        unset($this->comments[$id]);
+
+        $this->dispatch(event: 'update-comments-count');
+
+        $this->dispatch(event: 'toast', status: 'success', message: '成功刪除留言！');
     }
 };
 ?>
 
+@script
+  <script>
+    Alpine.data('rootCommentList', () => ({
+      observers: [],
+      init() {
+        let highlightCommentObserver = highlightObserver(this.$root);
+        this.observers.push(highlightCommentObserver);
+
+        highlightAllInElement(this.$root);
+      },
+      destroy() {
+        this.observers.forEach((observer) => {
+          observer.disconnect();
+        });
+      }
+    }));
+  </script>
+@endscript
+
 {{-- 留言列表 --}}
-<div class="w-full">
-  @foreach ($rootComments as $comment)
+<div
+  class="w-full"
+  x-data="rootCommentList"
+>
+  @foreach ($comments as $comment)
     <x-dashed-card
       class="mt-6"
       wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
     >
       <div class="flex flex-col">
         <div class="flex items-center space-x-4 text-base">
-          @if (!is_null($comment['user_id']))
+          @if ($comment['user_id'] !== null)
             <a
               href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
               wire:navigate
@@ -160,11 +213,12 @@ new class extends Component {
             @if (auth()->id() === $comment['user_id'])
               <button
                 class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                data-comment-id="{{ $comment['id'] }}"
-                data-comment-body="{{ $comment['body'] }}"
                 type="button"
-                {{-- TODO: edit comment --}}
-                x-on:click="openEditCommentModal"
+                x-on:click="$dispatch('open-edit-comment-modal', {
+                  listName: 'root-list',
+                  id: @js($comment['id']),
+                  body: @js($comment['body'])
+                })"
               >
                 <x-icons.pencil class="w-4" />
                 <span class="ml-2">編輯</span>
@@ -175,7 +229,6 @@ new class extends Component {
               <button
                 class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 type="button"
-                {{-- TODO: destroy comment --}}
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
               >
@@ -187,11 +240,11 @@ new class extends Component {
 
           <button
             class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-            data-comment-id="{{ $comment['id'] }}"
-            data-comment-user-name="{{ is_null($comment['user_name']) ? '訪客' : $comment['user_name'] }}"
             type="button"
-            {{-- TODO: create comment --}}
-            x-on:click="openCreateCommentModal"
+            x-on:click="$dispatch('open-create-comment-modal', {
+              parentId: @js($comment['id']),
+              replyTo: @js($comment['user_name'] === null ? '訪客' : $comment['user_name'])
+            })"
           >
             <x-icons.reply-fill class="w-4" />
             <span class="ml-2">回覆</span>
@@ -199,9 +252,16 @@ new class extends Component {
         </div>
       </div>
     </x-dashed-card>
+
+    <livewire:comments.children-list
+      :key="$comment['id'] . '-comment-children'"
+      :childrenCount="$comment['children_count']"
+      :parentId="$comment['id']"
+      :postUserId="$postUserId"
+    />
   @endforeach
 
-  @if ($showMoreButtonIsActive)
+  @if ($showMoreLabelIsActive)
     <div class="mt-6 flex w-full items-center justify-center">
       <span
         class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"

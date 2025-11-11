@@ -41,12 +41,6 @@ new class extends Component {
       changeOrder() {
         $wire.changeOrder(this.$el.dataset.order);
         this.orderDropdownIsOpen = false;
-      },
-      openCreateCommentModal() {
-        this.$dispatch('open-create-comment-modal', {
-          parentId: null,
-          replyTo: ''
-        });
       }
     }));
   </script>
@@ -119,8 +113,10 @@ new class extends Component {
       <button
         class="before:bg-lividus-600 dark:bg-lividus-700 group relative cursor-pointer overflow-hidden rounded-xl bg-emerald-600 px-6 py-2 [transform:translateZ(0)] before:absolute before:bottom-0 before:left-0 before:h-full before:w-full before:origin-[100%_100%] before:scale-x-0 before:transition before:duration-500 before:ease-in-out hover:before:origin-[0_0] hover:before:scale-x-100 dark:before:bg-emerald-700"
         type="button"
-        {{-- the comment group name should be full name --}}
-        x-on:click="openCreateCommentModal"
+        x-on:click="$dispatch('open-create-comment-modal', {
+          parentId: null,
+          replyTo: ''
+        })"
       >
         <div class="relative z-0 flex items-center text-lg text-zinc-200 transition duration-500 ease-in-out">
           <x-icons.chat-dots class="w-5" />
