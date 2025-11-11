@@ -135,83 +135,79 @@ new class extends Component {
 <div
   class="relative w-full pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
 >
-  {{-- If you want to change a property from an empty array to a non-empty array,  --}}
-  {{-- it will cause a morph bug --}}
-  @if (count($comments) > 0)
-    @foreach ($comments as $comment)
-      <x-dashed-card
-        class="mt-6"
-        wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
-      >
-        <div class="flex flex-col">
-          <div class="flex items-center space-x-4 text-base">
-            @if ($comment['user_id'] !== null)
-              <a
-                href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
-                wire:navigate
+  @foreach ($comments as $comment)
+    <x-dashed-card
+      class="mt-6"
+      wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
+    >
+      <div class="flex flex-col">
+        <div class="flex items-center space-x-4 text-base">
+          @if ($comment['user_id'] !== null)
+            <a
+              href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
+              wire:navigate
+            >
+              <img
+                class="size-10 rounded-full hover:ring-2 hover:ring-blue-400"
+                src="{{ $comment['user_gravatar_url'] }}"
+                alt="{{ $comment['user_name'] }}"
               >
-                <img
-                  class="size-10 rounded-full hover:ring-2 hover:ring-blue-400"
-                  src="{{ $comment['user_gravatar_url'] }}"
-                  alt="{{ $comment['user_name'] }}"
-                >
-              </a>
+            </a>
 
-              <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
-            @else
-              <x-icons.question-circle-fill class="size-10 text-zinc-300 dark:text-zinc-500" />
+            <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
+          @else
+            <x-icons.question-circle-fill class="size-10 text-zinc-300 dark:text-zinc-500" />
 
-              <span class="dark:text-zinc-50">訪客</span>
-            @endif
+            <span class="dark:text-zinc-50">訪客</span>
+          @endif
 
-            <time
-              class="hidden text-zinc-400 md:block"
-              datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
-            >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
+          <time
+            class="hidden text-zinc-400 md:block"
+            datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
+          >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
 
-            @if ($comment['created_at'] !== $comment['updated_at'])
-              <span class="text-zinc-400">(已編輯)</span>
-            @endif
-          </div>
+          @if ($comment['created_at'] !== $comment['updated_at'])
+            <span class="text-zinc-400">(已編輯)</span>
+          @endif
+        </div>
 
-          <div class="rich-text">
-            {!! $this->convertToHtml($comment['body']) !!}
-          </div>
+        <div class="rich-text">
+          {!! $this->convertToHtml($comment['body']) !!}
+        </div>
 
-          <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
-            @auth
-              @if (auth()->id() === $comment['user_id'])
-                <button
-                  class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                  type="button"
-                  x-on:click="$dispatch('open-edit-comment-modal', {
+        <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
+          @auth
+            @if (auth()->id() === $comment['user_id'])
+              <button
+                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                type="button"
+                x-on:click="$dispatch('open-edit-comment-modal', {
                   listName: @js('comment-' . $parentId . '-children-list'),
                   id: @js($comment['id']),
                   body: @js($comment['body'])
                 })"
-                >
-                  <x-icons.pencil class="w-4" />
-                  <span class="ml-2">編輯</span>
-                </button>
-              @endif
+              >
+                <x-icons.pencil class="w-4" />
+                <span class="ml-2">編輯</span>
+              </button>
+            @endif
 
-              @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
-                <button
-                  class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                  type="button"
-                  wire:click="destroyComment({{ $comment['id'] }})"
-                  wire:confirm="你確定要刪除該留言？"
-                >
-                  <x-icons.trash class="w-4" />
-                  <span class="ml-2">刪除</span>
-                </button>
-              @endif
-            @endauth
-          </div>
+            @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
+              <button
+                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                type="button"
+                wire:click="destroyComment({{ $comment['id'] }})"
+                wire:confirm="你確定要刪除該留言？"
+              >
+                <x-icons.trash class="w-4" />
+                <span class="ml-2">刪除</span>
+              </button>
+            @endif
+          @endauth
         </div>
-      </x-dashed-card>
-    @endforeach
-  @endif
+      </div>
+    </x-dashed-card>
+  @endforeach
 
   @if ($showMoreButtonIsActive)
     <button
