@@ -81,8 +81,6 @@ new class extends Component {
             ],
         );
 
-        $this->dispatch(event: 'update-comments-count');
-
         $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
     }
 };

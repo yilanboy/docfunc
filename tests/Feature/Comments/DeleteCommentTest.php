@@ -14,7 +14,6 @@ test('the author can delete their comment', function () {
         'postUserId' => $comment->post->user_id,
     ])
         ->call('destroyComment', id: $comment->id)
-        ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
             status: 'success',
             message: '成功刪除留言！',
@@ -33,7 +32,6 @@ test('post author can delete other users comment', function () {
         'postUserId' => $comment->post->user_id,
     ])
         ->call('destroyComment', id: $comment->id)
-        ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
             status: 'success',
             message: '成功刪除留言！',

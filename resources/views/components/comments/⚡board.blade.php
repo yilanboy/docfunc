@@ -21,12 +21,6 @@ new class extends Component {
     #[Locked]
     public CommentOrderOptions $order = CommentOrderOptions::POPULAR;
 
-    #[On('update-comments-count')]
-    public function updateCommentsCount(): void
-    {
-        $this->commentCounts = Comment::query()->where('post_id', $this->postId)->count();
-    }
-
     public function changeOrder(CommentOrderOptions $order): void
     {
         $this->order = $order;

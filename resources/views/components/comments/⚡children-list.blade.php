@@ -125,8 +125,6 @@ new class extends Component {
 
         unset($this->comments[$id]);
 
-        $this->dispatch(event: 'update-comments-count');
-
         $this->dispatch(event: 'toast', status: 'success', message: '成功刪除留言！');
     }
 };

@@ -44,8 +44,6 @@ new class extends Component {
 
         $comment->delete();
 
-        $this->dispatch(event: 'update-comments-count');
-
         $this->dispatch(event: 'toast', status: 'success', message: '成功刪除留言！');
 
         $this->redirect(url: route('root'), navigate: true);
