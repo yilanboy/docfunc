@@ -49,23 +49,24 @@ test('if a comment has replies, you can see a show more button below it', functi
     $page->assertSee($comment->children()->count().' 則回覆');
 });
 
-test('after clicking the show more button, if there are more replies, you can see a show more button below it', function () {
-    $post = Post::factory()->create();
+test('after clicking the show more button, if there are more replies, you can see a show more button below it',
+    function () {
+        $post = Post::factory()->create();
 
-    $comment = Comment::factory()->create([
-        'post_id' => $post->id,
-    ]);
+        $comment = Comment::factory()->create([
+            'post_id' => $post->id,
+        ]);
 
-    Comment::factory()->count(20)->create([
-        'parent_id' => $comment->id,
-    ]);
+        Comment::factory()->count(20)->create([
+            'parent_id' => $comment->id,
+        ]);
 
-    $page = $this->visit($post->link_with_slug);
+        $page = $this->visit($post->link_with_slug);
 
-    $page
-        ->click($comment->children()->count().' 則回覆')
-        ->assertSee('顯示更多留言');
-});
+        $page
+            ->click($comment->children()->count().' 則回覆')
+            ->assertSee('顯示更多回覆');
+    });
 
 test('after the user clicks the show more button, they can see more replies', function () {
     $post = Post::factory()->create();
