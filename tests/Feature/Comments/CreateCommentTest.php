@@ -17,7 +17,6 @@ test('non-logged-in users can leave an anonymous comment', function () {
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
         ->assertDispatched('create-comment-in-root-list')
-        ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
             status: 'success',
@@ -44,7 +43,6 @@ test('logged-in users can leave a comment', function () {
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
         ->assertDispatched('create-comment-in-root-list')
-        ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
             status: 'success',
@@ -141,7 +139,6 @@ it('can reply to another user\'s comment', function () {
         ->set('captchaToken', 'fake-captcha-response')
         ->call('save')
         ->assertDispatched('create-comment-in-comment-'.$comment->id.'-children-list')
-        ->assertDispatched('close-create-comment-modal')
         ->assertDispatched('update-comments-count')
         ->assertDispatched('toast',
             status: 'success',

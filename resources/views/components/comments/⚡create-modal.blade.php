@@ -81,10 +81,6 @@ new class extends Component {
             ],
         );
 
-        $this->dispatch(event: 'close-create-comment-modal');
-
-        $this->dispatch('reset-form-in-create-comment-modal');
-
         $this->dispatch(event: 'update-comments-count');
 
         $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
@@ -152,10 +148,15 @@ new class extends Component {
           });
         });
 
-        $wire.on('reset-form-in-create-comment-modal', () => {
-          this.comment.parentId = null;
-          this.comment.body = '';
-        });
+        $wire.intercept('save', ({
+          onSuccess,
+        }) => {
+          onSuccess(() => {
+            this.comment.parentId = null;
+            this.comment.body = '';
+            this.closeModal()
+          })
+        })
 
         let previewObserver = highlightObserver(this.$refs.createCommentModal)
         this.observers.push(previewObserver);
@@ -176,7 +177,6 @@ new class extends Component {
   x-ref="createCommentModal"
   x-show="modal.isOpen"
   x-on:open-create-comment-modal.window="openModal"
-  x-on:close-create-comment-modal.window="closeModal"
   x-on:keydown.escape.window="closeModal"
 >
   {{-- gray background --}}

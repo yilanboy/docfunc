@@ -26,8 +26,6 @@ new class extends Component {
 
         $this->form->update($comment);
 
-        $this->dispatch(event: 'close-edit-comment-modal');
-
         $this->dispatch(event: 'update-comment-in-' . $listName, id: $comment->id, body: $comment->body, updatedAt: $comment->updated_at);
     }
 };
@@ -75,6 +73,14 @@ new class extends Component {
         }
       },
       init() {
+        $wire.intercept('save', ({
+          onSuccess,
+        }) => {
+          onSuccess(() => {
+            this.closeModal();
+          })
+        })
+
         let previewObserver = highlightObserver(this.$refs.editCommentModal)
         this.observers.push(previewObserver);
       },
@@ -94,7 +100,6 @@ new class extends Component {
   x-ref="editCommentModal"
   x-show="modal.isOpen"
   x-on:open-edit-comment-modal.window="openModal"
-  x-on:close-edit-comment-modal.window="closeModal"
   x-on:keydown.escape.window="closeModal"
 >
   {{-- gray background --}}

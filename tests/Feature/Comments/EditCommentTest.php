@@ -28,7 +28,6 @@ test('logged-in users can update their comments', function () {
     Livewire::test('comments.edit-modal')
         ->set('form.body', $body)
         ->call('save', $comment->id, $commentListName)
-        ->assertDispatched('close-edit-comment-modal')
         ->assertDispatched('update-comment-in-'.$commentListName);
 
     $this->assertDatabaseHas('comments', ['body' => $body]);
