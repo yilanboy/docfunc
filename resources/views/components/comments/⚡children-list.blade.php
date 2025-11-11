@@ -12,13 +12,13 @@ new class extends Component {
     public const int PER_PAGE = 10;
 
     #[Locked]
+    public int $parentId;
+
+    #[Locked]
     public int $postUserId;
 
     #[Locked]
     public int $childrenCount;
-
-    #[Locked]
-    public int $parentId;
 
     /**
      * The array of comments list, the format is below:
@@ -128,7 +128,7 @@ new class extends Component {
 ?>
 
 <div
-  class="relative pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
+  class="relative w-full pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
 >
   {{-- If you want to change a property from an empty array to a non-empty array,  --}}
   {{-- it will cause a morph bug --}}

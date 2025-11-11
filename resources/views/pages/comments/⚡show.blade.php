@@ -61,9 +61,7 @@ new class extends Component {
 ?>
 
 @assets
-  {{-- highlight code block style --}}
   @vite('node_modules/highlight.js/styles/atom-one-dark.css')
-  {{-- highlight code block --}}
   @vite('resources/ts/highlight.ts')
 @endassets
 
@@ -121,7 +119,7 @@ new class extends Component {
         <x-dashed-card class="mt-6 w-full">
           <div class="flex flex-col">
             <div class="flex items-center space-x-4 text-base">
-              @if (!is_null($comment->user_id))
+              @if ($comment->user_id !== null)
                 <a
                   href="{{ route('users.show', ['id' => $comment->user_id]) }}"
                   wire:navigate
@@ -159,11 +157,12 @@ new class extends Component {
                 @if (auth()->id() === $comment->user_id)
                   <button
                     class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                    data-comment-group-name="comments-show-page"
-                    data-comment-id="{{ $comment->id }}"
-                    data-comment-body="{{ $comment->body }}"
                     type="button"
-                    x-on:click="openEditCommentModal"
+                    x-on:click="$dispatch('open-edit-comment-modal', {
+                      listName: 'comments-show-page',
+                      id: @js($comment['id']),
+                      body: @js($comment['body'])
+                    })"
                   >
                     <x-icons.pencil class="w-4" />
                     <span class="ml-2">編輯</span>
@@ -183,13 +182,14 @@ new class extends Component {
                 @endif
               @endauth
 
-              @if ($comment->hierarchy->level < config('comments.max_level'))
+              @if ($comment->parent_id === null)
                 <button
                   class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                  data-comment-id="{{ $comment->id }}"
-                  data-comment-user-name="{{ is_null($comment->user_id) ? '訪客' : $comment->user->name }}"
                   type="button"
-                  x-on:click="openCreateCommentModal"
+                  x-on:click="$dispatch('open-create-comment-modal', {
+                    parentId: @js($comment->id),
+                    replyTo: @js($comment->user === null ? '訪客' : $comment->user->name)
+                  })"
                 >
                   <x-icons.reply-fill class="w-4" />
                   <span class="ml-2">回覆</span>
@@ -199,40 +199,21 @@ new class extends Component {
           </div>
         </x-dashed-card>
 
-        @if ($comment->hierarchy->level < config('comments.max_level'))
-          <div
-            class="relative w-full pl-4 before:absolute before:bottom-0 before:left-0 before:top-6 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
-          >
-            {{-- new root comment will show here --}}
-            <livewire:comments.group
-              :post-id="$comment->post->id"
-              :post-user-id="$comment->post->user_id"
-              :parent-id="$comment->id"
-              :current-level="$comment->hierarchy->level + 1"
-              :comment-group-name="$comment->id . '-new-comment-group'"
-            />
-
-            @if ($comment->children->count() > 0)
-              {{-- root comment list --}}
-              <livewire:comments.list
-                :post-id="$comment->post->id"
-                :post-user-id="$comment->post->user_id"
-                :parent-id="$comment->id"
-                :current-level="$comment->hierarchy->level + 1"
-                :comment-list-name="$comment->id . '-comment-list'"
-              />
-            @endif
-          </div>
+        @if ($comment->parent_id === null)
+          <livewire:comments.children-list
+            :parent-id="$comment->id"
+            :post-user-id="$comment->post->user_id"
+            :children-count="$comment->children->count()"
+            :key="$comment->id . '-comment-children'"
+          />
         @endif
       </div>
 
-      @if ($comment->hierarchy->level < config('comments.max_level'))
-        {{-- create comment modal --}}
+      @if ($comment->parent_id === null)
         <livewire:comments.create-modal :post-id="$comment->post->id" />
       @endif
 
       @auth
-        {{-- edit comment modal --}}
         <livewire:comments.edit-modal />
       @endauth
     </div>

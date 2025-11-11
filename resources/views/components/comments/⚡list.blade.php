@@ -254,10 +254,10 @@ new class extends Component {
     </x-dashed-card>
 
     <livewire:comments.children-list
+      :parent-id="$comment['id']"
+      :post-user-id="$postUserId"
+      :children-count="$comment['children_count']"
       :key="$comment['id'] . '-comment-children'"
-      :childrenCount="$comment['children_count']"
-      :parentId="$comment['id']"
-      :postUserId="$postUserId"
     />
   @endforeach
 
