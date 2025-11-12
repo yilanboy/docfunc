@@ -35,7 +35,9 @@ new class extends Component {
             return $comment;
         });
 
-        return $this->view(compact('comments'));
+        return $this->view([
+            'comments' => $comments,
+        ]);
     }
 };
 ?>

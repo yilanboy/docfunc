@@ -16,7 +16,7 @@ new class extends Component {
             $results = Post::search($this->search)->take(10)->get();
         }
 
-        return $this->view()->with([
+        return $this->view([
             'results' => $results,
         ]);
     }

@@ -11,11 +11,11 @@ new class extends Component {
 
     public function render()
     {
-        $notifications = auth()->user()->notifications()->paginate(20);
-
         auth()->user()->unreadNotifications->markAsRead();
 
-        return $this->view()->with(compact('notifications'))->title('我的通知');
+        return $this->view([
+            'notifications' => auth()->user()->notifications()->paginate(20),
+        ])->title('我的通知');
     }
 };
 ?>

@@ -47,7 +47,9 @@ new class extends Component {
             ->paginate(10)
             ->withQueryString();
 
-        return $this->view(compact('posts'));
+        return $this->view([
+            'posts' => $posts,
+        ]);
     }
 };
 ?>
