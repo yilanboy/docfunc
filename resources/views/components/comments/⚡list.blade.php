@@ -146,6 +146,16 @@ new class extends Component {
   <script>
     Alpine.data('rootCommentList', () => ({
       observers: [],
+      loadMoreComments() {
+        let y = window.scrollY;
+
+        $wire.showMoreComments().then(() => {
+          scrollTo({
+            top: y,
+            behavior: 'instant'
+          });
+        });
+      },
       init() {
         let highlightCommentObserver = highlightObserver(this.$root);
         this.observers.push(highlightCommentObserver);
@@ -259,16 +269,18 @@ new class extends Component {
     />
   @endforeach
 
-  @if ($showMoreLabelIsActive)
-    <div class="mt-6 flex w-full items-center justify-center">
-      <span
-        class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
-        type="button"
-        wire:intersect="showMoreComments"
-      >
-        <x-icons.animate-spin class="size-5" />
-        <span>顯示更多留言</span>
-      </span>
-    </div>
-  @endif
+  <div
+    class="mt-6 flex w-full items-center justify-center"
+    x-cloak
+    x-show="$wire.showMoreLabelIsActive"
+  >
+    <span
+      class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
+      type="button"
+      x-intersect="loadMoreComments"
+    >
+      <x-icons.animate-spin class="size-5" />
+      <span>顯示更多留言</span>
+    </span>
+  </div>
 </div>
