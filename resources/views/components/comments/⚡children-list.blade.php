@@ -35,15 +35,16 @@ new class extends Component {
      */
     public array $comments = [];
 
-    public bool $showMoreButtonIsActive = false;
-
-    public string $showMoreButtonLabel = '';
+    public array $showMoreButton = [
+        'is_active' => false,
+        'label' => '',
+    ];
 
     public function mount(): void
     {
         if ($this->childrenCount > 0) {
-            $this->showMoreButtonIsActive = true;
-            $this->showMoreButtonLabel = $this->childrenCount . ' 則回覆';
+            $this->showMoreButton['is_active'] = true;
+            $this->showMoreButton['label'] = $this->childrenCount . ' 則回覆';
         }
     }
 
@@ -75,11 +76,15 @@ new class extends Component {
         return array_map($callback, $comments);
     }
 
-    private function updateShowMoreButtonStatus(array $comments): void
+    private function updateShowMoreButtonStatus($comments): void
     {
         if (count($comments) <= self::PER_PAGE) {
-            $this->showMoreButtonIsActive = false;
+            $this->showMoreButton['is_active'] = false;
+
+            return;
         }
+
+        $this->showMoreButton['label'] = '顯示更多回覆';
     }
 
     public function showMoreChildren(): void
@@ -91,8 +96,6 @@ new class extends Component {
         $comments = array_slice($comments, 0, self::PER_PAGE, true);
 
         $this->comments = $this->comments + $comments;
-
-        $this->showMoreButtonLabel = '顯示更多回覆';
     }
 
     #[On('create-comment-in-comment-{parentId}-children-list')]
@@ -207,12 +210,12 @@ new class extends Component {
     </x-dashed-card>
   @endforeach
 
-  @if ($showMoreButtonIsActive)
+  @if ($showMoreButton['is_active'])
     <button
       class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
       wire:click="showMoreChildren"
     >
-      <span>{{ $showMoreButtonLabel }}</span>
+      <span>{{ $showMoreButton['label'] }}</span>
 
       <x-icons.caret-down-fill
         class="size-4"
