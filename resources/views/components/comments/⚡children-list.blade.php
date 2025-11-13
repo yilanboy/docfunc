@@ -35,7 +35,7 @@ new class extends Component {
      */
     public array $comments = [];
 
-    public array $showMoreButton = [
+    public array $loadMoreButton = [
         'is_active' => false,
         'label' => '',
     ];
@@ -43,8 +43,8 @@ new class extends Component {
     public function mount(): void
     {
         if ($this->childrenCount > 0) {
-            $this->showMoreButton['is_active'] = true;
-            $this->showMoreButton['label'] = $this->childrenCount . ' 則回覆';
+            $this->loadMoreButton['is_active'] = true;
+            $this->loadMoreButton['label'] = $this->childrenCount . ' 則回覆';
         }
     }
 
@@ -76,22 +76,15 @@ new class extends Component {
         return array_map($callback, $comments);
     }
 
-    private function updateShowMoreButtonStatus($comments): void
-    {
-        if (count($comments) <= self::PER_PAGE) {
-            $this->showMoreButton['is_active'] = false;
-
-            return;
-        }
-
-        $this->showMoreButton['label'] = '顯示更多回覆';
-    }
-
-    public function showMoreChildren(): void
+    public function loadMoreChildren(): void
     {
         $comments = $this->getComments();
 
-        $this->updateShowMoreButtonStatus($comments);
+        if (count($comments) <= self::PER_PAGE) {
+            $this->loadMoreButton['is_active'] = false;
+        }
+
+        $this->loadMoreButton['label'] = '顯示更多回覆';
 
         $comments = array_slice($comments, 0, self::PER_PAGE, true);
 
@@ -210,21 +203,21 @@ new class extends Component {
     </x-dashed-card>
   @endforeach
 
-  @if ($showMoreButton['is_active'])
-    <button
-      class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
-      wire:click="showMoreChildren"
-    >
-      <span>{{ $showMoreButton['label'] }}</span>
+  <button
+    class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
+    x-cloak
+    x-show="$wire.loadMoreButton['is_active']"
+    wire:click="loadMoreChildren"
+  >
+    <span>{{ $loadMoreButton['label'] }}</span>
 
-      <x-icons.caret-down-fill
-        class="size-4"
-        wire:loading.remove
-      />
-      <x-icons.animate-spin
-        class="size-5"
-        wire:loading
-      />
-    </button>
-  @endif
+    <x-icons.caret-down-fill
+      class="size-4"
+      wire:loading.remove
+    />
+    <x-icons.animate-spin
+      class="size-5"
+      wire:loading
+    />
+  </button>
 </div>

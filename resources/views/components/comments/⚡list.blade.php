@@ -41,11 +41,13 @@ new class extends Component {
      */
     public array $comments = [];
 
-    public bool $showMoreLabelIsActive = true;
+    public array $loadingLabel = [
+        'is_visible' => true,
+    ];
 
     public function mount(): void
     {
-        $this->showMoreComments();
+        $this->loadMoreComments();
     }
 
     private function getComments(): array
@@ -89,18 +91,13 @@ new class extends Component {
         return array_map($callback, $comments);
     }
 
-    private function updateShowMoreLabelStatus(array $comments): void
-    {
-        if (count($comments) <= self::PER_PAGE) {
-            $this->showMoreLabelIsActive = false;
-        }
-    }
-
-    public function showMoreComments(): void
+    public function loadMoreComments(): void
     {
         $comments = $this->getComments();
 
-        $this->updateShowMoreLabelStatus($comments);
+        if (count($comments) <= self::PER_PAGE) {
+            $this->loadingLabel['is_visible'] = false;
+        }
 
         $comments = array_slice($comments, 0, self::PER_PAGE, true);
 
@@ -149,8 +146,8 @@ new class extends Component {
       loadMoreComments() {
         let y = window.scrollY;
 
-        $wire.showMoreComments().then(() => {
-          scrollTo({
+        $wire.loadMoreComments().then(() => {
+          window.scrollTo({
             top: y,
             behavior: 'instant'
           });
@@ -272,7 +269,7 @@ new class extends Component {
   <div
     class="mt-6 flex w-full items-center justify-center"
     x-cloak
-    x-show="$wire.showMoreLabelIsActive"
+    x-show="$wire.loadingLabel['is_visible']"
   >
     <span
       class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
