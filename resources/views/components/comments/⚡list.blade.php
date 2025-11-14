@@ -101,7 +101,7 @@ new class extends Component {
 
         $comments = array_slice($comments, 0, self::PER_PAGE, true);
 
-        $this->comments = $this->comments + $comments;
+        $this->comments += $comments;
     }
 
     #[On('create-comment-in-root-list')]

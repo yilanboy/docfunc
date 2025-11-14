@@ -23,7 +23,7 @@ new class extends Component {
             ],
         ),
     ]
-    public $image = null;
+    public $image;
 
     #[Modelable]
     public ?string $imageUrl = null;
@@ -84,64 +84,68 @@ new class extends Component {
   x-on:livewire-upload-cancel="uploading = false"
   x-on:livewire-upload-error="uploading = false"
 >
-  @if ($errors->isEmpty() && !is_null($imageUrl))
-    {{-- image preview --}}
-    <div class="relative w-full">
-      <img
-        class="rounded-lg"
-        id="image-url"
-        src="{{ $imageUrl }}"
-        alt="image url"
-      >
-
-      <button
-        class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-150 hover:bg-zinc-600/50"
-        type="button"
-        x-on:click="removePreviewUrl"
-      >
-        <x-icons.x-circle
-          class="size-24 opacity-0 transition-all duration-150 group-hover:text-zinc-50 group-hover:opacity-100"
-        />
-      </button>
-
-      <span
-        class="absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10 dark:bg-gray-50 dark:text-gray-700 dark:ring-gray-700/10"
-      >預覽圖</span>
-    </div>
-  @else
-    {{-- Upload Area --}}
-    <div
-      class="relative flex cursor-pointer flex-col items-center rounded-lg border-2 border-dashed border-emerald-500 bg-transparent px-4 py-6 tracking-wide text-emerald-500 transition-all duration-300 hover:border-emerald-600 hover:text-emerald-600 dark:border-indigo-400 dark:text-indigo-400 dark:hover:border-indigo-300 dark:hover:text-indigo-300"
-      x-ref="uploadBlock"
+  {{-- image preview --}}
+  <div
+    class="relative w-full"
+    x-cloak
+    x-show="$wire.$errors.all().length === 0 && $wire.imageUrl !== null"
+  >
+    <img
+      class="rounded-lg"
+      id="image-url"
+      src="{{ $imageUrl }}"
+      alt="image url"
     >
-      <input
-        class="outline-hidden absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0"
-        type="file"
-        wire:model.live="image"
-        x-on:dragenter="changeBlockStyleWhenDragEnter"
-        x-on:dragleave="changeBlockStyleWhenDragLeaveAndDrop"
-        x-on:drop="changeBlockStyleWhenDragLeaveAndDrop"
-      >
 
-      <div class="flex flex-col items-center justify-center space-y-2 text-center">
-        <x-icons.upload
-          class="size-10"
-          x-cloak
-          x-show="!uploading"
-        />
+    <button
+      class="hover:backdrop-blur-xs group absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg transition-all duration-150 hover:bg-zinc-600/50"
+      type="button"
+      x-on:click="removePreviewUrl"
+    >
+      <x-icons.x-circle
+        class="size-24 opacity-0 transition-all duration-150 group-hover:text-zinc-50 group-hover:opacity-100"
+      />
+    </button>
 
-        <x-icons.animate-spin
-          class="size-10"
-          x-cloak
-          x-show="uploading"
-        />
+    <span
+      class="absolute right-2 top-2 inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-700/10 dark:bg-gray-50 dark:text-gray-700 dark:ring-gray-700/10"
+    >預覽圖</span>
+  </div>
 
-        <p>預覽圖 (jpg, jpeg or png)</p>
+  {{-- Upload Area --}}
+  <div
+    class="relative flex cursor-pointer flex-col items-center rounded-lg border-2 border-dashed border-emerald-500 bg-transparent px-4 py-6 tracking-wide text-emerald-500 transition-all duration-300 hover:border-emerald-600 hover:text-emerald-600 dark:border-indigo-400 dark:text-indigo-400 dark:hover:border-indigo-300 dark:hover:text-indigo-300"
+    x-ref="uploadBlock"
+    x-cloak
+    x-show="$wire.imageUrl === null"
+  >
+    <input
+      class="outline-hidden absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0"
+      type="file"
+      wire:model.live="image"
+      x-on:dragenter="changeBlockStyleWhenDragEnter"
+      x-on:dragleave="changeBlockStyleWhenDragLeaveAndDrop"
+      x-on:drop="changeBlockStyleWhenDragLeaveAndDrop"
+    >
 
-        @error('image')
-          <span class="text-red-500">{{ $message }}</span>
-        @enderror
-      </div>
+    <div class="flex flex-col items-center justify-center space-y-2 text-center">
+      <x-icons.upload
+        class="size-10"
+        x-cloak
+        x-show="!uploading"
+      />
+
+      <x-icons.animate-spin
+        class="size-10"
+        x-cloak
+        x-show="uploading"
+      />
+
+      <p>預覽圖 (jpg, jpeg or png)</p>
+
+      @error('image')
+        <span class="text-red-500">{{ $message }}</span>
+      @enderror
     </div>
-  @endif
+  </div>
 </div>

@@ -57,7 +57,7 @@ class ClearUnusedImageCommand extends Command
         // find images that do not exist in the posts, but exist on S3
         $notInUseImages = array_diff(Storage::disk()->files('images'), $imagesInPosts);
 
-        if (empty($notInUseImages)) {
+        if ($notInUseImages === []) {
             $this->info('There is not a single image that has not been used');
 
             return self::SUCCESS;

@@ -38,8 +38,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
         $userEntity = new PublicKeyCredentialUserEntity(
             name: $request->user()->name,
             id: (string) $request->user()->id,
-            displayName: $request->user()->name,
-            icon: null
+            displayName: $request->user()->name
         );
 
         // 驗證裝置的設定

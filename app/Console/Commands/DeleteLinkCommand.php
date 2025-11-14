@@ -33,7 +33,7 @@ class DeleteLinkCommand extends Command
     {
         $id = search(
             label: 'Search for the tag that should be edited',
-            options: fn (string $value) => strlen($value) > 0
+            options: fn (string $value) => $value !== ''
                 ? Link::where('title', 'like', "%{$value}%")
                     ->orWhere('link', 'like', "%{$value}%")
                     ->pluck('title', 'id')->all()

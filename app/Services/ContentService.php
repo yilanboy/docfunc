@@ -91,7 +91,7 @@ class ContentService
      */
     public static function getReadTime(string $body): int
     {
-        if (empty(trim($body))) {
+        if (in_array(trim($body), ['', '0'], true)) {
             return 1;
         }
 
