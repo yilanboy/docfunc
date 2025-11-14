@@ -171,11 +171,12 @@ new class extends Component {
 {{-- 留言列表 --}}
 <div
   class="w-full"
+  id="root-comment-list"
   x-data="rootCommentList"
 >
   @foreach ($comments as $comment)
     <x-dashed-card
-      class="mt-6"
+      class="comment-card mt-6"
       wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
     >
       <div class="flex flex-col">
@@ -217,7 +218,7 @@ new class extends Component {
           @auth
             @if (auth()->id() === $comment['user_id'])
               <button
-                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                class="edit-comment-button flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                 type="button"
                 x-on:click="$dispatch('open-edit-comment-modal', {
                   listName: 'root-list',
