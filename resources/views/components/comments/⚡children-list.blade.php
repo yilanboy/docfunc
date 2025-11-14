@@ -128,6 +128,7 @@ new class extends Component {
 
 <div
   class="relative pl-4 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
+  data-test-id="comments.children-list"
 >
   @foreach ($comments as $comment)
     <x-dashed-card
@@ -174,6 +175,7 @@ new class extends Component {
             @if (auth()->id() === $comment['user_id'])
               <button
                 class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                data-test-id="comments.card.edit"
                 type="button"
                 x-on:click="$dispatch('open-edit-comment-modal', {
                   listName: @js('comment-' . $parentId . '-children-list'),
@@ -189,6 +191,7 @@ new class extends Component {
             @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
               <button
                 class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                data-test-id="comments.card.delete"
                 type="button"
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
@@ -205,6 +208,7 @@ new class extends Component {
 
   <button
     class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
+    data-test-id="comments.children.load-more"
     x-cloak
     x-show="$wire.loadMoreButton['is_active']"
     wire:click="loadMoreChildren"

@@ -98,20 +98,35 @@ test('orders root comments by popular, then by latest and oldest when changed', 
 
     $page = $this->visit($post->link_with_slug);
 
+    function commentCardSelector(int $order): string
+    {
+        return 'div[data-test-id="comments.root-list"] > :nth-child('.$order.' of div[data-test-id="comments.card"])';
+    }
+
     // Default on the board is POPULAR
-    $page->assertSeeIn('div#root-comment-list > div.comment-card:nth-child(1)', $c2->body);
+    // Maybe we can use general sibling combinator (~) to avoid position flakiness
+    // Expect: C2 before C1, and C1 before C3
+    $page
+        // Also confirm each specific card is present
+        ->assertSeeIn(commentCardSelector(1), 'C2 - middle')
+        ->assertSeeIn(commentCardSelector(2), 'C1 - oldest')
+        ->assertSeeIn(commentCardSelector(3), 'C3 - newest');
 
     // Change to Latest (由新到舊)
-    $page->click('排序依據')
-        ->click('由新到舊');
-
-    $page->assertSeeIn('div#root-comment-list > div.comment-card:nth-child(1)', $c3->body);
+    $page->click('[data-test-id="comments.order.toggle"]')
+        ->click('[data-test-id="comments.order.option"][ data-order-value="latest"]')
+        // Presence checks
+        ->assertSeeIn(commentCardSelector(1), 'C3 - newest')
+        ->assertSeeIn(commentCardSelector(2), 'C2 - middle')
+        ->assertSeeIn(commentCardSelector(3), 'C1 - oldest');
 
     // Change to Oldest (由舊到新)
-    $page->click('排序依據')
-        ->click('由舊到新');
-
-    $page->assertSeeIn('div#root-comment-list > div:nth-child(1)', $c3->body);
+    $page->click('[data-test-id="comments.order.toggle"]')
+        ->click('[data-test-id="comments.order.option"][data-order-value="oldest"]')
+        // Presence checks
+        ->assertSeeIn(commentCardSelector(1), 'C1 - oldest')
+        ->assertSeeIn(commentCardSelector(2), 'C2 - middle')
+        ->assertSeeIn(commentCardSelector(3), 'C3 - newest');
 });
 
 test('children replies load in pages and the load more button hides when finished', function () {
@@ -141,7 +156,7 @@ test('children replies load in pages and the load more button hides when finishe
     $page->assertSee('顯示更多回覆');
 
     // Load remaining children
-    $page->click('顯示更多回覆');
+    $page->click('[data-test-id="comments.children.load-more"]');
 
     // Button hides when no more
     $page->assertDontSee('顯示更多回覆');
@@ -185,7 +200,7 @@ test('editing own comment updates content and shows edited flag', function () {
 
     $page = $this->visit($post->link_with_slug);
 
-    $page->click('button.edit-comment-button')
+    $page->click('[data-test-id="comments.card.edit"]')
         ->fill('edit-comment-body', 'Updated content')
         ->click('更新')
         ->assertSee('Updated content')

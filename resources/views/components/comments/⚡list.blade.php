@@ -172,11 +172,13 @@ new class extends Component {
 <div
   class="w-full"
   id="root-comment-list"
+  data-test-id="comments.root-list"
   x-data="rootCommentList"
 >
   @foreach ($comments as $comment)
     <x-dashed-card
       class="comment-card mt-6"
+      data-test-id="comments.card"
       wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
     >
       <div class="flex flex-col">
@@ -218,7 +220,8 @@ new class extends Component {
           @auth
             @if (auth()->id() === $comment['user_id'])
               <button
-                class="edit-comment-button flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                data-test-id="comments.card.edit"
                 type="button"
                 x-on:click="$dispatch('open-edit-comment-modal', {
                   listName: 'root-list',
@@ -234,6 +237,7 @@ new class extends Component {
             @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
               <button
                 class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+                data-test-id="comments.card.delete"
                 type="button"
                 wire:click="destroyComment({{ $comment['id'] }})"
                 wire:confirm="你確定要刪除該留言？"
@@ -246,6 +250,7 @@ new class extends Component {
 
           <button
             class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
+            data-test-id="comments.card.reply"
             type="button"
             x-on:click="$dispatch('open-create-comment-modal', {
               parentId: @js($comment['id']),

@@ -33,7 +33,7 @@ new class extends Component {
     Alpine.data('commentsBoardPart', () => ({
       orderDropdownIsOpen: false,
       changeOrder() {
-        $wire.changeOrder(this.$el.dataset.order);
+        $wire.changeOrder(this.$el.dataset.orderValue);
         this.orderDropdownIsOpen = false;
       }
     }));
@@ -56,6 +56,7 @@ new class extends Component {
         <div class="relative inline-block text-left">
           <button
             class="inline-flex w-full cursor-pointer items-center justify-center gap-2 text-zinc-900 dark:text-zinc-50"
+            data-test-id="comments.order.toggle"
             type="button"
             x-on:click="orderDropdownIsOpen = true"
           >
@@ -86,7 +87,8 @@ new class extends Component {
             <div class="w-full py-1">
               @foreach (CommentOrderOptions::cases() as $commentOrder)
                 <button
-                  data-order="{{ $commentOrder->value }}"
+                  data-order-value="{{ $commentOrder->value }}"
+                  data-test-id="comments.order.option"
                   type="button"
                   @class([
                       'flex w-full justify-start px-4 py-2 cursor-pointer',
