@@ -212,7 +212,7 @@ new class extends Component {
     wire:show="loadMoreButton['is_active']"
     wire:click="loadMoreChildren"
   >
-    <span>{{ $loadMoreButton['label'] }}</span>
+    <span wire:text="loadMoreButton['label']"></span>
 
     <x-icons.caret-down-fill class="in-data-loading:hidden size-4" />
     <x-icons.animate-spin class="in-data-loading:inline-block hidden size-5" />

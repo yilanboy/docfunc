@@ -62,7 +62,8 @@ new class extends Component {
       <div class="flex items-center justify-center gap-6">
         <div class="flex items-center gap-2 dark:text-zinc-50">
           <x-icons.chat-square-text class="size-5" />
-          <span>{{ $commentCounts }} 則留言</span>
+          <span wire:text="commentCounts"></span>
+          則留言
         </div>
 
         <div class="relative inline-block text-left">
