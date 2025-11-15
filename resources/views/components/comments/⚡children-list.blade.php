@@ -209,19 +209,12 @@ new class extends Component {
   <button
     class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
     data-test-id="comments.children.load-more"
-    x-cloak
-    x-show="$wire.loadMoreButton['is_active']"
+    wire:show="loadMoreButton['is_active']"
     wire:click="loadMoreChildren"
   >
     <span>{{ $loadMoreButton['label'] }}</span>
 
-    <x-icons.caret-down-fill
-      class="size-4"
-      wire:loading.remove
-    />
-    <x-icons.animate-spin
-      class="size-5"
-      wire:loading
-    />
+    <x-icons.caret-down-fill class="in-data-loading:hidden size-4" />
+    <x-icons.animate-spin class="in-data-loading:inline-block hidden size-5" />
   </button>
 </div>

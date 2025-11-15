@@ -142,7 +142,6 @@ new class extends Component {
 @script
   <script>
     Alpine.data('rootCommentList', () => ({
-      observers: [],
       loadMoreComments() {
         let y = window.scrollY;
 
@@ -151,17 +150,6 @@ new class extends Component {
             top: y,
             behavior: 'instant'
           });
-        });
-      },
-      init() {
-        let highlightCommentObserver = highlightObserver(this.$root);
-        this.observers.push(highlightCommentObserver);
-
-        highlightAllInElement(this.$root);
-      },
-      destroy() {
-        this.observers.forEach((observer) => {
-          observer.disconnect();
         });
       }
     }));

@@ -38,7 +38,6 @@ new class extends Component {
 @script
   <script>
     Alpine.data('commentsEditModalPart', () => ({
-      observers: [],
       modal: {
         isOpen: false
       },
@@ -73,15 +72,6 @@ new class extends Component {
         } else {
           this.$refs.convertedBody.innerHTML = '';
         }
-      },
-      init() {
-        let previewObserver = highlightObserver(this.$refs.editCommentModal)
-        this.observers.push(previewObserver);
-      },
-      destroy() {
-        this.observers.forEach((observer) => {
-          observer.disconnect();
-        });
       }
     }));
   </script>

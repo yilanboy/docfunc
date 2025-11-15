@@ -93,7 +93,6 @@ new class extends Component {
 @script
   <script>
     Alpine.data('commentsCreateModalPart', () => ({
-      observers: [],
       modal: {
         isOpen: false,
         isSubmitEnabled: false,
@@ -148,14 +147,6 @@ new class extends Component {
               this.modal.isSubmitEnabled = true;
             }
           });
-        });
-
-        let previewObserver = highlightObserver(this.$refs.createCommentModal)
-        this.observers.push(previewObserver);
-      },
-      destroy() {
-        this.observers.forEach((observer) => {
-          observer.disconnect();
         });
       }
     }));

@@ -31,10 +31,22 @@ new class extends Component {
 @script
   <script>
     Alpine.data('commentsBoardPart', () => ({
+      observers: [],
       orderDropdownIsOpen: false,
       changeOrder() {
         $wire.changeOrder(this.$el.dataset.orderValue);
         this.orderDropdownIsOpen = false;
+      },
+      init() {
+        let highlightCommentObserver = highlightObserver(this.$root);
+        this.observers.push(highlightCommentObserver);
+
+        highlightAllInElement(this.$root);
+      },
+      destroy() {
+        this.observers.forEach((observer) => {
+          observer.disconnect();
+        });
       }
     }));
   </script>
