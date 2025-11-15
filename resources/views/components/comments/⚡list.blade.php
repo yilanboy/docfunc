@@ -145,7 +145,7 @@ new class extends Component {
       loadMoreComments() {
         let y = window.scrollY;
 
-        $wire.loadMoreComments().then(() => {
+        this.$wire.loadMoreComments().then(() => {
           window.scrollTo({
             top: y,
             behavior: 'instant'
@@ -262,8 +262,7 @@ new class extends Component {
 
   <div
     class="mt-6 flex w-full items-center justify-center"
-    x-cloak
-    x-show="$wire.loadingLabel['is_visible']"
+    wire:show="loadingLabel['is_visible']"
   >
     <span
       class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"

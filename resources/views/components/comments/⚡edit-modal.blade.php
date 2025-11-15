@@ -60,15 +60,15 @@ new class extends Component {
         this.previewIsEnable = false;
       },
       submit() {
-        $wire.form.body = this.comment.body;
-        $wire.save(this.comment.id, this.listName).then(() => {
+        this.$wire.form.body = this.comment.body;
+        this.$wire.save(this.comment.id, this.listName).then(() => {
           this.closeModal();
         });
       },
       tabToFourSpaces,
       previewChanged(event) {
         if (event.target.checked) {
-          $wire.$set('form.body', this.comment.body, true);
+          this.$wire.$set('form.body', this.comment.body, true);
         } else {
           this.$refs.convertedBody.innerHTML = '';
         }

@@ -119,9 +119,9 @@ new class extends Component {
         this.previewIsEnable = false;
       },
       submit() {
-        $wire.form.parent_id = this.comment.parentId;
-        $wire.form.body = this.comment.body;
-        $wire.save().then(() => {
+        this.$wire.form.parent_id = this.comment.parentId;
+        this.$wire.form.body = this.comment.body;
+        this.$wire.save().then(() => {
           this.comment.parentId = null;
           this.comment.body = '';
           this.closeModal()
@@ -133,7 +133,7 @@ new class extends Component {
       },
       previewChanged(event) {
         if (event.target.checked) {
-          $wire.$set('form.body', this.comment.body, true);
+          this.$wire.$set('form.body', this.comment.body, true);
         } else {
           this.$refs.convertedBody.innerHTML = '';
         }
@@ -143,7 +143,7 @@ new class extends Component {
           turnstile.render(this.$refs.turnstileBlock, {
             sitekey: this.captcha.siteKey,
             callback: (token) => {
-              $wire.captchaToken = token;
+              this.$wire.captchaToken = token;
               this.modal.isSubmitEnabled = true;
             }
           });

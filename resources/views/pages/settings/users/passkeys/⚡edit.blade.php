@@ -119,7 +119,7 @@ new class extends Component {
       browserSupportsWebAuthn,
       async register() {
         if (!this.browserSupportsWebAuthn()) {
-          $wire.dispatch('toast', {
+          this.$wire.$dispatch('toast', {
             status: 'danger',
             message: '不支援 WebAuthn'
           });
@@ -128,7 +128,7 @@ new class extends Component {
         }
 
         if (this.name === '') {
-          $wire.dispatch('toast', {
+          this.$wire.$dispatch('toast', {
             status: 'danger',
             message: '請輸入密碼金鑰名稱'
           });
@@ -140,11 +140,11 @@ new class extends Component {
         const optionsJSON = await response.json();
 
         try {
-          $wire.passkey = JSON.stringify(await startRegistration({
+          this.$wire.passkey = JSON.stringify(await startRegistration({
             optionsJSON
           }));
         } catch (e) {
-          $wire.dispatch('toast', {
+          this.$wire.$dispatch('toast', {
             status: 'danger',
             message: '註冊失敗，請重新註冊'
           });
@@ -152,11 +152,11 @@ new class extends Component {
           return;
         }
 
-        $wire.name = this.name;
-        $wire.store();
+        this.$wire.name = this.name;
+        this.$wire.store();
       },
       init() {
-        $wire.on('reset-passkey-name', () => {
+        this.$wire.$on('reset-passkey-name', () => {
           this.name = '';
         });
       }

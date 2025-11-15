@@ -34,7 +34,7 @@ new class extends Component {
       observers: [],
       orderDropdownIsOpen: false,
       changeOrder() {
-        $wire.changeOrder(this.$el.dataset.orderValue);
+        this.$wire.changeOrder(this.$el.dataset.orderValue);
         this.orderDropdownIsOpen = false;
       },
       init() {
