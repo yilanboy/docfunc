@@ -136,16 +136,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.359.12",
+            "version": "3.360.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "e5895be1c3a62a3fd540f9578049b88a17392987"
+                "reference": "a21055795be59f3d7c5ca6e4d52a80930dcf8c20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e5895be1c3a62a3fd540f9578049b88a17392987",
-                "reference": "e5895be1c3a62a3fd540f9578049b88a17392987",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a21055795be59f3d7c5ca6e4d52a80930dcf8c20",
+                "reference": "a21055795be59f3d7c5ca6e4d52a80930dcf8c20",
                 "shasum": ""
             },
             "require": {
@@ -227,9 +227,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.359.12"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.360.0"
             },
-            "time": "2025-11-13T19:10:00+00:00"
+            "time": "2025-11-17T19:46:19+00:00"
         },
         {
             "name": "bref/bref",
@@ -3027,16 +3027,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v4.0.0-beta.2",
+            "version": "v4.0.0-beta.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "1a6b9c954c8dfff30428b7f54199bae854d9fe34"
+                "reference": "640182b29e63f75150c6e11b4468e74bcd2fab00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/1a6b9c954c8dfff30428b7f54199bae854d9fe34",
-                "reference": "1a6b9c954c8dfff30428b7f54199bae854d9fe34",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/640182b29e63f75150c6e11b4468e74bcd2fab00",
+                "reference": "640182b29e63f75150c6e11b4468e74bcd2fab00",
                 "shasum": ""
             },
             "require": {
@@ -3091,7 +3091,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v4.0.0-beta.2"
+                "source": "https://github.com/livewire/livewire/tree/v4.0.0-beta.3"
             },
             "funding": [
                 {
@@ -3099,7 +3099,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-31T12:33:14+00:00"
+            "time": "2025-11-12T21:09:04+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -4007,16 +4007,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.10.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a"
+                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/679e3ce485b99e84c775d28e2e96fade9a7fb50a",
-                "reference": "679e3ce485b99e84c775d28e2e96fade9a7fb50a",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/431c02da15e566adb0ad9c5030fa6f6204d9de9e",
+                "reference": "431c02da15e566adb0ad9c5030fa6f6204d9de9e",
                 "shasum": ""
             },
             "require": {
@@ -4059,9 +4059,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.10.1"
             },
-            "time": "2024-11-09T15:12:26+00:00"
+            "time": "2025-11-18T07:51:16+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -11466,16 +11466,16 @@
         },
         {
             "name": "laravel-lang/actions",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/actions.git",
-                "reference": "2fd80501e849b84a795f3325d61a44b543fe8d41"
+                "reference": "55615a5d013b4f99656c1687d1548fc5f382b87e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/actions/zipball/2fd80501e849b84a795f3325d61a44b543fe8d41",
-                "reference": "2fd80501e849b84a795f3325d61a44b543fe8d41",
+                "url": "https://api.github.com/repos/Laravel-Lang/actions/zipball/55615a5d013b4f99656c1687d1548fc5f382b87e",
+                "reference": "55615a5d013b4f99656c1687d1548fc5f382b87e",
                 "shasum": ""
             },
             "require": {
@@ -11527,22 +11527,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/actions/issues",
-                "source": "https://github.com/Laravel-Lang/actions/tree/1.10.2"
+                "source": "https://github.com/Laravel-Lang/actions/tree/1.11.0"
             },
-            "time": "2025-06-23T09:39:11+00:00"
+            "time": "2025-11-18T08:36:08+00:00"
         },
         {
             "name": "laravel-lang/attributes",
-            "version": "2.13.6",
+            "version": "2.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/attributes.git",
-                "reference": "2b86d41fa05e0ee9ca710c544951567ad91e0484"
+                "reference": "81fd36309dfe0e9f38545b58a8a35763c1f88d48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/attributes/zipball/2b86d41fa05e0ee9ca710c544951567ad91e0484",
-                "reference": "2b86d41fa05e0ee9ca710c544951567ad91e0484",
+                "url": "https://api.github.com/repos/Laravel-Lang/attributes/zipball/81fd36309dfe0e9f38545b58a8a35763c1f88d48",
+                "reference": "81fd36309dfe0e9f38545b58a8a35763c1f88d48",
                 "shasum": ""
             },
             "require": {
@@ -11596,9 +11596,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/attributes/issues",
-                "source": "https://github.com/Laravel-Lang/attributes/tree/2.13.6"
+                "source": "https://github.com/Laravel-Lang/attributes/tree/2.14.0"
             },
-            "time": "2025-09-10T20:38:31+00:00"
+            "time": "2025-11-18T08:44:22+00:00"
         },
         {
             "name": "laravel-lang/common",
@@ -11764,16 +11764,16 @@
         },
         {
             "name": "laravel-lang/http-statuses",
-            "version": "3.10.5",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/http-statuses.git",
-                "reference": "a4a5508088950a97058ab06e8f3587c611b97097"
+                "reference": "5f4f9aebf7d907c89e4f65136c7863d34bc9dc28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/http-statuses/zipball/a4a5508088950a97058ab06e8f3587c611b97097",
-                "reference": "a4a5508088950a97058ab06e8f3587c611b97097",
+                "url": "https://api.github.com/repos/Laravel-Lang/http-statuses/zipball/5f4f9aebf7d907c89e4f65136c7863d34bc9dc28",
+                "reference": "5f4f9aebf7d907c89e4f65136c7863d34bc9dc28",
                 "shasum": ""
             },
             "require": {
@@ -11825,9 +11825,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/http-statuses/issues",
-                "source": "https://github.com/Laravel-Lang/http-statuses/tree/3.10.5"
+                "source": "https://github.com/Laravel-Lang/http-statuses/tree/3.11.0"
             },
-            "time": "2025-08-10T12:13:52+00:00"
+            "time": "2025-11-18T08:24:17+00:00"
         },
         {
             "name": "laravel-lang/json-fallback",
@@ -11946,16 +11946,16 @@
         },
         {
             "name": "laravel-lang/locale-list",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/locale-list.git",
-                "reference": "060475db218a97a54612163112b44782024d79c1"
+                "reference": "98227230d737b32279f8376a3149be43965513c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/locale-list/zipball/060475db218a97a54612163112b44782024d79c1",
-                "reference": "060475db218a97a54612163112b44782024d79c1",
+                "url": "https://api.github.com/repos/Laravel-Lang/locale-list/zipball/98227230d737b32279f8376a3149be43965513c6",
+                "reference": "98227230d737b32279f8376a3149be43965513c6",
                 "shasum": ""
             },
             "require": {
@@ -11999,7 +11999,7 @@
                 "issues": "https://github.com/Laravel-Lang/locale-list/issues",
                 "source": "https://github.com/Laravel-Lang/locale-list"
             },
-            "time": "2025-06-23T09:39:26+00:00"
+            "time": "2025-11-16T18:22:05+00:00"
         },
         {
             "name": "laravel-lang/locales",
@@ -12160,16 +12160,16 @@
         },
         {
             "name": "laravel-lang/moonshine",
-            "version": "1.5.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/moonshine.git",
-                "reference": "997be1ad95b3a4922344e73a25385bcc86759704"
+                "reference": "3ee6678d649983646831dc036fe2c0b510683e45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/moonshine/zipball/997be1ad95b3a4922344e73a25385bcc86759704",
-                "reference": "997be1ad95b3a4922344e73a25385bcc86759704",
+                "url": "https://api.github.com/repos/Laravel-Lang/moonshine/zipball/3ee6678d649983646831dc036fe2c0b510683e45",
+                "reference": "3ee6678d649983646831dc036fe2c0b510683e45",
                 "shasum": ""
             },
             "require": {
@@ -12222,22 +12222,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/moonshine/issues",
-                "source": "https://github.com/Laravel-Lang/moonshine/tree/1.5.0"
+                "source": "https://github.com/Laravel-Lang/moonshine/tree/1.7.0"
             },
-            "time": "2025-11-12T07:52:52+00:00"
+            "time": "2025-11-17T02:56:35+00:00"
         },
         {
             "name": "laravel-lang/native-country-names",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/native-country-names.git",
-                "reference": "70eba5c3b7a4035da085123a81c076e52367b30c"
+                "reference": "22a9d18d9094fdf0b3384f37feefd3c7d91f1db9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/native-country-names/zipball/70eba5c3b7a4035da085123a81c076e52367b30c",
-                "reference": "70eba5c3b7a4035da085123a81c076e52367b30c",
+                "url": "https://api.github.com/repos/Laravel-Lang/native-country-names/zipball/22a9d18d9094fdf0b3384f37feefd3c7d91f1db9",
+                "reference": "22a9d18d9094fdf0b3384f37feefd3c7d91f1db9",
                 "shasum": ""
             },
             "require": {
@@ -12296,20 +12296,20 @@
                 "issues": "https://github.com/Laravel-Lang/native-country-names/issues",
                 "source": "https://github.com/Laravel-Lang/native-country-names"
             },
-            "time": "2025-06-23T09:38:47+00:00"
+            "time": "2025-11-18T07:59:31+00:00"
         },
         {
             "name": "laravel-lang/native-currency-names",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/native-currency-names.git",
-                "reference": "b376c69778be7184f7292cb92424ac7d7415d55d"
+                "reference": "cc871b6d2574b4397728b78e4522e6cfd53cdb79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/native-currency-names/zipball/b376c69778be7184f7292cb92424ac7d7415d55d",
-                "reference": "b376c69778be7184f7292cb92424ac7d7415d55d",
+                "url": "https://api.github.com/repos/Laravel-Lang/native-currency-names/zipball/cc871b6d2574b4397728b78e4522e6cfd53cdb79",
+                "reference": "cc871b6d2574b4397728b78e4522e6cfd53cdb79",
                 "shasum": ""
             },
             "require": {
@@ -12365,20 +12365,20 @@
                 "issues": "https://github.com/Laravel-Lang/native-currency-names/issues",
                 "source": "https://github.com/Laravel-Lang/native-currency-names"
             },
-            "time": "2025-06-23T09:38:58+00:00"
+            "time": "2025-11-18T07:53:26+00:00"
         },
         {
             "name": "laravel-lang/native-locale-names",
-            "version": "2.5.1",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/native-locale-names.git",
-                "reference": "38278ef43fb3460c9fb7a056ac2e8043e4faa963"
+                "reference": "6f5c0662287b61d078501eba9cdfff305a0d2266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/native-locale-names/zipball/38278ef43fb3460c9fb7a056ac2e8043e4faa963",
-                "reference": "38278ef43fb3460c9fb7a056ac2e8043e4faa963",
+                "url": "https://api.github.com/repos/Laravel-Lang/native-locale-names/zipball/6f5c0662287b61d078501eba9cdfff305a0d2266",
+                "reference": "6f5c0662287b61d078501eba9cdfff305a0d2266",
                 "shasum": ""
             },
             "require": {
@@ -12431,7 +12431,7 @@
                 "issues": "https://github.com/Laravel-Lang/native-locale-names/issues",
                 "source": "https://github.com/Laravel-Lang/native-locale-names"
             },
-            "time": "2025-06-23T09:38:52+00:00"
+            "time": "2025-11-16T20:54:01+00:00"
         },
         {
             "name": "laravel-lang/publisher",
@@ -12611,16 +12611,16 @@
         },
         {
             "name": "laravel-lang/starter-kits",
-            "version": "1.5.1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/starter-kits.git",
-                "reference": "553f9815e353177d530313b5e47b9cd348e069a9"
+                "reference": "0570716d62df4e718573bc9dfb3b621246629b40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/starter-kits/zipball/553f9815e353177d530313b5e47b9cd348e069a9",
-                "reference": "553f9815e353177d530313b5e47b9cd348e069a9",
+                "url": "https://api.github.com/repos/Laravel-Lang/starter-kits/zipball/0570716d62df4e718573bc9dfb3b621246629b40",
+                "reference": "0570716d62df4e718573bc9dfb3b621246629b40",
                 "shasum": ""
             },
             "require": {
@@ -12672,9 +12672,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/starter-kits/issues",
-                "source": "https://github.com/Laravel-Lang/starter-kits/tree/1.5.1"
+                "source": "https://github.com/Laravel-Lang/starter-kits/tree/1.6.0"
             },
-            "time": "2025-11-01T03:50:07+00:00"
+            "time": "2025-11-17T02:59:45+00:00"
         },
         {
             "name": "laravel/boost",
@@ -16257,16 +16257,16 @@
         },
         {
             "name": "theseer/tokenizer",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
-                "reference": "d74205c497bfbca49f34d4bc4c19c17e22db4ebb"
+                "reference": "b7489ce515e168639d17feec34b8847c326b0b3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/d74205c497bfbca49f34d4bc4c19c17e22db4ebb",
-                "reference": "d74205c497bfbca49f34d4bc4c19c17e22db4ebb",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/b7489ce515e168639d17feec34b8847c326b0b3c",
+                "reference": "b7489ce515e168639d17feec34b8847c326b0b3c",
                 "shasum": ""
             },
             "require": {
@@ -16295,7 +16295,7 @@
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "support": {
                 "issues": "https://github.com/theseer/tokenizer/issues",
-                "source": "https://github.com/theseer/tokenizer/tree/1.3.0"
+                "source": "https://github.com/theseer/tokenizer/tree/1.3.1"
             },
             "funding": [
                 {
@@ -16303,7 +16303,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-13T13:44:09+00:00"
+            "time": "2025-11-17T20:03:58+00:00"
         }
     ],
     "aliases": [],

@@ -21,6 +21,8 @@ new class extends Component {
 
     public string $captchaToken = '';
 
+    public bool $previewIsEnable = false;
+
     public function mount(): void
     {
         $this->form->post_id = $this->postId;
@@ -81,6 +83,8 @@ new class extends Component {
             ],
         );
 
+        $this->reset('previewIsEnable');
+
         $this->dispatch(event: 'toast', status: 'success', message: '成功新增留言！');
     }
 };
@@ -98,45 +102,25 @@ new class extends Component {
         isSubmitEnabled: false,
         replyTo: '',
       },
-      comment: {
-        parentId: null,
-        body: ''
-      },
       captcha: {
         siteKey: @js(config('services.captcha.site_key')),
       },
-      previewIsEnable: false,
       openModal(event) {
-        this.comment.parentId = event.detail.parentId;
+        this.$wire.$set('form.parent_id', event.detail.parentId);
 
         this.modal.replyTo = event.detail.replyTo;
         this.modal.isOpen = true;
 
         this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
       },
-      closeModal() {
-        this.modal.isOpen = false;
-        this.previewIsEnable = false;
-      },
-      submit() {
-        this.$wire.form.parent_id = this.comment.parentId;
-        this.$wire.form.body = this.comment.body;
-        this.$wire.save().then(() => {
-          this.comment.parentId = null;
-          this.comment.body = '';
-          this.closeModal()
-        });
-      },
       tabToFourSpaces,
       replyToLabel() {
         return `回覆 ${this.modal.replyTo} 的留言`;
       },
-      previewChanged(event) {
-        if (event.target.checked) {
-          this.$wire.$set('form.body', this.comment.body, true);
-        } else {
-          this.$refs.convertedBody.innerHTML = '';
-        }
+      submit() {
+        this.$wire.save().then(() => {
+          this.modal.isOpen = false;
+        });
       },
       init() {
         turnstile.ready(() => {
@@ -155,12 +139,11 @@ new class extends Component {
 
 <div
   class="fixed inset-0 z-30 flex min-h-screen items-end justify-center"
-  x-cloak
   x-data="commentsCreateModalPart"
-  x-ref="createCommentModal"
+  x-cloak
   x-show="modal.isOpen"
   x-on:open-create-comment-modal.window="openModal"
-  x-on:keydown.escape.window="closeModal"
+  x-on:keydown.escape.window="modal.isOpen = false"
 >
   {{-- gray background --}}
   <div
@@ -180,7 +163,7 @@ new class extends Component {
       <button
         class="cursor-pointer text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300"
         type="button"
-        x-on:click="closeModal"
+        x-on:click="modal.isOpen = false"
       >
         <x-icons.x class="size-8" />
       </button>
@@ -207,8 +190,7 @@ new class extends Component {
 
         <div
           class="space-y-2"
-          x-cloak
-          x-show="previewIsEnable"
+          wire:show="previewIsEnable"
         >
           <div class="relative space-x-4">
             <span class="font-semibold dark:text-zinc-50">
@@ -216,10 +198,7 @@ new class extends Component {
             </span>
             <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
           </div>
-          <div
-            class="rich-text h-80 overflow-auto"
-            x-ref="convertedBody"
-          >
+          <div class="rich-text h-80 overflow-auto">
             {!! $this->convertToHtml($this->form->body) !!}
           </div>
 
@@ -230,17 +209,14 @@ new class extends Component {
           />
         </div>
 
-        <div
-          x-cloak
-          x-show="!previewIsEnable"
-        >
+        <div wire:show="!previewIsEnable">
           <x-floating-label-textarea
             class="font-jetbrains-mono"
             id="create-comment-body"
             x-ref="createCommentTextarea"
             {{-- change tab into 4 spaces --}}
             x-on:keydown.tab.prevent="tabToFourSpaces"
-            x-model="comment.body"
+            wire:model="form.body"
             rows="12"
             placeholder="寫下你的留言吧！**支援 Markdown**"
             required
@@ -256,9 +232,8 @@ new class extends Component {
         <div class="flex items-center justify-between space-x-3">
           <x-toggle-switch
             id="create-comment-modal-preview"
-            x-model="previewIsEnable"
-            x-on:change="previewChanged"
-            x-bind:disabled="comment.body === ''"
+            wire:model.live="previewIsEnable"
+            x-bind:disabled="$wire.form.body === ''"
           >
             預覽
           </x-toggle-switch>
