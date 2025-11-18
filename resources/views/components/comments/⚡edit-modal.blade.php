@@ -35,6 +35,8 @@ new class extends Component {
 
         $this->form->update($comment);
 
+        $this->reset('previewIsEnable');
+
         $this->dispatch(event: 'update-comment-in-' . $this->comment['list_name'], id: $comment->id, body: $comment->body, updatedAt: $comment->updated_at);
     }
 };
