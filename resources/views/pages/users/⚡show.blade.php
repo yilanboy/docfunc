@@ -22,10 +22,7 @@ new class extends Component {
 ?>
 
 @assets
-  {{-- highlight code block style --}}
-  @vite('node_modules/highlight.js/styles/atom-one-dark.css')
-  {{-- highlight code block --}}
-  @vite('resources/ts/highlight.ts')
+  @vite('resources/ts/shiki.ts')
 @endassets
 
 @script

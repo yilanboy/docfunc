@@ -40,7 +40,7 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
 
 function createExpandCodeButton(
     modal: Modal,
-    codeOuterHTML: string,
+    preOuterHTML: string,
 ): HTMLButtonElement {
     const expandCodeButton: HTMLButtonElement =
         document.createElement('button');
@@ -54,7 +54,7 @@ function createExpandCodeButton(
     expandCodeButton.addEventListener(
         'click',
         function (this: HTMLButtonElement) {
-            zoomInCode.innerHTML = codeOuterHTML;
+            zoomInCode.innerHTML = preOuterHTML;
             modal.open();
         },
     );
@@ -79,7 +79,7 @@ function findLanguagePrefixClass(element: HTMLElement) {
 // create language label
 function createLanguageLabel(language: string): HTMLSpanElement {
     const labelElement: HTMLSpanElement = document.createElement('span');
-    labelElement.classList.add(...label.BASE_CLASS_NAME);
+    labelElement.classList.add('language-label', ...label.BASE_CLASS_NAME);
 
     if (languageSettings[language]) {
         labelElement.innerText = languageSettings[language].label;
@@ -101,7 +101,7 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         return;
     }
 
-    const zoomInCode: HTMLPreElement = document.createElement('pre');
+    const zoomInCode: HTMLDivElement = document.createElement('div');
     zoomInCode.classList.add('lg:min-w-3xl');
     zoomInCode.id = ZOOM_IN_PRE_ID;
 
@@ -144,7 +144,10 @@ window.codeBlockHelper = function (element: HTMLElement): void {
             code.innerText,
         );
 
-        const expandCodeButton = createExpandCodeButton(modal, code.outerHTML);
+        const expandCodeButton = createExpandCodeButton(
+            modal,
+            preTag.outerHTML,
+        );
 
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(

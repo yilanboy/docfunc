@@ -37,8 +37,8 @@ new class extends Component {
         this.$wire.changeOrder(this.$el.dataset.orderValue);
         this.orderDropdownIsOpen = false;
       },
-      init() {
-        let highlightCommentObserver = highlightObserver(this.$root);
+      async init() {
+        let highlightCommentObserver = await highlightObserver(this.$root);
         this.observers.push(highlightCommentObserver);
 
         highlightAllInElement(this.$root);

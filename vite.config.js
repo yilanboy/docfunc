@@ -10,7 +10,7 @@ export default defineConfig({
                 'resources/ts/app.ts',
                 'resources/ts/ckeditor/ckeditor.ts',
                 'resources/ts/sharer.ts',
-                'resources/ts/highlight.ts',
+                'resources/ts/shiki.ts',
                 'resources/ts/tagify.ts',
                 'resources/ts/scroll-to-top-btn.ts',
                 'resources/ts/reader-helpers/code-block-helper.ts',
@@ -25,7 +25,6 @@ export default defineConfig({
                 // css
                 'resources/css/app.css',
                 'node_modules/@yaireo/tagify/dist/tagify.css',
-                'node_modules/highlight.js/styles/atom-one-dark.css',
             ],
             refresh: true,
         }),

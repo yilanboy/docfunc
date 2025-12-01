@@ -59,8 +59,7 @@ new class extends Component {
 ?>
 
 @assets
-  @vite('node_modules/highlight.js/styles/atom-one-dark.css')
-  @vite('resources/ts/highlight.ts')
+  @vite('resources/ts/shiki.ts')
 @endassets
 
 @script
@@ -82,11 +81,11 @@ new class extends Component {
           replyTo: this.$el.dataset.commentUserName
         });
       },
-      init() {
-        let commentsObserver = highlightObserver(this.$root)
-        this.observers.push(commentsObserver);
+      async init() {
+        await highlightAllInElement(this.$root);
 
-        hljs.highlightAll();
+        let commentsObserver = await highlightObserver(this.$root)
+        this.observers.push(commentsObserver);
       },
       destroy() {
         this.observers.forEach((observer) => {

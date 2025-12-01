@@ -46,24 +46,10 @@ new class extends Component {
   <script>
     Alpine.data('usersCommentsPart', () => ({
       observers: [],
-      init() {
-        hljs.highlightAll();
+      async init() {
+        await highlightAllInElement(this.$root);
 
-        let userCommentsObserver = new MutationObserver(() => {
-          this.$refs.userComments
-            .querySelectorAll('pre code:not(.hljs)')
-            .forEach((element) => {
-              hljs.highlightElement(element);
-            });
-        });
-
-        userCommentsObserver.observe(this.$refs.userComments, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          characterData: false
-        });
-
+        let userCommentsObserver = await highlightObserver(this.$root)
         this.observers.push(userCommentsObserver);
       },
       destroy() {

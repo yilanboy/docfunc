@@ -152,23 +152,25 @@
     overflow-x: auto;
 }
 
-/* highlight.js */
-pre:has(code.hljs) {
-    padding: 0 !important;
+/* shiki */
+html.dark .shiki,
+html.dark .shiki span:not(.language-label) {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+}
+
+pre.shiki {
+    padding: 1rem !important;
     border-radius: 0.75rem !important;
 }
 
-pre > code.hljs {
+pre.shiki code {
+    display: block !important;
     font-family: var(--font-jetbrains-mono), sans-serif !important;
     font-size: var(--text-lg) !important;
     line-height: var(--text-lg--line-height) !important;
     font-weight: 600 !important;
     overflow-x: auto !important;
-    background: var(--color-neutral-800) !important;
-}
-
-.dark pre > code.hljs {
-    background: var(--color-neutral-900) !important;
 }
 
 /* Alpine.js */
