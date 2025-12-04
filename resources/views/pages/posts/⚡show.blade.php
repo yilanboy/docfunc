@@ -126,7 +126,7 @@ new class extends Component {
             <article>
               {{-- post title --}}
               <h1
-                class="dark:text-lividus-500 dark:from-lividus-800/60 bg-linear-to-r -mx-4 -mt-4 rounded-t-xl from-emerald-100/60 to-transparent px-4 py-6 text-4xl font-semibold leading-relaxed text-emerald-600"
+                class="dark:text-lividus-500 dark:from-lividus-800/60 bg-linear-to-r -mx-4 -mt-4 rounded-t-xl from-emerald-100/60 to-transparent px-4 py-6 text-2xl font-semibold leading-relaxed text-emerald-600 md:text-4xl"
               >
                 {{ $post->title }}
               </h1>
