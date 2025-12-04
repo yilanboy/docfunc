@@ -91,7 +91,7 @@ class ContentService
      */
     public static function getReadTime(string $body): int
     {
-        if (in_array(trim($body), ['', '0'], true)) {
+        if (trim($body) === '') {
             return 1;
         }
 
@@ -99,19 +99,23 @@ class ContentService
         $body = strip_tags($body);
         $body = trim($body);
 
-        // English words including programming terms (variables, functions, CSS classes, etc.)
-        $englishWordPattern = '/[\w\'-]+/';
-        preg_match_all($englishWordPattern, $body, $matches);
-        $englishWordCount = count($matches[0]);
-
         // Chinese characters pattern
         $chineseWordPattern = '/\p{Han}/u';
         preg_match_all($chineseWordPattern, $body, $matches);
         $chineseWordCount = count($matches[0]);
 
-        // Different reading speeds: English 200 WPM, Chinese 300 characters per minute
+        // Remove Chinese characters to avoid double counting
+        $bodyWithoutChinese = preg_replace($chineseWordPattern, ' ', $body);
+
+        // English words including programming terms (variables, functions, CSS classes, etc.)
+        $englishWordPattern = '/[\w\'-]+/';
+        preg_match_all($englishWordPattern, $bodyWithoutChinese, $matches);
+        $englishWordCount = count($matches[0]);
+
+        // Different reading speeds: English 200 WPM, Chinese 250 characters per minute
+        // Conservative speeds for technical content with code snippets
         $englishReadTime = $englishWordCount / 200;
-        $chineseReadTime = $chineseWordCount / 300;
+        $chineseReadTime = $chineseWordCount / 250;
 
         $totalMinutes = $englishReadTime + $chineseReadTime;
 

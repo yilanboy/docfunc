@@ -11,7 +11,7 @@ test('we can get the latest posts', function () {
         ->assertJsonStructure([
             'data' => [
                 '*' => ['id', 'title', 'excerpt', 'created_at', 'updated_at', 'url'],
-            ]
+            ],
         ])
         ->assertSuccessful();
 });

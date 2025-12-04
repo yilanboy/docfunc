@@ -113,13 +113,13 @@ it('calculates read time for English only content', function () {
 });
 
 it('calculates read time for Chinese only content', function () {
-    $chineseContent = str_repeat('中', 300); // 300 Chinese characters
+    $chineseContent = str_repeat('中', 250); // 300 Chinese characters
 
     expect(ContentService::getReadTime($chineseContent))->toBe(1); // 300 chars / 300 CPM = 1 minute
 });
 
 it('calculates read time for mixed English and Chinese content', function () {
-    $mixedContent = str_repeat('word ', 100).str_repeat('中', 150); // 100 English words + 150 Chinese chars
+    $mixedContent = str_repeat('word ', 100).str_repeat('中', 125); // 100 English words + 150 Chinese chars
 
     // 100/200 + 150/300 = 0.5 + 0.5 = 1 minute
     expect(ContentService::getReadTime($mixedContent))->toBe(1);
