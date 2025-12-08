@@ -120,6 +120,9 @@ test('orders root comments by popular, then by latest and oldest when changed', 
         ->assertSeeIn(commentCardSelector(2), 'C2 - middle')
         ->assertSeeIn(commentCardSelector(3), 'C1 - oldest');
 
+    // Wait for the page is ready
+    sleep(3);
+
     // Change to Oldest (由舊到新)
     $page->click('[data-test-id="comments.order.toggle"]')
         ->click('[data-test-id="comments.order.option"][data-order-value="oldest"]')
