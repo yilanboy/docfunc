@@ -122,12 +122,12 @@ new class extends Component {
       wire:navigate
     >
       <img
-        class="block size-10 dark:hidden"
+        class="block size-8 dark:hidden"
         src="{{ asset('images/icon/logo.svg') }}"
         alt="logo"
       >
       <img
-        class="hidden size-10 dark:block"
+        class="hidden size-8 dark:block"
         src="{{ asset('images/icon/dark-logo.svg') }}"
         alt="logo"
       >
