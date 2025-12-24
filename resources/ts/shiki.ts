@@ -14,7 +14,7 @@ async function getHighlighter(): Promise<Highlighter> {
     if (!highlighter) {
         highlighter = await createHighlighter({
             langs: Object.keys(languageSettings),
-            themes: ['catppuccin-latte', 'catppuccin-mocha'],
+            themes: ['one-light', 'one-dark-pro'],
         });
     }
 
@@ -39,8 +39,14 @@ async function highlightElement(
         const html = highlighter.codeToHtml(code, {
             lang,
             themes: {
-                light: 'catppuccin-latte',
-                dark: 'catppuccin-mocha',
+                light: 'one-light',
+                dark: 'one-dark-pro',
+            },
+            colorReplacements: {
+                // Change background color
+                'one-light': {
+                    '#fafafa': '#f4f4f5',
+                },
             },
         });
 
