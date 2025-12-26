@@ -58,38 +58,7 @@ new class extends Component {
   {{-- CKEditor --}}
   @vite('resources/ts/ckeditor/ckeditor.ts')
   {{-- Tagify --}}
-  @vite(['resources/ts/tagify.ts', 'node_modules/@yaireo/tagify/dist/tagify.css'])
-
-  <style>
-    /* CKEditor */
-    .ck-editor__editable_inline {
-      min-height: 500px;
-    }
-
-    /* Tagify */
-    .tagify-custom-look {
-      --tag-border-radius: 6px;
-      align-items: center;
-      --tag-inset-shadow-size: 3rem;
-    }
-
-    .dark .tagify-custom-look {
-      --tag-bg: #52525b;
-      --tag-hover: #71717a;
-      --tag-text-color: #f9fafb;
-      --tag-remove-btn-color: #f9fafb;
-      --tag-text-color--edit: #f9fafb;
-      --input-color: #f9fafb;
-      --placeholder-color: #f9fafb;
-      --placeholder-color-focus: #f9fafb;
-    }
-
-    :root.dark {
-      --tagify-dd-bg-color: #52525b;
-      --tagify-dd-color-primary: #71717a;
-      --tagify-dd-text-color: #f9fafb;
-    }
-  </style>
+  @vite(['resources/ts/tagify.ts', 'node_modules/@yaireo/tagify/dist/tagify.css', 'resources/css/custom-tagify.css'])
 @endassets
 
 @script

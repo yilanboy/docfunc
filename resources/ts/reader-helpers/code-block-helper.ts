@@ -147,11 +147,16 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(
+            'hidden',
+            'lg:flex',
+            'gap-2',
             'absolute',
             'top-2',
             'right-2',
-            'flex',
-            'gap-2',
+            'opacity-0',
+            'group-hover:opacity-100',
+            'transition-opacity',
+            'duration-200',
         );
 
         preTag.appendChild(codeHelperGroup);

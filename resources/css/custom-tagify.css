@@ -1,0 +1,23 @@
+/* Tagify */
+.tagify-custom-look {
+    --tag-border-radius: 6px;
+    align-items: center;
+    --tag-inset-shadow-size: 3rem;
+}
+
+html[data-theme='dark'] .tagify-custom-look {
+    --tag-bg: #52525b;
+    --tag-hover: #71717a;
+    --tag-text-color: #f9fafb;
+    --tag-remove-btn-color: #f9fafb;
+    --tag-text-color--edit: #f9fafb;
+    --input-color: #f9fafb;
+    --placeholder-color: #f9fafb;
+    --placeholder-color-focus: #f9fafb;
+}
+
+:root[data-theme='dark'] {
+    --tagify-dd-bg-color: #52525b;
+    --tagify-dd-color-primary: #71717a;
+    --tagify-dd-text-color: #f9fafb;
+}

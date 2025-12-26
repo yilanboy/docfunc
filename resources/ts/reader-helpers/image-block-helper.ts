@@ -75,6 +75,16 @@ window.imageBlockHelper = function (element: HTMLElement): void {
         const image: HTMLImageElement = images[0];
 
         const expandImageButton = createExpandImageButton(modal, image.src);
+        expandImageButton.classList.remove('flex');
+        expandImageButton.classList.add(
+            'hidden',
+            'lg:flex',
+            'group-hover:opacity-100',
+            'opacity-0',
+            'group-hover:opacity-100',
+            'transition-opacity',
+            'duration-200',
+        );
 
         figureTag.appendChild(expandImageButton);
 

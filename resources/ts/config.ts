@@ -14,11 +14,6 @@ export const label = {
         'font-mono',
         'italic',
         'px-2',
-        'opacity-100',
-        'lg:opacity-0',
-        'lg:group-hover:opacity-100',
-        'transition-all',
-        'duration-200',
     ],
 };
 
@@ -191,10 +186,7 @@ export const button = {
         'dark:hover:bg-lividus-500',
         'active:bg-emerald-500',
         'dark:active:bg-lividus-500',
-        'opacity-100',
-        'lg:opacity-0',
-        'lg:group-hover:opacity-100',
-        'transition-all',
+        'transition',
         'duration-200',
         'cursor-pointer',
     ],

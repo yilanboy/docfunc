@@ -1,3 +1,7 @@
+.ck-editor__editable_inline {
+    min-height: 500px;
+}
+
 :root {
     /* Overrides the border radius setting in the theme. */
     --ck-border-radius: 6px;
@@ -11,7 +15,7 @@
     }
 }
 
-:root.dark {
+:root[data-theme='dark'] {
     & .ck.ck-editor__editable .ck-code_selected {
         /* lividus 600 */
         background-color: #366ba1;
