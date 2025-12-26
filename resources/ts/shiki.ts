@@ -9,6 +9,7 @@ declare global {
 }
 
 let highlighter: Highlighter | null = null;
+let template: HTMLTemplateElement | null = null;
 
 async function getHighlighter(): Promise<Highlighter> {
     if (!highlighter) {
@@ -56,9 +57,12 @@ async function highlightElement(
             },
         });
 
-        const template = document.createElement('template');
+        if (!template) {
+            template = document.createElement('template');
+        }
+
         template.innerHTML = html.trim();
-        const pre = template.content.firstChild as HTMLElement;
+        const pre = template.content.firstChild as HTMLPreElement;
 
         preElement.replaceWith(pre);
         pre.classList.add('shiki-highlighted');
