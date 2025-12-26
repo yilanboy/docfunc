@@ -45,7 +45,7 @@ async function highlightElement(
             colorReplacements: {
                 // Change background color
                 'one-light': {
-                    '#fafafa': '#f4f4f5',
+                    '#fafafa': '#f3f4f6',
                 },
             },
         });

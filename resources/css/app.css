@@ -171,6 +171,20 @@ pre.shiki code {
     line-height: var(--text-lg--line-height) !important;
     font-weight: 600 !important;
     overflow-x: auto !important;
+    /* line number */
+    counter-reset: step;
+    counter-increment: step 0;
+}
+
+/* line number */
+pre.shiki code .line::before {
+    content: counter(step);
+    counter-increment: step;
+    width: 1rem;
+    margin-right: 1.5rem;
+    display: inline-block;
+    text-align: right;
+    color: rgba(115, 138, 148, 0.4);
 }
 
 /* Alpine.js */
