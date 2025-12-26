@@ -83,12 +83,12 @@ new class extends Component {
         root.style.setProperty('--circle-in-start-y', `${centerY}px`);
 
         const updateTheme = () => {
-          if (this.html.classList.contains('dark')) {
-            this.html.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-          } else {
-            this.html.classList.add('dark');
+          if (this.html.getAttribute('data-theme') === 'light') {
+            this.html.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
+          } else {
+            this.html.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
           }
         }
 
