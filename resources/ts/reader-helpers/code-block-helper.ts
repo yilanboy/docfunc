@@ -62,18 +62,14 @@ function createExpandCodeButton(
     return expandCodeButton;
 }
 
-function findLanguagePrefixClass(element: HTMLElement) {
-    const prefix = 'language-';
-
-    const foundClass = Array.from(element.classList).find((className) =>
-        className.startsWith(prefix),
-    );
+function getProgramLanguage(element: HTMLPreElement) {
+    const foundClass = element.getAttribute('data-program-language');
 
     if (!foundClass) {
         return 'text';
     }
 
-    return foundClass.substring(prefix.length);
+    return foundClass;
 }
 
 // create language label
@@ -123,6 +119,11 @@ window.codeBlockHelper = function (element: HTMLElement): void {
 
         preTag.classList.add('code-block-helper-added', 'group', 'relative');
 
+        // to get language from code class name, the class name is like "language-JavaScript"
+        // we need to get the last part of the class name
+
+        const language = getProgramLanguage(preTag);
+
         const codes = preTag.getElementsByTagName('code');
 
         if (codes.length === 0) {
@@ -130,11 +131,6 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         }
 
         const code: HTMLElement = codes[0];
-
-        // to get language from code class name, the class name is like "language-JavaScript"
-        // we need to get the last part of the class name
-
-        const language = findLanguagePrefixClass(code);
 
         const languageLabelElement: HTMLSpanElement =
             createLanguageLabel(language);

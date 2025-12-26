@@ -62,6 +62,7 @@ async function highlightElement(
 
         preElement.replaceWith(pre);
         pre.classList.add('shiki-highlighted');
+        pre.setAttribute('data-program-language', lang);
     } catch (e) {
         console.warn(`Failed to highlight language: ${lang}`, e);
         // Fallback or ignore
