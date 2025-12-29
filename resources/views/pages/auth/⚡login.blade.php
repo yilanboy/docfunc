@@ -23,6 +23,7 @@ use Webauthn\Exception\AuthenticatorResponseVerificationException;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
 
 new #[Title('登入')] class extends Component {
     public string $email = '';
@@ -81,39 +82,39 @@ new #[Title('登入')] class extends Component {
 
         $this->ensureIsNotRateLimited();
 
-        $publicKeyCredential = $serializer->fromJson($data['answer'], PublicKeyCredential::class);
-
-        if (!$publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
-
-        $rawId = json_decode($data['answer'], true)['rawId'];
-
-        $passkey = Passkey::query()->where('credential_id', $rawId)->where('owner_type', User::class)->first();
-
-        if (!$passkey) {
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
-
-        $publicKeyCredentialSource = $serializer->fromJson(json_encode($passkey->data), PublicKeyCredentialSource::class);
-
-        $options = Session::get('passkey-authentication-options');
-
-        if (!$options) {
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
-
-        $publicKeyCredentialRequestOptions = $serializer->fromJson($options, PublicKeyCredentialRequestOptions::class);
-
         try {
+            $publicKeyCredential = $serializer->fromJson($data['answer'], PublicKeyCredential::class);
+
+            if (!$publicKeyCredential->response instanceof AuthenticatorAssertionResponse) {
+                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+                return;
+            }
+
+            $rawId = json_decode($data['answer'], true)['rawId'];
+
+            $passkey = Passkey::query()->where('credential_id', $rawId)->where('owner_type', User::class)->first();
+
+            if (!$passkey) {
+                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+                return;
+            }
+
+            $publicKeyCredentialSource = $serializer->fromJson(json_encode($passkey->data), PublicKeyCredentialSource::class);
+
+            $options = Session::get('passkey-authentication-options');
+
+            if (!$options) {
+                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+                return;
+            }
+
+            $publicKeyCredentialRequestOptions = $serializer->fromJson($options, PublicKeyCredentialRequestOptions::class);
+
             AuthenticatorAssertionResponseValidator::create(new CeremonyStepManagerFactory()->requestCeremony())->check(publicKeyCredentialSource: $publicKeyCredentialSource, authenticatorAssertionResponse: $publicKeyCredential->response, publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions, host: request()->getHost(), userHandle: null);
-        } catch (AuthenticatorResponseVerificationException) {
+        } catch (SerializerExceptions | AuthenticatorResponseVerificationException) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;

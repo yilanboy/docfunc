@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
-use Throwable;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
@@ -36,7 +36,7 @@ class GeneratePasskeyAuthenticationOptionsController extends Controller
 
         try {
             $optionsJson = $serializer->toJson($options);
-        } catch (Throwable $e) {
+        } catch (SerializerExceptions $e) {
             Log::error('Webauthn 認證選項序列化失敗', [
                 'exception' => $e->getMessage(),
             ]);

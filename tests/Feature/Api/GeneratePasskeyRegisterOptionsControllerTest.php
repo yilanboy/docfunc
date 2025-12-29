@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Services\Serializer;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\getJson;
@@ -31,10 +32,12 @@ test('it returns error when user is not authenticated', function () {
 test('it returns 500 and logs error when serialization fails', function () {
     $user = User::factory()->create();
 
+    class E extends Exception implements SerializerExceptions {}
+
     // 模擬 Serializer 拋出例外
     $serializerMock = Mockery::mock(Serializer::class);
     $serializerMock->shouldReceive('toJson')
-        ->andThrow(new Exception('Serialization failed'));
+        ->andThrow(new E('Serialization failed'));
 
     $this->app->instance(Serializer::class, $serializerMock);
 
@@ -45,7 +48,7 @@ test('it returns 500 and logs error when serialization fails', function () {
         }));
 
     actingAs($user)
-        ->getJson('/api/passkeys/register-options')
+        ->getJson(route('passkeys.register-options'))
         ->assertStatus(400)
         ->assertJson([
             'error' => '伺服器發生錯誤，無法序列化註冊選項。',

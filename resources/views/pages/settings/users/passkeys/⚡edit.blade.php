@@ -42,28 +42,28 @@ new class extends Component {
             'passkey' => ['required', 'json'],
         ]);
 
-        $publicKeyCredential = $serializer->fromJson($data['passkey'], PublicKeyCredential::class);
-
-        if (!$publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
-
-        $options = Session::get('passkey-registration-options');
-
-        if (!$options) {
-            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-            return;
-        }
-
-        $publicKeyCredentialCreationOptions = $serializer->fromJson($options, PublicKeyCredentialCreationOptions::class);
-
-        $csmFactory = new CeremonyStepManagerFactory();
-        $csmFactory->setCounterChecker(new CustomCounterChecker());
-
         try {
+            $publicKeyCredential = $serializer->fromJson($data['passkey'], PublicKeyCredential::class);
+
+            if (!$publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
+                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+                return;
+            }
+
+            $options = Session::get('passkey-registration-options');
+
+            if (!$options) {
+                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+                return;
+            }
+
+            $publicKeyCredentialCreationOptions = $serializer->fromJson($options, PublicKeyCredentialCreationOptions::class);
+
+            $csmFactory = new CeremonyStepManagerFactory();
+            $csmFactory->setCounterChecker(new CustomCounterChecker());
+
             $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($csmFactory->requestCeremony())->check(authenticatorAttestationResponse: $publicKeyCredential->response, publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions, host: request()->getHost());
         } catch (Throwable) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
