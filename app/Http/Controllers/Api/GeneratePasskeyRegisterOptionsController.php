@@ -76,7 +76,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
 
             return response()->json([
                 'error' => '無法建立金鑰註冊選項，請稍後再試。',
-            ], 500);
+            ], 400);
         }
 
         try {
@@ -89,8 +89,8 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             ]);
 
             return response()->json([
-                'message' => '伺服器發生錯誤，無法序列化註冊選項。',
-            ], 500);
+                'error' => '伺服器發生錯誤，無法序列化註冊選項。',
+            ], 400);
         }
 
         // 將 $options 儲存在 Flash Session 中，好讓我們在下一步驟中使用

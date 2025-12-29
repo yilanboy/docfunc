@@ -46,8 +46,8 @@ test('it returns 500 and logs error when serialization fails', function () {
 
     actingAs($user)
         ->getJson('/api/passkeys/register-options')
-        ->assertStatus(500)
+        ->assertStatus(400)
         ->assertJson([
-            'message' => '伺服器發生錯誤，無法序列化註冊選項。',
+            'error' => '伺服器發生錯誤，無法序列化註冊選項。',
         ]);
 });
