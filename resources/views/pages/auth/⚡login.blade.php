@@ -75,13 +75,11 @@ new #[Title('登入')] class extends Component {
         $this->redirectIntended(route('root', absolute: false), navigate: true);
     }
 
-    public function loginWithPasskey(): void
+    public function loginWithPasskey(Serializer $serializer): void
     {
         $data = $this->validate(['answer' => ['required', 'json']]);
 
         $this->ensureIsNotRateLimited();
-
-        $serializer = Serializer::make();
 
         $publicKeyCredential = $serializer->fromJson($data['answer'], PublicKeyCredential::class);
 

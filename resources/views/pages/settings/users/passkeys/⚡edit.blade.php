@@ -35,14 +35,12 @@ new class extends Component {
         $this->authorize('update', $this->user);
     }
 
-    public function store(): void
+    public function store(Serializer $serializer): void
     {
         $data = $this->validate([
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'passkey' => ['required', 'json'],
         ]);
-
-        $serializer = Serializer::make();
 
         $publicKeyCredential = $serializer->fromJson($data['passkey'], PublicKeyCredential::class);
 
