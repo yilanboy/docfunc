@@ -32,12 +32,12 @@ test('it returns error when user is not authenticated', function () {
 test('it returns 500 and logs error when serialization fails', function () {
     $user = User::factory()->create();
 
-    class E extends Exception implements SerializerExceptions {}
+    $serializerException = new class extends Exception implements SerializerExceptions {};
 
     // 模擬 Serializer 拋出例外
     $serializerMock = Mockery::mock(Serializer::class);
     $serializerMock->shouldReceive('toJson')
-        ->andThrow(new E('Serialization failed'));
+        ->andThrow(new $serializerException('Serialization failed'));
 
     $this->app->instance(Serializer::class, $serializerMock);
 
