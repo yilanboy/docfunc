@@ -5,7 +5,8 @@ declare(strict_types=1);
 use App\Models\Post;
 use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
     public string $search = '';
 
     public function render()
@@ -24,185 +25,186 @@ new class extends Component {
 ?>
 
 @script
-  <script>
+<script>
     Alpine.data('globalSearchPart', () => ({
-      searchBar: {
-        isOpen: false
-      },
-      openSearchBar() {
-        this.searchBar.isOpen = true;
-        this.$nextTick(() => {
-          this.$refs.searchBar.focus();
-        });
-      },
-      setShortcutKeyDisplayByOS() {
-        let userAgentInfo = navigator.userAgent.toLowerCase();
+        searchBar: {
+            isOpen: false
+        },
+        openSearchBar() {
+            this.searchBar.isOpen = true;
+            this.$nextTick(() => {
+                this.$refs.searchBar.focus();
+            });
+        },
+        setShortcutKeyDisplayByOS() {
+            let userAgentInfo = navigator.userAgent.toLowerCase();
 
-        if (userAgentInfo.includes('mac')) {
-          this.$refs.searchShortcut.textContent = '⌘ K';
-        } else {
-          this.$refs.searchShortcut.textContent = 'Ctrl K';
+            if (userAgentInfo.includes('mac')) {
+                this.$refs.searchShortcut.textContent = '⌘ K';
+            } else {
+                this.$refs.searchShortcut.textContent = 'Ctrl K';
+            }
+        },
+        init() {
+            this.setShortcutKeyDisplayByOS();
         }
-      },
-      init() {
-        this.setShortcutKeyDisplayByOS();
-      }
     }));
-  </script>
+</script>
 @endscript
 
 <search x-data="globalSearchPart">
-  {{-- 搜尋按鈕 --}}
-  <button
-    class="group hidden cursor-pointer items-center justify-between gap-2 rounded-lg bg-zinc-200 p-2 text-sm text-zinc-500 xl:flex dark:bg-zinc-600 dark:text-zinc-400"
-    type="button"
-    aria-label="Search"
-    x-on:click="openSearchBar"
-    x-on:keydown.window.prevent.cmd.k="openSearchBar"
-    x-on:keydown.window.prevent.ctrl.k="openSearchBar"
-    x-on:keydown.window.escape="searchBar.isOpen = false"
-  >
-    <x-icons.search class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
+    {{-- 搜尋按鈕 --}}
+    <button
+        class="hidden gap-2 justify-between items-center p-2 text-sm rounded-lg cursor-pointer xl:flex group bg-zinc-200 text-zinc-500 dark:bg-zinc-600 dark:text-zinc-400"
+        type="button"
+        aria-label="Search"
+        x-on:click="openSearchBar"
+        x-on:keydown.window.prevent.cmd.k="openSearchBar"
+        x-on:keydown.window.prevent.ctrl.k="openSearchBar"
+        x-on:keydown.window.escape="searchBar.isOpen = false"
+    >
+        <x-icons.search
+            class="transition duration-300 size-4 dark:group-hover:text-zinc-50 group-hover:text-zinc-900" />
 
-    <span class="transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50">搜尋</span>
+        <span class="transition duration-300 dark:group-hover:text-zinc-50 group-hover:text-zinc-900">搜尋</span>
 
-    <kbd
-      class="font-noto-sans inline-flex items-center rounded-sm bg-zinc-300 px-2 py-1 dark:bg-zinc-500 dark:text-zinc-200"
-      x-ref="searchShortcut"
-      wire:ignore
-    ></kbd>
-  </button>
+        <kbd
+            class="inline-flex items-center py-1 px-2 rounded-sm font-noto-sans bg-zinc-300 dark:bg-zinc-500 dark:text-zinc-200"
+            x-ref="searchShortcut"
+            wire:ignore
+        ></kbd>
+    </button>
 
-  {{-- search moodal --}}
-  <div
-    class="fixed inset-0 z-30 overflow-y-auto"
-    role="dialog"
-    aria-labelledby="modal-title"
-    aria-modal="true"
-    x-cloak
-    x-show="searchBar.isOpen"
-  >
-    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-
-      {{-- modal --}}
-      <div
-        class="fixed inset-0 bg-zinc-500/75 backdrop-blur-sm transition-opacity"
+    {{-- search moodal --}}
+    <div
+        class="overflow-y-auto fixed inset-0 z-30"
+        role="dialog"
+        aria-labelledby="modal-title"
+        aria-modal="true"
+        x-cloak
         x-show="searchBar.isOpen"
-        x-transition:enter="ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        x-description="Background backdrop, show/hide based on modal state."
-      ></div>
+    >
+        <div class="flex justify-center items-end p-4 min-h-full text-center sm:items-center sm:p-0">
 
-      {{-- search form --}}
-      <div class="fixed inset-0 z-10 overflow-y-auto">
-        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-start sm:p-0">
-          <div
-            class="mt-16 inline-block w-full max-w-md transition-all"
-            x-show="searchBar.isOpen"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-on:click.outside="searchBar.isOpen = false"
-            x-trap.noscroll="searchBar.isOpen"
-          >
+            {{-- modal --}}
+            <div
+                class="fixed inset-0 transition-opacity bg-zinc-500/75 backdrop-blur-sm"
+                x-show="searchBar.isOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                x-description="Background backdrop, show/hide based on modal state."
+            ></div>
+
             {{-- search form --}}
-            <div class="relative">
-              <label
-                class="hidden"
-                for="searchBox"
-              >搜尋</label>
+            <div class="overflow-y-auto fixed inset-0 z-10">
+                <div class="flex justify-center items-end p-4 min-h-full text-center sm:items-start sm:p-0">
+                    <div
+                        class="inline-block mt-16 w-full max-w-md transition-all"
+                        x-show="searchBar.isOpen"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-on:click.outside="searchBar.isOpen = false"
+                        x-trap.noscroll="searchBar.isOpen"
+                    >
+                        {{-- search form --}}
+                        <div class="relative">
+                            <label
+                                class="hidden"
+                                for="searchBox"
+                            >搜尋</label>
 
-              <input
-                class="outline-hidden focus:ring-3 w-full rounded-xl border border-zinc-400 bg-zinc-50 px-10 py-2 text-xl placeholder-zinc-400 focus:border-indigo-300 focus:ring-indigo-200/50 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder-white"
-                id="searchBox"
-                type="text"
-                x-ref="searchBar"
-                wire:model.live.debounce.500ms="search"
-                autocomplete="off"
-                placeholder="搜尋文章"
-              />
+                            <input
+                                class="py-2 px-10 w-full text-xl rounded-xl border dark:placeholder-white focus:border-indigo-300 outline-hidden border-zinc-400 bg-zinc-50 placeholder-zinc-400 dark:bg-zinc-800 dark:text-zinc-50 focus:ring-3 focus:ring-indigo-200/50"
+                                id="searchBox"
+                                type="text"
+                                x-ref="searchBar"
+                                wire:model.live.debounce.500ms="search"
+                                autocomplete="off"
+                                placeholder="搜尋文章"
+                            />
 
-              <div class="absolute left-3 top-3.5 text-lg text-zinc-400 dark:text-zinc-50">
-                <x-icons.search class="w-5" />
-              </div>
+                            <div class="absolute left-3 top-3.5 text-lg text-zinc-400 dark:text-zinc-50">
+                                <x-icons.search class="w-5" />
+                            </div>
 
-              <x-icons.animate-spin
-                class="absolute right-3 top-3 h-5 w-5 text-zinc-700 dark:text-zinc-50"
-                wire:loading
-              />
-            </div>
+                            <x-icons.animate-spin
+                                class="absolute top-3 right-3 w-5 h-5 text-zinc-700 dark:text-zinc-50"
+                                wire:loading
+                            />
+                        </div>
 
-            {{-- 搜尋結果列表 --}}
-            @if (strlen($search) >= 2)
-              <div
-                class="mt-4 w-full rounded-xl bg-zinc-50 p-2 dark:bg-zinc-800 dark:text-zinc-50"
-                wire:transition
-              >
-                @if ($results->count() > 0)
-                  <div class="flex items-center justify-center">搜尋結果</div>
+                        {{-- 搜尋結果列表 --}}
+                        @if (strlen($search) >= 2)
+                            <div
+                                class="p-2 mt-4 w-full rounded-xl bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-50"
+                                wire:transition
+                            >
+                                @if ($results->count() > 0)
+                                    <div class="flex justify-center items-center">搜尋結果</div>
 
-                  <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                                    <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
-                  <ul>
-                    @foreach ($results as $result)
-                      <li wire:key="search-result-{{ $result->id }}">
-                        <a
-                          class="flex items-start rounded-md p-2 text-left hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-600"
-                          href="{{ $result->link_with_slug }}"
-                          wire:navigate
-                        >
-                          <span class="mr-2 flex h-[1lh] items-center">
+                                    <ul>
+                                        @foreach ($results as $result)
+                                            <li wire:key="search-result-{{ $result->id }}">
+                                                <a
+                                                    class="flex items-start p-2 text-left rounded-md dark:text-zinc-50 dark:hover:bg-zinc-600 hover:bg-zinc-200"
+                                                    href="{{ $result->link_with_slug }}"
+                                                    wire:navigate
+                                                >
+                          <span class="flex items-center mr-2 h-[1lh]">
                             <x-icons.caret-right class="w-4" />
                           </span>
-                          {{ $result->title }}
-                        </a>
-                      </li>
-                    @endforeach
-                  </ul>
-                @else
-                  <div class="flex h-16 items-center justify-center">
-                    抱歉...找不到相關文章
-                  </div>
-                @endif
+                                                    {{ $result->title }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <div class="flex justify-center items-center h-16">
+                                        抱歉...找不到相關文章
+                                    </div>
+                                @endif
 
-                <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                                <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
-                {{-- Algolia Logo --}}
-                <div class="flex w-full items-center justify-center">
-                  <a
-                    href="https://www.algolia.com"
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                  >
-                    {{-- Light Mode Algolia Logo --}}
-                    <img
-                      class="inline-block dark:hidden"
-                      src="{{ asset('images/icon/search-by-algolia-light-background.png') }}"
-                      alt="Search by Algolia"
-                    >
+                                {{-- Algolia Logo --}}
+                                <div class="flex justify-center items-center w-full">
+                                    <a
+                                        href="https://www.algolia.com"
+                                        target="_blank"
+                                        rel="nofollow noopener noreferrer"
+                                    >
+                                        {{-- Light Mode Algolia Logo --}}
+                                        <img
+                                            class="inline-block dark:hidden"
+                                            src="{{ asset('images/icon/search-by-algolia-light-background.png') }}"
+                                            alt="Search by Algolia"
+                                        >
 
-                    {{-- Dark Mode Algolia Logo --}}
-                    <img
-                      class="hidden dark:inline-block"
-                      src="{{ asset('images/icon/search-by-algolia-dark-background.png') }}"
-                      alt="Search by Algolia"
-                    >
-                  </a>
+                                        {{-- Dark Mode Algolia Logo --}}
+                                        <img
+                                            class="hidden dark:inline-block"
+                                            src="{{ asset('images/icon/search-by-algolia-dark-background.png') }}"
+                                            alt="Search by Algolia"
+                                        >
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
+                    </div>
                 </div>
-              </div>
-            @endif
+            </div>
 
-          </div>
         </div>
-      </div>
-
     </div>
-  </div>
 </search>

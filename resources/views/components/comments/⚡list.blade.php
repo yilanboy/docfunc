@@ -11,7 +11,8 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
     use MarkdownConverter;
 
     private const int PER_PAGE = 10;
@@ -53,7 +54,10 @@ new class extends Component {
     private function getComments(): array
     {
         $comments = Comment::query()
-            ->select(['comments.id', 'comments.user_id', 'comments.body', 'comments.created_at', 'comments.updated_at', 'users.name as user_name', 'users.email as user_email'])
+            ->select([
+                'comments.id', 'comments.user_id', 'comments.body', 'comments.created_at', 'comments.updated_at',
+                'users.name as user_name', 'users.email as user_email'
+            ])
             // Use a sub query to generate a children_count column,
             // this line must be after the select method
             ->withCount('children')
@@ -140,137 +144,137 @@ new class extends Component {
 ?>
 
 @script
-  <script>
+<script>
     Alpine.data('rootCommentList', () => ({
-      loadMoreComments() {
-        let y = window.scrollY;
+        loadMoreComments() {
+            let y = window.scrollY;
 
-        this.$wire.loadMoreComments().then(() => {
-          window.scrollTo({
-            top: y,
-            behavior: 'instant'
-          });
-        });
-      }
+            this.$wire.loadMoreComments().then(() => {
+                window.scrollTo({
+                    top: y,
+                    behavior: 'instant'
+                });
+            });
+        }
     }));
-  </script>
+</script>
 @endscript
 
 {{-- 留言列表 --}}
 <div
-  class="w-full"
-  id="root-comment-list"
-  data-test-id="comments.root-list"
-  x-data="rootCommentList"
+    class="w-full"
+    id="root-comment-list"
+    data-test-id="comments.root-list"
+    x-data="rootCommentList"
 >
-  @foreach ($comments as $comment)
-    <x-dashed-card
-      class="comment-card mt-6"
-      data-test-id="comments.card"
-      wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
-    >
-      <div class="flex flex-col">
-        <div class="flex items-center space-x-4 text-base">
-          @if ($comment['user_id'] !== null)
-            <a
-              href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
-              wire:navigate
-            >
-              <img
-                class="size-10 rounded-full hover:ring-2 hover:ring-blue-400"
-                src="{{ $comment['user_gravatar_url'] }}"
-                alt="{{ $comment['user_name'] }}"
-              >
-            </a>
+    @foreach ($comments as $comment)
+        <x-dashed-card
+            class="mt-6 comment-card"
+            data-test-id="comments.card"
+            wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
+        >
+            <div class="flex flex-col">
+                <div class="flex items-center space-x-4 text-base">
+                    @if ($comment['user_id'] !== null)
+                        <a
+                            href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
+                            wire:navigate
+                        >
+                            <img
+                                class="rounded-full hover:ring-2 hover:ring-blue-400 size-10"
+                                src="{{ $comment['user_gravatar_url'] }}"
+                                alt="{{ $comment['user_name'] }}"
+                            >
+                        </a>
 
-            <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
-          @else
-            <x-icons.question-circle-fill class="size-10 text-zinc-300 dark:text-zinc-500" />
+                        <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
+                    @else
+                        <x-icons.question-circle-fill class="size-10 text-zinc-300 dark:text-zinc-500" />
 
-            <span class="dark:text-zinc-50">訪客</span>
-          @endif
+                        <span class="dark:text-zinc-50">訪客</span>
+                    @endif
 
-          <time
-            class="hidden text-zinc-400 md:block"
-            datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
-          >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
+                    <time
+                        class="hidden md:block text-zinc-400"
+                        datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
+                    >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
 
-          @if ($comment['created_at'] !== $comment['updated_at'])
-            <span class="text-zinc-400">(已編輯)</span>
-          @endif
-        </div>
+                    @if ($comment['created_at'] !== $comment['updated_at'])
+                        <span class="text-zinc-400">(已編輯)</span>
+                    @endif
+                </div>
 
-        <div class="rich-text">
-          {!! $this->convertToHtml($comment['body']) !!}
-        </div>
+                <div class="rich-text">
+                    {!! $this->convertToHtml($comment['body']) !!}
+                </div>
 
-        <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
-          @auth
-            @if (auth()->id() === $comment['user_id'])
-              <button
-                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                data-test-id="comments.card.edit"
-                type="button"
-                x-on:click="$dispatch('open-edit-comment-modal', {
+                <div class="flex gap-6 justify-end items-center text-base text-zinc-400">
+                    @auth
+                        @if (auth()->id() === $comment['user_id'])
+                            <button
+                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                data-test-id="comments.card.edit"
+                                type="button"
+                                x-on:click="$dispatch('open-edit-comment-modal', {
                   listName: 'root-list',
                   id: @js($comment['id']),
                   body: @js($comment['body'])
                 })"
-              >
-                <x-icons.pencil class="w-4" />
-                <span class="ml-2">編輯</span>
-              </button>
-            @endif
+                            >
+                                <x-icons.pencil class="w-4" />
+                                <span class="ml-2">編輯</span>
+                            </button>
+                        @endif
 
-            @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
-              <button
-                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-                data-test-id="comments.card.delete"
-                type="button"
-                wire:click="destroyComment({{ $comment['id'] }})"
-                wire:confirm="你確定要刪除該留言？"
-              >
-                <x-icons.trash class="w-4" />
-                <span class="ml-2">刪除</span>
-              </button>
-            @endif
-          @endauth
+                        @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
+                            <button
+                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                data-test-id="comments.card.delete"
+                                type="button"
+                                wire:click="destroyComment({{ $comment['id'] }})"
+                                wire:confirm="你確定要刪除該留言？"
+                            >
+                                <x-icons.trash class="w-4" />
+                                <span class="ml-2">刪除</span>
+                            </button>
+                        @endif
+                    @endauth
 
-          <button
-            class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
-            data-test-id="comments.card.reply"
-            type="button"
-            x-on:click="$dispatch('open-create-comment-modal', {
+                    <button
+                        class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                        data-test-id="comments.card.reply"
+                        type="button"
+                        x-on:click="$dispatch('open-create-comment-modal', {
               parentId: @js($comment['id']),
               replyTo: @js($comment['user_name'] === null ? '訪客' : $comment['user_name'])
             })"
-          >
-            <x-icons.reply-fill class="w-4" />
-            <span class="ml-2">回覆</span>
-          </button>
-        </div>
-      </div>
-    </x-dashed-card>
+                    >
+                        <x-icons.reply-fill class="w-4" />
+                        <span class="ml-2">回覆</span>
+                    </button>
+                </div>
+            </div>
+        </x-dashed-card>
 
-    <livewire:comments.children-list
-      :parent-id="$comment['id']"
-      :post-user-id="$postUserId"
-      :children-count="$comment['children_count']"
-      :key="$comment['id'] . '-comment-children'"
-    />
-  @endforeach
+        <livewire:comments.children-list
+            :parent-id="$comment['id']"
+            :post-user-id="$postUserId"
+            :children-count="$comment['children_count']"
+            :key="$comment['id'] . '-comment-children'"
+        />
+    @endforeach
 
-  <div
-    class="mt-6 flex w-full items-center justify-center"
-    wire:show="loadingLabel['is_visible']"
-  >
+    <div
+        class="flex justify-center items-center mt-6 w-full"
+        wire:show="loadingLabel['is_visible']"
+    >
     <span
-      class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
-      type="button"
-      x-intersect="loadMoreComments"
+        class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
+        type="button"
+        x-intersect="loadMoreComments"
     >
       <x-icons.animate-spin class="size-5" />
       <span>顯示更多留言</span>
     </span>
-  </div>
+    </div>
 </div>

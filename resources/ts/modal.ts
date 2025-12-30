@@ -83,8 +83,8 @@ export class Modal {
                 class="${BACKGROUND_BACKDROP_CLASS_NAME} fixed inset-0 bg-zinc-500/75 backdrop-blur-md transition-opacity ${HIDE_BACKGROUND_BACKDROP_CLASS_NAME.join(' ')}"
             ></div>
 
-            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div class="flex min-h-full items-center justify-center p-4 text-center">
+            <div class="overflow-y-auto fixed inset-0 z-10 w-screen">
+                <div class="flex justify-center items-center p-4 min-h-full text-center">
                     <!-- Modal panel, show/hide based on modal state. -->
                     <div
                         class="${MODAL_PANEL_CLASS_NAME} relative transform overflow-hidden rounded-xl text-left transition-all sm:w-fit sm:max-w-6xl ${HIDE_MODAL_PANEL_CLASS_NAME.join(' ')}"
@@ -94,7 +94,7 @@ export class Modal {
                 </div>
             </div>
 
-            <div class="fixed right-10 top-10 z-10">
+            <div class="fixed top-10 right-10 z-10">
                 <button
                     type="button"
                     class="${CLOSE_MODAL_BUTTON_CLASS_NAME} text-zinc-200 transition duration-300 hover:text-zinc-50 cursor-pointer"

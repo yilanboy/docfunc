@@ -11,7 +11,9 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('重設密碼')] class extends Component {
+new #[Title('重設密碼')]
+class extends Component
+{
     // token will be passed in the URL,
     // and auto binding will take care of it
     #[Locked]
@@ -36,8 +38,8 @@ new #[Title('重設密碼')] class extends Component {
     public function resetPassword(): void
     {
         $this->validate([
-            'token' => 'required',
-            'email' => ['required', 'email'],
+            'token'    => 'required',
+            'email'    => ['required', 'email'],
             'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
@@ -47,7 +49,7 @@ new #[Title('重設密碼')] class extends Component {
         $status = Password::reset($this->only('email', 'password', 'password_confirmation', 'token'), function ($user) {
             $user
                 ->forceFill([
-                    'password' => Hash::make($this->password),
+                    'password'       => Hash::make($this->password),
                     'remember_token' => Str::random(60),
                 ])
                 ->save();
@@ -72,57 +74,57 @@ new #[Title('重設密碼')] class extends Component {
 ?>
 
 <x-layouts.auth>
-  <div class="container mx-auto">
-    <div class="flex min-h-screen flex-col items-center justify-center px-4">
-      {{-- 頁面標題 --}}
-      <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
-        <x-icons.question-circle class="w-6" />
-        <span class="ml-4">重設密碼</span>
-      </div>
+    <div class="container mx-auto">
+        <div class="flex flex-col justify-center items-center px-4 min-h-screen">
+            {{-- 頁面標題 --}}
+            <div class="flex items-center text-2xl fill-current text-zinc-700 dark:text-zinc-50">
+                <x-icons.question-circle class="w-6" />
+                <span class="ml-4">重設密碼</span>
+            </div>
 
-      <x-card class="mt-4 w-full space-y-6 overflow-hidden sm:max-w-md">
-        {{-- 驗證錯誤訊息 --}}
-        <x-auth-validation-errors :errors="$errors" />
+            <x-card class="overflow-hidden mt-4 space-y-6 w-full sm:max-w-md">
+                {{-- 驗證錯誤訊息 --}}
+                <x-auth-validation-errors :errors="$errors" />
 
-        <form wire:submit="resetPassword">
-          {{-- 信箱 --}}
-          <x-floating-label-input
-            id="email"
-            type="text"
-            placeholder="電子信箱"
-            required
-            readonly
-            wire:model="email"
-          />
+                <form wire:submit="resetPassword">
+                    {{-- 信箱 --}}
+                    <x-floating-label-input
+                        id="email"
+                        type="text"
+                        placeholder="電子信箱"
+                        required
+                        readonly
+                        wire:model="email"
+                    />
 
-          {{-- 密碼 --}}
-          <x-floating-label-input
-            class="mt-6"
-            id="password"
-            type="password"
-            placeholder="新密碼"
-            required
-            autofocus
-            wire:model="password"
-          />
+                    {{-- 密碼 --}}
+                    <x-floating-label-input
+                        class="mt-6"
+                        id="password"
+                        type="password"
+                        placeholder="新密碼"
+                        required
+                        autofocus
+                        wire:model="password"
+                    />
 
-          {{-- 確認密碼 --}}
-          <x-floating-label-input
-            class="mt-6"
-            id="password_confirmation"
-            type="password"
-            placeholder="確認新密碼"
-            required
-            wire:model="password_confirmation"
-          />
+                    {{-- 確認密碼 --}}
+                    <x-floating-label-input
+                        class="mt-6"
+                        id="password_confirmation"
+                        type="password"
+                        placeholder="確認新密碼"
+                        required
+                        wire:model="password_confirmation"
+                    />
 
-          <div class="mt-6 flex items-center justify-end">
-            <x-button>
-              {{ __('Reset Password') }}
-            </x-button>
-          </div>
-        </form>
-      </x-card>
+                    <div class="flex justify-end items-center mt-6">
+                        <x-button>
+                            {{ __('Reset Password') }}
+                        </x-button>
+                    </div>
+                </form>
+            </x-card>
+        </div>
     </div>
-  </div>
 </x-layouts.auth>

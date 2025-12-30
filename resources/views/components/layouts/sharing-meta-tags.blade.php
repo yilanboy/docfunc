@@ -1,49 +1,49 @@
 @props(['title'])
 
 @php
-  $defaultPreviewUrl = 'https://blobs.docfunc.com/share.jpg';
+    $defaultPreviewUrl = 'https://blobs.docfunc.com/share.jpg';
 @endphp
 
 {{-- Open Graph / Facebook --}}
 <meta
-  property="og:url"
-  content="{{ url()->full() }}"
+    property="og:url"
+    content="{{ url()->full() }}"
 >
 <meta
-  property="og:type"
-  content="{{ request()->route()->getName() === 'posts.show'? 'article': 'website' }}"
+    property="og:type"
+    content="{{ request()->route()->getName() === 'posts.show'? 'article': 'website' }}"
 >
 <meta
-  property="og:title"
-  content="{{ $title }}"
+    property="og:title"
+    content="{{ $title }}"
 >
 <meta
-  property="og:description"
-  content="@yield('description', config('app.name'))"
+    property="og:description"
+    content="@yield('description', config('app.name'))"
 >
 <meta
-  property="og:image"
-  content="@yield('preview_url', $defaultPreviewUrl)"
+    property="og:image"
+    content="@yield('preview_url', $defaultPreviewUrl)"
 >
 
 {{-- Twitter --}}
 <meta
-  property="twitter:card"
-  content="summary_large_image"
+    property="twitter:card"
+    content="summary_large_image"
 >
 <meta
-  property="twitter:url"
-  content="{{ url()->full() }}"
+    property="twitter:url"
+    content="{{ url()->full() }}"
 >
 <meta
-  property="twitter:title"
-  content="{{ $title }}"
+    property="twitter:title"
+    content="{{ $title }}"
 >
 <meta
-  property="twitter:description"
-  content="@yield('description', config('app.name'))"
+    property="twitter:description"
+    content="@yield('description', config('app.name'))"
 >
 <meta
-  property="twitter:image"
-  content="@yield('preview_url', $defaultPreviewUrl)"
+    property="twitter:image"
+    content="@yield('preview_url', $defaultPreviewUrl)"
 >
