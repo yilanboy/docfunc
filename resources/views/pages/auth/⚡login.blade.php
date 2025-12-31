@@ -23,7 +23,7 @@ use Webauthn\Exception\AuthenticatorResponseVerificationException;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
 use Webauthn\PublicKeyCredentialSource;
-use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 
 new #[Title('登入')]
 class extends Component
@@ -125,7 +125,7 @@ class extends Component
                     host: request()->getHost(),
                     userHandle: null
                 );
-        } catch (SerializerExceptions|AuthenticatorResponseVerificationException) {
+        } catch (SerializerExceptionInterface|AuthenticatorResponseVerificationException) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;

@@ -3,7 +3,7 @@
 use App\Models\User;
 use App\Services\Serializer;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\getJson;
@@ -29,10 +29,10 @@ test('it returns error when user is not authenticated', function () {
         ->assertStatus(401);
 });
 
-test('it returns 500 and logs error when serialization fails', function () {
+test('it returns 400 and logs error when serialization fails in returning register options', function () {
     $user = User::factory()->create();
 
-    $serializerException = new class extends Exception implements SerializerExceptions {};
+    $serializerException = new class extends Exception implements SerializerExceptionInterface {};
 
     // 模擬 Serializer 拋出例外
     $serializerMock = Mockery::mock(Serializer::class);

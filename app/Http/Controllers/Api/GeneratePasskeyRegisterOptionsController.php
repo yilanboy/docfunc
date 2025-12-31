@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Uri;
-use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptions;
+use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
@@ -82,7 +82,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
         try {
             // 將 $options 物件進行序列化，轉換為 JSON 字串
             $optionsJson = $serializer->toJson($options);
-        } catch (SerializerExceptions  $e) {
+        } catch (SerializerExceptionInterface  $e) {
             Log::error('Webauthn 註冊選項序列化失敗', [
                 'user_id'   => $request->user()->id,
                 'exception' => $e->getMessage(),
