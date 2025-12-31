@@ -113,7 +113,7 @@ new class extends Component
     x-data="layoutsHeaderPart"
 >
     <div
-        class="hidden relative justify-center items-center w-full h-20 transition-all duration-300 lg:flex bg-zinc-50 dark:bg-zinc-800"
+        class="hidden relative justify-center items-center w-full transition-all duration-300 lg:flex h-18 bg-zinc-50 dark:bg-zinc-800"
         id="desktop-header"
     >
         {{-- logo --}}
