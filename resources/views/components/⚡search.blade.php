@@ -155,14 +155,13 @@ new class extends Component
                                     <ul>
                                         @foreach ($results as $result)
                                             <li wire:key="search-result-{{ $result->id }}">
-                                                <a
-                                                    class="flex items-start p-2 text-left rounded-md dark:text-zinc-50 dark:hover:bg-zinc-600 hover:bg-zinc-200"
-                                                    href="{{ $result->link_with_slug }}"
-                                                    wire:navigate
+                                                <a class="flex items-start p-2 text-left rounded-md dark:text-zinc-50 dark:hover:bg-zinc-600 hover:bg-zinc-200"
+                                                   href="{{ $result->link_with_slug }}"
+                                                   wire:navigate
                                                 >
-                          <span class="flex items-center mr-2 h-[1lh]">
-                            <x-icons.caret-right class="w-4" />
-                          </span>
+                                                      <span class="flex items-center mr-2 h-lh">
+                                                        <x-icons.caret-right class="w-4" />
+                                                      </span>
                                                     {{ $result->title }}
                                                 </a>
                                             </li>

@@ -63,7 +63,7 @@ new class extends Component
 
         <div class="flex justify-center items-center mt-8">
             <a
-                class="flex overflow-hidden relative justify-center items-center py-2 px-4 w-full bg-emerald-600 rounded-lg before:bg-lividus-600 group [transform:translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:size-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-0 before:rounded-full before:opacity-0 before:transition before:duration-700 before:ease-in-out dark:bg-lividus-700 dark:before:bg-emerald-700 hover:before:scale-[10] hover:before:opacity-100"
+                class="flex overflow-hidden relative justify-center items-center py-2 px-4 w-full bg-emerald-600 rounded-lg before:bg-lividus-600 group transform-[translateZ(0)] before:absolute before:left-1/2 before:top-1/2 before:size-8 before:-translate-x-1/2 before:-translate-y-1/2 before:scale-0 before:rounded-full before:opacity-0 before:transition before:duration-700 before:ease-in-out dark:bg-lividus-700 dark:before:bg-emerald-700 hover:before:scale-[10] hover:before:opacity-100"
                 href="{{ route('posts.create') }}"
                 wire:navigate
             >
@@ -89,14 +89,15 @@ new class extends Component
 
         <div class="flex justify-center items-center mt-8">
             <a
-                class="inline-flex justify-center items-center py-2 px-4 w-full tracking-widest rounded-lg border border-transparent transition duration-150 ease-in-out bg-zinc-500 text-zinc-50 ring-zinc-300 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500 dark:active:bg-zinc-600 hover:bg-zinc-600 focus:outline-hidden focus:ring-3 focus:border-zinc-700 active:bg-zinc-500"
+                class="flex justify-center items-center py-2 px-4 w-full tracking-widest rounded-lg transition duration-150 ease-in-out bg-zinc-500 text-zinc-50 ring-zinc-300 dark:bg-zinc-600 dark:ring-zinc-800 dark:hover:bg-zinc-500 dark:active:bg-zinc-600 hover:bg-zinc-600 focus:outline-hidden focus:ring-3 active:bg-zinc-500"
                 href="{{ route('feeds.main') }}"
                 x-on:click.prevent="copyWebFeedUrl"
             >
-        <span
-            class="ml-2 h-[1lh]"
-            x-text="rssLinkLabel"
-        ></span>
+                <x-icons.rss class="w-5 h-lh" />
+                <span
+                    class="ml-2"
+                    x-text="rssLinkLabel"
+                ></span>
             </a>
         </div>
     </x-card>
@@ -139,9 +140,9 @@ new class extends Component
                         target="_blank"
                         rel="nofollow noopener noreferrer"
                     >
-            <span class="flex items-center mr-2 h-[1lh]">
-              <x-icons.link-45deg class="w-5" />
-            </span>
+                        <span class="flex items-center mr-2 h-lh">
+                            <x-icons.link-45deg class="w-5" />
+                        </span>
                         {{ $link->title }}
                     </a>
                 @endforeach
