@@ -63,37 +63,37 @@
 
 @utility rich-text {
     @apply prose text-lg max-w-none prose-slate dark:prose-invert leading-8
-    /* paragraph */
+        /* paragraph */
     prose-p:break-all lg:prose-p:break-normal
-    /*  heading  */
+        /*  heading  */
     prose-headings:font-medium prose-headings:text-emerald-600 dark:prose-headings:text-lividus-500
-     prose-h2:my-4 prose-h2:py-4 prose-h2:relative
-    /*  h2 underline  */
+    prose-h2:my-4 prose-h2:py-4 prose-h2:relative
+        /*  h2 underline  */
     prose-h2:after:absolute prose-h2:after:bottom-0 prose-h2:after:left-0 prose-h2:after:w-full prose-h2:after:h-1 prose-h2:after:bg-linear-to-r prose-h2:after:from-emerald-500 dark:prose-h2:after:from-lividus-600 prose-h2:after:to-transparent
-    /* link */
+        /* link */
     prose-a:no-underline prose-a:hover:underline prose-a:decoration-2 prose-a:underline-offset-4 prose-a:text-emerald-600 prose-a:hover:text-emerald-700
     dark:prose-a:text-lividus-400 dark:prose-a:hover:text-lividus-300
-    /* list */
+        /* list */
     prose-li:marker:text-emerald-500 dark:prose-li:marker:text-lividus-400
-    /* figure */
+        /* figure */
     prose-figure:table prose-figure:w-full prose-figure:mx-auto
-    /* figure table */
+        /* figure table */
     prose-figure:has-[table]:p-4 prose-figure:has-[table]:border prose-figure:has-[table]:border-zinc-300 dark:prose-figure:has-[table]:border-zinc-600 prose-figure:has-[table]:rounded-xl
-    /* image */
+        /* image */
     prose-img:w-full prose-img:rounded-xl
-    /* figcaption */
+        /* figcaption */
     prose-figcaption:table-caption prose-figcaption:[caption-side:bottom] prose-figcaption:break-words
     prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-zinc-200!
     dark:prose-figcaption:bg-zinc-700! dark:prose-figcaption:text-slate-100
-    /* hr */
+        /* hr */
     prose-hr:my-3 prose-hr:h-1 prose-hr:border-none prose-hr:bg-slate-300 dark:prose-hr:bg-slate-500
-    /* code */
+        /* code */
     prose-code:before:content-none prose-code:after:content-none prose-code:font-jetbrains-mono prose-code:font-medium
-    /* pre */
+        /* pre */
     prose-pre:text-[#abb2bf] prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:text-lg dark:prose-pre:bg-neutral-900 prose-pre:border-none
-    /* blockquote before */
+        /* blockquote before */
     prose-blockquote:relative prose-blockquote:before:absolute prose-blockquote:before:w-1.5 prose-blockquote:before:h-full prose-blockquote:before:rounded-sm prose-blockquote:before:top-0 prose-blockquote:before:-left-4 prose-blockquote:before:bg-emerald-300 dark:prose-blockquote:before:bg-lividus-700 prose-blockquote:before:contain-none prose-blockquote:ml-4
-    /* blockquote */
+        /* blockquote */
     prose-blockquote:border-none prose-blockquote:not-italic prose-blockquote:rounded-xl prose-blockquote:text-emerald-500 prose-blockquote:bg-emerald-200/20 dark:prose-blockquote:text-lividus-200 dark:prose-blockquote:bg-lividus-800/20 prose-blockquote:py-2 prose-blockquote:px-4;
 
     /* ckeditor5-font/theme/fontsize.css */
@@ -180,7 +180,7 @@ pre.shiki code {
 pre.shiki code .line::before {
     content: counter(step);
     counter-increment: step;
-    width: 1rem;
+    width: 1.25rem;
     margin-right: 1.5rem;
     display: inline-block;
     text-align: right;
