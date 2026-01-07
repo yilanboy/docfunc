@@ -50,16 +50,15 @@ new class extends Component
 >
     {{-- 介紹 --}}
     <x-card class="group dark:text-zinc-50">
-        <p
-            class="w-full text-xl font-semibold text-center text-transparent bg-clip-text from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 dark:border-white bg-linear-to-r font-jetbrains-mono">
+        <p class="w-full text-xl font-semibold text-center text-transparent bg-clip-text from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 dark:border-white bg-linear-to-r font-jetbrains-mono">
             echo 'Hello World';
         </p>
 
         <hr class="my-4 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
         <span class="leading-relaxed group-gradient-underline-grow">
-      這是一個使用 TALL Stack 開發的部落格，用來記錄自己學習的過程，與生活上的大小事。🚀
-    </span>
+            這是一個使用 TALL Stack 開發的部落格，用來記錄自己學習的過程，與生活上的大小事。🚀
+        </span>
 
         <div class="flex justify-center items-center mt-8">
             <a

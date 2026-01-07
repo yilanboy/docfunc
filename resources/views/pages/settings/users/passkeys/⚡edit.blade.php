@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Mail\CreatePasskeyMail;
 use App\Models\User;
-use App\Services\CustomCounterChecker;
 use App\Services\Serializer;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -63,10 +62,13 @@ new class extends Component
                 PublicKeyCredentialCreationOptions::class);
 
             $csmFactory = new CeremonyStepManagerFactory();
-            $csmFactory->setCounterChecker(new CustomCounterChecker());
 
-            $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($csmFactory->requestCeremony())->check(authenticatorAttestationResponse: $publicKeyCredential->response,
-                publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions, host: request()->getHost());
+            $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($csmFactory->requestCeremony())
+                ->check(
+                    authenticatorAttestationResponse: $publicKeyCredential->response,
+                    publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions,
+                    host: request()->getHost()
+                );
         } catch (Throwable) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
