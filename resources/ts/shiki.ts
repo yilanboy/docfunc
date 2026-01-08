@@ -1,6 +1,10 @@
 import { createHighlighter, type Highlighter } from 'shiki';
 import { languageSettings } from './config.js';
-import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
+import {
+    transformerNotationDiff,
+    transformerNotationHighlight,
+    transformerRemoveNotationEscape
+} from '@shikijs/transformers';
 
 declare global {
     interface Window {
@@ -58,7 +62,8 @@ async function highlightElement(
             },
             transformers: [
                 transformerNotationDiff(),
-                transformerNotationHighlight()
+                transformerNotationHighlight(),
+                transformerRemoveNotationEscape()
             ]
         });
 
