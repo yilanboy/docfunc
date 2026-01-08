@@ -154,23 +154,25 @@
 
 /* shiki */
 html[data-theme='dark'] .shiki,
-html[data-theme='dark'] .shiki span:not(.language-label) {
+html[data-theme='dark'] .shiki span {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
 }
 
 pre.shiki {
-    padding: 1rem !important;
+    padding: 0 !important;
     border-radius: 0.75rem !important;
 }
 
 pre.shiki code {
     display: block !important;
+    width: fit-content !important;
+    min-width: 100% !important;
+    padding: 1rem !important;
     font-family: var(--font-jetbrains-mono), sans-serif !important;
     font-size: var(--text-lg) !important;
     line-height: var(--text-lg--line-height) !important;
     font-weight: 600 !important;
-    overflow-x: auto !important;
     /* line number */
     counter-reset: step;
     counter-increment: step 0;
@@ -185,6 +187,42 @@ pre.shiki code .line::before {
     display: inline-block;
     text-align: right;
     color: rgba(115, 138, 148, 0.4);
+}
+
+pre.shiki code span.line.highlighted {
+    display: inline-block !important;
+    width: calc(100% + 2rem) !important;
+    margin: 0 -1rem !important;
+    padding: 0 1rem !important;
+    background-color: rgba(115, 138, 148, 0.15) !important;
+}
+
+pre.shiki code span.line.highlighted span {
+    background-color: transparent !important;
+}
+
+pre.shiki code span.line.diff.remove {
+    display: inline-block !important;
+    width: calc(100% + 2rem) !important;
+    margin: 0 -1rem !important;
+    padding: 0 1rem !important;
+    background-color: rgba(255, 85, 85, 0.2) !important;
+}
+
+pre.shiki code span.line.diff.remove span {
+    background-color: transparent !important;
+}
+
+pre.shiki code span.line.diff.add {
+    display: inline-block !important;
+    width: calc(100% + 2rem) !important;
+    margin: 0 -1rem !important;
+    padding: 0 1rem !important;
+    background-color: rgba(167, 229, 104, 0.2) !important;
+}
+
+pre.shiki code span.line.diff.add span {
+    background-color: transparent !important;
 }
 
 /* Alpine.js */

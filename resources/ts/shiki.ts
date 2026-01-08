@@ -1,5 +1,6 @@
 import { createHighlighter, type Highlighter } from 'shiki';
 import { languageSettings } from './config.js';
+import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
 
 declare global {
     interface Window {
@@ -15,7 +16,7 @@ async function getHighlighter(): Promise<Highlighter> {
     if (!highlighter) {
         highlighter = await createHighlighter({
             langs: Object.keys(languageSettings),
-            themes: ['one-light', 'one-dark-pro'],
+            themes: ['one-light', 'one-dark-pro']
         });
     }
 
@@ -24,7 +25,7 @@ async function getHighlighter(): Promise<Highlighter> {
 
 async function highlightElement(
     preElement: HTMLPreElement,
-    highlighter: Highlighter,
+    highlighter: Highlighter
 ) {
     if (preElement.classList.contains('shiki-highlighted')) {
         return;
@@ -37,7 +38,7 @@ async function highlightElement(
     }
 
     const langClass = Array.from(codeElement.classList).find((c) =>
-        c.startsWith('language-'),
+        c.startsWith('language-')
     );
     const lang = langClass ? langClass.replace('language-', '') : 'text';
     const code = codeElement.innerText;
@@ -47,14 +48,18 @@ async function highlightElement(
             lang,
             themes: {
                 light: 'one-light',
-                dark: 'one-dark-pro',
+                dark: 'one-dark-pro'
             },
             colorReplacements: {
                 // Change background color
                 'one-light': {
-                    '#fafafa': '#f3f4f6',
-                },
+                    '#fafafa': '#f3f4f6'
+                }
             },
+            transformers: [
+                transformerNotationDiff(),
+                transformerNotationHighlight()
+            ]
         });
 
         if (!template) {
@@ -77,7 +82,7 @@ async function highlightAllInElement(htmlElement: HTMLElement): Promise<void> {
     const highlighter = await getHighlighter();
 
     let preElements = htmlElement.querySelectorAll(
-        'pre:not(.shiki-highlighted)',
+        'pre:not(.shiki-highlighted)'
     ) as NodeListOf<HTMLPreElement>;
 
     for (const preElement of preElements) {
@@ -88,13 +93,13 @@ async function highlightAllInElement(htmlElement: HTMLElement): Promise<void> {
 window.highlightAllInElement = highlightAllInElement;
 
 async function highlightObserver(
-    htmlElement: HTMLElement,
+    htmlElement: HTMLElement
 ): Promise<MutationObserver> {
     const highlighter = await getHighlighter();
 
     let observer = new MutationObserver(async () => {
         let preElements = htmlElement.querySelectorAll(
-            'pre:not(.shiki-highlighted)',
+            'pre:not(.shiki-highlighted)'
         ) as NodeListOf<HTMLPreElement>;
 
         for (const preElement of preElements) {
@@ -106,7 +111,7 @@ async function highlightObserver(
         childList: true,
         subtree: true,
         attributes: true,
-        characterData: false,
+        characterData: false
     });
 
     return observer;

@@ -5,6 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@shikijs/transformers": "^3.21.0",
         "@simplewebauthn/browser": "^13.1.0",
         "@tailwindcss/typography": "^0.5.15",
         "@tailwindcss/vite": "^4.0.0",
