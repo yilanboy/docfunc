@@ -189,25 +189,29 @@ pre.shiki code span.line::before {
     color: oklch(55.6% 0 0 / .5);
 }
 
-pre.shiki code span.line.highlighted {
+pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) {
     display: inline-block !important;
     width: calc(100% + 2rem) !important;
     margin: 0 -1rem !important;
     padding: 0 1rem !important;
-    background-color: oklch(70.7% 0.022 261.325 / .2) !important;
 }
 
-pre.shiki code span.line.highlighted span {
-    background-color: transparent !important;
+pre.shiki code span.line.highlighted {
+    background-color: oklch(70.7% 0.022 261.325 / .2) !important;
 }
 
 pre.shiki code span.line.diff.remove {
     position: relative !important;
-    display: inline-block !important;
-    width: calc(100% + 2rem) !important;
-    margin: 0 -1rem !important;
-    padding: 0 1rem !important;
     background-color: oklch(63.7% 0.237 25.331 / .2) !important;
+}
+
+pre.shiki code span.line.diff.add {
+    position: relative !important;
+    background-color: oklch(72.3% 0.219 149.579 / .2) !important;
+}
+
+pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) span {
+    background-color: transparent !important;
 }
 
 pre.shiki code span.line.diff.remove::after {
@@ -218,29 +222,12 @@ pre.shiki code span.line.diff.remove::after {
     color: oklch(70.4% 0.191 22.216);
 }
 
-pre.shiki code span.line.diff.remove span {
-    background-color: transparent !important;
-}
-
-pre.shiki code span.line.diff.add {
-    position: relative !important;
-    display: inline-block !important;
-    width: calc(100% + 2rem) !important;
-    margin: 0 -1rem !important;
-    padding: 0 1rem !important;
-    background-color: oklch(72.3% 0.219 149.579 / .2) !important;
-}
-
 pre.shiki code span.line.diff.add::after {
     position: absolute;
     content: '+';
     inset-block: 0;
     left: 2.75rem;
     color: oklch(79.2% 0.209 151.711);
-}
-
-pre.shiki code span.line.diff.add span {
-    background-color: transparent !important;
 }
 
 /* Alpine.js */
