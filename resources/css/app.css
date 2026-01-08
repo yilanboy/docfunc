@@ -153,8 +153,8 @@
 }
 
 /* shiki */
-html[data-theme='dark'] .shiki,
-html[data-theme='dark'] .shiki span {
+html[data-theme='dark'] pre.shiki,
+html[data-theme='dark'] pre.shiki span {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
 }
@@ -179,14 +179,14 @@ pre.shiki code {
 }
 
 /* line number */
-pre.shiki code .line::before {
+pre.shiki code span.line::before {
     content: counter(step);
     counter-increment: step;
     width: 1.25rem;
     margin-right: 1.5rem;
     display: inline-block;
     text-align: right;
-    color: rgba(115, 138, 148, 0.4);
+    color: oklch(55.6% 0 0 / .5);
 }
 
 pre.shiki code span.line.highlighted {
@@ -194,7 +194,7 @@ pre.shiki code span.line.highlighted {
     width: calc(100% + 2rem) !important;
     margin: 0 -1rem !important;
     padding: 0 1rem !important;
-    background-color: rgba(115, 138, 148, 0.15) !important;
+    background-color: oklch(70.7% 0.022 261.325 / .2) !important;
 }
 
 pre.shiki code span.line.highlighted span {
@@ -202,11 +202,20 @@ pre.shiki code span.line.highlighted span {
 }
 
 pre.shiki code span.line.diff.remove {
+    position: relative !important;
     display: inline-block !important;
     width: calc(100% + 2rem) !important;
     margin: 0 -1rem !important;
     padding: 0 1rem !important;
-    background-color: rgba(255, 85, 85, 0.2) !important;
+    background-color: oklch(63.7% 0.237 25.331 / .2) !important;
+}
+
+pre.shiki code span.line.diff.remove::after {
+    position: absolute;
+    content: '-';
+    inset-block: 0;
+    left: 2.75rem;
+    color: oklch(70.4% 0.191 22.216);
 }
 
 pre.shiki code span.line.diff.remove span {
@@ -214,11 +223,20 @@ pre.shiki code span.line.diff.remove span {
 }
 
 pre.shiki code span.line.diff.add {
+    position: relative !important;
     display: inline-block !important;
     width: calc(100% + 2rem) !important;
     margin: 0 -1rem !important;
     padding: 0 1rem !important;
-    background-color: rgba(167, 229, 104, 0.2) !important;
+    background-color: oklch(72.3% 0.219 149.579 / .2) !important;
+}
+
+pre.shiki code span.line.diff.add::after {
+    position: absolute;
+    content: '+';
+    inset-block: 0;
+    left: 2.75rem;
+    color: oklch(79.2% 0.209 151.711);
 }
 
 pre.shiki code span.line.diff.add span {
