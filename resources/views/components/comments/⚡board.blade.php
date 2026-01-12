@@ -121,12 +121,12 @@ new class extends Component
             </div>
 
             <button
-                class="before:bg-lividus-600 dark:bg-lividus-700 group relative cursor-pointer overflow-hidden rounded-xl bg-emerald-600 px-6 py-2 transform-[translateZ(0)] before:absolute before:bottom-0 before:left-0 before:h-full before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-500 before:ease-in-out hover:before:origin-top-left hover:before:scale-x-100 dark:before:bg-emerald-700"
+                class="overflow-hidden relative py-2 px-6 bg-emerald-600 rounded-xl cursor-pointer before:bg-lividus-600 group transform-[translateZ(0)] before:absolute before:bottom-0 before:left-0 before:h-full before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-500 before:ease-in-out dark:bg-lividus-700 dark:before:bg-emerald-700 hover:before:origin-top-left hover:before:scale-x-100"
                 type="button"
                 x-on:click="$dispatch('open-create-comment-modal', {
-          parentId: null,
-          replyTo: ''
-        })"
+                    parentId: null,
+                    replyTo: ''
+                })"
             >
                 <div class="flex relative z-0 items-center text-lg transition duration-500 ease-in-out text-zinc-200">
                     <x-icons.chat-dots class="w-5" />

@@ -131,8 +131,8 @@ new class extends Component
                     </div>
 
                     <x-icons.animate-spin
-                        class="hidden absolute top-1/2 left-1/2 w-10 -translate-x-1/2 -translate-y-1/2 dark:text-zinc-50"
-                        wire:loading.class.remove="hidden"
+                        class="absolute top-1/2 left-1/2 w-10 -translate-x-1/2 -translate-y-1/2 dark:text-zinc-50"
+                        wire:loading.delay
                         wire:target="form.body"
                     />
                 </div>
