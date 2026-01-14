@@ -11,7 +11,7 @@
         "@tailwindcss/vite": "^4.0.0",
         "@types/yaireo__tagify": "^4.27.0",
         "@yaireo/tagify": "^4.32.1",
-        "ckeditor5": "^46.0.0",
+        "ckeditor5": "^47.0.0",
         "laravel-vite-plugin": "^2.0.0",
         "playwright": "^1.57.0",
         "shiki": "^3.17.1",
