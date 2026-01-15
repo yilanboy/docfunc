@@ -28,6 +28,7 @@ new class extends Component
         }
     }
 
+    #[Transition(skip: true)]
     public function save(): void
     {
         $comment = Comment::findOrFail($this->comment['id']);
@@ -65,9 +66,12 @@ new class extends Component
         },
         tabToFourSpaces,
         submit() {
-            this.$wire.save().then(() => {
-                this.modal.isOpen = false;
-            });
+            this.$wire.save()
+                .then(() => {
+                    if (this.$wire.$errors.isEmpty()) {
+                        this.modal.isOpen = false;
+                    }
+                });
         }
     }));
 </script>

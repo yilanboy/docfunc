@@ -119,9 +119,12 @@ new class extends Component
             return `回覆 ${this.modal.replyTo} 的留言`;
         },
         submit() {
-            this.$wire.save().then(() => {
-                this.modal.isOpen = false;
-            });
+            this.$wire.save()
+                .then(() => {
+                    if (this.$wire.$errors.isEmpty()) {
+                        this.modal.isOpen = false;
+                    }
+                });
         },
         init() {
             turnstile.ready(() => {
