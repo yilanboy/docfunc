@@ -150,9 +150,12 @@ new class extends Component
             let y = window.scrollY;
 
             this.$wire.loadMoreComments().then(() => {
-                window.scrollTo({
-                    top: y,
-                    behavior: 'instant'
+                // make sure window.scrollTo will execute after the DOM is updated
+                this.$nextTick(() => {
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'instant'
+                    });
                 });
             });
         }
