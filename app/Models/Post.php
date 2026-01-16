@@ -50,6 +50,8 @@ class Post extends Model implements Feedable
         'is_private' => 'boolean',
     ];
 
+    protected $appends = ['link_with_slug'];
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
@@ -100,7 +102,7 @@ class Post extends Model implements Feedable
     {
         return new Attribute(
             get: fn ($value) => route('posts.show', [
-                'id' => $this->id,
+                'id'   => $this->id,
                 'slug' => $this->slug,
             ])
         );
