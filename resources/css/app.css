@@ -54,11 +54,11 @@
 }
 
 @utility group-gradient-underline-grow {
-    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in group-hover:bg-[length:100%_3px];
+    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-size-[0_3px] bg-bottom-left bg-no-repeat transition-all duration-200 ease-in group-hover:bg-size-[100%_3px];
 }
 
 @utility gradient-underline-grow {
-    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-[length:0_3px] bg-left-bottom bg-no-repeat transition-all duration-200 ease-in hover:bg-[length:100%_3px];
+    @apply bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 dark:from-indigo-500 dark:via-violet-500 dark:to-purple-500 bg-size-[0_3px] bg-bottom-left bg-no-repeat transition-all duration-200 ease-in hover:bg-size-[100%_3px];
 }
 
 @utility rich-text {
@@ -82,7 +82,7 @@
         /* image */
     prose-img:w-full prose-img:rounded-xl
         /* figcaption */
-    prose-figcaption:table-caption prose-figcaption:[caption-side:bottom] prose-figcaption:break-words
+    prose-figcaption:table-caption prose-figcaption:caption-bottom prose-figcaption:wrap-break-word
     prose-figcaption:rounded-lg prose-figcaption:p-1.5 prose-figcaption:text-center prose-figcaption:bg-zinc-200!
     dark:prose-figcaption:bg-zinc-700! dark:prose-figcaption:text-slate-100
         /* hr */
