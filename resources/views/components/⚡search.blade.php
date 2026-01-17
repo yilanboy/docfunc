@@ -24,7 +24,8 @@ new class extends Component
     Alpine.data('globalSearch', () => ({
         searchBox: {
             isOpen: false,
-            query: ''
+            query: '',
+            isLoading: false
         },
         posts: [],
         openSearchBox() {
@@ -36,12 +37,14 @@ new class extends Component
         onSearchBoxInput() {
             if (this.searchBox.query.length < 2) {
                 this.posts = [];
+
                 return;
             }
 
             this.$wire.search(this.searchBox.query)
                 .then(data => {
                     this.posts = data;
+                    this.searchBox.isLoading = false;
                 });
         },
         setShortcutKeyDisplayByOS() {
@@ -55,6 +58,11 @@ new class extends Component
         },
         init() {
             this.setShortcutKeyDisplayByOS();
+
+            // when the query is changed, into the loading state immediately
+            this.$watch('searchBox.query', () => {
+                this.searchBox.isLoading = true;
+            });
         }
     }));
 </script>
@@ -136,7 +144,7 @@ new class extends Component
                                 type="text"
                                 x-ref="searchBox"
                                 x-model="searchBox.query"
-                                x-on:input.debounce="onSearchBoxInput"
+                                x-on:input.debounce.750ms="onSearchBoxInput"
                                 autocomplete="off"
                                 placeholder="搜尋文章"
                             />
@@ -154,7 +162,7 @@ new class extends Component
                         {{-- 搜尋結果列表 --}}
                         <div
                             x-cloak
-                            x-show="searchBox.query.length >= 2"
+                            x-show="searchBox.query.length >= 2 && searchBox.isLoading === false"
                             class="p-2 mt-4 w-full rounded-xl bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-50"
                         >
                             <div
@@ -183,7 +191,11 @@ new class extends Component
                             </div>
 
                             <div x-cloak x-show="posts.length === 0">
-                                <span class="flex justify-center items-center h-16">抱歉...找不到相關文章</span>
+                                <div class="flex justify-center items-center h-16">
+                                    <span>抱歉... 找不到 "</span>
+                                    <span class="font-semibold" x-text="searchBox.query"></span>
+                                    <span>" 的相關文章</span>
+                                </div>
                             </div>
 
                             <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
