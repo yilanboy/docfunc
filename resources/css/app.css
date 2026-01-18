@@ -200,14 +200,26 @@ pre.shiki code span.line.highlighted {
     background-color: oklch(70.7% 0.022 261.325 / .2) !important;
 }
 
+html[data-theme="dark"] pre.shiki code span.line.highlighted {
+    background-color: oklch(70.7% 0.022 261.325 / .1) !important;
+}
+
 pre.shiki code span.line.diff.remove {
     position: relative !important;
     background-color: oklch(63.7% 0.237 25.331 / .2) !important;
 }
 
+html[data-theme="dark"] pre.shiki code span.line.diff.remove {
+    background-color: oklch(63.7% 0.237 25.331 / .1) !important;
+}
+
 pre.shiki code span.line.diff.add {
     position: relative !important;
     background-color: oklch(72.3% 0.219 149.579 / .2) !important;
+}
+
+html[data-theme="dark"] pre.shiki code span.line.diff.add {
+    background-color: oklch(72.3% 0.219 149.579 / .1) !important;
 }
 
 pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) span {
