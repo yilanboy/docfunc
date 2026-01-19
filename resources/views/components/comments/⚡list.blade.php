@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Transition;
 use Livewire\Component;
 
 new class extends Component
@@ -95,6 +96,7 @@ new class extends Component
         return array_map($callback, $comments);
     }
 
+    #[Transition(skip: true)]
     public function loadMoreComments(): void
     {
         $comments = $this->getComments();
@@ -150,7 +152,6 @@ new class extends Component
             let y = window.scrollY;
 
             this.$wire.loadMoreComments().then(() => {
-                // make sure window.scrollTo will execute after the DOM is updated
                 this.$nextTick(() => {
                     window.scrollTo({
                         top: y,
