@@ -37,35 +37,6 @@ new class extends Component
 };
 ?>
 
-@assets
-<style>
-    :root {
-        --animation-duration: 1s;
-        --circle-in-start-x: right;
-        --circle-in-start-y: top;
-    }
-
-    /* view transition */
-    ::view-transition-old(root) {
-        animation-delay: var(--animation-duration);
-    }
-
-    ::view-transition-new(root) {
-        animation: circle-in var(--animation-duration);
-    }
-
-    @keyframes circle-in {
-        from {
-            clip-path: circle(5% at var(--circle-in-start-x) var(--circle-in-start-y));
-        }
-
-        to {
-            clip-path: circle(100% at 50% 50%);
-        }
-    }
-</style>
-@endassets
-
 @script
 <script>
     Alpine.data('layoutsHeaderPart', () => ({
@@ -74,34 +45,13 @@ new class extends Component
         dropdownMenuIsOpen: false,
         profileMenuIsOpen: false,
         switchTheme() {
-            const rect = this.$el.getBoundingClientRect();
-
-            const centerX = rect.left + (rect.width / 2);
-            const centerY = rect.top + (rect.height / 2);
-
-            const root = document.documentElement;
-            root.style.setProperty('--circle-in-start-x', `${centerX}px`);
-            root.style.setProperty('--circle-in-start-y', `${centerY}px`);
-
-            const updateTheme = () => {
-                if (this.html.getAttribute('data-theme') === 'light') {
-                    this.html.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    this.html.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                }
-            };
-
-            if (!document.startViewTransition) {
-                updateTheme();
-
-                return;
+            if (this.html.getAttribute('data-theme') === 'light') {
+                this.html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                this.html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
             }
-
-            document.startViewTransition(() => {
-                updateTheme();
-            });
         }
     }));
 </script>

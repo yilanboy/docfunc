@@ -175,6 +175,7 @@ new class extends Component
             class="mt-6 comment-card"
             data-test-id="comments.card"
             wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
+            wire:transition
         >
             <div class="flex flex-col">
                 <div class="flex items-center space-x-4 text-base">
@@ -219,10 +220,10 @@ new class extends Component
                                 data-test-id="comments.card.edit"
                                 type="button"
                                 x-on:click="$dispatch('open-edit-comment-modal', {
-                  listName: 'root-list',
-                  id: @js($comment['id']),
-                  body: @js($comment['body'])
-                })"
+                                    listName: 'root-list',
+                                    id: @js($comment['id']),
+                                    body: @js($comment['body'])
+                                })"
                             >
                                 <x-icons.pencil class="w-4" />
                                 <span class="ml-2">編輯</span>
@@ -248,9 +249,9 @@ new class extends Component
                         data-test-id="comments.card.reply"
                         type="button"
                         x-on:click="$dispatch('open-create-comment-modal', {
-              parentId: @js($comment['id']),
-              replyTo: @js($comment['user_name'] === null ? '訪客' : $comment['user_name'])
-            })"
+                            parentId: @js($comment['id']),
+                            replyTo: @js($comment['user_name'] === null ? '訪客' : $comment['user_name'])
+                        })"
                     >
                         <x-icons.reply-fill class="w-4" />
                         <span class="ml-2">回覆</span>

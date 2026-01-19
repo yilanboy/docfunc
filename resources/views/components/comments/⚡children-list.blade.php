@@ -138,6 +138,7 @@ new class extends Component
         <x-dashed-card
             class="mt-6"
             wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
+            wire:transition
         >
             <div class="flex flex-col">
                 <div class="flex items-center space-x-4 text-base">
