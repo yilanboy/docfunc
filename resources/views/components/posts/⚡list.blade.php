@@ -102,13 +102,13 @@ new class extends Component
                     <x-dynamic-component
                         class="w-3"
                         :component="$postOrder->iconComponentName()"
-                        wire:loading.class="hidden"
+                        wire:loading.remove
                         wire:target="changeOrder('{{ $postOrder->value }}')"
                     />
 
                     <x-icons.animate-spin
-                        class="hidden w-3"
-                        wire:loading.class.remove="hidden"
+                        class="w-3"
+                        wire:loading
                         wire:target="changeOrder('{{ $postOrder->value }}')"
                     />
                     <span>{{ $postOrder->label() }}</span>

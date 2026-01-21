@@ -58,7 +58,7 @@ new class extends Component
             ])
             // this line must be after the select method
             ->join('users', 'comments.user_id', '=', 'users.id', 'left')
-            // Don't show new comments, avoid showing duplicate comments,
+            // Don't show new comments, avoid showing duplicate comments;
             // New comments have already showed in a new comment group.
             ->whereNotIn('comments.id', array_keys($this->comments))
             ->where('comments.parent_id', $this->parentId)
