@@ -162,7 +162,7 @@ html[data-theme='dark'] pre.shiki span {
 pre.shiki {
     padding: 0 !important;
     border-radius: 0.75rem !important;
-    overflow: auto !important;
+    overflow-x: auto !important;
 }
 
 pre.shiki code {
