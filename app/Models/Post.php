@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\PostOrderOptions;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -75,7 +76,8 @@ class Post extends Model implements Feedable
     /**
      * Set the ordering of the post
      */
-    public function scopeWithOrder(Builder $query, ?string $order): void
+    #[Scope]
+    protected function withOrder(Builder $query, ?string $order): void
     {
         $query->withCount('comments')
             ->when($order, function ($query, $order) {
@@ -88,7 +90,7 @@ class Post extends Model implements Feedable
     }
 
     /**
-     * Set the prune rule of the post data
+     * Set the prune rule of the post-data
      */
     public function prunable(): Builder
     {
@@ -98,7 +100,7 @@ class Post extends Model implements Feedable
     /**
      * Use laravel mutator to set the slug attribute.
      */
-    public function linkWithSlug(): Attribute
+    protected function linkWithSlug(): Attribute
     {
         return new Attribute(
             get: fn ($value) => route('posts.show', [
@@ -108,7 +110,7 @@ class Post extends Model implements Feedable
         );
     }
 
-    public function tagsJson(): Attribute
+    protected function tagsJson(): Attribute
     {
         // 生成包含 tag ID 與 tag name 的 json 字串
         // [{"id":"2","value":"C#"},{"id":"5","value":"Dart"}]

@@ -46,7 +46,7 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 
-    public function hierarchy(): Attribute
+    protected function hierarchy(): Attribute
     {
         $query = <<<'SQL'
         WITH RECURSIVE CommentHierarchy AS (

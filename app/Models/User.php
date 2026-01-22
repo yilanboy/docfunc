@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<string, string>
      */
     protected $casts = [
-        'password' => 'hashed',
+        'password'          => 'hashed',
         'email_verified_at' => 'datetime',
     ];
 
@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify($instance);
     }
 
-    public function gravatarUrl(): Attribute
+    protected function gravatarUrl(): Attribute
     {
         return new Attribute(
             get: fn ($value) => get_gravatar(email: $this->email, size: 512)
