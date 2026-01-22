@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Shared;
-
 use App\Livewire\Actions\Logout;
 use App\Models\Category;
 use App\Services\SettingService;
