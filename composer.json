@@ -28,9 +28,9 @@
         "web-auth/webauthn-lib": "^5.2"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.9.1",
+        "fruitcake/laravel-debugbar": "^4.0",
         "jetbrains/phpstorm-attributes": "^1.0",
         "larastan/larastan": "^3.0",
         "laravel-lang/common": "^6.4",
