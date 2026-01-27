@@ -65,7 +65,7 @@ describe('home page', function () {
         $tagOneJsonString = Tag::query()
             ->where('id', 1)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
 
         $tagOnePost->tags()->attach(

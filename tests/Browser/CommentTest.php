@@ -114,6 +114,7 @@ test('orders root comments by popular, then by latest and oldest when changed', 
 
     // Change to Latest (由新到舊)
     $page->click('[data-test-id="comments.order.toggle"]')
+        ->wait(2)
         ->click('[data-test-id="comments.order.option"][data-order-value="latest"]')
         // Presence checks
         ->assertSeeIn(commentCardSelector(1), 'C3 - newest')
@@ -121,10 +122,11 @@ test('orders root comments by popular, then by latest and oldest when changed', 
         ->assertSeeIn(commentCardSelector(3), 'C1 - oldest');
 
     // Wait for the page is ready
-    sleep(3);
+    $page->wait(2);
 
     // Change to Oldest (由舊到新)
     $page->click('[data-test-id="comments.order.toggle"]')
+        ->wait(2)
         ->click('[data-test-id="comments.order.option"][data-order-value="oldest"]')
         // Presence checks
         ->assertSeeIn(commentCardSelector(1), 'C1 - oldest')

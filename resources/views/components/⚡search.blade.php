@@ -140,7 +140,7 @@ new class extends Component
 
                             <input
                                 class="py-2 px-10 w-full text-xl rounded-xl border dark:placeholder-white focus:border-indigo-300 outline-hidden border-zinc-400 bg-zinc-50 placeholder-zinc-400 dark:bg-zinc-800 dark:text-zinc-50 focus:ring-3 focus:ring-indigo-200/50"
-                                id="searchBox"
+                                id="search-box"
                                 type="text"
                                 x-ref="searchBox"
                                 x-model="searchBox.query"
@@ -161,6 +161,7 @@ new class extends Component
 
                         {{-- 搜尋結果列表 --}}
                         <div
+                            id="search-result"
                             x-cloak
                             x-show="searchBox.query.length >= 2 && searchBox.isLoading === false"
                             class="p-2 mt-4 w-full rounded-xl bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-50"
