@@ -33,5 +33,6 @@
         <env name="TELESCOPE_ENABLED" value="false"/>
         <!-- custom -->
         <env name="REDIS_DB" value="1"/>
+        <env name="SCOUT_DRIVER" value="collection"/>
     </php>
 </phpunit>

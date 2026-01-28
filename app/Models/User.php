@@ -13,14 +13,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property DatabaseNotificationCollection $unreadNotifications
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
