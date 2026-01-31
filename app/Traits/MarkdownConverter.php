@@ -41,8 +41,8 @@ trait MarkdownConverter
             $environment->addEventListener(DocumentParsedEvent::class, function (DocumentParsedEvent $event) {
                 $walker = $event->getDocument()->walker();
 
-                while ($event = $walker->next()) {
-                    $node = $event->getNode();
+                while ($walkerEvent = $walker->next()) {
+                    $node = $walkerEvent->getNode();
 
                     if ($node instanceof Heading) {
                         $paragraph = new Paragraph;

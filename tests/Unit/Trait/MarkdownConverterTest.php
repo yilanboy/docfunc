@@ -70,3 +70,35 @@ it('can convert the markdown content to html', function () {
         ->toContain('<li>item 3</li>')
         ->toContain('</ul>');
 });
+
+it('strips html tags', function () {
+    $trait = new class
+    {
+        use MarkdownConverter;
+    };
+
+    $body = 'Hello <script>alert("hello")</script> **bold**';
+
+    $convertedBody = $trait->convertToHtml($body);
+
+    expect($convertedBody)
+        ->not->toContain('<script>')
+        ->toContain('Hello')
+        ->toContain('<strong>bold</strong>');
+});
+
+it('can handle external links', function () {
+    $trait = new class
+    {
+        use MarkdownConverter;
+    };
+
+    $body = '[External Link](https://google.com)';
+
+    $convertedBody = $trait->convertToHtml($body);
+
+    expect($convertedBody)
+        ->toContain('href="https://google.com"')
+        ->toContain('target="_blank"')
+        ->toContain('rel="nofollow noopener noreferrer"');
+});
