@@ -55,6 +55,10 @@ new class extends Component
 </script>
 @endscript
 
+@php
+    $hasUnreadNotifications = auth()->check() ? auth()->user()->unreadNotifications()->exists() : false;
+@endphp
+
 <header
     class="z-20 mb-6"
     id="header"
@@ -158,7 +162,7 @@ new class extends Component
             <x-icons.bell class="size-6" />
           </a>
 
-          @if (auth()->user()->unreadNotifications->count() > 0)
+          @if ($hasUnreadNotifications)
                         <span class="flex absolute top-2 right-2 -mt-1 -mr-1 w-3 h-3">
               <span class="inline-flex absolute w-full h-full bg-red-400 rounded-full opacity-75 animate-ping"></span>
               <span class="inline-flex relative w-3 h-3 bg-red-500 rounded-full"></span>
@@ -315,7 +319,7 @@ new class extends Component
                                 <x-icons.bell class="w-5" />
                             </a>
 
-                            @if (auth()->user()->unreadNotifications->count() > 0)
+                            @if ($hasUnreadNotifications)
                                 <span class="flex absolute top-2 right-2 -mt-1 -mr-1 w-3 h-3">
                   <span
                       class="inline-flex absolute w-full h-full bg-red-400 rounded-full opacity-75 animate-ping"></span>
