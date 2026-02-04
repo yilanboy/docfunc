@@ -56,7 +56,7 @@ new class extends Component
 @endscript
 
 @php
-    $hasUnreadNotifications = auth()->check() ? auth()->user()->unreadNotifications()->exists() : false;
+    $hasUnreadNotifications = auth()->check() && auth()->user()->unreadNotifications()->exists();
 @endphp
 
 <header
