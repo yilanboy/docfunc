@@ -15,6 +15,7 @@ test('comment form can be submitted', function () {
     $message = 'Hello World! This is my first comment.';
 
     $page->click('新增留言')
+        ->wait(1)
         ->fill('create-comment-body', $message)
         ->click('#create-comment-submit-button')
         ->assertSee($message);

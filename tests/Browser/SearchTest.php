@@ -5,14 +5,15 @@ use App\Models\Post;
 
 test('user can search posts by title', function () {
     Post::factory()->create([
-        'title' => 'this is a news',
+        'title'   => 'this is a news',
+        'excerpt' => 'this is a news excerpt',
     ]);
 
     $page = $this->visit(route('posts.index'));
 
     $page->click('#search-button')
         ->type('#search-box', 'news')
-        ->assertSeeIn('#search-result', 'this is a news');
+        ->assertSeeIn('#search-result', 'this is a news excerpt');
 });
 
 test('user can search posts by body', function () {

@@ -120,7 +120,7 @@ new class extends Component
             <div class="overflow-y-auto fixed inset-0 z-10">
                 <div class="flex justify-center items-end p-4 min-h-full text-center sm:items-start sm:p-0">
                     <div
-                        class="inline-block mt-16 w-full max-w-md transition-all"
+                        class="inline-block mt-16 w-full max-w-lg transition-all"
                         x-show="searchBox.isOpen"
                         x-transition:enter="ease-out duration-300"
                         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -172,7 +172,7 @@ new class extends Component
                             >
                                 <div class="flex justify-center items-center">搜尋結果</div>
 
-                                <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                                <hr class="my-2 mx-4 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
                                 <ul>
                                     <template x-for="post in posts" x-bind:key="post.id">
@@ -184,7 +184,11 @@ new class extends Component
                                                 <span class="flex items-center mr-2 h-lh">
                                                     <x-icons.caret-right class="w-4" />
                                                 </span>
-                                                <span x-text="post.title"></span>
+                                                <div class="flex flex-col">
+                                                    <span class="font-semibold" x-text="post.title"></span>
+                                                    <span class="text-sm text-zinc-500 line-clamp-2 dark:text-zinc-400"
+                                                          x-show="post.excerpt" x-text="post.excerpt"></span>
+                                                </div>
                                             </a>
                                         </li>
                                     </template>
@@ -199,7 +203,7 @@ new class extends Component
                                 </div>
                             </div>
 
-                            <hr class="my-2 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                            <hr class="my-2 mx-4 h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
 
                             {{-- Algolia Logo --}}
                             <div class="flex justify-center items-center w-full">
