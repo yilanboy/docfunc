@@ -77,10 +77,12 @@ class Comment extends Model
             CommentHierarchy
         SQL;
 
-        return new Attribute(
+        $attribute = new Attribute(
             get: fn ($value) => Arr::first(
                 DB::select($query, ['id' => $this->id])
             )
-        )->shouldCache();
+        );
+
+        return $attribute->shouldCache();
     }
 }
