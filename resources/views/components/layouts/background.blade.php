@@ -1,11 +1,11 @@
-<div class="absolute top-0 right-1/2 w-full h-screen translate-x-1/2 -z-10 max-w-480">
+<div class="fixed top-0 right-1/2 w-full h-screen translate-x-1/2 -z-10 max-w-480">
     <div id="background-right">
         <div class="absolute left-[2%] top-24 hidden md:block">
             <x-icons.controller class="rotate-12 size-48 text-zinc-300/60 dark:text-zinc-950/80" />
         </div>
 
-        <div class="absolute left-[24%] top-72 hidden lg:block">
-            <x-icons.person-walking class="-rotate-12 size-24 text-zinc-300/60 dark:text-zinc-950/80" />
+        <div class="absolute left-[20%] top-72 hidden lg:block">
+            <x-icons.person-walking class="-rotate-12 size-36 text-zinc-300/60 dark:text-zinc-950/80" />
         </div>
 
         <div class="absolute left-[8%] top-104 hidden lg:block">

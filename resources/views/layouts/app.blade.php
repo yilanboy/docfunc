@@ -30,7 +30,7 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
 </head>
 
-<body class="overscroll-y-none text-lg antialiased font-noto-sans bg-zinc-200 text-zinc-900 dark:bg-zinc-900">
+<body class="overscroll-y-none relative text-lg antialiased font-noto-sans bg-zinc-200 text-zinc-900 dark:bg-zinc-900">
 {{-- Set theme --}}
 <script>
     if (
@@ -42,6 +42,8 @@
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 </script>
+
+<x-layouts.background />
 
 {{ $slot }}
 
