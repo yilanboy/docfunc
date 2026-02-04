@@ -2,14 +2,24 @@
 
 use App\Models\Setting;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 use function Pest\Laravel\get;
 
 beforeEach(function () {
+    Http::fake([
+        'https://challenges.cloudflare.com/turnstile/v0/siteverify' => Http::response([
+            'success' => true,
+        ]),
+    ]);
+
     Setting::query()
         ->where('key', 'allow_register')
         ->firstOrFail()
         ->update(['value' => true]);
+
+    Cache::forget('setting:allow_register');
 });
 
 test('registration screen can be rendered', function () {
@@ -214,6 +224,8 @@ test('guests cannot visit the registration page when registration is not allowed
         ->firstOrFail()
         ->update(['value' => false]);
 
+    Cache::forget('setting:allow_register');
+
     get(route('register'))->assertStatus(503);
 });
 
@@ -222,6 +234,8 @@ test('guests cannot see the register button', function () {
         ->where('key', 'allow_register')
         ->firstOrFail()
         ->update(['value' => false]);
+
+    Cache::forget('setting:allow_register');
 
     Livewire::test('layouts.header')->assertDontSeeText('註冊');
 });
