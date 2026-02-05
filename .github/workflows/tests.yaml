@@ -25,27 +25,12 @@ jobs:
     env:
       APP_NAME: DocFunc
       APP_URL: "https://docfunc.test"
-      DB_CONNECTION: sqlite
-      DB_DATABASE: ":memory:"
-      BROADCAST_DRIVER: log
-      CACHE_STORE: redis
       FILESYSTEM_DISK: s3
-      QUEUE_CONNECTION: redis
-      SESSION_DRIVER: redis
-      MAIL_MAILER: log
-      MAIL_FROM_ADDRESS: hello@example.com
       SCOUT_PREFIX: dev_posts
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_SECRET: ${{ secrets.ALGOLIA_SECRET }}
       CAPTCHA_SITE_KEY: 1x00000000000000000000BB
       CAPTCHA_SECRET_KEY: 1x0000000000000000000000000000000AA
-
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -57,7 +42,6 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           # https://laravel.com/docs/9.x/deployment#server-requirements
-          extensions: redis
           coverage: xdebug
 
       - name: Setup node.js
@@ -100,8 +84,6 @@ jobs:
         run: |
           npx playwright install --with-deps
           vendor/bin/pest --parallel --coverage-clover ./coverage.xml
-        env:
-          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
