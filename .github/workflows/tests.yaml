@@ -25,7 +25,7 @@ jobs:
     env:
       APP_NAME: DocFunc
       APP_URL: "https://docfunc.test"
-      FILESYSTEM_DISK: s3
+      FILESYSTEM_DISK: public
       SCOUT_PREFIX: dev_posts
       ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
       ALGOLIA_SECRET: ${{ secrets.ALGOLIA_SECRET }}
