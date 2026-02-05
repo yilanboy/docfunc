@@ -110,7 +110,7 @@ test('the number of characters in the name must be between 3 and 25.', function 
     'ThisIsAVeryLongNameThatExceedsTheMaximumNumberOfCharacters',
 ]);
 
-// name must be alphanumeric, '-' and '_'
+// the name must be alphanumeric, '-' and '_'
 test('name must be alphanumeric, \'-\' and \'_\'', function (string $name) {
     Livewire::test('pages::auth.register')
         ->set('name', $name)

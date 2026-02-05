@@ -16,21 +16,21 @@ test('comment form can be submitted', function () {
 
     $page->click('新增留言')
         ->wait(1)
-        ->fill('create-comment-body', $message)
+        ->fill('#create-comment-body', $message)
         ->click('#create-comment-submit-button')
         ->assertSee($message);
 
     $message = 'Hello World! This is my second comment.';
 
     $page->click('新增留言')
-        ->fill('create-comment-body', $message)
+        ->fill('#create-comment-body', $message)
         ->click('#create-comment-submit-button')
         ->assertSee($message);
 
     $message = 'Hello World! This is my third comment.';
 
     $page->click('新增留言')
-        ->fill('create-comment-body', $message)
+        ->fill('#create-comment-body', $message)
         ->click('#create-comment-submit-button')
         ->assertSee($message);
 });
@@ -191,7 +191,7 @@ test('replying to a root comment shows reply-to label and renders under that par
     // Open reply modal via the parent's 回覆 button
     $page->click('回覆')
         ->assertSee('回覆 小明 的留言')
-        ->fill('create-comment-body', 'Hi 小明，我來回覆你了')
+        ->fill('#create-comment-body', 'Hi 小明，我來回覆你了')
         ->click('#create-comment-submit-button')
         ->assertSee('Hi 小明，我來回覆你了');
 });
@@ -209,7 +209,7 @@ test('editing own comment updates content and shows edited flag', function () {
     $page = $this->visit($post->link_with_slug);
 
     $page->click('[data-test-id="comments.card.edit"]')
-        ->fill('edit-comment-body', 'Updated content')
+        ->fill('#edit-comment-body', 'Updated content')
         ->click('更新')
         ->assertSee('Updated content')
         ->assertSee('(已編輯)');
