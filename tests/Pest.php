@@ -16,6 +16,8 @@ use App\Models\User;
 pest()->extend(Tests\TestCase::class)
     ->in('Feature', 'Browser');
 
+pest()->browser()->timeout(10000);
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
