@@ -21,6 +21,7 @@ jobs:
       matrix:
         php:
           - 8.4
+          - 8.5
     env:
       APP_NAME: DocFunc
       APP_URL: "https://docfunc.test"
