@@ -184,7 +184,7 @@ new class extends Component
                                                 <span class="flex items-center mr-2 h-lh">
                                                     <x-icons.caret-right class="w-4" />
                                                 </span>
-                                                <div class="flex flex-col">
+                                                <div class="flex flex-col gap-1">
                                                     <span class="font-semibold" x-text="post.title"></span>
                                                     <span class="text-sm text-zinc-500 line-clamp-2 dark:text-zinc-400"
                                                           x-show="post.excerpt" x-text="post.excerpt"></span>
