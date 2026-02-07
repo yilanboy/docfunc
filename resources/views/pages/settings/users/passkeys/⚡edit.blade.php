@@ -62,8 +62,9 @@ new class extends Component
                 PublicKeyCredentialCreationOptions::class);
 
             $csmFactory = new CeremonyStepManagerFactory();
+            $creationCSM = $csmFactory->creationCeremony();
 
-            $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($csmFactory->requestCeremony())
+            $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($creationCSM)
                 ->check(
                     authenticatorAttestationResponse: $publicKeyCredential->response,
                     publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions,

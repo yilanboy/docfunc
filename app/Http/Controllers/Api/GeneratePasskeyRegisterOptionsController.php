@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Serializer;
+use Cose\Algorithms;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExcep
 use Webauthn\AuthenticatorSelectionCriteria;
 use Webauthn\Exception\InvalidDataException;
 use Webauthn\PublicKeyCredentialCreationOptions;
+use Webauthn\PublicKeyCredentialParameters;
 use Webauthn\PublicKeyCredentialRpEntity;
 use Webauthn\PublicKeyCredentialUserEntity;
 
@@ -59,6 +61,14 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             residentKey: AuthenticatorSelectionCriteria::RESIDENT_KEY_REQUIREMENT_REQUIRED,
         );
 
+        $publicKeyCredentialParametersList = [
+            PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256K),
+            PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ES256),
+            PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_RS256),
+            PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_PS256),
+            PublicKeyCredentialParameters::create('public-key', Algorithms::COSE_ALGORITHM_ED256),
+        ];
+
         try {
             // 註冊金鑰的選項，前端會使用這些選項來顯示註冊金鑰的 UI
             // challenge 是一個隨機的字串，用來防止重送攻擊
@@ -66,6 +76,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
                 rp: $relatedPartyEntity,
                 user: $userEntity,
                 challenge: Str::random(),
+                pubKeyCredParams: $publicKeyCredentialParametersList,
                 authenticatorSelection: $authenticatorSelectionCriteria
             );
         } catch (InvalidDataException $e) {
