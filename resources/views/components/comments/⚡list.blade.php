@@ -176,7 +176,6 @@ new class extends Component
             class="mt-6 comment-card"
             data-test-id="comments.card"
             wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
-            wire:transition
         >
             <div class="flex flex-col">
                 <div class="flex items-center space-x-4 text-base">
