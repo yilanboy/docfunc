@@ -14,7 +14,8 @@ export const label = {
         'font-mono',
         'italic',
         'px-2',
-    ],
+        'pointer-events-none'
+    ]
 };
 
 type LanguagesSetting = {
@@ -27,148 +28,148 @@ export const languageSettings: { [Name: string]: LanguagesSetting } = {
     text: {
         label: 'Text',
         backgroundColor: 'white',
-        color: 'black',
+        color: 'black'
     }, // The default language.
     bash: {
         label: 'Bash',
         backgroundColor: '#e95420',
-        color: 'white',
+        color: 'white'
     },
     blade: {
         label: 'Blade',
         backgroundColor: '#ff2d20',
-        color: 'white',
+        color: 'white'
     },
     c: {
         label: 'C',
         backgroundColor: '#00599d',
-        color: 'white',
+        color: 'white'
     },
     cs: {
         label: 'C#',
         backgroundColor: '#39008d',
-        color: 'white',
+        color: 'white'
     },
     cpp: {
         label: 'C++',
         backgroundColor: '#00599d',
-        color: 'white',
+        color: 'white'
     },
     css: {
         label: 'CSS',
         backgroundColor: '#2965f1',
-        color: 'white',
+        color: 'white'
     },
     dart: {
         label: 'Dart',
         backgroundColor: '#2bb6f5',
-        color: 'white',
+        color: 'white'
     },
     docker: {
         label: 'Docker',
         backgroundColor: '#1d5ee9',
-        color: 'white',
+        color: 'white'
     },
     go: {
         label: 'Go',
         backgroundColor: '#00a9d2',
-        color: 'white',
+        color: 'white'
     },
     hcl: {
         label: 'HCL',
         backgroundColor: '#5f3add',
-        color: 'white',
+        color: 'white'
     },
     html: {
         label: 'HTML',
         backgroundColor: '#dd4b25',
-        color: 'white',
+        color: 'white'
     },
     ini: {
         label: 'INI',
         backgroundColor: 'white',
-        color: 'black',
+        color: 'black'
     },
     java: {
         label: 'Java',
         backgroundColor: '#f89820',
-        color: 'white',
+        color: 'white'
     },
     javascript: {
         label: 'JavaScript',
         backgroundColor: '#f0db4f',
-        color: '#323330',
+        color: '#323330'
     },
     json: {
         label: 'JSON',
         backgroundColor: '#f0db4f',
-        color: '#323330',
+        color: '#323330'
     },
     kotlin: {
         label: 'Kotlin',
         backgroundColor: '#b125ea',
-        color: 'white',
+        color: 'white'
     },
     nginx: {
         label: 'Nginx',
         backgroundColor: '#009900',
-        color: 'white',
+        color: 'white'
     },
     php: {
         label: 'PHP',
         backgroundColor: '#787cb5',
-        color: 'white',
+        color: 'white'
     },
     python: {
         label: 'Python',
         backgroundColor: '#ffd43b',
-        color: '#646464',
+        color: '#646464'
     },
     ruby: {
         label: 'Ruby',
         backgroundColor: '#d30001',
-        color: 'white',
+        color: 'white'
     },
     rust: {
         label: 'Rust',
         backgroundColor: '#ce412b',
-        color: 'white',
+        color: 'white'
     },
     svelte: {
         label: 'Svelte',
         backgroundColor: '#f73c00',
-        color: 'white',
+        color: 'white'
     },
     sql: {
         label: 'SQL',
         backgroundColor: '#2d99d6',
-        color: 'white',
+        color: 'white'
     },
     swift: {
         label: 'Swift',
         backgroundColor: '#f05138',
-        color: 'white',
+        color: 'white'
     },
     toml: {
         label: 'TOML',
         backgroundColor: 'white',
-        color: 'black',
+        color: 'black'
     },
     typescript: {
         label: 'TypeScript',
         backgroundColor: '#007acc',
-        color: 'white',
+        color: 'white'
     },
     xml: {
         label: 'XML',
         backgroundColor: 'white',
-        color: 'black',
+        color: 'black'
     },
     yaml: {
         label: 'YAML',
         backgroundColor: 'white',
-        color: 'black',
-    },
+        color: 'black'
+    }
 };
 
 export const button = {
@@ -188,8 +189,8 @@ export const button = {
         'dark:active:bg-lividus-500',
         'transition',
         'duration-200',
-        'cursor-pointer',
-    ],
+        'cursor-pointer'
+    ]
 };
 
 export const icon = {
@@ -201,5 +202,5 @@ export const icon = {
 </svg>`,
     CLIPBOARD: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2"/>
-</svg>`,
+</svg>`
 };
