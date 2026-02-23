@@ -13,16 +13,16 @@
 
 @theme {
     /* color */
-    --color-lividus-50: #e4ecf5;
-    --color-lividus-100: #cddeee;
-    --color-lividus-200: #abc7e3;
-    --color-lividus-300: #88b0d7;
-    --color-lividus-400: #6699cc;
-    --color-lividus-500: #4482c1;
-    --color-lividus-600: #366ba1;
-    --color-lividus-700: #2a547e;
-    --color-lividus-800: #1d3d5b;
-    --color-lividus-900: #111e38;
+    --color-lividus-50: oklch(0.9397 0.0149 251.16);
+    --color-lividus-100: oklch(0.8927 0.0286 246.5);
+    --color-lividus-200: oklch(0.8182 0.0499 248.44);
+    --color-lividus-300: oklch(0.7423 0.0713 248.17);
+    --color-lividus-400: oklch(0.6676 0.0939 249.39);
+    --color-lividus-500: oklch(0.594 0.1163 250.72);
+    --color-lividus-600: oklch(0.517 0.103 250.85);
+    --color-lividus-700: oklch(0.4362 0.0842 250.33);
+    --color-lividus-800: oklch(0.3509 0.0649 248.78);
+    --color-lividus-900: oklch(0.2385 0.0534 262.91);
 
     /* font family */
     --font-noto-sans: 'Noto Sans TC', 'Roboto';
