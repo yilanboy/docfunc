@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 @props(['pathClassName' => 'fill-black dark:fill-white'])
 
 <svg

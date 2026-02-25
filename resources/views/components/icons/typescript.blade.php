@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 @props(['rectClassName' => 'fill-[#3178c6]', 'pathClassName' => 'fill-white'])
 
 <svg
