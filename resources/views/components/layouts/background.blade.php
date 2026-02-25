@@ -1,5 +1,5 @@
 <div class="fixed top-0 right-1/2 w-full h-screen translate-x-1/2 -z-10 max-w-480">
-    <div id="background-right">
+    <div id="background-left">
         <div class="absolute left-[2%] top-24 hidden md:block">
             <x-icons.controller class="rotate-12 size-42 text-zinc-300/60 dark:text-zinc-950/80" />
         </div>
