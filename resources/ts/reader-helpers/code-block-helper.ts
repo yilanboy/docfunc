@@ -122,7 +122,7 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         // to make the copy button fixed in the container, we wrap it in the container
         let wrapper: HTMLDivElement = document.createElement('div');
         // add 'relative' to make this element to become an anchor
-        wrapper.classList.add('group', 'relative');
+        wrapper.classList.add('group', 'relative', '-mx-4');
 
         // set the wrapper as sibling of the pre-tag
         preTag.parentNode?.insertBefore(wrapper, preTag);
