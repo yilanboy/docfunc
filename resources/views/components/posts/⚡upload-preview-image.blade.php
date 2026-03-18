@@ -2,58 +2,22 @@
 
 declare(strict_types=1);
 
-use App\Services\FileService;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Modelable;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Random\RandomException;
 
 new class extends Component
 {
-    use WithFileUploads;
-
-    #[Validate(
-        rule: ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
-        message: [
-            'image' => '必須是圖片',
-            'mimes' => '圖片格式必須是 jpeg, png, jpg',
-            'max'   => '圖片大小不能超過 1024 KB',
-        ],
-    )]
-    public $image;
-
     #[Modelable]
     public ?string $imageUrl = null;
-
-    public function store(): void
-    {
-        $this->validate();
-
-        if (is_null($this->image)) {
-            return;
-        }
-
-        $imageName = app(FileService::class)->generateFileName($this->image->getClientOriginalExtension());
-
-        $path = $this->image->storeAs('images', $imageName, config('filesystems.default'));
-
-        $this->imageUrl = Storage::disk()->url($path);
-    }
-
-    public function updatedImage(): void
-    {
-        $this->store();
-        $this->image = null;
-    }
 };
 ?>
 
 @script
 <script>
-    Alpine.data('postsUploadPreviewImagePart', () => ({
+    Alpine.data('uploadPreviewImage', () => ({
+        imageUrl: $wire.entangle('imageUrl'),
         uploading: false,
+        errorMessage: null,
         changeBlockStyleWhenDragEnter() {
             this.$refs.uploadBlock.classList.remove('text-emerald-500', 'dark:text-indigo-400', 'border-emerald-500',
                 'dark:border-indigo-400');
@@ -68,7 +32,42 @@ new class extends Component
         },
         removePreviewUrl() {
             if (confirm('你確定要刪除預覽圖嗎？')) {
-                this.$wire.$set('imageUrl', null);
+                this.imageUrl = null;
+            }
+        },
+        async uploadImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            this.uploading = true;
+            this.errorMessage = null;
+
+            const formData = new FormData();
+            formData.append('upload', file);
+
+            try {
+                const response = await fetch('{{ route('images.store') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin'
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    this.imageUrl = result.url;
+                } else {
+                    this.errorMessage = result.error?.message || '上傳失敗，請稍後再試';
+                }
+            } catch (error) {
+                this.errorMessage = '上傳過程發生錯誤';
+            } finally {
+                this.uploading = false;
+                event.target.value = '';
             }
         }
     }));
@@ -77,22 +76,18 @@ new class extends Component
 
 <div
     class="col-span-2 text-base"
-    x-data="postsUploadPreviewImagePart"
-    x-on:livewire-upload-start="uploading = true"
-    x-on:livewire-upload-finish="uploading = false"
-    x-on:livewire-upload-cancel="uploading = false"
-    x-on:livewire-upload-error="uploading = false"
+    x-data="uploadPreviewImage"
 >
     {{-- image preview --}}
     <div
         class="relative w-full"
         x-cloak
-        x-show="$wire.$errors.all().length === 0 && $wire.imageUrl !== null"
+        x-show="imageUrl !== null"
     >
         <img
             class="rounded-lg"
             id="image-url"
-            src="{{ $imageUrl }}"
+            x-bind:src="imageUrl"
             alt="image url"
         >
 
@@ -116,12 +111,12 @@ new class extends Component
         class="flex relative flex-col items-center py-6 px-4 tracking-wide text-emerald-500 bg-transparent rounded-lg border-2 border-emerald-500 border-dashed transition-all duration-300 cursor-pointer dark:text-indigo-400 dark:border-indigo-400 hover:text-emerald-600 hover:border-emerald-600 dark:hover:border-indigo-300 dark:hover:text-indigo-300"
         x-ref="uploadBlock"
         x-cloak
-        x-show="$wire.imageUrl === null"
+        x-show="imageUrl === null"
     >
         <input
             class="absolute inset-0 z-50 p-0 m-0 w-full h-full opacity-0 cursor-pointer outline-hidden"
             type="file"
-            wire:model.live="image"
+            x-on:change="uploadImage"
             x-on:dragenter="changeBlockStyleWhenDragEnter"
             x-on:dragleave="changeBlockStyleWhenDragLeaveAndDrop"
             x-on:drop="changeBlockStyleWhenDragLeaveAndDrop"
@@ -142,9 +137,12 @@ new class extends Component
 
             <p>預覽圖 (jpg, jpeg or png)</p>
 
-            @error('image')
-            <span class="text-red-500">{{ $message }}</span>
-            @enderror
+            <template x-if="errorMessage">
+                <span
+                    class="text-red-500"
+                    x-text="errorMessage"
+                ></span>
+            </template>
         </div>
     </div>
 </div>
