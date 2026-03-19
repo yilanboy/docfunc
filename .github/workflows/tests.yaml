@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup php
@@ -45,16 +45,16 @@ jobs:
           coverage: xdebug
 
       - name: Setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "24.10.0"
+          node-version: "25.8.1"
 
       - name: Get composer cache directory
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -66,7 +66,7 @@ jobs:
 
       - name: Generate vite manifest
         run: |
-          npm install
+          npm ci
           npm run build
 
       - name: Prepare the application
