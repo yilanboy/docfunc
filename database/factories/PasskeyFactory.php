@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Passkey;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Passkey>
+ * @extends Factory<Passkey>
  */
 class PasskeyFactory extends Factory
 {

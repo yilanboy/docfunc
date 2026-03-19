@@ -26,7 +26,8 @@
         "livewire/livewire": "^v4.0",
         "spatie/laravel-feed": "^4.1",
         "symfony/html-sanitizer": "^8.0",
-        "web-auth/webauthn-lib": "^5.2"
+        "web-auth/webauthn-lib": "^5.2",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
