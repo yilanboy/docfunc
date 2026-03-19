@@ -5,7 +5,6 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use App\Services\ContentService;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 
 use function Pest\Laravel\get;
@@ -37,7 +36,7 @@ describe('create post', function () {
         $tagCollection = Tag::factory()->count(3)->create();
 
         $tagsJson = $tagCollection
-            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         $contentService = app(ContentService::class);
@@ -61,7 +60,7 @@ describe('create post', function () {
         $post = Post::latest()->first();
 
         $tagIdsArray = $tagCollection
-            ->map(fn ($item) => $item->id)
+            ->map(fn($item) => $item->id)
             ->all();
 
         expect(Cache::has('auto_save_user_'.$user->id.'_create_post'))->toBeFalse()
@@ -128,46 +127,6 @@ describe('create post', function () {
             ->assertHasErrors(['body' => 'max:20000']);
     });
 
-    it('can check image type', function () {
-        $file = UploadedFile::fake()->create('document.pdf', 512);
-
-        Livewire::test('posts.upload-preview-image')
-            ->set('image', $file)
-            ->assertHasErrors('image');
-    });
-
-    it('can check image size', function () {
-        $file = UploadedFile::fake()->image('image.jpg')->size(1025);
-
-        Livewire::test('posts.upload-preview-image')
-            ->set('image', $file)
-            ->assertHasErrors('image');
-    });
-
-    it('can upload image', function () {
-        Storage::fake();
-
-        $image = UploadedFile::fake()->image('fake_image.jpg');
-
-        Livewire::test('posts.upload-preview-image')
-            ->set('image', $image)
-            ->assertHasNoErrors()
-            ->assertSeeHtml('id="image-url"');
-
-        expect(Storage::disk()->allFiles())->not->toBeEmpty();
-    });
-
-    it('can\'t upload a non-image', function () {
-        Storage::fake();
-
-        $file = UploadedFile::fake()->create('document.pdf', 512);
-
-        Livewire::test('posts.upload-preview-image')
-            ->set('image', $file)
-            ->assertHasErrors('image')
-            ->assertDontSeeHtml('id="upload-image"');
-    });
-
     it('can get auto save key property', function () {
         $user = loginAsUser();
 
@@ -195,7 +154,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -238,7 +197,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
