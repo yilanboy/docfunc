@@ -12,12 +12,12 @@
         "@types/yaireo__tagify": "^4.27.0",
         "@yaireo/tagify": "^4.32.1",
         "ckeditor5": "^47.0.0",
-        "laravel-vite-plugin": "^2.0.0",
+        "laravel-vite-plugin": "^3.0.0",
         "playwright": "^1.58.0",
         "shiki": "^3.17.1",
         "tailwindcss": "^4.0.0",
         "typescript": "^5.7.2",
-        "vite": "^7.0.0"
+        "vite": "^8.0.0"
     },
     "type": "module"
 }
