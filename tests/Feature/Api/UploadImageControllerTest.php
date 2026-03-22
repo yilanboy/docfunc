@@ -33,8 +33,8 @@ it('validates the upload is an image', function () {
         ]);
 });
 
-it('validates the upload size is not more than 1MB', function () {
-    $file = UploadedFile::fake()->image('large.jpg')->size(1100);
+it('validates the upload size is not more than 2MB', function () {
+    $file = UploadedFile::fake()->image('large.jpg')->size(2049);
 
     $response = actingAs($this->user)->postJson(route('images.store'), [
         'upload' => $file,
@@ -42,7 +42,7 @@ it('validates the upload size is not more than 1MB', function () {
 
     $response->assertStatus(413)
         ->assertJson([
-            'error' => ['message' => 'The image size cannot exceed 1MB.'],
+            'error' => ['message' => 'The image size cannot exceed 2MB.'],
         ]);
 });
 

@@ -65,11 +65,11 @@ describe('image upload api', function () {
         Storage::disk()->assertDirectoryEmpty('images');
     });
 
-    test('the size of the uploaded image must be less than 1024 kb', function () {
+    test('the size of the uploaded image must be less than 2MB', function () {
         loginAsUser();
 
         post(route('images.store'), [
-            'upload' => UploadedFile::fake()->image('photo.jpg')->size(1025),
+            'upload' => UploadedFile::fake()->image('photo.jpg')->size(2049),
         ])
             ->assertStatus(413)
             ->assertJsonStructure(['error' => ['message']]);
