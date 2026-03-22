@@ -110,5 +110,5 @@ jobs:
         if: always()
         run: |
           curl -G -s -o /dev/null "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage?" \
-            --data-urlencode "text=DocFunc tests ${{ job.status }}: ${{ github.workflow }} - ${{ github.run_number }}" \
+            --data-urlencode "text=DocFunc PHP ${{ matrix.php }} tests ${{ job.status }}: ${{ github.workflow }} - ${{ github.run_number }}" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}"
