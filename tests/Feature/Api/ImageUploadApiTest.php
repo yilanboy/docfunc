@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\post;
 
-beforeEach(fn() => Storage::fake());
+beforeEach(fn () => Storage::fake());
 
 describe('image upload api', function () {
     test('users who are not logged in cannot upload images', function () {
@@ -65,11 +65,11 @@ describe('image upload api', function () {
         Storage::disk()->assertDirectoryEmpty('images');
     });
 
-    test('the size of the uploaded image must be less than 2MB', function () {
+    test('the size of the uploaded image must be less than 25MB', function () {
         loginAsUser();
 
         post(route('images.store'), [
-            'upload' => UploadedFile::fake()->image('photo.jpg')->size(2049),
+            'upload' => UploadedFile::fake()->image('photo.jpg')->size(25 * 1024 + 1),
         ])
             ->assertStatus(413)
             ->assertJsonStructure(['error' => ['message']]);
