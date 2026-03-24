@@ -47,7 +47,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "25.8.1"
+          node-version: latest
 
       - name: Get composer cache directory
         id: composer-cache
