@@ -77,7 +77,7 @@ class PostForm extends Form
                 'tags'        => $this->tags,
                 'body'        => $this->body,
             ], JSON_UNESCAPED_UNICODE),
-            now()->addDays(7)
+            now()->addMonth()
         );
     }
 

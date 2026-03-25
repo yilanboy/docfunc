@@ -36,7 +36,7 @@ describe('create post', function () {
         $tagCollection = Tag::factory()->count(3)->create();
 
         $tagsJson = $tagCollection
-            ->map(fn($item) => ['id' => $item->id, 'name' => $item->name])
+            ->map(fn ($item) => ['id' => $item->id, 'name' => $item->name])
             ->toJson();
 
         $contentService = app(ContentService::class);
@@ -60,7 +60,7 @@ describe('create post', function () {
         $post = Post::latest()->first();
 
         $tagIdsArray = $tagCollection
-            ->map(fn($item) => $item->id)
+            ->map(fn ($item) => $item->id)
             ->all();
 
         expect(Cache::has('auto_save_user_'.$user->id.'_create_post'))->toBeFalse()
@@ -154,7 +154,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -197,7 +197,7 @@ describe('create post', function () {
         $tags = Tag::inRandomOrder()
             ->limit(5)
             ->get()
-            ->map(fn($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
             ->toJson(JSON_UNESCAPED_UNICODE);
         $body = str()->random(500);
 
@@ -211,7 +211,7 @@ describe('create post', function () {
                 'tags'        => $tags,
                 'body'        => $body,
             ], JSON_UNESCAPED_UNICODE),
-            now()->addDays(7)
+            now()->addMonth()
         );
 
         Livewire::test('pages::posts.create', [
