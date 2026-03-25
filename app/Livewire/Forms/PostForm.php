@@ -83,20 +83,22 @@ class PostForm extends Form
 
     public function setDataFromAutoSave(string $key): bool
     {
-        if (Cache::has($key)) {
-            $autoSavePostData = json_decode(Cache::get($key), true);
+        $cached = Cache::get($key);
 
-            $this->category_id = $autoSavePostData['category_id'];
-            $this->is_private = $autoSavePostData['is_private'];
-            $this->preview_url = $autoSavePostData['preview_url'];
-            $this->title = $autoSavePostData['title'];
-            $this->tags = $autoSavePostData['tags'];
-            $this->body = $autoSavePostData['body'];
-
-            return true;
+        if ($cached === null) {
+            return false;
         }
 
-        return false;
+        $autoSavePostData = json_decode($cached, true);
+
+        $this->category_id = $autoSavePostData['category_id'];
+        $this->is_private = $autoSavePostData['is_private'];
+        $this->preview_url = $autoSavePostData['preview_url'];
+        $this->title = $autoSavePostData['title'];
+        $this->tags = $autoSavePostData['tags'];
+        $this->body = $autoSavePostData['body'];
+
+        return true;
     }
 
     public function clearAutoSave(string $key): void

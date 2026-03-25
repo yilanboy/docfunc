@@ -3,6 +3,7 @@
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\ContentService;
+use Illuminate\Support\Facades\Cache;
 
 use function Pest\Laravel\get;
 
@@ -101,6 +102,176 @@ describe('edit post', function () {
 
         expect($post->is_private)->toBe(! $privateStatus);
     })->with([true, false]);
+
+    it('can get auto save key property', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->assertSet('autoSaveKey', 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id);
+    });
+
+    it('can auto save the editing post to cache', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        $autoSaveKey = 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id;
+
+        if (Cache::has($autoSaveKey)) {
+            Cache::pull($autoSaveKey);
+        }
+
+        expect(Cache::has($autoSaveKey))->toBeFalse();
+
+        $newTitle = str()->random(4);
+        $newCategoryId = $post->category_id;
+        $newTags = Tag::factory()->count(3)->create()
+            ->map(fn ($tag) => ['id' => $tag->id, 'value' => $tag->name])
+            ->toJson(JSON_UNESCAPED_UNICODE);
+        $newBody = str()->random(500);
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->set('form.title', $newTitle)
+            ->set('form.category_id', $newCategoryId)
+            ->set('form.tags', $newTags)
+            ->set('form.body', $newBody);
+
+        expect(Cache::has($autoSaveKey))
+            ->toBeTrue()
+            ->and(json_decode(Cache::get($autoSaveKey), true))
+            ->toBe([
+                'category_id' => $newCategoryId,
+                'is_private'  => $post->is_private,
+                'preview_url' => $post->preview_url,
+                'title'       => $newTitle,
+                'tags'        => $newTags,
+                'body'        => $newBody,
+            ]);
+    });
+
+    it('can restore auto saved data when editing post', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        $autoSaveKey = 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id;
+
+        $cachedTitle = str()->random(10);
+        $cachedBody = str()->random(600);
+
+        Cache::put(
+            $autoSaveKey,
+            json_encode([
+                'category_id' => $post->category_id,
+                'is_private'  => true,
+                'preview_url' => null,
+                'title'       => $cachedTitle,
+                'tags'        => '',
+                'body'        => $cachedBody,
+            ], JSON_UNESCAPED_UNICODE),
+            now()->addMonth()
+        );
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->assertSet('form.title', $cachedTitle)
+            ->assertSet('form.body', $cachedBody)
+            ->assertSet('form.is_private', true);
+    });
+
+    it('shows hasAutoSave as true when auto save data exists', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        $autoSaveKey = 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id;
+
+        Cache::put(
+            $autoSaveKey,
+            json_encode([
+                'category_id' => $post->category_id,
+                'is_private'  => $post->is_private,
+                'preview_url' => $post->preview_url,
+                'title'       => str()->random(10),
+                'tags'        => '',
+                'body'        => str()->random(500),
+            ], JSON_UNESCAPED_UNICODE),
+            now()->addMonth()
+        );
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->assertSet('hasAutoSave', true);
+    });
+
+    it('shows hasAutoSave as false when no auto save data exists', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->assertSet('hasAutoSave', false);
+    });
+
+    it('can restore from database and clears auto save cache', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        $autoSaveKey = 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id;
+
+        Cache::put(
+            $autoSaveKey,
+            json_encode([
+                'category_id' => $post->category_id,
+                'is_private'  => $post->is_private,
+                'preview_url' => $post->preview_url,
+                'title'       => str()->random(10),
+                'tags'        => '',
+                'body'        => str()->random(500),
+            ], JSON_UNESCAPED_UNICODE),
+            now()->addMonth()
+        );
+
+        expect(Cache::has($autoSaveKey))->toBeTrue();
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->call('restoreFromDatabase')
+            ->assertRedirect(route('posts.edit', ['id' => $post->id]));
+
+        expect(Cache::has($autoSaveKey))->toBeFalse();
+    });
+
+    it('clears auto save cache after successfully updating post', function () {
+        $post = Post::factory()->create();
+
+        loginAsUser($post->user);
+
+        $autoSaveKey = 'auto_save_user_'.$post->user_id.'_edit_post_'.$post->id;
+
+        Cache::put(
+            $autoSaveKey,
+            json_encode([
+                'category_id' => $post->category_id,
+                'is_private'  => $post->is_private,
+                'preview_url' => $post->preview_url,
+                'title'       => $post->title,
+                'tags'        => '',
+                'body'        => $post->body,
+            ], JSON_UNESCAPED_UNICODE),
+            now()->addMonth()
+        );
+
+        expect(Cache::has($autoSaveKey))->toBeTrue();
+
+        Livewire::test('pages::posts.edit', ['id' => $post->id])
+            ->set('form.title', str()->random(4))
+            ->set('form.body', str()->random(500))
+            ->call('save', post: $post)
+            ->assertHasNoErrors();
+
+        expect(Cache::has($autoSaveKey))->toBeFalse();
+    });
 
     test('toggle private status won\'t touch timestamp', function ($privateStatus) {
         $post = Post::factory()->create([

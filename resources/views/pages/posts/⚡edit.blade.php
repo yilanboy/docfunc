@@ -17,9 +17,13 @@ new class extends Component
 
     public PostForm $form;
 
+    public string $autoSaveKey;
+
     public Collection $categories;
 
     public Post $post;
+
+    public bool $hasAutoSave = false;
 
     public function mount(int $id): void
     {
@@ -27,16 +31,35 @@ new class extends Component
 
         $this->authorize('update', $this->post);
 
+        $this->autoSaveKey = 'auto_save_user_'.auth()->id().'_edit_post_'.$this->post->id;
+
         $this->categories = Category::all(['id', 'name']);
 
         $this->form->user_id = auth()->id();
 
         $this->form->setPost($this->post);
+
+        $this->hasAutoSave = $this->form->setDataFromAutoSave($this->autoSaveKey);
+    }
+
+    // when data update, auto save it to redis
+    public function updated(): void
+    {
+        $this->form->autoSave($this->autoSaveKey);
+    }
+
+    public function restoreFromDatabase(): void
+    {
+        $this->form->clearAutoSave($this->autoSaveKey);
+
+        $this->redirect(route('posts.edit', ['id' => $this->post->id]), navigate: true);
     }
 
     public function save(Post $post): void
     {
         $this->form->update($post);
+
+        $this->form->clearAutoSave($this->autoSaveKey);
 
         $this->dispatch('toast', status: 'success', message: '成功更新文章！');
 
@@ -66,8 +89,8 @@ new class extends Component
         tagsListUrl: @js(route('api.tags')),
         bodyMaxCharacters: @js($this->form::BODY_MAX_CHARACTER),
         ClassNameToAddOnEditorContent: @js(['rich-text']),
-        tags: $wire.entangle('form.tags'),
-        body: $wire.entangle('form.body'),
+        tags: $wire.entangle('form.tags').live,
+        body: $wire.entangle('form.body').live,
         debounce(callback, delay) {
             let timeoutId;
             clearTimeout(timeoutId);
@@ -144,6 +167,26 @@ new class extends Component
                         <x-icons.pencil-square class="w-6" />
                         <span class="ml-4">編輯文章</span>
                     </div>
+
+                    {{-- auto save restore notice --}}
+                    @if ($hasAutoSave)
+                        <div
+                            class="flex justify-between items-center py-3 px-4 w-full text-sm text-amber-800 bg-amber-50 rounded-lg border border-amber-200 dark:text-amber-200 dark:border-amber-700 dark:bg-amber-900/30">
+                            <span>已載入上次未儲存的編輯內容</span>
+
+                            <button
+                                class="ml-4 font-medium underline transition cursor-pointer hover:text-amber-600 dark:hover:text-amber-100"
+                                type="button"
+                                wire:click="restoreFromDatabase"
+                                wire:loading.attr="disabled"
+                            >
+                                <span class="inline-flex gap-1 items-center">
+                                    <x-icons.arrow-counterclockwise class="size-4" />
+                                    還原為已儲存版本
+                                </span>
+                            </button>
+                        </div>
+                    @endif
 
                     {{-- editor --}}
                     <x-card class="w-full">
