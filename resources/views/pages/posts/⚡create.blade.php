@@ -20,6 +20,8 @@ new class extends Component
 
     public Collection $categories;
 
+    public bool $hasAutoSave = false;
+
     public function mount(): void
     {
         $this->autoSaveKey = 'auto_save_user_'.auth()->id().'_create_post';
@@ -28,7 +30,7 @@ new class extends Component
 
         $this->categories = Category::all(['id', 'name']);
 
-        $this->form->setDataFromAutoSave($this->autoSaveKey);
+        $this->hasAutoSave = $this->form->setDataFromAutoSave($this->autoSaveKey);
     }
 
     // when data update, auto save it to redis
@@ -150,6 +152,14 @@ new class extends Component
                         <x-icons.pencil class="w-6" />
                         <span class="ml-4">新增文章</span>
                     </div>
+
+                    {{-- auto save restore notice --}}
+                    @if ($hasAutoSave)
+                        <div
+                            class="py-3 px-4 w-full text-sm text-amber-800 bg-amber-50 rounded-lg border border-amber-200 dark:text-amber-200 dark:border-amber-700 dark:bg-amber-900/30">
+                            <span>已載入上次未儲存的編輯內容</span>
+                        </div>
+                    @endif
 
                     {{-- editor --}}
                     <x-card class="w-full">

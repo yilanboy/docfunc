@@ -180,6 +180,43 @@ describe('create post', function () {
             ]);
     });
 
+    it('shows hasAutoSave as true when auto save data exists', function () {
+        $user = loginAsUser();
+
+        $autoSaveKey = 'auto_save_user_'.$user->id.'_create_post';
+
+        Cache::put(
+            $autoSaveKey,
+            json_encode([
+                'category_id' => Category::pluck('id')->random(),
+                'is_private'  => false,
+                'preview_url' => null,
+                'title'       => str()->random(10),
+                'tags'        => '',
+                'body'        => str()->random(500),
+            ], JSON_UNESCAPED_UNICODE),
+            now()->addMonth()
+        );
+
+        Livewire::test('pages::posts.create', [
+            'categories' => Category::all(['id', 'name']),
+        ])->assertSet('hasAutoSave', true);
+    });
+
+    it('shows hasAutoSave as false when no auto save data exists', function () {
+        $user = loginAsUser();
+
+        $autoSaveKey = 'auto_save_user_'.$user->id.'_create_post';
+
+        if (Cache::has($autoSaveKey)) {
+            Cache::pull($autoSaveKey);
+        }
+
+        Livewire::test('pages::posts.create', [
+            'categories' => Category::all(['id', 'name']),
+        ])->assertSet('hasAutoSave', false);
+    });
+
     it('can get data from cache', function () {
         $user = loginAsUser();
 
