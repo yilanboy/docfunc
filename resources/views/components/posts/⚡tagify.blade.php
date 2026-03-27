@@ -26,19 +26,23 @@ new class extends Component
         tagsListUrl: @js(route('api.tags')),
         async init() {
             const response = await fetch(this.tagsListUrl);
-            const tagsJson = await response.json();
+            const tagsList = await response.json();
 
             const tagify = window.createTagify(
                 this.$refs.tags,
-                tagsJson.data,
-                (event) => {
-                    this.$wire.value = event.detail.value;
-                }
+                tagsList.data
             );
 
-            if (this.$wire.value.length > 0) {
-                tagify.addTags(JSON.parse(this.$wire.value));
+            try {
+                const tags = JSON.parse(this.$wire.value);
+                tagify.addTags(tags);
+            } catch (error) {
+                console.error('Error parsing tags:', error);
             }
+
+            tagify.on('change', (event) => {
+                this.$wire.value = event.detail.value;
+            });
 
             document.addEventListener('livewire:navigating', () => {
                 tagify.destroy();
