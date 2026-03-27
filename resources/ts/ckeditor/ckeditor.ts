@@ -36,7 +36,7 @@ import {
     TextTransformation,
     Underline,
     Undo,
-    WordCount,
+    WordCount
 } from 'ckeditor5';
 
 import coreTranslations from 'ckeditor5/translations/zh.js';
@@ -46,7 +46,8 @@ import 'ckeditor5/ckeditor5-editor.css';
 // import './custom.css';
 import { languageSettings } from '../config.js';
 
-class ClassicEditor extends ClassicEditorBase {}
+class ClassicEditor extends ClassicEditorBase {
+}
 
 ClassicEditor.builtinPlugins = [
     Alignment,
@@ -84,7 +85,7 @@ ClassicEditor.builtinPlugins = [
     TextTransformation,
     Underline,
     Undo,
-    WordCount,
+    WordCount
 ];
 
 ClassicEditor.defaultConfig = {
@@ -120,69 +121,69 @@ ClassicEditor.defaultConfig = {
             'undo',
             'redo',
             '|',
-            'findAndReplace',
+            'findAndReplace'
         ],
-        shouldNotGroupWhenFull: true,
+        shouldNotGroupWhenFull: true
     },
     heading: {
         options: [
             {
                 model: 'paragraph',
                 title: 'Paragraph',
-                class: 'ck-heading_paragraph',
+                class: 'ck-heading_paragraph'
             },
             {
                 model: 'heading2',
                 view: 'h2',
                 title: 'Heading 2',
-                class: 'ck-heading_heading2',
+                class: 'ck-heading_heading2'
             },
             {
                 model: 'heading3',
                 view: 'h3',
                 title: 'Heading 3',
-                class: 'ck-heading_heading3',
-            },
-        ] as HeadingOption[],
+                class: 'ck-heading_heading3'
+            }
+        ] as HeadingOption[]
     },
     fontSize: {
-        options: ['tiny', 'default', 'big'],
+        options: ['tiny', 'default', 'big']
     },
     link: {
-        addTargetToExternalLinks: true,
+        addTargetToExternalLinks: true
     },
     image: {
         resizeOptions: [
             {
                 name: 'resizeImage:original',
                 value: null,
-                icon: 'original',
+                icon: 'original'
             },
             {
                 name: 'resizeImage:50',
                 value: '50',
-                icon: 'medium',
+                icon: 'medium'
             },
             {
                 name: 'resizeImage:75',
                 value: '75',
-                icon: 'large',
-            },
+                icon: 'large'
+            }
         ],
-        toolbar: ['toggleImageCaption', 'imageTextAlternative', 'resizeImage'],
+        toolbar: ['toggleImageCaption', 'imageTextAlternative', 'resizeImage']
     },
     table: {
-        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
     },
     codeBlock: {
         languages: Object.keys(languageSettings).map((key) => ({
             language: key,
-            label: languageSettings[key].label,
+            label: languageSettings[key].label
         })),
-        indentSequence: '    ',
+        indentSequence: '    '
     },
     translations: [coreTranslations],
-    language: 'zh',
+    language: 'zh'
 };
 
 declare global {
@@ -191,16 +192,16 @@ declare global {
             element: HTMLElement,
             maxCharacters: number,
             imageUploadUrl: string,
-            csrfToken: string,
+            csrfToken: string
         ) => Promise<ClassicEditor>;
     }
 }
 
-window.createClassicEditor = async function (
+window.createClassicEditor = async function(
     element: HTMLElement,
     maxCharacters: number,
     imageUploadUrl: string,
-    csrfToken: string,
+    csrfToken: string
 ) {
     return ClassicEditor.create(element, {
         licenseKey: 'GPL',
@@ -226,16 +227,19 @@ window.createClassicEditor = async function (
                     // add the class 'text-red-400' to the 'wordsBox' element to turn the text red
                     element.classList.toggle('text-red-400', isLimitExceeded);
                 });
-            },
+            }
         },
         simpleUpload: {
             // The URL that the images are uploaded to.
             uploadUrl: imageUploadUrl,
 
+            // Enable the XMLHttpRequest.withCredentials property.
+            withCredentials: true,
+
             // laravel sanctum need csrf token to authenticate
             headers: {
-                'X-CSRF-TOKEN': csrfToken,
-            },
-        },
+                'X-CSRF-TOKEN': csrfToken
+            }
+        }
     });
 };
