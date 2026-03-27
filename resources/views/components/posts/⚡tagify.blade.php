@@ -40,9 +40,12 @@ new class extends Component
                 console.error('Error parsing tags:', error);
             }
 
-            tagify.on('change', (event) => {
-                this.$wire.value = event.detail.value;
-            });
+            // Prevent from triggering when component is initialized
+            setTimeout(() => {
+                tagify.on('change', (event) => {
+                    this.$wire.value = event.detail.value;
+                });
+            }, 500);
 
             document.addEventListener('livewire:navigating', () => {
                 tagify.destroy();
@@ -62,7 +65,7 @@ new class extends Component
     >標籤 (最多 5 個)</label>
 
     <input
-        class="tagify-custom-look dark:border-zinc-600! border-zinc-300! w-full rounded-md bg-white dark:bg-zinc-700"
+        class="tagify-custom-look dark:border-zinc-600! border-zinc-300! w-full rounded-md bg-white dark:bg-zinc-700 inline-flex items-center"
         id="tags"
         type="text"
         placeholder="標籤 (最多 5 個)"
