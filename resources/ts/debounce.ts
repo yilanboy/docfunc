@@ -1,10 +1,10 @@
 export default function debounce<T extends (...args: unknown[]) => void>(
     callback: T,
-    delay: number,
+    delay: number
 ): (...args: Parameters<T>) => void {
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
+    return function(this: ThisParameterType<T>, ...args: Parameters<T>): void {
         if (timeoutId) {
             clearTimeout(timeoutId);
         }

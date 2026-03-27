@@ -98,7 +98,7 @@ new class extends Component
                 callback.apply(this, arguments);
             }, delay);
         },
-        async init() {
+        async initCkeditor() {
             // init the creation post-page
             const ckeditor = await window.createClassicEditor(
                 this.$refs.editor,
@@ -110,17 +110,22 @@ new class extends Component
             // set the default value of the editor
             ckeditor.setData(this.body);
 
+            const updateBody = window.debounce(() => {
+                this.body = ckeditor.getData();
+            }, 1000);
+
             // binding the value of the ckeditor to the livewire attribute 'body'
             ckeditor.model.document.on('change:data', () => {
-                this.debounce(() => {
-                    this.body = ckeditor.getData();
-                }, 1000);
+                updateBody();
             });
 
             // override editable block style
             ckeditor.ui.view.editable.element
                 .parentElement.classList.add(...this.ClassNameToAddOnEditorContent);
 
+            return ckeditor;
+        },
+        async initTagify() {
             const response = await fetch(this.tagsListUrl);
             const tagsJson = await response.json();
 
@@ -135,6 +140,10 @@ new class extends Component
             if (this.tags.length !== 0) {
                 tagify.addTags(JSON.parse(this.tags));
             }
+        },
+        async init() {
+            const ckeditor = await this.initCkeditor();
+            const tagify = await this.initTagify();
 
             document.addEventListener('livewire:navigating', () => {
                 ckeditor.destroy();

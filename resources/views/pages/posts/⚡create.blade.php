@@ -20,8 +20,6 @@ new class extends Component
 
     public Collection $categories;
 
-    public bool $hasAutoSave = false;
-
     public function mount(): void
     {
         $this->autoSaveKey = 'auto_save_user_'.auth()->id().'_create_post';
@@ -30,7 +28,7 @@ new class extends Component
 
         $this->categories = Category::all(['id', 'name']);
 
-        $this->hasAutoSave = $this->form->setDataFromAutoSave($this->autoSaveKey);
+        $this->form->setDataFromAutoSave($this->autoSaveKey);
     }
 
     // when data update, auto save it to redis
@@ -75,14 +73,7 @@ new class extends Component
         ClassNameToAddOnEditorContent: @js(['rich-text']),
         tags: $wire.entangle('form.tags').live,
         body: $wire.entangle('form.body').live,
-        debounce(callback, delay) {
-            let timeoutId;
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                callback.apply(this, arguments);
-            }, delay);
-        },
-        async init() {
+        async initCkeditor() {
             // init the creation post-page
             const ckeditor = await window.createClassicEditor(
                 this.$refs.editor,
@@ -94,17 +85,22 @@ new class extends Component
             // set the default value of the editor
             ckeditor.setData(this.body);
 
+            const updateBody = window.debounce(() => {
+                this.body = ckeditor.getData();
+            }, 1000);
+
             // binding the value of the ckeditor to the livewire attribute 'body'
             ckeditor.model.document.on('change:data', () => {
-                this.debounce(() => {
-                    this.body = ckeditor.getData();
-                }, 1000);
+                updateBody();
             });
 
             // override editable block style
             ckeditor.ui.view.editable.element
                 .parentElement.classList.add(...this.ClassNameToAddOnEditorContent);
 
+            return ckeditor;
+        },
+        async initTagify() {
             const response = await fetch(this.tagsListUrl);
             const tagsJson = await response.json();
 
@@ -119,6 +115,12 @@ new class extends Component
             if (this.tags.length !== 0) {
                 tagify.addTags(JSON.parse(this.tags));
             }
+
+            return tagify;
+        },
+        async init() {
+            const ckeditor = await this.initCkeditor();
+            const tagify = await this.initTagify();
 
             document.addEventListener('livewire:navigating', () => {
                 ckeditor.destroy();
@@ -152,14 +154,6 @@ new class extends Component
                         <x-icons.pencil class="w-6" />
                         <span class="ml-4">新增文章</span>
                     </div>
-
-                    {{-- auto save restore notice --}}
-                    @if ($hasAutoSave)
-                        <div
-                            class="py-3 px-4 w-full text-sm text-amber-800 bg-amber-50 rounded-lg border border-amber-200 dark:text-amber-200 dark:border-amber-700 dark:bg-amber-900/30">
-                            <span>已載入上次未儲存的編輯內容</span>
-                        </div>
-                    @endif
 
                     {{-- editor --}}
                     <x-card class="w-full">
