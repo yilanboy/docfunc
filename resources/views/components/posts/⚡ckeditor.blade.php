@@ -37,13 +37,13 @@ new class extends Component
             // set the default value of the editor
             ckeditor.setData(this.$wire.content);
 
-            const updateValue = window.debounce(() => {
+            const updateContent = window.debounce(() => {
                 this.$wire.content = ckeditor.getData();
             }, 1000);
 
             // binding the value of the ckeditor to the livewire property
             ckeditor.model.document.on('change:data', () => {
-                updateValue();
+                updateContent();
             });
 
             // override editable block style
