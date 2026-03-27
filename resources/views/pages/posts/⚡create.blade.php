@@ -5,12 +5,12 @@ declare(strict_types=1);
 use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-new class extends Component
+new #[Title('新增文章')]
+class extends Component
 {
     use WithFileUploads;
 
@@ -47,103 +47,12 @@ new class extends Component
 
         $this->redirect($post->link_with_slug, navigate: true);
     }
-
-    public function render()
-    {
-        return $this->view()->title('新增文章');
-    }
 };
 ?>
 
-@assets
-{{-- CKEditor --}}
-@vite('resources/ts/ckeditor/ckeditor.ts')
-{{-- Tagify --}}
-@vite(['resources/ts/tagify.ts', 'node_modules/@yaireo/tagify/dist/tagify.css', 'resources/css/custom-tagify.css'])
-@endassets
-
-@script
-<script>
-    Alpine.data('postsCreatePage', () => ({
-        showPage: false,
-        csrfToken: @js(csrf_token()),
-        imageUploadUrl: @js(route('images.store')),
-        tagsListUrl: @js(route('api.tags')),
-        bodyMaxCharacters: @js($this->form::BODY_MAX_CHARACTER),
-        ClassNameToAddOnEditorContent: @js(['rich-text']),
-        tags: $wire.entangle('form.tags').live,
-        body: $wire.entangle('form.body').live,
-        async initCkeditor() {
-            // init the creation post-page
-            const ckeditor = await window.createClassicEditor(
-                this.$refs.editor,
-                this.bodyMaxCharacters,
-                this.imageUploadUrl,
-                this.csrfToken
-            );
-
-            // set the default value of the editor
-            ckeditor.setData(this.body);
-
-            const updateBody = window.debounce(() => {
-                this.body = ckeditor.getData();
-            }, 1000);
-
-            // binding the value of the ckeditor to the livewire attribute 'body'
-            ckeditor.model.document.on('change:data', () => {
-                updateBody();
-            });
-
-            // override editable block style
-            ckeditor.ui.view.editable.element
-                .parentElement.classList.add(...this.ClassNameToAddOnEditorContent);
-
-            return ckeditor;
-        },
-        async initTagify() {
-            const response = await fetch(this.tagsListUrl);
-            const tagsJson = await response.json();
-
-            const tagify = window.createTagify(
-                this.$refs.tags,
-                tagsJson.data,
-                (event) => {
-                    this.tags = event.detail.value;
-                }
-            );
-
-            if (this.tags.length !== 0) {
-                tagify.addTags(JSON.parse(this.tags));
-            }
-
-            return tagify;
-        },
-        async init() {
-            const ckeditor = await this.initCkeditor();
-            const tagify = await this.initTagify();
-
-            document.addEventListener('livewire:navigating', () => {
-                ckeditor.destroy();
-                tagify.destroy();
-            }, {
-                once: true
-            });
-
-            // After loading page is finished, show the page
-            this.showPage = true;
-        }
-    }));
-</script>
-@endscript
-
 {{-- create new post --}}
 <x-layouts.main>
-    <div
-        class="container mx-auto grow"
-        x-data="postsCreatePage"
-        x-cloak
-        x-show="showPage"
-    >
+    <div class="container mx-auto grow">
         <div class="flex justify-center items-stretch space-x-4">
             <div class="hidden xl:block xl:w-1/5"></div>
 
@@ -216,30 +125,13 @@ new class extends Component
                                 </div>
 
                                 {{-- post tags --}}
-                                <div
-                                    class="col-span-2"
-                                    wire:ignore
-                                >
-                                    <label
-                                        class="hidden"
-                                        for="tags"
-                                    >標籤 (最多 5 個)</label>
-
-                                    <input
-                                        class="tagify-custom-look dark:border-zinc-600! border-zinc-300! w-full rounded-md bg-white dark:bg-zinc-700"
-                                        id="tags"
-                                        type="text"
-                                        placeholder="標籤 (最多 5 個)"
-                                        x-ref="tags"
-                                    >
+                                <div class="col-span-2">
+                                    <livewire:posts.tagify wire:model.live="form.tags" />
                                 </div>
 
                                 {{-- post body --}}
-                                <div
-                                    class="col-span-2 max-w-none"
-                                    wire:ignore
-                                >
-                                    <div x-ref="editor"></div>
+                                <div class="col-span-2 max-w-none">
+                                    <livewire:posts.ckeditor wire:model.live="form.body" />
                                 </div>
                             </div>
 
@@ -264,8 +156,8 @@ new class extends Component
                                         class="w-5 h-5"
                                         wire:loading
                                     >
-                    <x-icons.animate-spin />
-                  </span>
+                                        <x-icons.animate-spin />
+                                    </span>
 
                                     <span class="ml-2">儲存</span>
                                 </x-button>
