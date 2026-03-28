@@ -32,7 +32,8 @@ class UploadImageRequest extends FormRequest
             'upload' => [
                 'required',
                 File::image()
-                    ->max(25 * 1024)
+                    // Cloudflare CDN only support 10MB
+                    ->max(10 * 1024)
                     ->dimensions(Rule::dimensions()->maxWidth(1200)->maxHeight(1200)),
             ],
         ];
@@ -48,7 +49,7 @@ class UploadImageRequest extends FormRequest
         return [
             'upload.required'   => 'Please select an image to upload.',
             'upload.image'      => 'The uploaded file must be an image (JPEG, PNG, BMP, GIF, SVG, or WebP).',
-            'upload.max'        => 'The image size cannot exceed 25MB.',
+            'upload.max'        => 'The image size cannot exceed 10MB.',
             'upload.dimensions' => 'The image dimensions must not exceed 1200x1200 pixels.',
         ];
     }
