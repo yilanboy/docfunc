@@ -186,7 +186,7 @@ pre.shiki code span.line::before {
     margin-right: 1.5rem;
     display: inline-block;
     text-align: right;
-    color: oklch(55.6% 0 0 / .5);
+    color: --alpha(var(--color-zinc-500) / 50%);
 }
 
 pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) {
@@ -197,29 +197,31 @@ pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.
 }
 
 pre.shiki code span.line.highlighted {
-    background-color: oklch(70.7% 0.022 261.325 / .1) !important;
+    background-color: --alpha(var(--color-cyan-300) / 10%) !important;
+    border-left: 0.25rem solid var(--color-cyan-500) !important;
 }
 
 html[data-theme="dark"] pre.shiki code span.line.highlighted {
-    background-color: oklch(70.7% 0.022 261.325 / .1) !important;
+    background-color: --alpha(var(--color-lividus-500) / 10%) !important;
+    border-left: 0.25rem solid var(--color-lividus-400) !important;
 }
 
 pre.shiki code span.line.diff.remove {
     position: relative !important;
-    background-color: oklch(63.7% 0.237 25.331 / .2) !important;
+    background-color: --alpha(var(--color-red-400) / 10%) !important;
 }
 
 html[data-theme="dark"] pre.shiki code span.line.diff.remove {
-    background-color: oklch(63.7% 0.237 25.331 / .1) !important;
+    background-color: --alpha(var(--color-red-500) / 10%) !important;
 }
 
 pre.shiki code span.line.diff.add {
     position: relative !important;
-    background-color: oklch(72.3% 0.219 149.579 / .2) !important;
+    background-color: --alpha(var(--color-green-400) / 10%) !important;
 }
 
 html[data-theme="dark"] pre.shiki code span.line.diff.add {
-    background-color: oklch(72.3% 0.219 149.579 / .1) !important;
+    background-color: --alpha(var(--color-green-500) / 10%) !important;
 }
 
 pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) span {
@@ -231,7 +233,7 @@ pre.shiki code span.line.diff.remove::after {
     content: '-';
     inset-block: 0;
     left: 2.75rem;
-    color: oklch(70.4% 0.191 22.216);
+    color: var(--color-red-500);
 }
 
 pre.shiki code span.line.diff.add::after {
@@ -239,7 +241,7 @@ pre.shiki code span.line.diff.add::after {
     content: '+';
     inset-block: 0;
     left: 2.75rem;
-    color: oklch(79.2% 0.209 151.711);
+    color: var(--color-green-500);
 }
 
 /* Alpine.js */
