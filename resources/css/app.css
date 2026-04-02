@@ -198,12 +198,12 @@ pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.
 
 pre.shiki code span.line.highlighted {
     background-color: --alpha(var(--color-cyan-300) / 10%) !important;
-    border-left: 0.25rem solid var(--color-cyan-500) !important;
+    box-shadow: inset 0.25rem 0 0 var(--color-cyan-500) !important;
 }
 
 html[data-theme="dark"] pre.shiki code span.line.highlighted {
     background-color: --alpha(var(--color-lividus-500) / 10%) !important;
-    border-left: 0.25rem solid var(--color-lividus-400) !important;
+    box-shadow: inset 0.25rem 0 0 var(--color-lividus-400) !important;
 }
 
 pre.shiki code span.line.diff.remove {
