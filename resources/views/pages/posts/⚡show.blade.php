@@ -159,7 +159,7 @@ new class extends Component
 
                                 {{-- post created time --}}
                                 <div class="hidden items-center md:flex">
-                                    <x-icons.clock class="w-4" />
+                                    <x-icons.calendar-week-fill class="w-4" />
                                     <time
                                         class="ml-2"
                                         datetime="{{ $post->created_at->toDateString() }}"
