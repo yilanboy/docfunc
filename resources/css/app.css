@@ -234,6 +234,10 @@ pre.shiki code span.line.diff.remove::after {
     inset-block: 0;
     left: 2.75rem;
     color: var(--color-red-500);
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
 pre.shiki code span.line.diff.add::after {
@@ -242,6 +246,10 @@ pre.shiki code span.line.diff.add::after {
     inset-block: 0;
     left: 2.75rem;
     color: var(--color-green-500);
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
 /* Alpine.js */
