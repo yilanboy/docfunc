@@ -197,8 +197,8 @@ pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.
 }
 
 pre.shiki code span.line.highlighted {
-    background-color: --alpha(var(--color-cyan-300) / 10%) !important;
-    box-shadow: inset 0.25rem 0 0 var(--color-cyan-500) !important;
+    background-color: --alpha(var(--color-emerald-300) / 10%) !important;
+    box-shadow: inset 0.25rem 0 0 var(--color-emerald-500) !important;
 }
 
 html[data-theme="dark"] pre.shiki code span.line.highlighted {
