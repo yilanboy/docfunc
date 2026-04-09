@@ -41,27 +41,34 @@ new class extends Component
 <script>
     Alpine.data('usersInfoCardsPart', () => ({
         init() {
-            document.querySelectorAll('.count-up').forEach((countUp) => {
-                let from = 0;
-                let to = Number(countUp.textContent);
+            document.querySelectorAll('.count-up').forEach((el) => {
+                const target = Number(el.textContent);
 
-                if (to > 999) {
-                    to = 999;
-                }
-
-                if (from === to) {
+                if (target <= 0) {
                     return;
                 }
 
-                let counter = setInterval(() => {
-                    countUp.textContent = String(from);
+                const duration = 1500;
+                const start = performance.now();
 
-                    if (from === to) {
-                        clearInterval(counter);
+                const format = (n) => n > 999
+                    ? Math.floor(n / 1000) + 'k'
+                    : String(n);
+
+                const step = (now) => {
+                    const progress = Math.min((now - start) / duration, 1);
+                    // ease-out cubic: fast start, smooth deceleration
+                    const eased = 1 - Math.pow(1 - progress, 3);
+
+                    el.textContent = format(Math.round(eased * target));
+
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
                     }
+                };
 
-                    from++;
-                }, 1000 * (1 / to));
+                el.textContent = '0';
+                requestAnimationFrame(step);
             });
         }
     }));
