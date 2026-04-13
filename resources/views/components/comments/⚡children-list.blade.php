@@ -22,7 +22,7 @@ new class extends Component
     public int $childrenCount;
 
     /**
-     * The array of a comments list, the format is below:
+     * The array of the comment list, the format is below:
      *
      * @var array<int, array{
      *     'id': int,
@@ -182,10 +182,10 @@ new class extends Component
                                 data-test-id="comments.card.edit"
                                 type="button"
                                 x-on:click="$dispatch('open-edit-comment-modal', {
-                  listName: @js('comment-' . $parentId . '-children-list'),
-                  id: @js($comment['id']),
-                  body: @js($comment['body'])
-                })"
+                                    listName: @js('comment-' . $parentId . '-children-list'),
+                                    id: @js($comment['id']),
+                                    body: @js($comment['body'])
+                                })"
                             >
                                 <x-icons.pencil class="w-4" />
                                 <span class="ml-2">編輯</span>

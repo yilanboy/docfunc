@@ -19,8 +19,10 @@ new class extends Component
             },
         ]);
 
-        $commentCountsInAllPosts = Comment::query()->join('posts', 'comments.post_id', '=',
-            'posts.id')->where('posts.user_id', $user->id)->count();
+        $commentCountsInAllPosts = Comment::query()
+            ->join('posts', 'comments.post_id', '=', 'posts.id')
+            ->where('posts.user_id', $user->id)
+            ->count();
 
         $categories = Category::with([
             'posts' => function ($query) use ($user) {

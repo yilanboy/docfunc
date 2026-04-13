@@ -28,7 +28,6 @@ new class extends Component
         }
     }
 
-    #[Transition(skip: true)]
     public function save(): void
     {
         $comment = Comment::findOrFail($this->comment['id']);
@@ -39,8 +38,12 @@ new class extends Component
 
         $this->reset('previewIsEnable');
 
-        $this->dispatch(event: 'update-comment-in-'.$this->comment['list_name'], id: $comment->id, body: $comment->body,
-            updatedAt: $comment->updated_at);
+        $this->dispatch(
+            event: 'update-comment-in-'.$this->comment['list_name'],
+            id: $comment->id,
+            body: $comment->body,
+            updatedAt: $comment->updated_at
+        );
     }
 };
 ?>

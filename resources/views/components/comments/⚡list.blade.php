@@ -28,7 +28,7 @@ new class extends Component
     public CommentOrderOptions $order = CommentOrderOptions::LATEST;
 
     /**
-     * The array of comments list, the format is below:
+     * The array of the comment list, the format is below:
      *
      * @var array<int, array{
      *     'id': int,
@@ -72,7 +72,7 @@ new class extends Component
             ->when($this->order === CommentOrderOptions::POPULAR, function (Builder $query) {
                 $query->orderByDesc('children_count');
             })
-            // Don't show new comments, avoid showing duplicate comments,
+            // Don't show new comments, avoid showing duplicate comments;
             // New comments have already showed in a new comment group.
             ->whereNotIn('comments.id', array_keys($this->comments))
             ->where('comments.post_id', $this->postId)
@@ -88,6 +88,7 @@ new class extends Component
         // Livewire will save data in the frontend, so we need to remove sensitive data
         $callback = function (array $comment): array {
             $comment['user_gravatar_url'] = is_null($comment['user_email']) ? null : get_gravatar($comment['user_email']);
+
             unset($comment['user_email']);
 
             return $comment;
@@ -96,7 +97,6 @@ new class extends Component
         return array_map($callback, $comments);
     }
 
-    #[Transition(skip: true)]
     public function loadMoreComments(): void
     {
         $comments = $this->getComments();

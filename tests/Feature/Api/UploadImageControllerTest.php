@@ -42,7 +42,7 @@ it('validates the upload size is not more than 25MB', function () {
 
     $response->assertStatus(413)
         ->assertJson([
-            'error' => ['message' => 'The image size cannot exceed 25MB.'],
+            'error' => ['message' => 'The image size cannot exceed 10MB.'],
         ]);
 });
 
