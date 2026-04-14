@@ -13,12 +13,10 @@ class ShowAllTagsController extends Controller
 {
     public function __invoke()
     {
-        $tags = Cache::remember(
+        return Cache::remember(
             'inputTags',
             now()->addDay(),
-            fn () => Tag::all()
+            fn () => TagResource::collection(Tag::all())->resolve()
         );
-
-        return TagResource::collection($tags);
     }
 }

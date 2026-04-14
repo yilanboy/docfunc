@@ -30,7 +30,7 @@ new class extends Component
 
             const tagify = window.createTagify(
                 this.$refs.tags,
-                tagsList.data
+                tagsList
             );
 
             try {

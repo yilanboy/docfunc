@@ -5,20 +5,24 @@ declare(strict_types=1);
 use App\Livewire\Actions\Logout;
 use App\Models\Category;
 use App\Services\SettingService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 new class extends Component
 {
-    public Collection $categories;
+    public array $categories;
 
     public bool $showRegisterButton;
 
     public function mount(): void
     {
         $this->categories = Cache::remember('categories', now()->addDay(), function () {
-            return Category::all(['id', 'name', 'icon']);
+            return Category::all(['id', 'name', 'icon'])->map(fn (Category $category) => [
+                'id'             => $category->id,
+                'name'           => $category->name,
+                'icon'           => $category->icon,
+                'link_with_name' => $category->link_with_name,
+            ])->toArray();
         });
 
         $this->showRegisterButton = SettingService::isRegisterAllowed();
@@ -98,12 +102,12 @@ new class extends Component
 
             @foreach ($categories as $category)
                 <x-skew-underline-link
-                    :link="$category->link_with_name"
-                    :selected="urldecode(request()->url()) === urldecode($category->link_with_name)"
-                    :icon="$category->icon"
-                    wire:key="category-{{ $category->id }}"
+                    :link="$category['link_with_name']"
+                    :selected="urldecode(request()->url()) === urldecode($category['link_with_name'])"
+                    :icon="$category['icon']"
+                    wire:key="category-{{ $category['id'] }}"
                 >
-                    {{ $category->name }}
+                    {{ $category['name'] }}
                 </x-skew-underline-link>
             @endforeach
         </nav>
@@ -414,10 +418,10 @@ new class extends Component
 
             @foreach ($categories as $category)
                 @php
-                    $inCategoryPage = urldecode(request()->url()) === urldecode($category->link_with_name);
+                    $inCategoryPage = urldecode(request()->url()) === urldecode($category['link_with_name']);
                 @endphp
                 <a
-                    href="{{ $category->link_with_name }}"
+                    href="{{ $category['link_with_name'] }}"
                     @if ($inCategoryPage) aria-current="page" @endif
                     @class([
                         'block px-3 py-2 rounded-md font-medium flex items-center',
@@ -426,8 +430,8 @@ new class extends Component
                     ])
                     wire:navigate
                 >
-                    <div class="w-4">{!! $category->icon !!}</div>
-                    <span class="ml-2">{{ $category->name }}</span>
+                    <div class="w-4">{!! $category['icon'] !!}</div>
+                    <span class="ml-2">{{ $category['name'] }}</span>
                 </a>
             @endforeach
         </nav>

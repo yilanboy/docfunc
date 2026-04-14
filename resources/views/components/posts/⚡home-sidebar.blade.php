@@ -13,11 +13,11 @@ new class extends Component
     {
         $popularTags = Cache::remember('popularTags', now()->addDay(), function () {
             // 取出標籤使用次數前 20 名
-            return Tag::withCount('posts')->orderByDesc('posts_count')->limit(20)->get();
+            return Tag::withCount('posts')->orderByDesc('posts_count')->limit(20)->get()->toArray();
         });
 
         $links = Cache::remember('links', now()->addDay(), function () {
-            return Link::all();
+            return Link::all()->toArray();
         });
 
         return $this->view([
@@ -102,7 +102,7 @@ new class extends Component
     </x-card>
 
     {{-- 熱門標籤 --}}
-    @if ($popularTags->count())
+    @if (count($popularTags))
         <x-card class="dark:text-zinc-50">
             <div class="flex justify-center items-center">
                 <x-icons.tags class="w-5" />
@@ -113,8 +113,8 @@ new class extends Component
 
             <div class="flex flex-wrap">
                 @foreach ($popularTags as $popularTag)
-                    <x-tag :href="route('tags.show', ['id' => $popularTag->id])">
-                        {{ $popularTag->name }}
+                    <x-tag :href="route('tags.show', ['id' => $popularTag['id']])">
+                        {{ $popularTag['name'] }}
                     </x-tag>
                 @endforeach
             </div>
@@ -122,7 +122,7 @@ new class extends Component
     @endif
 
     {{-- 學習資源推薦 --}}
-    @if ($links->count())
+    @if (count($links))
         <x-card class="dark:text-zinc-50">
             <div class="flex justify-center items-center">
                 <x-icons.file-earmark-code class="w-5" />
@@ -135,14 +135,14 @@ new class extends Component
                 @foreach ($links as $link)
                     <a
                         class="flex items-center p-2 rounded-md dark:text-zinc-50 dark:hover:bg-zinc-700 hover:bg-zinc-200"
-                        href="{{ $link->url }}"
+                        href="{{ $link['url'] }}"
                         target="_blank"
                         rel="nofollow noopener noreferrer"
                     >
                         <span class="flex items-center mr-2 h-lh">
                             <x-icons.link-45deg class="w-5" />
                         </span>
-                        {{ $link->title }}
+                        {{ $link['title'] }}
                     </a>
                 @endforeach
             </div>
