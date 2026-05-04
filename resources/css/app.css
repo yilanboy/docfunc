@@ -252,6 +252,23 @@ pre.shiki code span.line.diff.add::after {
     align-items: center;
 }
 
+/* scroll shadow indicators for code blocks */
+.scroll-indicator-right {
+    background: linear-gradient(to left, --alpha(var(--color-emerald-400) / 12%), transparent);
+}
+
+.scroll-indicator-left {
+    background: linear-gradient(to right, --alpha(var(--color-emerald-400) / 12%), transparent);
+}
+
+html[data-theme='dark'] .scroll-indicator-right {
+    background: linear-gradient(to left, --alpha(var(--color-lividus-700) / 25%), transparent);
+}
+
+html[data-theme='dark'] .scroll-indicator-left {
+    background: linear-gradient(to right, --alpha(var(--color-lividus-700) / 25%), transparent);
+}
+
 /* Alpine.js */
 [x-cloak] {
     display: none !important;

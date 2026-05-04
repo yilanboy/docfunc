@@ -9,6 +9,8 @@ declare global {
 
 const ZOOM_IN_PRE_MODAL_ID = 'zoom-in-pre-modal';
 const ZOOM_IN_PRE_ID = 'zoom-in-pre';
+const SCROLL_INDICATOR_LEFT_CLASS = 'scroll-indicator-left';
+const SCROLL_INDICATOR_RIGHT_CLASS = 'scroll-indicator-right';
 
 function createCopyCodeButton(code: string): HTMLButtonElement {
     // create a copy button
@@ -72,6 +74,34 @@ function getProgramLanguage(element: HTMLPreElement) {
     return foundClass;
 }
 
+function createScrollIndicator(side: 'left' | 'right'): HTMLDivElement {
+    const indicator = document.createElement('div');
+    indicator.classList.add(
+        'absolute', 'top-0', 'bottom-0',
+        side === 'right' ? 'right-0' : 'left-0',
+        side === 'right' ? SCROLL_INDICATOR_RIGHT_CLASS : SCROLL_INDICATOR_LEFT_CLASS,
+        'w-8',
+        'pointer-events-none',
+        'transition-opacity', 'duration-300'
+    );
+    indicator.style.opacity = '0';
+
+    return indicator;
+}
+
+function updateScrollIndicators(
+    preTag: HTMLPreElement,
+    leftIndicator: HTMLDivElement,
+    rightIndicator: HTMLDivElement
+): void {
+    const { scrollLeft, scrollWidth, clientWidth } = preTag;
+    const nextLeft = scrollLeft > 0 ? '1' : '0';
+    // subtract 1 to absorb sub-pixel rounding when scrolled to the end
+    const nextRight = scrollLeft + clientWidth < scrollWidth - 1 ? '1' : '0';
+    if (leftIndicator.style.opacity !== nextLeft) leftIndicator.style.opacity = nextLeft;
+    if (rightIndicator.style.opacity !== nextRight) rightIndicator.style.opacity = nextRight;
+}
+
 // create language label
 function createLanguageLabel(language: string): HTMLSpanElement {
     const labelElement: HTMLSpanElement = document.createElement('span');
@@ -116,7 +146,7 @@ window.codeBlockHelper = function(element: HTMLElement): void {
     // add a code block helper to all pre-tags
     for (const preTag of preTags) {
         if (preTag.classList.contains(marker)) {
-            return;
+            continue;
         }
 
         // to make the copy button fixed in the container, we wrap it in the container
@@ -156,6 +186,18 @@ window.codeBlockHelper = function(element: HTMLElement): void {
             preTag.outerHTML
         );
 
+        const leftScrollIndicator = createScrollIndicator('left');
+        const rightScrollIndicator = createScrollIndicator('right');
+
+        wrapper.appendChild(leftScrollIndicator);
+        wrapper.appendChild(rightScrollIndicator);
+
+        updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
+
+        const onScroll = () =>
+            updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
+        preTag.addEventListener('scroll', onScroll);
+
         const codeHelperGroup: HTMLDivElement = document.createElement('div');
         codeHelperGroup.classList.add(
             'hidden',
@@ -183,6 +225,9 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         document.addEventListener(
             'livewire:navigating',
             () => {
+                preTag.removeEventListener('scroll', onScroll);
+                leftScrollIndicator.remove();
+                rightScrollIndicator.remove();
                 languageLabelElement.remove();
                 copyButton.remove();
                 expandCodeButton.remove();
