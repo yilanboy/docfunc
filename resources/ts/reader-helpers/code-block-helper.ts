@@ -80,7 +80,7 @@ function createScrollIndicator(side: 'left' | 'right'): HTMLDivElement {
         'absolute', 'top-0', 'bottom-0',
         side === 'right' ? 'right-0' : 'left-0',
         side === 'right' ? SCROLL_INDICATOR_RIGHT_CLASS : SCROLL_INDICATOR_LEFT_CLASS,
-        'w-8',
+        'w-12',
         'pointer-events-none',
         'transition-opacity', 'duration-300'
     );
@@ -185,6 +185,9 @@ window.codeBlockHelper = function(element: HTMLElement): void {
             modal,
             preTag.outerHTML
         );
+
+        wrapper.style.setProperty('--pre-light-bg', preTag.style.backgroundColor);
+        wrapper.style.setProperty('--pre-dark-bg', preTag.style.getPropertyValue('--shiki-dark-bg').trim());
 
         const leftScrollIndicator = createScrollIndicator('left');
         const rightScrollIndicator = createScrollIndicator('right');
