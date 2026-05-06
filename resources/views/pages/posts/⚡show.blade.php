@@ -79,9 +79,11 @@ new class extends Component
 @script
 <script>
     Alpine.data('postsShowPage', () => ({
+        isReady: false,
         async init() {
             setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
             await highlightAllInElement(this.$refs.postBody);
+            this.isReady = true;
             codeBlockHelper(this.$refs.postBody);
             imageBlockHelper(this.$refs.postBody);
             processYoutubeOembeds();
@@ -105,7 +107,20 @@ new class extends Component
         <x-posts.scroll-to-top-button x-ref="scrollToTopBtn" />
 
         <div class="container mx-auto">
-            <div class="flex justify-center items-stretch lg:space-x-4 animate-fade-in">
+            {{-- loading spinner --}}
+            <div
+                class="flex justify-center items-center py-20"
+                x-show="!isReady"
+                x-cloak
+            >
+                <x-icons.animate-spin class="text-emerald-500 size-8 dark:text-lividus-500" />
+            </div>
+
+            <div
+                class="flex justify-center items-stretch lg:space-x-4 animate-fade-in"
+                x-show="isReady"
+                x-cloak
+            >
                 <div class="hidden xl:block xl:w-1/5">
                     {{-- content menu --}}
                     <div

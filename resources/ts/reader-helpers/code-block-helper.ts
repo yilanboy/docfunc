@@ -195,7 +195,10 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         wrapper.appendChild(leftScrollIndicator);
         wrapper.appendChild(rightScrollIndicator);
 
-        updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
+        const sizeObserver = new ResizeObserver(() => {
+            updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
+        });
+        sizeObserver.observe(code);
 
         const onScroll = () =>
             updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
@@ -228,6 +231,7 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         document.addEventListener(
             'livewire:navigating',
             () => {
+                sizeObserver.disconnect();
                 preTag.removeEventListener('scroll', onScroll);
                 leftScrollIndicator.remove();
                 rightScrollIndicator.remove();

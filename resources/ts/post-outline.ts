@@ -4,14 +4,14 @@ declare global {
     interface Window {
         setupPostOutline: (
             postOutline: HTMLElement,
-            postBody: HTMLElement,
+            postBody: HTMLElement
         ) => void;
     }
 }
 
 function createPostOutlineLinks(
     postOutline: HTMLElement,
-    headings: NodeListOf<HTMLHeadingElement>,
+    headings: NodeListOf<HTMLHeadingElement>
 ): void {
     postOutline.innerHTML = `
         <div class="flex justify-center items-center mb-4 dark:text-zinc-50" role="heading" aria-level="2">目錄</div>
@@ -38,12 +38,12 @@ function createPostOutlineLinks(
             'hover:text-zinc-800',
             'dark:text-zinc-400',
             'dark:hover:bg-zinc-700',
-            'dark:hover:text-zinc-200',
+            'dark:hover:text-zinc-200'
         );
         link.setAttribute('role', 'link');
         link.setAttribute(
             'aria-label',
-            'Jump to section: ' + heading.textContent,
+            'Jump to section: ' + heading.textContent
         );
         link.setAttribute('tabindex', '0');
 
@@ -65,7 +65,7 @@ function addClickEventOnPostLinks(postOutline: HTMLElement) {
 
     outlineLinks.forEach((outlineLink: HTMLAnchorElement, index: number) => {
         let heading: HTMLElement | null = document.getElementById(
-            `heading-${index}`,
+            `heading-${index}`
         );
 
         if (!heading) {
@@ -78,7 +78,7 @@ function addClickEventOnPostLinks(postOutline: HTMLElement) {
             event.preventDefault();
             heading.scrollIntoView({
                 behavior: 'smooth',
-                block: 'start',
+                block: 'start'
             });
         };
 
@@ -89,7 +89,7 @@ function addClickEventOnPostLinks(postOutline: HTMLElement) {
 function showWhichSectionIAmIn(
     postOutline: HTMLElement,
     postBody: HTMLElement,
-    headings: NodeListOf<HTMLHeadingElement>,
+    headings: NodeListOf<HTMLHeadingElement>
 ): void {
     let outlineLinks: NodeListOf<HTMLAnchorElement> =
         postOutline.querySelectorAll('a');
@@ -119,7 +119,7 @@ function showWhichSectionIAmIn(
     const highlightCurrentSection = () => {
         const currentScrollY = window.scrollY;
         const headingKeys = Object.keys(headingScrollYs).sort(
-            (a, b) => headingScrollYs[a] - headingScrollYs[b],
+            (a, b) => headingScrollYs[a] - headingScrollYs[b]
         );
 
         for (let i = 0; i < headingKeys.length; i++) {
@@ -130,10 +130,10 @@ function showWhichSectionIAmIn(
                 currentScrollY >= headingScrollYs[currentKey] &&
                 (!nextKey || currentScrollY < headingScrollYs[nextKey]) &&
                 currentScrollY <
-                    postBody.getBoundingClientRect().bottom + currentScrollY
+                postBody.getBoundingClientRect().bottom + currentScrollY
             ) {
                 const outlineLink = document.getElementById(
-                    `${currentKey}-link`,
+                    `${currentKey}-link`
                 );
                 outlineLink?.classList.add('bg-zinc-300', 'dark:bg-zinc-600');
 
@@ -147,26 +147,21 @@ function showWhichSectionIAmIn(
         highlightCurrentSection();
     }, 100);
 
-    window.addEventListener('scroll', updateSection);
+    document.addEventListener('scroll', updateSection);
 
-    function clearPostOutlineObserverAndEvent() {
-        resizeObserver.disconnect();
-        window.removeEventListener('scroll', updateSection);
-        window.removeEventListener(
-            'livewire:navigating',
-            clearPostOutlineObserverAndEvent,
-        );
-    }
-
-    window.addEventListener(
+    document.addEventListener(
         'livewire:navigating',
-        clearPostOutlineObserverAndEvent,
+        () => {
+            resizeObserver.disconnect();
+            document.removeEventListener('scroll', updateSection);
+        },
+        { once: true }
     );
 }
 
-window.setupPostOutline = function (
+window.setupPostOutline = function(
     postOutline: HTMLElement,
-    postBody: HTMLElement,
+    postBody: HTMLElement
 ): void {
     // Cache headings query to avoid repeated DOM queries across functions
     const headings: NodeListOf<HTMLHeadingElement> =
