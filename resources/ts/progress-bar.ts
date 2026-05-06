@@ -1,61 +1,53 @@
 declare global {
     interface Window {
-        setupProgressBar: Function;
+        setupProgressBar: (section: HTMLElement, progressBar: HTMLElement) => void;
     }
 }
 
-function progressBarAnimation(
-    section: HTMLElement,
-    progressBar: HTMLElement,
-): void {
-    let scrollDistance: number = -section.getBoundingClientRect().top;
-    let progressWidth: number =
-        (scrollDistance /
-            (section.getBoundingClientRect().height -
-                document.documentElement.clientHeight)) *
-        100;
+function updateProgress(section: HTMLElement, progressBar: HTMLElement): void {
+    const rect = section.getBoundingClientRect();
+    const scrollable = rect.height - document.documentElement.clientHeight;
+    const raw = scrollable > 0 ? (-rect.top / scrollable) * 100 : 100;
+    const value = Math.max(0, Math.min(100, Math.floor(raw) || 0));
 
-    let value: number = Math.floor(progressWidth);
-
-    progressBar.style.width = value + '%';
-    progressBar.ariaValueNow = value.toString();
-
-    if (value < 0) {
-        progressBar.style.width = '0%';
-        progressBar.ariaValueNow = '0';
-    }
-
-    if (value > 100) {
-        progressBar.style.width = '100%';
-        progressBar.ariaValueNow = '100';
-    }
+    progressBar.style.width = `${value}%`;
+    progressBar.ariaValueNow = String(value);
 }
 
-window.setupProgressBar = function (
-    section: HTMLElement,
-    progressBar: HTMLElement,
-): void {
-    if (
-        document.documentElement.clientHeight >
-        section.getBoundingClientRect().height
-    ) {
-        progressBar.style.width = '100%';
-        progressBar.ariaValueNow = '100';
+window.setupProgressBar = function (section, progressBar) {
+    let scrollAttached = false;
+    const onScroll = () => updateProgress(section, progressBar);
 
-        return;
-    }
+    const sync = () => {
+        const sectionHeight = section.getBoundingClientRect().height;
+        if (sectionHeight <= 0) return;
 
-    const updateProgressBar = () => progressBarAnimation(section, progressBar);
+        if (document.documentElement.clientHeight >= sectionHeight) {
+            progressBar.style.width = '100%';
+            progressBar.ariaValueNow = '100';
+            if (scrollAttached) {
+                document.removeEventListener('scroll', onScroll);
+                scrollAttached = false;
+            }
+            return;
+        }
 
-    window.addEventListener('scroll', updateProgressBar);
+        if (!scrollAttached) {
+            document.addEventListener('scroll', onScroll, { passive: true });
+            scrollAttached = true;
+        }
+        updateProgress(section, progressBar);
+    };
 
-    function clearProgressBarEvent() {
-        window.removeEventListener('scroll', updateProgressBar);
-        window.removeEventListener(
-            'livewire:navigating',
-            clearProgressBarEvent,
-        );
-    }
+    const observer = new ResizeObserver(sync);
+    observer.observe(section);
+    window.addEventListener('resize', sync);
 
-    window.addEventListener('livewire:navigating', clearProgressBarEvent);
+    document.addEventListener('livewire:navigating', () => {
+        observer.disconnect();
+        window.removeEventListener('resize', sync);
+        if (scrollAttached) {
+            document.removeEventListener('scroll', onScroll);
+        }
+    }, { once: true });
 };
