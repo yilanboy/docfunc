@@ -14,7 +14,7 @@
         aria-hidden="true"
         class="absolute bottom-12 left-[3%] hidden flex-col gap-4 font-jetbrains-mono text-sm leading-none text-zinc-500/60 lg:flex dark:text-zinc-500/60"
     >
-        <div class="flex gap-3 items-center font-semibold">
+        <div class="flex gap-3 items-center font-semibold font-inter">
             <span>Laravel&nbsp;13</span>
             <span class="text-zinc-500/40 dark:text-zinc-500/40">·</span>
             <span>Livewire&nbsp;4</span>
@@ -27,7 +27,7 @@
 
     <div
         aria-hidden="true"
-        class="absolute bottom-16 left-[1.5%] hidden h-[35vh] w-px bg-gradient-to-t from-transparent via-zinc-300/40 to-transparent lg:block dark:via-zinc-700/40"
+        class="absolute bottom-16 left-[1.5%] hidden h-[35vh] w-px bg-linear-to-t from-transparent via-zinc-300/40 to-transparent lg:block dark:via-zinc-700/40"
     ></div>
 
     <div class="absolute top-[5vh] right-[20%] hidden lg:block">
@@ -35,18 +35,18 @@
     </div>
 
     <div class="absolute top-[6vh] right-[2%] hidden lg:block">
-        <x-icons.terminal class="rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+        <x-icons.gunbash class="rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
     <div class="absolute top-[13vh] right-[11%] hidden lg:block">
         <x-icons.svelte class="-rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute top-[20vh] right-[20%] hidden lg:block">
-        <x-icons.person-walking class="rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+    <div class="absolute top-[25vh] right-[20%] hidden lg:block">
+        <x-icons.laravel class="rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute top-[27vh] right-[2%] hidden lg:block">
+    <div class="absolute top-[26vh] right-[2%] hidden lg:block">
         <x-icons.php
             class="-rotate-6 size-20"
             :path-class-name="'fill-zinc-300/40 dark:fill-zinc-700/40'"
@@ -57,12 +57,12 @@
         <x-icons.github class="-rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute top-[41vh] right-[20%] hidden lg:block">
+    <div class="absolute top-[45vh] right-[20%] hidden lg:block">
         <x-icons.folder-open class="rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute top-[48vh] right-[2%] hidden lg:block">
-        <x-icons.lightbulb class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+    <div class="absolute top-[46vh] right-[2%] hidden lg:block">
+        <x-icons.docker class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
     <div class="absolute top-[55vh] right-[11%] hidden lg:block">
@@ -73,23 +73,23 @@
         />
     </div>
 
-    <div class="absolute top-[62vh] right-[20%] hidden lg:block">
-        <x-icons.bug class="rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+    <div class="absolute top-[65vh] right-[20%] hidden lg:block">
+        <x-icons.rust class="rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute top-[69vh] right-[2%] hidden lg:block">
-        <x-icons.rocket-takeoff class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+    <div class="absolute top-[66vh] right-[2%] hidden lg:block">
+        <x-icons.terraform class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
     <div class="absolute top-[76vh] right-[11%] hidden lg:block">
         <x-icons.cloud class="-rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute right-[20%] bottom-[7vh] hidden lg:block">
-        <x-icons.cpu class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
+    <div class="absolute top-[85vh] right-[20%] hidden lg:block">
+        <x-icons.bug class="-rotate-6 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 
-    <div class="absolute right-[2%] bottom-[7vh] hidden lg:block">
+    <div class="absolute top-[86vh] right-[2%] hidden lg:block">
         <x-icons.floppy class="rotate-12 size-20 text-zinc-300/40 dark:text-zinc-700/40" />
     </div>
 </div>
