@@ -22,7 +22,7 @@ use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
 use Webauthn\Exception\AuthenticatorResponseVerificationException;
 use Webauthn\PublicKeyCredential;
 use Webauthn\PublicKeyCredentialRequestOptions;
-use Webauthn\PublicKeyCredentialSource;
+use Webauthn\CredentialRecord;
 use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 
 new #[Title('登入')]
@@ -95,7 +95,11 @@ class extends Component
 
             $rawId = json_decode($data['answer'], true)['rawId'];
 
-            $passkey = Passkey::query()->where('credential_id', $rawId)->where('owner_type', User::class)->first();
+            $passkey = Passkey::query()
+                ->where('credential_id', $rawId)
+                ->where('owner_type', User::class)
+                ->first();
+
 
             if (! $passkey) {
                 $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
@@ -103,8 +107,8 @@ class extends Component
                 return;
             }
 
-            $publicKeyCredentialSource = $serializer->fromJson(json_encode($passkey->data),
-                PublicKeyCredentialSource::class);
+            $credentialRecord = $serializer->fromJson(json_encode($passkey->data),
+                CredentialRecord::class);
 
             $options = Session::get('passkey-authentication-options');
 
@@ -117,14 +121,15 @@ class extends Component
             $publicKeyCredentialRequestOptions = $serializer->fromJson($options,
                 PublicKeyCredentialRequestOptions::class);
 
-            AuthenticatorAssertionResponseValidator::create(new CeremonyStepManagerFactory()->requestCeremony())
-                ->check(
-                    publicKeyCredentialSource: $publicKeyCredentialSource,
-                    authenticatorAssertionResponse: $publicKeyCredential->response,
-                    publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions,
-                    host: request()->getHost(),
-                    userHandle: null
-                );
+            $credentialRecord = AuthenticatorAssertionResponseValidator::create(
+                new CeremonyStepManagerFactory()->requestCeremony()
+            )->check(
+                credentialRecord: $credentialRecord,
+                authenticatorAssertionResponse: $publicKeyCredential->response,
+                publicKeyCredentialRequestOptions: $publicKeyCredentialRequestOptions,
+                host: request()->getHost(),
+                userHandle: null
+            );
         } catch (SerializerExceptionInterface|AuthenticatorResponseVerificationException) {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
@@ -132,6 +137,7 @@ class extends Component
         }
 
         $passkey->update([
+            'data'         => $serializer->toArray($credentialRecord),
             'last_used_at' => now(),
         ]);
 
