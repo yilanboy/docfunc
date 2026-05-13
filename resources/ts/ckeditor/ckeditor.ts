@@ -190,6 +190,7 @@ declare global {
     interface Window {
         createClassicEditor: (
             element: HTMLElement,
+            initialData: string,
             maxCharacters: number,
             imageUploadUrl: string,
             csrfToken: string
@@ -199,13 +200,19 @@ declare global {
 
 window.createClassicEditor = async function(
     element: HTMLElement,
+    initialData: string,
     maxCharacters: number,
     imageUploadUrl: string,
     csrfToken: string
 ) {
-    return ClassicEditor.create(element, {
+    return ClassicEditor.create({
+        attachTo: element,
         licenseKey: 'GPL',
-        placeholder: '分享使自己成長～',
+        root: {
+            initialData: initialData,
+            placeholder: '分享使自己成長～',
+            label: 'Main content'
+        },
         // Editor configuration.
         wordCount: {
             onUpdate: (stats) => {
@@ -220,10 +227,10 @@ window.createClassicEditor = async function(
                 // update character count in HTML element
                 characterCounter.forEach((element) => {
                     element.textContent = `${stats.characters} / ${maxCharacters}`;
-                    // If the character count is approaching the limit
+                    // If the character count is approaching the limit,
                     // add the class 'text-yellow-500' to the 'wordsBox' element to turn the text yellow
                     element.classList.toggle('text-yellow-500', isCloseToLimit);
-                    // If the character count exceeds the limit
+                    // If the character count exceeds the limit,
                     // add the class 'text-red-400' to the 'wordsBox' element to turn the text red
                     element.classList.toggle('text-red-400', isLimitExceeded);
                 });
@@ -236,7 +243,7 @@ window.createClassicEditor = async function(
             // Enable the XMLHttpRequest.withCredentials property.
             withCredentials: true,
 
-            // laravel sanctum need csrf token to authenticate
+            // laravel sanctum needs csrf token to authenticate
             headers: {
                 'X-CSRF-TOKEN': csrfToken
             }

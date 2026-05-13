@@ -29,13 +29,11 @@ new class extends Component
         async init() {
             const ckeditor = await window.createClassicEditor(
                 this.$refs.editor,
+                this.$wire.content,
                 this.$wire.maxCharacters,
                 this.imageUploadUrl,
                 this.csrfToken
             );
-
-            // set the default value of the editor
-            ckeditor.setData(this.$wire.content);
 
             const updateContent = window.debounce(() => {
                 this.$wire.content = ckeditor.getData();
