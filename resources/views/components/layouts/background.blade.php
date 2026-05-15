@@ -21,7 +21,9 @@
         </div>
 
         <div>
-            &lt;?php declare(strict_types=1);
+            <code class="rounded-md bg-zinc-300/40 px-1.5 py-0.5 font-jetbrains-mono text-xs text-zinc-600/80 ring-1 ring-zinc-400/40 ring-inset dark:bg-zinc-800/40 dark:text-zinc-400/80 dark:ring-zinc-700/40">
+                &lt;?php declare(strict_types=1);
+            </code>
         </div>
     </div>
 
