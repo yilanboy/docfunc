@@ -50,6 +50,8 @@ new class extends Component
             document.addEventListener('livewire:navigating', () => {
                 tagify.destroy();
             }, { once: true });
+
+            this.$dispatch('tagify-ready');
         }
     }));
 </script>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Tag;
 
 test('user can see post outline', function () {
     $body = <<<'HTML'
@@ -121,6 +122,41 @@ test('scroll indicators flip as the user scrolls a code block', function () {
 
     // at the far right: left indicator visible, right indicator hidden
     expect($state)->toMatchArray(['left' => '1', 'right' => '0']);
+});
+
+test('ckeditor and tagify are visible on create page after the spinner clears', function () {
+    loginAsUser();
+
+    $page = visit(route('posts.create'));
+
+    // "文章不公開" sits inside x-show="isReady", which only flips on
+    // after both ckeditor-ready and tagify-ready events fire. assertSee
+    // will retry until the spinner is gone and the form is shown.
+    $page->assertSee('文章不公開');
+
+    // Confirm both libraries actually mounted into the DOM.
+    $hasCkeditor = $page->script('!!document.querySelector(".ck-editor")');
+    $hasTagify = $page->script('!!document.querySelector("tags.tagify")');
+
+    expect($hasCkeditor)->toBeTrue();
+    expect($hasTagify)->toBeTrue();
+});
+
+test('ckeditor and tagify are visible on edit page after the spinner clears', function () {
+    $user = loginAsUser();
+    $post = Post::factory()
+        ->hasAttached(Tag::factory()->count(2))
+        ->create(['user_id' => $user->id]);
+
+    $page = visit(route('posts.edit', ['id' => $post->id]));
+
+    $page->assertSee('文章不公開');
+
+    $hasCkeditor = $page->script('!!document.querySelector(".ck-editor")');
+    $hasTagify = $page->script('!!document.querySelector("tags.tagify")');
+
+    expect($hasCkeditor)->toBeTrue();
+    expect($hasTagify)->toBeTrue();
 });
 
 test('reading progress bar starts at 0 and advances as user scrolls', function () {

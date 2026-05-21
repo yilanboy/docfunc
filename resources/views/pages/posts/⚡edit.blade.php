@@ -70,8 +70,30 @@ class extends Component
 
 {{-- edit post --}}
 <x-layouts.main>
-    <div class="container mx-auto grow">
-        <div class="flex justify-center items-stretch space-x-4">
+    <div
+        class="container mx-auto grow"
+        x-data="{
+            ckeditorReady: false,
+            tagifyReady: false,
+            get isReady() { return this.ckeditorReady && this.tagifyReady; },
+        }"
+        x-on:ckeditor-ready="ckeditorReady = true"
+        x-on:tagify-ready="tagifyReady = true"
+    >
+        {{-- loading spinner --}}
+        <div
+            class="flex justify-center items-center py-20"
+            x-show="!isReady"
+            x-cloak
+        >
+            <x-icons.animate-spin class="text-emerald-500 size-8 dark:text-lividus-500" />
+        </div>
+
+        <div
+            class="flex justify-center items-stretch space-x-4"
+            x-show="isReady"
+            x-cloak
+        >
             <div class="hidden xl:block xl:w-1/5"></div>
 
             <div class="p-2 w-full max-w-3xl xl:p-0">

@@ -51,6 +51,8 @@ new class extends Component
             document.addEventListener('livewire:navigating', () => {
                 ckeditor.destroy();
             }, { once: true });
+
+            this.$dispatch('ckeditor-ready');
         }
     }));
 </script>
