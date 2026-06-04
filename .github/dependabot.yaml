@@ -4,7 +4,17 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      composer-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
