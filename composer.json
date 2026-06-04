@@ -38,6 +38,7 @@
         "laravel-lang/common": "^6.4",
         "laravel/boost": "^2.0",
         "laravel/pail": "^1.2",
+        "laravel/pao": "^1.1",
         "laravel/pint": "^1.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",

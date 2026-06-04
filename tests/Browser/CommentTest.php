@@ -15,24 +15,29 @@ test('comment form can be submitted', function () {
     $message = 'Hello World! This is my first comment.';
 
     $page->click('新增留言')
-        ->wait(1)
+        ->assertVisible('#create-comment-body')
         ->fill('#create-comment-body', $message)
+        ->assertEnabled('#create-comment-submit-button')
         ->click('#create-comment-submit-button')
-        ->assertSee($message);
+        ->waitForText($message);
 
     $message = 'Hello World! This is my second comment.';
 
     $page->click('新增留言')
+        ->assertVisible('#create-comment-body')
         ->fill('#create-comment-body', $message)
+        ->assertEnabled('#create-comment-submit-button')
         ->click('#create-comment-submit-button')
-        ->assertSee($message);
+        ->waitForText($message);
 
     $message = 'Hello World! This is my third comment.';
 
     $page->click('新增留言')
+        ->assertVisible('#create-comment-body')
         ->fill('#create-comment-body', $message)
+        ->assertEnabled('#create-comment-submit-button')
         ->click('#create-comment-submit-button')
-        ->assertSee($message);
+        ->waitForText($message);
 });
 
 test('after the user clicks the load more button, they can see more replies', function () {
@@ -65,10 +70,10 @@ test('after the user clicks the load more button, they can see more replies', fu
 
     $page
         ->click($comment->children()->count().' 則回覆')
-        ->assertSee($bodyOne)
+        ->waitForText($bodyOne)
         ->assertSee($bodyTwo)
         ->assertSee($bodyThree);
-})->skipOnCI();
+});
 
 test('orders root comments by popular, then by latest and oldest when changed', function () {
     $user = loginAsUser();
@@ -115,9 +120,9 @@ test('orders root comments by popular, then by latest and oldest when changed', 
 
     // Change to Latest (由新到舊)
     $page->click('[data-test-id="comments.order.toggle"]')
-        ->wait(1)
+        ->assertVisible('[data-test-id="comments.order.option"][data-order-value="latest"]')
         ->click('[data-test-id="comments.order.option"][data-order-value="latest"]')
-        ->wait(1)
+        ->waitForText('C3 - newest')
         // Presence checks
         ->assertSeeIn(commentCardSelector(1), 'C3 - newest')
         ->assertSeeIn(commentCardSelector(2), 'C2 - middle')
@@ -128,9 +133,9 @@ test('orders root comments by popular, then by latest and oldest when changed', 
 
     // Change to Oldest (由舊到新)
     $page->click('[data-test-id="comments.order.toggle"]')
-        ->wait(1)
+        ->assertVisible('[data-test-id="comments.order.option"][data-order-value="oldest"]')
         ->click('[data-test-id="comments.order.option"][data-order-value="oldest"]')
-        ->wait(1)
+        ->waitForText('C1 - oldest')
         // Presence checks
         ->assertSeeIn(commentCardSelector(1), 'C1 - oldest')
         ->assertSeeIn(commentCardSelector(2), 'C2 - middle')
@@ -158,13 +163,15 @@ test('children replies load in pages and the load more button hides when finishe
     $page = $this->visit($post->link_with_slug);
 
     // Open children list
-    $page->click('15 則回覆');
+    $page->click('15 則回覆')
+        ->waitForText('顯示更多回覆');
 
     // After first open (loads 10), the "顯示更多回覆" button should be visible
     $page->assertSee('顯示更多回覆');
 
     // Load remaining children
-    $page->click('[data-test-id="comments.children.load-more"]');
+    $page->click('[data-test-id="comments.children.load-more"]')
+        ->assertMissing('[data-test-id="comments.children.load-more"]');
 
     // Button hides when no more
     $page->assertDontSee('顯示更多回覆');
@@ -172,7 +179,7 @@ test('children replies load in pages and the load more button hides when finishe
     // Spot-check that both early and late children are visible
     $page->assertSee('Child #1')
         ->assertSee('Child #15');
-})->skipOnCI();
+});
 
 test('replying to a root comment shows reply-to label and renders under that parent', function () {
     $author = loginAsUser();
