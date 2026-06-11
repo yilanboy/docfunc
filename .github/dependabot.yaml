@@ -9,6 +9,10 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
+      composer-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -16,5 +20,9 @@ updates:
     groups:
       npm-security:
         applies-to: security-updates
+        patterns:
+          - "*"
+      npm-version:
+        applies-to: version-updates
         patterns:
           - "*"
