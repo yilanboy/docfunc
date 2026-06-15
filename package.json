@@ -7,7 +7,7 @@
     "devDependencies": {
         "@shikijs/transformers": "^4.1.0",
         "@simplewebauthn/browser": "^13.1.0",
-        "@tailwindcss/typography": "^0.5.15",
+        "@tailwindcss/typography": "^0.5.20",
         "@tailwindcss/vite": "^4.0.0",
         "@types/yaireo__tagify": "^4.27.0",
         "@yaireo/tagify": "^4.32.1",
