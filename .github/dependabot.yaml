@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       composer-security:
         applies-to: security-updates
@@ -16,7 +16,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       npm-security:
         applies-to: security-updates
