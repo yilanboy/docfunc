@@ -230,7 +230,7 @@ describe('home page', function () {
             'preview_url' => '',
         ]);
 
-        $defaultPreviewUrl = 'https://blobs.docfunc.com/share.jpg';
+        $defaultPreviewUrl = 'https://blobs.docfunc.com/share.webp';
 
         get($post->link_with_slug)
             ->assertStatus(200)
