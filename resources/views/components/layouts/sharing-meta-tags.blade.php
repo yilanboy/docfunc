@@ -23,7 +23,7 @@
 >
 <meta
     property="og:image"
-    content="@yield('preview_url', $defaultPreviewUrl)"
+    content="@yield('social_image', $defaultPreviewUrl)"
 >
 
 {{-- Twitter --}}
@@ -45,5 +45,5 @@
 >
 <meta
     property="twitter:image"
-    content="@yield('preview_url', $defaultPreviewUrl)"
+    content="@yield('social_image', $defaultPreviewUrl)"
 >

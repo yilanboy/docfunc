@@ -14,7 +14,7 @@ new class extends Component
 
 @script
 <script>
-    Alpine.data('uploadPreviewImage', () => ({
+    Alpine.data('uploadCoverImage', () => ({
         imageUrl: $wire.entangle('imageUrl'),
         uploading: false,
         errorMessage: null,
@@ -30,8 +30,8 @@ new class extends Component
             this.$refs.uploadBlock.classList.remove('text-emerald-600', 'dark:text-indigo-300', 'border-emerald-600',
                 'dark:border-indigo-300');
         },
-        removePreviewUrl() {
-            if (confirm('你確定要刪除預覽圖嗎？')) {
+        removeCoverImage() {
+            if (confirm('你確定要刪除封面圖嗎？')) {
                 this.imageUrl = null;
             }
         },
@@ -76,7 +76,7 @@ new class extends Component
 
 <div
     class="col-span-2 text-base"
-    x-data="uploadPreviewImage"
+    x-data="uploadCoverImage"
 >
     {{-- image preview --}}
     <div
@@ -94,7 +94,7 @@ new class extends Component
         <button
             class="flex absolute top-0 right-0 justify-center items-center w-full h-full rounded-lg transition-all duration-150 cursor-pointer group hover:backdrop-blur-xs hover:bg-zinc-600/50"
             type="button"
-            x-on:click="removePreviewUrl"
+            x-on:click="removeCoverImage"
         >
             <x-icons.x-circle
                 class="opacity-0 transition-all duration-150 group-hover:opacity-100 size-24 group-hover:text-zinc-50"
@@ -103,7 +103,7 @@ new class extends Component
 
         <span
             class="inline-flex absolute top-2 right-2 items-center py-1 px-2 text-sm font-medium text-emerald-700 bg-emerald-50 rounded-md ring-1 ring-inset dark:text-gray-700 dark:bg-gray-50 ring-emerald-700/10 dark:ring-gray-700/10"
-        >預覽圖</span>
+        >封面圖</span>
     </div>
 
     {{-- Upload Area --}}
@@ -135,7 +135,7 @@ new class extends Component
                 x-show="uploading"
             />
 
-            <p>預覽圖 (jpg, jpeg or png)</p>
+            <p>封面圖 (jpg, jpeg or png)</p>
 
             <template x-if="errorMessage">
                 <span

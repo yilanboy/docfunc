@@ -144,7 +144,7 @@ describe('edit post', function () {
             ->toBe([
                 'category_id' => $newCategoryId,
                 'is_private'  => $post->is_private,
-                'preview_url' => $post->preview_url,
+                'cover_image_url' => $post->cover_image_url,
                 'title'       => $newTitle,
                 'tags'        => $newTags,
                 'body'        => $newBody,
@@ -166,7 +166,7 @@ describe('edit post', function () {
             json_encode([
                 'category_id' => $post->category_id,
                 'is_private'  => true,
-                'preview_url' => null,
+                'cover_image_url' => null,
                 'title'       => $cachedTitle,
                 'tags'        => '',
                 'body'        => $cachedBody,
@@ -192,7 +192,7 @@ describe('edit post', function () {
             json_encode([
                 'category_id' => $post->category_id,
                 'is_private'  => $post->is_private,
-                'preview_url' => $post->preview_url,
+                'cover_image_url' => $post->cover_image_url,
                 'title'       => str()->random(10),
                 'tags'        => '',
                 'body'        => str()->random(500),
@@ -225,7 +225,7 @@ describe('edit post', function () {
             json_encode([
                 'category_id' => $post->category_id,
                 'is_private'  => $post->is_private,
-                'preview_url' => $post->preview_url,
+                'cover_image_url' => $post->cover_image_url,
                 'title'       => str()->random(10),
                 'tags'        => '',
                 'body'        => str()->random(500),
@@ -254,7 +254,7 @@ describe('edit post', function () {
             json_encode([
                 'category_id' => $post->category_id,
                 'is_private'  => $post->is_private,
-                'preview_url' => $post->preview_url,
+                'cover_image_url' => $post->cover_image_url,
                 'title'       => $post->title,
                 'tags'        => '',
                 'body'        => $post->body,

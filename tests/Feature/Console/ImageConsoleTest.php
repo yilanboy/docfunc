@@ -55,7 +55,7 @@ it('can clear unused images', function () {
 
     $post = Post::factory()->create([
         'body' => $body,
-        'preview_url' => 'https://fake-url.com/images/'.$this->imageName2,
+        'cover_image_url' => 'https://fake-url.com/images/'.$this->imageName2,
     ]);
 
     expect(Post::find($post->id))->body->toContain($this->imageName1);

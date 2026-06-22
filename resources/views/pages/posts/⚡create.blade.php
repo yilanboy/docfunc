@@ -99,8 +99,8 @@ class extends Component
                             wire:submit="save"
                         >
                             <div class="grid grid-cols-2 gap-5">
-                                {{-- post preview image --}}
-                                <livewire:posts.upload-preview-image wire:model.live="form.preview_url" />
+                                {{-- post cover image --}}
+                                <livewire:posts.upload-cover-image wire:model.live="form.cover_image_url" />
 
                                 {{-- post classfication --}}
                                 <div class="col-span-2 md:col-span-1">

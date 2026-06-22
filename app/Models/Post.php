@@ -44,7 +44,7 @@ class Post extends Model implements Feedable
         'category_id',
         'excerpt',
         'slug',
-        'preview_url',
+        'cover_image_url',
     ];
 
     protected $casts = [

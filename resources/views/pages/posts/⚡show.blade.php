@@ -52,10 +52,10 @@ new class extends Component
 
 @section('description', $post->excerpt)
 
-@if (!empty($post->preview_url))
-    @section('preview_url', $post->preview_url)
+@if (!empty($post->cover_image_url))
+    @section('social_image', $post->cover_image_url)
 @else
-    @section('preview_url', route('posts.preview.webp', ['post' => $post->id]))
+    @section('social_image', route('posts.preview.webp', ['post' => $post->id]))
 @endif
 
 @assets
@@ -150,14 +150,14 @@ new class extends Component
                             </h1>
 
                             {{-- post thumbnail --}}
-                            @if (!empty($post->preview_url))
+                            @if (!empty($post->cover_image_url))
                                 <div
                                     class="-mx-4"
-                                    id="post-thumbnail"
+                                    id="post-cover-image"
                                 >
                                     <img
                                         class="w-full"
-                                        src="{{ $post->preview_url }}"
+                                        src="{{ $post->cover_image_url }}"
                                         alt="{{ $post->title }}"
                                     >
                                 </div>

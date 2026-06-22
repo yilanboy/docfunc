@@ -19,7 +19,7 @@ class PostForm extends Form
 
     public int $category_id = 1;
 
-    public ?string $preview_url = null;
+    public ?string $cover_image_url = null;
 
     public bool $is_private = false;
 
@@ -72,7 +72,7 @@ class PostForm extends Form
             json_encode([
                 'category_id' => $this->category_id,
                 'is_private'  => $this->is_private,
-                'preview_url' => $this->preview_url,
+                'cover_image_url' => $this->cover_image_url,
                 'title'       => $this->title,
                 'tags'        => $this->tags,
                 'body'        => $this->body,
@@ -93,7 +93,7 @@ class PostForm extends Form
 
         $this->category_id = $autoSavePostData['category_id'];
         $this->is_private = $autoSavePostData['is_private'];
-        $this->preview_url = $autoSavePostData['preview_url'];
+        $this->cover_image_url = $autoSavePostData['cover_image_url'];
         $this->title = $autoSavePostData['title'];
         $this->tags = $autoSavePostData['tags'];
         $this->body = $autoSavePostData['body'];
@@ -125,7 +125,7 @@ class PostForm extends Form
     {
         $this->category_id = $post->category_id;
         $this->is_private = $post->is_private;
-        $this->preview_url = $post->preview_url;
+        $this->cover_image_url = $post->cover_image_url;
         $this->title = $post->title;
         $this->tags = $post->tags_json;
         $this->body = $post->body;

@@ -173,7 +173,7 @@ describe('create post', function () {
             ->toBe([
                 'category_id' => $categoryId,
                 'is_private'  => false, // default value
-                'preview_url' => null,
+                'cover_image_url' => null,
                 'title'       => $title,
                 'tags'        => $tags,
                 'body'        => $body,
@@ -207,7 +207,7 @@ describe('create post', function () {
             json_encode([
                 'category_id' => $categoryId,
                 'is_private'  => false,
-                'preview_url' => null,
+                'cover_image_url' => null,
                 'title'       => $title,
                 'tags'        => $tags,
                 'body'        => $body,
