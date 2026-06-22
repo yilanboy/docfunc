@@ -54,6 +54,8 @@ new class extends Component
 
 @if (!empty($post->preview_url))
     @section('preview_url', $post->preview_url)
+@else
+    @section('preview_url', route('posts.preview.webp', ['post' => $post->id]))
 @endif
 
 @assets

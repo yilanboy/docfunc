@@ -31,7 +31,7 @@ class extends Component
         $this->form->setDataFromAutoSave($this->autoSaveKey);
     }
 
-    // when data update, auto save it to redis
+    // when data update, auto save it to cache
     public function updated(): void
     {
         $this->form->autoSave($this->autoSaveKey);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Post\ShowDefaultPreviewController;
 use App\Http\Controllers\User\DestroyUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,8 @@ Route::middleware('auth')->prefix('/settings/users')->group(function () {
 // 文章列表與內容
 Route::prefix('/posts')->group(function () {
     Route::livewire('/', 'pages::posts.index')->name('posts.index');
+
+    Route::get('/{post}/preview.webp', ShowDefaultPreviewController::class)->name('posts.preview.webp');
 
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::livewire('/create', 'pages::posts.create')->name('posts.create');

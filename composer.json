@@ -27,7 +27,7 @@
         "spatie/laravel-feed": "^4.1",
         "symfony/html-sanitizer": "^8.0",
         "web-auth/webauthn-lib": "^5.2",
-        "ext-pdo": "*"
+        "yilanboy/preview": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",

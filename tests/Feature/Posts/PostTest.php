@@ -230,11 +230,9 @@ describe('home page', function () {
             'preview_url' => '',
         ]);
 
-        $defaultPreviewUrl = 'https://blobs.docfunc.com/share.webp';
-
         get($post->link_with_slug)
             ->assertStatus(200)
-            ->assertSee($defaultPreviewUrl);
+            ->assertSee(route('posts.preview.webp', ['post' => $post->id]));
     });
 
     test('not showing the thumbnail on top of the post', function () {
