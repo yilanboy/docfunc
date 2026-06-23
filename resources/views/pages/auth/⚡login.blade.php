@@ -62,7 +62,7 @@ class extends Component
         }
 
         // If the user has PassKeys, he won't be able to log in using just the password
-        if (Auth::user()->passkeys()->count() > 0) {
+        if (Auth::user()->passkeys()->exists()) {
             session()->flash('status', '您的帳號已註冊密碼金鑰，請使用密碼金鑰進行登入');
 
             Auth::logout();

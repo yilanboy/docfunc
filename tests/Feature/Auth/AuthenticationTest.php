@@ -145,3 +145,40 @@ test('users can authenticate using passkey', function () {
         ->call('loginWithPasskey')
         ->assertDispatched('toast', status: 'success', message: '登入成功！');
 });
+
+
+test('users cannot login if they have passkey', function () {
+    $password = 'Password101';
+
+    $user = User::factory()->create([
+        'name'     => 'Allen',
+        'password' => bcrypt($password),
+    ]);
+
+    $user->passkeys()->create([
+        'name'          => 'passkey-1',
+        'credential_id' => 'VJzplgZvT6WiyhirG1BR0g',
+        'data'          => [
+            'publicKeyCredentialId' => 'VJzplgZvT6WiyhirG1BR0g',
+            'type'                  => 'public-key',
+            'transports'            => ['internal', 'hybrid'],
+            'attestationType'       => 'none',
+            'trustPath'             => [],
+            'aaguid'                => 'd548826e-79b4-db40-a3d8-11116f7e8349',
+            'credentialPublicKey'   => 'pQECAyYgASFYIDmVeb2lam-IwR_x-0t93x_2abq32kmh9AJotixqT06hIlggDOCXVrQQC7yV2AGW1uSbx3gQTrFidMx5YW9ERQfkyLE',
+            'userHandle'            => 'MQ',
+            'counter'               => 0,
+            'backupEligible'        => true,
+            'backupStatus'          => true,
+            'uvInitialized'         => true,
+        ],
+    ]);
+
+    Livewire::test('pages::auth.login')
+        ->set('email', $user->email)
+        ->set('password', $password)
+        ->call('login')
+        ->assertSeeText('您的帳號已註冊密碼金鑰，請使用密碼金鑰進行登入');
+
+    $this->assertGuest();
+});
