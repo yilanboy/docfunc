@@ -14,6 +14,7 @@ new class extends Component
     public function render()
     {
         $user = User::find($this->userId)->loadCount([
+            'posts',
             'posts as posts_count_in_this_year' => function ($query) {
                 $query->whereYear('created_at', date('Y'));
             },
@@ -24,11 +25,12 @@ new class extends Component
             ->where('posts.user_id', $user->id)
             ->count();
 
-        $categories = Category::with([
-            'posts' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            },
-        ])->get();
+        $categories = Category::query()
+            ->withCount([
+                'posts' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                },
+            ])->get();
 
         return $this->view([
             'user'                    => $user,
@@ -129,8 +131,8 @@ new class extends Component
                 </div>
                 <div class="flex col-span-11 items-center">
                     @php
-                        $barWidth = $category->posts->count()
-                            ? (int) (($category->posts->count() / $user->posts->count()) * 100)
+                        $barWidth = $category->posts_count
+                            ? (int) (($category->posts_count / $user->posts_count) * 100)
                             : 0.2;
                     @endphp
 
@@ -144,7 +146,7 @@ new class extends Component
 
                 <div
                     class="flex col-span-1 justify-end items-center text-lg font-semibold text-teal-500 dark:text-purple-500">
-                    {{ $category->posts->count() }}
+                    {{ $category->posts_count }}
                 </div>
             @endforeach
         </div>
@@ -153,7 +155,7 @@ new class extends Component
     <x-card class="flex flex-col col-span-6 justify-between items-start md:col-span-2 dark:text-zinc-50">
         <div class="w-full text-2xl text-left">文章總數</div>
         <div class="w-full text-8xl font-semibold text-center text-teal-500 dark:text-purple-500 count-up">
-            {{ $user->posts->count() }}</div>
+            {{ $user->posts_count }}</div>
         <div class="w-full text-2xl text-right">篇</div>
     </x-card>
 
