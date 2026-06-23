@@ -10,7 +10,7 @@ use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class ContentService
 {
-    private const IMAGE_PATTERN = '/\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}_[a-zA-Z0-9]+\.(jpeg|png|jpg|gif|svg)/u';
+    private const string IMAGE_PATTERN = '/\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}_[a-zA-Z0-9]+\.(jpg|jpeg|png|bmp|gif|webp)/u';
 
     /**
      * 生成用來優化 SEO 的 slug
