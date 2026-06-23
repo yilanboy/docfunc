@@ -25,11 +25,12 @@ new class extends Component
             ->where('posts.user_id', $user->id)
             ->count();
 
-        $categories = Category::withCount([
-            'posts' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            },
-        ])->get();
+        $categories = Category::query()
+            ->withCount([
+                'posts' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                },
+            ])->get();
 
         return $this->view([
             'user'                    => $user,
