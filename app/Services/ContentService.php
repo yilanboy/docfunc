@@ -10,6 +10,8 @@ use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class ContentService
 {
+    private const IMAGE_PATTERN = '/\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}_[a-zA-Z0-9]+\.(jpeg|png|jpg|gif|svg)/u';
+
     /**
      * 生成用來優化 SEO 的 slug
      *
@@ -66,11 +68,9 @@ class ContentService
         $imageList = [];
 
         foreach ($dom->getElementsByTagName('img') as $img) {
-            $pattern = '/\d{4}_\d{2}_\d{2}_\d{2}_\d{2}_\d{2}_[a-zA-Z0-9]+\.(jpeg|png|jpg|gif|svg)/u';
-
             $imageName = basename($img->getAttribute('src'));
 
-            if (preg_match($pattern, $imageName)) {
+            if (preg_match(self::IMAGE_PATTERN, $imageName)) {
                 $imageList[] = $imageName;
             }
         }
