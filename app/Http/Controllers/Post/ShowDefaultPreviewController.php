@@ -35,7 +35,7 @@ class ShowDefaultPreviewController extends Controller
                 text: $post->title,
                 color: 'white',
                 fontSize: FontSize::Medium,
-                font: Font::NotoSansTC,
+                font: Font::NotoSansTCMedium,
                 alignment: Alignment::Left,
                 position: Position::Center,
             ))
@@ -43,7 +43,7 @@ class ShowDefaultPreviewController extends Controller
                 text: config('app.name'),
                 color: 'white',
                 fontSize: FontSize::Small,
-                font: Font::Inter,
+                font: Font::JetBrainsMonoMedium,
                 alignment: Alignment::Left,
                 position: Position::Bottom,
             ))
