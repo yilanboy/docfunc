@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\ShowAllTagsController;
 use App\Http\Controllers\Api\ShowLatestPostController;
 use App\Http\Controllers\Api\TwitterOembedController;
 use App\Http\Controllers\Api\UploadImageController;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->get('user', function (#[CurrentUser] User $user) {
+    return $user;
 });
 
 Route::get('/passkeys/register-options', GeneratePasskeyRegisterOptionsController::class)

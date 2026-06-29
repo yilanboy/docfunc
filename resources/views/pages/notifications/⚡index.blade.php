@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Models\User;
+use Illuminate\Container\Attributes\CurrentUser;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,12 +12,14 @@ new class extends Component
 {
     use WithPagination;
 
-    public function render()
-    {
-        auth()->user()->unreadNotifications->markAsRead();
+    public function render(
+        #[CurrentUser]
+        User $user
+    ) {
+        $user->unreadNotifications->markAsRead();
 
         return $this->view([
-            'notifications' => auth()->user()->notifications()->paginate(20),
+            'notifications' => $user->notifications()->paginate(20),
         ])->title('我的通知');
     }
 };

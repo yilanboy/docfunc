@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use App\Livewire\Forms\CommentForm;
 use App\Models\Comment;
+use App\Models\User;
 use App\Traits\MarkdownConverter;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Container\Attributes\CurrentUser;
 use Livewire\Component;
 
 new class extends Component
@@ -21,9 +23,11 @@ new class extends Component
 
     public bool $previewIsEnable = false;
 
-    public function mount(): void
-    {
-        if (! auth()->check()) {
+    public function mount(
+        #[CurrentUser]
+        ?User $user
+    ): void {
+        if ($user === null) {
             throw new Exception(message: 'Edit modal part component requires authentication.');
         }
     }

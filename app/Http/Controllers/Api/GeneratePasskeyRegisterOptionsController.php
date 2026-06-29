@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\Serializer;
 use Cose\Algorithms;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -23,7 +24,7 @@ use Webauthn\PublicKeyCredentialUserEntity;
 
 class GeneratePasskeyRegisterOptionsController extends Controller
 {
-    public function __invoke(Request $request, Serializer $serializer): JsonResponse|string
+    public function __invoke(#[CurrentUser] User $user, Serializer $serializer): JsonResponse|string
     {
         // 建立一個信賴方實體
         // id 是網站的網域名稱
@@ -37,13 +38,13 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             // id 必須是唯一的，通常是用戶的 ID 或 UUID
             // 需要注意的是，name 不可以使用用戶的敏感資訊，例如 email 或電話號碼
             $userEntity = new PublicKeyCredentialUserEntity(
-                name: $request->user()->name,
-                id: (string) $request->user()->id,
-                displayName: $request->user()->name
+                name: $user->name,
+                id: (string) $user->id,
+                displayName: $user->name
             );
         } catch (InvalidDataException $e) {
             Log::error('無法建立 Webauthn 用戶實體', [
-                'user_id'   => $request->user()->id,
+                'user_id'   => $user->id,
                 'exception' => $e->getMessage(),
             ]);
 
@@ -81,7 +82,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             );
         } catch (InvalidDataException $e) {
             Log::error('無法建立 Webauthn 註冊選項', [
-                'user_id'   => $request->user()->id,
+                'user_id'   => $user->id,
                 'exception' => $e->getMessage(),
             ]);
 
@@ -95,7 +96,7 @@ class GeneratePasskeyRegisterOptionsController extends Controller
             $optionsJson = $serializer->toJson($options);
         } catch (SerializerExceptionInterface  $e) {
             Log::error('Webauthn 註冊選項序列化失敗', [
-                'user_id'   => $request->user()->id,
+                'user_id'   => $user->id,
                 'exception' => $e->getMessage(),
             ]);
 

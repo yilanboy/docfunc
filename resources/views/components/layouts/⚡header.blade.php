@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Livewire\Actions\Logout;
 use App\Models\Category;
+use App\Models\User;
 use App\Services\SettingService;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
@@ -58,6 +59,7 @@ new class extends Component
     }));
 </script>
 @endscript
+
 
 @php
     $hasUnreadNotifications = auth()->check() && auth()->user()->unreadNotifications()->exists();
@@ -234,7 +236,7 @@ new class extends Component
         id="mobile-header"
     >
         <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex relative justify-between items-center h-[4.5rem]">
+            <div class="flex relative justify-between items-center h-18">
                 <div class="flex absolute inset-y-0 left-0 items-center">
                     {{-- category dropdown menu toggle --}}
                     <button
@@ -371,7 +373,8 @@ new class extends Component
                                     <span class="ml-2">個人資訊</span>
                                 </x-dropdown.link>
 
-                                <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
+                                <x-dropdown.link
+                                    href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
                                     <x-icons.geer-fill class="w-4" />
                                     <span class="ml-2">設定</span>
                                 </x-dropdown.link>
