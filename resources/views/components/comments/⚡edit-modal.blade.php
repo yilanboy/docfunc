@@ -23,15 +23,11 @@ new class extends Component
 
     public bool $previewIsEnable = false;
 
-    public ?User $currentUser = null;
-
     public function mount(
         #[CurrentUser]
         ?User $user
     ): void {
-        $this->currentUser = $user;
-
-        if ($this->currentUser === null) {
+        if ($user === null) {
             throw new Exception(message: 'Edit modal part component requires authentication.');
         }
     }
@@ -137,7 +133,7 @@ new class extends Component
                     wire:show="previewIsEnable"
                 >
                     <div class="space-x-4">
-                        <span class="font-semibold dark:text-zinc-50"> {{ $this->currentUser->name }}</span>
+                        <span class="font-semibold dark:text-zinc-50"> {{ auth()->user()->name }}</span>
                         <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
                     </div>
 

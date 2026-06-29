@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\TwitterOembedController;
 use App\Http\Controllers\Api\UploadImageController;
 use App\Models\User;
 use Illuminate\Container\Attributes\CurrentUser;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

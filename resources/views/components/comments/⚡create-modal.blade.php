@@ -26,18 +26,14 @@ new class extends Component
 
     public bool $previewIsEnable = false;
 
-    public ?User $currentUser = null;
-
-    public function mount(
-        #[CurrentUser]
-        ?User $user
-    ): void {
+    public function mount(#[CurrentUser] ?User $user): void
+    {
         $this->currentUser = $user;
         $this->form->post_id = $this->postId;
         $this->form->user_id = $user?->id;
     }
 
-    public function save(): void
+    public function save(#[CurrentUser] ?User $user): void
     {
         $this->validate(
             rules: [
@@ -85,8 +81,8 @@ new class extends Component
                 'body'              => $comment->body,
                 'created_at'        => $comment->created_at->toDateTimeString(),
                 'updated_at'        => $comment->updated_at->toDateTimeString(),
-                'user_name'         => $this->currentUser !== null ? $this->currentUser->name : null,
-                'user_gravatar_url' => $this->currentUser !== null ? get_gravatar($this->currentUser->email) : null,
+                'user_name'         => $user?->name,
+                'user_gravatar_url' => $user !== null ? get_gravatar($user->email) : null,
                 'children_count'    => 0,
             ],
         );
@@ -205,7 +201,7 @@ new class extends Component
                 >
                     <div class="relative space-x-4">
                         <span class="font-semibold dark:text-zinc-50">
-                            {{ $this->currentUser !== null ? $this->currentUser->name : '訪客' }}
+                           {{ auth()->check() ? auth()->user()->name : '訪客' }}
                         </span>
                         <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
                     </div>
