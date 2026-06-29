@@ -31,7 +31,7 @@ class extends Component
         $passwordRule = Password::min(8)->letters()->mixedCase()->numbers();
 
         return [
-            'current_password' => ['required', new MatchOldPassword()],
+            'current_password' => ['required', app(MatchOldPassword::class)],
             'new_password'     => ['required', 'confirmed', $passwordRule],
         ];
     }

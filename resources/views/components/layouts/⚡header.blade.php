@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 use App\Livewire\Actions\Logout;
 use App\Models\Category;
+use App\Models\User;
 use App\Services\SettingService;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
@@ -14,8 +16,13 @@ new class extends Component
 
     public bool $showRegisterButton;
 
-    public function mount(): void
-    {
+    public ?User $currentUser = null;
+
+    public function mount(
+        #[CurrentUser]
+        ?User $user
+    ): void {
+        $this->currentUser = $user;
         $this->categories = Cache::remember('categories', now()->addDay(), function () {
             return Category::all(['id', 'name', 'icon'])->map(fn (Category $category) => [
                 'id'             => $category->id,
@@ -60,7 +67,7 @@ new class extends Component
 @endscript
 
 @php
-    $hasUnreadNotifications = auth()->check() && auth()->user()->unreadNotifications()->exists();
+    $hasUnreadNotifications = $this->currentUser !== null && $this->currentUser->unreadNotifications()->exists();
 @endphp
 
 <header
@@ -187,7 +194,7 @@ new class extends Component
                             <span class="sr-only">Open user menu</span>
                             <img
                                 class="rounded-full size-12"
-                                src="{{ auth()->user()->gravatar_url }}"
+                                        src="{{ $this->currentUser->gravatar_url }}"
                                 alt=""
                             >
                         </button>
@@ -347,7 +354,7 @@ new class extends Component
                                     <span class="sr-only">Open user menu</span>
                                     <img
                                         class="rounded-full size-10"
-                                        src="{{ auth()->user()->gravatar_url }}"
+                                        src="{{ $this->currentUser->gravatar_url }}"
                                         alt=""
                                     >
                                 </button>
@@ -366,12 +373,12 @@ new class extends Component
                                     <span class="ml-2">新增文章</span>
                                 </x-dropdown.link>
 
-                                <x-dropdown.link href="{{ route('users.show', ['id' => auth()->id()]) }}">
+                                <x-dropdown.link href="{{ route('users.show', ['id' => $this->currentUser->id]) }}">
                                     <x-icons.info-circle class="w-4" />
                                     <span class="ml-2">個人資訊</span>
                                 </x-dropdown.link>
 
-                                <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
+                                <x-dropdown.link href="{{ route('settings.users.edit', ['id' => $this->currentUser->id]) }}">
                                     <x-icons.geer-fill class="w-4" />
                                     <span class="ml-2">設定</span>
                                 </x-dropdown.link>
