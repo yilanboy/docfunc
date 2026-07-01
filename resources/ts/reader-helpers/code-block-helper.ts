@@ -23,8 +23,8 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     copyButton.addEventListener('click', function(this: HTMLButtonElement) {
         // copy code to clipboard
         navigator.clipboard.writeText(code).then(
-            () => console.log('Copied to clipboard'),
-            () => console.log('Failed to copy to clipboard')
+            () => window.dispatchEvent(new CustomEvent('toast', { detail: { status: 'success', message: 'Copied to clipboard' } })),
+            () => window.dispatchEvent(new CustomEvent('toast', { detail: { status: 'danger', message: 'Failed to copy to clipboard' } }))
         );
 
         // change the button icon to "Copied!" for 2 seconds
