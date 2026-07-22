@@ -16,6 +16,7 @@
         "bref/bref": "^3.0",
         "bref/laravel-bridge": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^4.0",
         "laravel/framework": "^13.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",

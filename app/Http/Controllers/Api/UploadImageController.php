@@ -26,10 +26,10 @@ class UploadImageController extends Controller
      */
     public function __invoke(UploadImageRequest $request): JsonResponse
     {
-        $file = $request->file('upload');
-        $imageName = $this->fileService->generateFileName($file->getClientOriginalExtension());
-        Storage::disk()->put('images/'.$imageName, $file->getContent());
-        $url = Storage::disk()->url('images/'.$imageName);
+        $image = $request->image('upload')->toWebp();
+        $name = $this->fileService->generateFileName();
+        $image->storeAs(path: 'images', name: "$name.{$image->extension()}", disk: config('filesystems.default'));
+        $url = Storage::disk()->url('images/'."$name.{$image->extension()}");
 
         return response()->json(['url' => $url]);
     }

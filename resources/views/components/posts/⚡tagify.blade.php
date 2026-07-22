@@ -13,11 +13,7 @@ new class extends Component
 ?>
 
 @assets
-@vite([
-    'resources/ts/tagify.ts',
-    'node_modules/@yaireo/tagify/dist/tagify.css',
-    'resources/css/custom-tagify.css',
-])
+@vite('resources/ts/tagify.ts')
 @endassets
 
 @script
