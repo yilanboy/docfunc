@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,17 +20,25 @@ describe('image upload api', function () {
         Storage::disk()->assertDirectoryEmpty('images');
     });
 
-    test('logged-in users can upload images', function () {
+    test('logged-in users can upload images as webp', function () {
         loginAsUser();
 
         $file = UploadedFile::fake()->image('photo.jpg')->size(100);
 
-        post(route('images.store'), [
+        $response = post(route('images.store'), [
             'upload' => $file,
-        ])->assertStatus(200)
-            ->assertJsonStructure(['url']);
+        ])->assertSuccessful();
 
-        expect(Storage::disk()->allFiles())->not->toBeEmpty();
+        $storedFiles = Storage::disk()->files('images');
+        $storedPath = $storedFiles[0] ?? null;
+
+        expect($storedFiles)->toHaveCount(1)
+            ->and($storedPath)->toEndWith('.webp')
+            ->and(Storage::disk()->mimeType($storedPath))->toBe('image/webp');
+
+        $response->assertExactJson([
+            'url' => Storage::disk()->url($storedPath),
+        ]);
     });
 
     test('the upload field is required', function () {
