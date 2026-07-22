@@ -30,6 +30,7 @@ class ShowDefaultPreviewController extends Controller
         $image = new Generator()
             ->size(Size::OpenGraph)
             ->format($format)
+            ->quality(100)
             ->background(new Gradient(from: '#00d5be', to: '#00d3f2', direction: GradientDirection::Diagonal))
             ->title(new TextBlock(
                 text: $post->title,
