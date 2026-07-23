@@ -1,4 +1,6 @@
 import Tagify from '@yaireo/tagify';
+import '@yaireo/tagify/dist/tagify.css';
+import '../css/custom-tagify.css';
 
 declare global {
     interface Window {

@@ -22,3 +22,14 @@ it('has link with name', function () {
             'name' => $category->name,
         ]));
 })->group('has link with name');
+
+it('marks the seeded categories as default', function () {
+    expect(Category::whereIn('id', [1, 2, 3])->pluck('is_default'))
+        ->each->toBeTrue();
+});
+
+it('defaults is_default to false for new categories', function () {
+    $category = Category::factory()->create();
+
+    expect($category->is_default)->toBeFalse();
+});

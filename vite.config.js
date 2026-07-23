@@ -24,8 +24,6 @@ export default defineConfig({
                 'resources/ts/markdown-helper.ts',
                 // css
                 'resources/css/app.css',
-                'node_modules/@yaireo/tagify/dist/tagify.css',
-                'resources/css/custom-tagify.css',
             ],
             refresh: true,
         }),

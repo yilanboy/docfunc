@@ -15,6 +15,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->name(),
             'icon' => $this->faker->bothify('##### #####'),
             'description' => $this->faker->sentence(),
+            'is_default' => false,
         ];
     }
 }

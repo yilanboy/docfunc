@@ -19,8 +19,15 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'icon', 'description',
+        'name', 'icon', 'description', 'is_default',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_default' => 'boolean',
+        ];
+    }
 
     public function posts(): HasMany
     {
