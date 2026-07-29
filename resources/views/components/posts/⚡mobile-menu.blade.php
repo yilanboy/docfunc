@@ -30,10 +30,9 @@ new class extends Component
 };
 ?>
 
-<div
-    class="inline-flex gap-0.5 justify-end items-center mb-6 w-full text-sm rounded-md xl:hidden isolate text-zinc-400">
+<div class="isolate mb-6 inline-flex w-full items-center justify-end gap-0.5 rounded-md text-sm text-zinc-400 xl:hidden">
     <a
-        class="inline-flex relative items-center py-2 px-4 rounded-l-xl focus:z-10 bg-zinc-50 text-zinc-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 hover:bg-zinc-100"
+        class="relative inline-flex items-center rounded-l-xl bg-zinc-50 px-4 py-2 text-zinc-400 hover:bg-zinc-100 focus:z-10 dark:bg-zinc-800 dark:hover:bg-zinc-700"
         href="{{ route('posts.edit', ['id' => $postId]) }}"
     >
         <x-icons.pencil class="w-4" />
@@ -41,7 +40,7 @@ new class extends Component
     </a>
 
     <button
-        class="inline-flex relative items-center py-2 px-4 -ml-px rounded-r-xl cursor-pointer focus:z-10 bg-zinc-50 text-zinc-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 hover:bg-zinc-100"
+        class="relative -ml-px inline-flex cursor-pointer items-center rounded-r-xl bg-zinc-50 px-4 py-2 text-zinc-400 hover:bg-zinc-100 focus:z-10 dark:bg-zinc-800 dark:hover:bg-zinc-700"
         type="button"
         wire:confirm="你確定要刪除文章嗎？（7 天之內可以還原）"
         wire:click="destroy({{ $postId }})"

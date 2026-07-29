@@ -1,13 +1,13 @@
 <div class="flex gap-3">
-    <div class="flex items-center shrink-0">
-        <div class="grid grid-cols-1 group size-5">
+    <div class="flex shrink-0 items-center">
+        <div class="group grid size-5 grid-cols-1">
             <input
-                class="col-start-1 row-start-1 bg-white rounded-sm border appearance-none checked:bg-emerald-600 checked:border-emerald-600 border-zinc-300 indeterminate:border-emerald-600 indeterminate:bg-emerald-600 forced-colors:appearance-auto dark:checked:border-lividus-600 dark:checked:bg-lividus-600 dark:indeterminate:border-lividus-600 dark:indeterminate:bg-lividus-600 dark:focus-visible:outline-lividus-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:border-zinc-300 disabled:bg-zinc-100 disabled:checked:bg-zinc-100"
+                class="dark:checked:border-lividus-600 dark:checked:bg-lividus-600 dark:indeterminate:border-lividus-600 dark:indeterminate:bg-lividus-600 dark:focus-visible:outline-lividus-600 col-start-1 row-start-1 appearance-none rounded-sm border border-zinc-300 bg-white checked:border-emerald-600 checked:bg-emerald-600 indeterminate:border-emerald-600 indeterminate:bg-emerald-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:border-zinc-300 disabled:bg-zinc-100 disabled:checked:bg-zinc-100 forced-colors:appearance-auto"
                 type="checkbox"
                 {{ $attributes }}
-            >
+            />
             <svg
-                class="col-start-1 row-start-1 justify-self-center self-center pointer-events-none group-has-disabled:stroke-zinc-950/25 size-3.5 stroke-white"
+                class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-zinc-950/25"
                 viewBox="0 0 14 14"
                 fill="none"
             >

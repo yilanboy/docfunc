@@ -82,6 +82,7 @@
         ],
         "ci": [
             "vendor/bin/pint --parallel",
+            "vendor/bin/pint --blade --parallel",
             "@php artisan test --parallel",
             "vendor/bin/phpstan analyse --memory-limit=2G"
         ]

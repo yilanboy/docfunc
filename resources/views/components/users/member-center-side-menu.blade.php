@@ -1,8 +1,8 @@
 {{-- user edit side men --}}
-<x-card class="flex flex-col justify-center items-center w-full md:w-60 xl:w-80 dark:text-zinc-50">
-    <div class="flex flex-col space-y-1 w-full">
+<x-card class="flex w-full flex-col items-center justify-center md:w-60 xl:w-80 dark:text-zinc-50">
+    <div class="flex w-full flex-col space-y-1">
         <a
-            class="flex items-center p-2 rounded-md dark:text-zinc-50 dark:hover:bg-zinc-700 hover:bg-zinc-200"
+            class="flex items-center rounded-md p-2 hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-700"
             href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}"
             wire:current="bg-zinc-200 dark:bg-zinc-700"
             wire:navigate
@@ -12,7 +12,7 @@
         </a>
 
         <a
-            class="flex items-center p-2 rounded-md dark:text-zinc-50 dark:hover:bg-zinc-700 hover:bg-zinc-200"
+            class="flex items-center rounded-md p-2 hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-700"
             href="{{ route('settings.users.password.edit', ['id' => auth()->id()]) }}"
             wire:current="bg-zinc-200 dark:bg-zinc-700"
             wire:navigate
@@ -22,7 +22,7 @@
         </a>
 
         <a
-            class="flex items-center p-2 rounded-md dark:text-zinc-50 dark:hover:bg-zinc-700 hover:bg-zinc-200"
+            class="flex items-center rounded-md p-2 hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-700"
             href="{{ route('settings.users.passkeys.edit', ['id' => auth()->id()]) }}"
             wire:current="bg-zinc-200 dark:bg-zinc-700"
             wire:navigate
@@ -32,7 +32,7 @@
         </a>
 
         <a
-            class="flex items-center p-2 rounded-md dark:text-zinc-50 dark:hover:bg-zinc-700 hover:bg-zinc-200"
+            class="flex items-center rounded-md p-2 hover:bg-zinc-200 dark:text-zinc-50 dark:hover:bg-zinc-700"
             href="{{ route('settings.users.destroy', ['id' => auth()->id()]) }}"
             wire:current="bg-zinc-200 dark:bg-zinc-700"
             wire:navigate

@@ -83,7 +83,7 @@ new class extends Component
     {{-- posts list --}}
     @foreach ($posts as $post)
         <div
-            class="flex gap-2 justify-between py-2 px-2 rounded-sm transition duration-100 lg:gap-0 group dark:hover:bg-zinc-700 hover:bg-zinc-100"
+            class="group flex justify-between gap-2 rounded-sm px-2 py-2 transition duration-100 hover:bg-zinc-100 lg:gap-0 dark:hover:bg-zinc-700"
             {{-- in this list, these post attribue will be change in the loop, so we have to track them down --}}
             wire:key="{{ $post->id . $post->is_private . $post->deleted_at }}"
         >
@@ -94,7 +94,7 @@ new class extends Component
                     <span class="text-red-400 line-through">{{ $post->title . ' (已刪除)' }}</span>
                 @elseif ($post->is_private)
                     <a
-                        class="duration-200 ease-out hover:underline dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                        class="duration-200 ease-out hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-50"
                         href="{{ $post->link_with_slug }}"
                         wire:navigate
                     >
@@ -102,7 +102,7 @@ new class extends Component
                     </a>
                 @else
                     <a
-                        class="duration-200 ease-out hover:underline dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                        class="duration-200 ease-out hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-50"
                         href="{{ $post->link_with_slug }}"
                         wire:navigate
                     >
@@ -112,14 +112,11 @@ new class extends Component
             </div>
 
             @if ($post->user_id === auth()->id())
-                <div
-                    class="hidden items-center ml-2 space-x-4 opacity-0 transition duration-100 lg:flex group-hover:opacity-100"
-                >
-
+                <div class="ml-2 hidden items-center space-x-4 opacity-0 transition duration-100 group-hover:opacity-100 lg:flex">
                     {{-- restore --}}
                     @if ($post->trashed())
                         <button
-                            class="duration-200 ease-out cursor-pointer text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                            class="cursor-pointer text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                             type="button"
                             title="還原文章"
                             wire:loading.attr="disabled"
@@ -132,7 +129,7 @@ new class extends Component
                         {{-- private --}}
                         @if ($post->is_private)
                             <button
-                                class="duration-200 ease-out cursor-pointer text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                                class="cursor-pointer text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                                 type="button"
                                 title="公開文章"
                                 wire:loading.attr="disabled"
@@ -143,21 +140,20 @@ new class extends Component
                             </button>
                         @else
                             <button
-                                class="duration-200 ease-out cursor-pointer text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                                class="cursor-pointer text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                                 type="button"
                                 title="關閉文章"
                                 wire:loading.attr="disabled"
                                 wire:confirm="你確定要將該文章設為不公開？"
                                 wire:click="privateStatusToggle({{ $post->id }})"
                             >
-
                                 <x-icons.unlock class="w-5" />
                             </button>
                         @endif
 
                         {{-- edit --}}
                         <a
-                            class="duration-200 ease-out text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                            class="text-zinc-500 duration-200 ease-out hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                             href="{{ route('posts.edit', ['id' => $post->id]) }}"
                             title="編輯文章"
                             role="button"
@@ -168,7 +164,7 @@ new class extends Component
 
                         {{-- destroy --}}
                         <button
-                            class="text-red-400 duration-200 ease-out cursor-pointer hover:text-red-700 dark:hover:text-red-200"
+                            class="cursor-pointer text-red-400 duration-200 ease-out hover:text-red-700 dark:hover:text-red-200"
                             type="button"
                             title="刪除文章"
                             wire:loading.attr="disabled"
@@ -178,7 +174,6 @@ new class extends Component
                             <x-icons.x class="w-5" />
                         </button>
                     @endif
-
                 </div>
             @endif
         </div>

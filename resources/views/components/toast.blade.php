@@ -42,7 +42,7 @@
 
             closeToast() {
                 this.isShow = false;
-            }
+            },
         }));
     });
 </script>
@@ -61,20 +61,9 @@
     x-transition:leave-end="opacity-0"
 >
     <div class="p-10">
-        <div
-            class="flex items-center py-3 px-4 text-lg text-white rounded-sm"
-            role="alert"
-            :class="backgroundColor"
-        >
-      <span
-          class="flex items-center"
-          x-html="message"
-      ></span>
-            <button
-                class="flex"
-                type="button"
-                x-on:click="closeToast"
-            >
+        <div class="flex items-center rounded-sm px-4 py-3 text-lg text-white" role="alert" :class="backgroundColor">
+            <span class="flex items-center" x-html="message"></span>
+            <button class="flex" type="button" x-on:click="closeToast">
                 <x-icons.x class="size-6" />
             </button>
         </div>

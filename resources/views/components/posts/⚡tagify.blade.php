@@ -13,60 +13,55 @@ new class extends Component
 ?>
 
 @assets
-@vite('resources/ts/tagify.ts')
+    @vite('resources/ts/tagify.ts')
 @endassets
 
 @script
-<script>
-    Alpine.data('tagifyComponent', () => ({
-        tagsListUrl: @js(route('api.tags')),
-        async init() {
-            const response = await fetch(this.tagsListUrl);
-            const tagsList = await response.json();
+    <script>
+        Alpine.data('tagifyComponent', () => ({
+            tagsListUrl: @js(route('api.tags')),
+            async init() {
+                const response = await fetch(this.tagsListUrl);
+                const tagsList = await response.json();
 
-            const tagify = window.createTagify(
-                this.$refs.tags,
-                tagsList
-            );
+                const tagify = window.createTagify(this.$refs.tags, tagsList);
 
-            try {
-                const tags = JSON.parse(this.$wire.value);
-                tagify.addTags(tags);
-            } catch (error) {
-                console.error('Error parsing tags:', error);
-            }
+                try {
+                    const tags = JSON.parse(this.$wire.value);
+                    tagify.addTags(tags);
+                } catch (error) {
+                    console.error('Error parsing tags:', error);
+                }
 
-            // Prevent from triggering when component is initialized
-            setTimeout(() => {
-                tagify.on('change', (event) => {
-                    this.$wire.value = event.detail.value;
-                });
-            }, 500);
+                // Prevent from triggering when component is initialized
+                setTimeout(() => {
+                    tagify.on('change', (event) => {
+                        this.$wire.value = event.detail.value;
+                    });
+                }, 500);
 
-            document.addEventListener('livewire:navigating', () => {
-                tagify.destroy();
-            }, { once: true });
+                document.addEventListener(
+                    'livewire:navigating',
+                    () => {
+                        tagify.destroy();
+                    },
+                    { once: true },
+                );
 
-            this.$dispatch('tagify-ready');
-        }
-    }));
-</script>
+                this.$dispatch('tagify-ready');
+            },
+        }));
+    </script>
 @endscript
 
-<div
-    x-data="tagifyComponent"
-    wire:ignore
->
-    <label
-        class="hidden"
-        for="tags"
-    >標籤 (最多 5 個)</label>
+<div x-data="tagifyComponent" wire:ignore>
+    <label class="hidden" for="tags">標籤 (最多 5 個)</label>
 
     <input
-        class="tagify-custom-look dark:border-zinc-600! border-zinc-300! w-full rounded-md bg-white dark:bg-zinc-700 inline-flex items-center"
+        class="tagify-custom-look inline-flex w-full items-center rounded-md border-zinc-300! bg-white dark:border-zinc-600! dark:bg-zinc-700"
         id="tags"
         type="text"
         placeholder="標籤 (最多 5 個)"
         x-ref="tags"
-    >
+    />
 </div>

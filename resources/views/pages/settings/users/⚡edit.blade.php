@@ -31,7 +31,7 @@ class extends Component
         return [
             'name'         => [
                 'required', 'string', 'regex:/^[A-Za-z0-9\-\_]+$/u', 'between:3,25',
-                'unique:users,name,'.$this->user->id
+                'unique:users,name,'.$this->user->id,
             ],
             'introduction' => ['max:120'],
         ];
@@ -68,27 +68,23 @@ class extends Component
 
 <x-layouts.main>
     <div class="container mx-auto grow">
-        <div class="flex flex-col gap-6 justify-center items-start px-4 md:flex-row">
+        <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
             <x-users.member-center-side-menu />
 
-            <x-card class="flex flex-col gap-6 justify-center w-full md:max-w-2xl">
+            <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
                 <div class="space-y-4">
-                    <h1 class="w-full text-2xl text-center dark:text-zinc-50">編輯個人資料</h1>
-                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                    <h1 class="w-full text-center text-2xl dark:text-zinc-50">編輯個人資料</h1>
+                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700" />
                 </div>
 
-                <div class="flex flex-col gap-4 justify-center items-center">
+                <div class="flex flex-col items-center justify-center gap-4">
                     {{-- 大頭貼照片 --}}
-                    <img
-                        class="rounded-full size-48"
-                        src="{{ $user->gravatar_url }}"
-                        alt="{{ $name }}"
-                    >
+                    <img class="size-48 rounded-full" src="{{ $user->gravatar_url }}" alt="{{ $name }}" />
 
                     <div class="flex dark:text-zinc-50">
                         <span class="mr-2">個人圖像由</span>
                         <a
-                            class="text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-700"
+                            class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
                             href="https://zh-tw.gravatar.com/"
                             target="_blank"
                             rel="nofollow noopener noreferrer"
@@ -100,10 +96,7 @@ class extends Component
                 {{-- 驗證錯誤訊息 --}}
                 <x-auth-validation-errors :errors="$errors" />
 
-                <form
-                    class="space-y-6 w-full"
-                    wire:submit="update({{ $user->id }})"
-                >
+                <form class="w-full space-y-6" wire:submit="update({{ $user->id }})">
                     @php
                         $emailLength = strlen($user->email);
                         $startToMask = round($emailLength / 4);
@@ -136,7 +129,7 @@ class extends Component
                         rows="5"
                     >{{ old('introduction', $introduction) }}</x-floating-label-textarea>
 
-                    <div class="flex justify-end items-center">
+                    <div class="flex items-center justify-end">
                         {{-- 儲存按鈕 --}}
                         <x-button>
                             <x-icons.save class="w-5" />

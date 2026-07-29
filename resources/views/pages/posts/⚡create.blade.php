@@ -57,31 +57,25 @@ class extends Component
         x-data="{
             ckeditorReady: false,
             tagifyReady: false,
-            get isReady() { return this.ckeditorReady && this.tagifyReady; },
+            get isReady() {
+                return this.ckeditorReady && this.tagifyReady;
+            },
         }"
         x-on:ckeditor-ready="ckeditorReady = true"
         x-on:tagify-ready="tagifyReady = true"
     >
         {{-- loading spinner --}}
-        <div
-            class="flex justify-center items-center py-20"
-            x-show="!isReady"
-            x-cloak
-        >
-            <x-icons.animate-spin class="text-emerald-500 size-8 dark:text-lividus-500" />
+        <div class="flex items-center justify-center py-20" x-show="! isReady" x-cloak>
+            <x-icons.animate-spin class="dark:text-lividus-500 size-8 text-emerald-500" />
         </div>
 
-        <div
-            class="flex justify-center items-stretch space-x-4"
-            x-show="isReady"
-            x-cloak
-        >
+        <div class="flex items-stretch justify-center space-x-4" x-show="isReady" x-cloak>
             <div class="hidden xl:block xl:w-1/5"></div>
 
-            <div class="p-2 w-full max-w-3xl xl:p-0">
-                <div class="flex flex-col justify-center items-center space-y-6 w-full">
+            <div class="w-full max-w-3xl p-2 xl:p-0">
+                <div class="flex w-full flex-col items-center justify-center space-y-6">
                     {{-- title --}}
-                    <div class="flex items-center text-2xl fill-current text-zinc-700 dark:text-zinc-50">
+                    <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
                         <x-icons.pencil class="w-6" />
                         <span class="ml-4">新增文章</span>
                     </div>
@@ -89,15 +83,9 @@ class extends Component
                     {{-- editor --}}
                     <x-card class="w-full">
                         {{-- validation error message --}}
-                        <x-auth-validation-errors
-                            class="mb-4"
-                            :errors="$errors"
-                        />
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                        <form
-                            id="create-post"
-                            wire:submit="save"
-                        >
+                        <form id="create-post" wire:submit="save">
                             <div class="grid grid-cols-2 gap-5">
                                 {{-- post cover image --}}
                                 <livewire:posts.upload-cover-image wire:model.live="form.cover_image_url" />
@@ -115,20 +103,14 @@ class extends Component
                                         @endslot
 
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">
-                                                {{ $category->name }}
-                                            </option>
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </x-select>
                                 </div>
 
                                 {{-- post private setting --}}
-                                <div class="flex col-span-2 items-center md:col-span-1">
-                                    <x-checkbox
-                                        id="is-private"
-                                        name="is-private"
-                                        wire:model.change="form.is_private"
-                                    >
+                                <div class="col-span-2 flex items-center md:col-span-1">
+                                    <x-checkbox id="is-private" name="is-private" wire:model.change="form.is_private">
                                         文章不公開
                                     </x-checkbox>
                                 </div>
@@ -158,26 +140,17 @@ class extends Component
                             </div>
 
                             {{-- show in mobile device --}}
-                            <div class="flex justify-between items-center mt-4 xl:hidden">
+                            <div class="mt-4 flex items-center justify-between xl:hidden">
                                 {{-- show characters count --}}
-                                <div
-                                    class="dark:text-zinc-50"
-                                    wire:ignore
-                                >
+                                <div class="dark:text-zinc-50" wire:ignore>
                                     <span class="character-counter"></span>
                                 </div>
 
                                 {{-- save button --}}
                                 <x-button wire:loading.attr="disabled">
-                                    <x-icons.save
-                                        class="w-6"
-                                        wire:loading.remove
-                                    />
+                                    <x-icons.save class="w-6" wire:loading.remove />
 
-                                    <span
-                                        class="w-5 h-5"
-                                        wire:loading
-                                    >
+                                    <span class="h-5 w-5" wire:loading>
                                         <x-icons.animate-spin />
                                     </span>
 
@@ -186,7 +159,6 @@ class extends Component
                             </div>
                         </form>
                     </x-card>
-
                 </div>
             </div>
 

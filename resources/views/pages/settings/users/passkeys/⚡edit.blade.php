@@ -61,7 +61,7 @@ new class extends Component
             $publicKeyCredentialCreationOptions = $serializer->fromJson($options,
                 PublicKeyCredentialCreationOptions::class);
 
-            $csmFactory = new CeremonyStepManagerFactory();
+            $csmFactory = new CeremonyStepManagerFactory;
             $creationCSM = $csmFactory->creationCeremony();
 
             $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($creationCSM)
@@ -109,116 +109,105 @@ new class extends Component
 ?>
 
 @assets
-@vite('resources/ts/webauthn.ts')
+    @vite('resources/ts/webauthn.ts')
 @endassets
 
 @script
-<script>
-    Alpine.data('settingsUsersPasskeysEditPage', () => ({
-        passkey: {
-            optionEndpoint: $wire.optionEndpoint
-        },
-        name: '',
-        browserSupportsWebAuthn,
-        async register() {
-            if (!this.browserSupportsWebAuthn()) {
-                this.$wire.$dispatch('toast', {
-                    status: 'danger',
-                    message: '不支援 WebAuthn'
+    <script>
+        Alpine.data('settingsUsersPasskeysEditPage', () => ({
+            passkey: {
+                optionEndpoint: $wire.optionEndpoint,
+            },
+            name: '',
+            browserSupportsWebAuthn,
+            async register() {
+                if (!this.browserSupportsWebAuthn()) {
+                    this.$wire.$dispatch('toast', {
+                        status: 'danger',
+                        message: '不支援 WebAuthn',
+                    });
+
+                    return;
+                }
+
+                if (this.name === '') {
+                    this.$wire.$dispatch('toast', {
+                        status: 'danger',
+                        message: '請輸入密碼金鑰名稱',
+                    });
+
+                    return;
+                }
+
+                const response = await fetch(this.passkey.optionEndpoint);
+                const optionsJSON = await response.json();
+
+                try {
+                    this.$wire.passkey = JSON.stringify(
+                        await startRegistration({
+                            optionsJSON,
+                        }),
+                    );
+                } catch (e) {
+                    this.$wire.$dispatch('toast', {
+                        status: 'danger',
+                        message: '註冊失敗，請重新註冊',
+                    });
+
+                    return;
+                }
+
+                this.$wire.name = this.name;
+                this.$wire.store();
+            },
+            init() {
+                this.$wire.$on('reset-passkey-name', () => {
+                    this.name = '';
                 });
-
-                return;
-            }
-
-            if (this.name === '') {
-                this.$wire.$dispatch('toast', {
-                    status: 'danger',
-                    message: '請輸入密碼金鑰名稱'
-                });
-
-                return;
-            }
-
-            const response = await fetch(this.passkey.optionEndpoint);
-            const optionsJSON = await response.json();
-
-            try {
-                this.$wire.passkey = JSON.stringify(await startRegistration({
-                    optionsJSON
-                }));
-            } catch (e) {
-                this.$wire.$dispatch('toast', {
-                    status: 'danger',
-                    message: '註冊失敗，請重新註冊'
-                });
-
-                return;
-            }
-
-            this.$wire.name = this.name;
-            this.$wire.store();
-        },
-        init() {
-            this.$wire.$on('reset-passkey-name', () => {
-                this.name = '';
-            });
-        }
-    }));
-</script>
+            },
+        }));
+    </script>
 @endscript
 
 <x-layouts.main x-data="settingsUsersPasskeysEditPage">
     <div class="container mx-auto grow">
-        <div class="flex flex-col gap-6 justify-center items-start px-4 md:flex-row">
+        <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
             <x-users.member-center-side-menu />
 
-            <x-card class="flex flex-col gap-6 justify-center w-full md:max-w-2xl">
+            <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
                 <div class="space-y-4">
-                    <h1 class="w-full text-2xl text-center dark:text-zinc-50">密碼金鑰</h1>
-                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                    <h1 class="w-full text-center text-2xl dark:text-zinc-50">密碼金鑰</h1>
+                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700" />
                 </div>
 
                 {{-- 驗證錯誤訊息 --}}
                 <x-auth-validation-errors :errors="$errors" />
 
-                <x-quotes.success>
-                    註冊密碼金鑰後，將無法使用密碼進行登入
-                </x-quotes.success>
+                <x-quotes.success> 註冊密碼金鑰後，將無法使用密碼進行登入 </x-quotes.success>
 
-                <form
-                    id="passkey"
-                    x-on:submit.prevent="register"
-                >
-                    <x-floating-label-input
-                        id="name"
-                        type="text"
-                        placeholder="密碼金鑰名稱"
-                        x-model="name"
-                    />
+                <form id="passkey" x-on:submit.prevent="register">
+                    <x-floating-label-input id="name" type="text" placeholder="密碼金鑰名稱" x-model="name" />
                 </form>
 
-                <ul
-                    class="divide-y divide-zinc-200 dark:divide-zinc-700"
-                    role="list"
-                >
+                <ul class="divide-y divide-zinc-200 dark:divide-zinc-700" role="list">
                     @foreach ($user->passkeys as $passkey)
-                        <li class="flex gap-x-6 justify-between py-5">
-                            <div class="flex gap-x-4 min-w-0">
+                        <li class="flex justify-between gap-x-6 py-5">
+                            <div class="flex min-w-0 gap-x-4">
                                 @if (in_array('usb', $passkey->data['transports']))
-                                    <x-icons.usb-drive-fill class="flex-none size-12 dark:text-zinc-50" />
+                                    <x-icons.usb-drive-fill class="size-12 flex-none dark:text-zinc-50" />
                                 @else
-                                    <x-icons.fingerprint class="flex-none size-12 dark:text-zinc-50" />
+                                    <x-icons.fingerprint class="size-12 flex-none dark:text-zinc-50" />
                                 @endif
-                                <div class="flex-auto min-w-0">
-                                    <p class="font-semibold text-sm/6 text-zinc-900 dark:text-zinc-50">
+                                <div class="min-w-0 flex-auto">
+                                    <p class="text-sm/6 font-semibold text-zinc-900 dark:text-zinc-50">
                                         {{ $passkey->name }}
                                     </p>
-                                    <p class="flex mt-1 truncate text-xs/5 text-zinc-500 dark:text-zinc-400">
+                                    <p class="mt-1 flex truncate text-xs/5 text-zinc-500 dark:text-zinc-400">
                                         建立於 {{ $passkey->created_at->diffForHumans() }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="flex gap-x-6 items-center shrink-0">
+                            <div class="flex shrink-0 items-center gap-x-6">
                                 <div class="hidden sm:flex sm:flex-col sm:items-end">
                                     <p class="text-sm/6 text-zinc-900 dark:text-zinc-50">
                                         {{ strtoupper(implode(' / ', $passkey->data['transports'])) }}
@@ -235,7 +224,7 @@ new class extends Component
                                     </p>
                                 </div>
                                 <button
-                                    class="block p-2.5 -m-2.5 cursor-pointer text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                                    class="-m-2.5 block cursor-pointer p-2.5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                                     type="button"
                                     wire:click="destroy({{ $passkey->id }})"
                                     wire:confirm="你確定要刪除這個密碼金鑰嗎？"
@@ -243,13 +232,12 @@ new class extends Component
                                     <span class="sr-only">開啟編輯選單</span>
                                     <x-icons.x class="size-6" />
                                 </button>
-
                             </div>
                         </li>
                     @endforeach
                 </ul>
 
-                <div class="flex justify-end items-center">
+                <div class="flex items-center justify-end">
                     <x-button form="passkey">
                         <x-icons.save class="w-5" />
                         <span class="ml-2">新增密碼金鑰</span>

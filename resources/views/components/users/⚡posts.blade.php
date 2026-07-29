@@ -68,39 +68,38 @@ new class extends Component
 ?>
 
 @script
-<script>
-    Alpine.data('usersPostsPart', () => ({
-        currentYear: $wire.entangle('currentPostsYear').live,
-        dropdownIsOpen: false,
-        showCurrentYearText() {
-            return `${this.currentYear} 年的文章`;
-        },
-        switchPostsByYear() {
-            this.currentYear = this.$el.getAttribute('data-year');
-            this.dropdownIsOpen = false;
-        },
-        showPostsByYear() {
-            return this.currentYear === this.$el.getAttribute('data-year');
-        }
-    }));
-</script>
+    <script>
+        Alpine.data('usersPostsPart', () => ({
+            currentYear: $wire.entangle('currentPostsYear').live,
+            dropdownIsOpen: false,
+            showCurrentYearText() {
+                return `${this.currentYear} 年的文章`;
+            },
+            switchPostsByYear() {
+                this.currentYear = this.$el.getAttribute('data-year');
+                this.dropdownIsOpen = false;
+            },
+            showPostsByYear() {
+                return this.currentYear === this.$el.getAttribute('data-year');
+            },
+        }));
+    </script>
 @endscript
 
 <div x-data="usersPostsPart">
-    @if (!empty($this->groupPostsByYear))
+    @if (! empty($this->groupPostsByYear))
         {{-- 會員文章 --}}
         <x-card class="relative w-full text-lg">
-            <div class="flex relative justify-end mb-6">
+            <div class="relative mb-6 flex justify-end">
                 <button
-                    class="inline-flex justify-center items-center py-2 px-4 w-full text-lg font-medium rounded-md border transition-colors cursor-pointer focus:bg-white focus:ring-2 focus:ring-offset-2 active:bg-white disabled:opacity-50 disabled:pointer-events-none border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700 dark:focus:bg-zinc-600 dark:focus:ring-zinc-600 dark:focus:ring-offset-zinc-800 dark:active:bg-zinc-600 hover:bg-neutral-100 focus:outline-hidden focus:ring-neutral-200/60"
+                    class="inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 px-4 py-2 text-lg font-medium transition-colors hover:bg-neutral-100 focus:bg-white focus:ring-2 focus:ring-neutral-200/60 focus:ring-offset-2 focus:outline-hidden active:bg-white disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700 dark:focus:bg-zinc-600 dark:focus:ring-zinc-600 dark:focus:ring-offset-zinc-800 dark:active:bg-zinc-600"
                     type="button"
-                    x-on:click="dropdownIsOpen = !dropdownIsOpen"
+                    x-on:click="dropdownIsOpen = ! dropdownIsOpen"
                     x-text="showCurrentYearText"
-                >
-                </button>
+                ></button>
 
                 <x-dropdown.menu
-                    class="absolute right-0 top-12 z-10"
+                    class="absolute top-12 right-0 z-10"
                     x-cloak=""
                     x-show="dropdownIsOpen"
                     x-on:click.away="dropdownIsOpen = false"
@@ -122,7 +121,7 @@ new class extends Component
 
             @foreach ($this->groupPostsByYear as $year => $posts)
                 <div
-                    class="rounded-md border duration-200 border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800"
+                    class="rounded-md border border-zinc-200 bg-zinc-50 duration-200 dark:border-zinc-700 dark:bg-zinc-800"
                     data-year="{{ $year }}"
                     x-cloak
                     x-show="showPostsByYear"
@@ -130,7 +129,7 @@ new class extends Component
                     wire:key="{{ $year . '-posts' }}"
                 >
                     <livewire:users.group-posts-by-year
-                        :key="$year . '-posts'"
+                        :key="$year.'-posts'"
                         :user-id="$userId"
                         :posts="$posts"
                         :year="$year"
@@ -139,7 +138,7 @@ new class extends Component
             @endforeach
         </x-card>
     @else
-        <x-card class="flex justify-center items-center h-32 text-zinc-400 dark:text-zinc-600">
+        <x-card class="flex h-32 items-center justify-center text-zinc-400 dark:text-zinc-600">
             <x-icons.exclamation-circle class="w-6" />
             <span class="ml-2">目前還沒有發佈任何文章喔！</span>
         </x-card>

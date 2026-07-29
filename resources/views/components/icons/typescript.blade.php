@@ -2,18 +2,8 @@
 
 @props(['rectClassName' => 'fill-[#3178c6]', 'pathClassName' => 'fill-white'])
 
-<svg
-    {{ $attributes }}
-    fill="none"
-    viewBox="0 0 128 128"
-    xmlns="http://www.w3.org/2000/svg"
->
-    <rect
-        class="{{ $rectClassName }}"
-        height="128"
-        rx="6"
-        width="128"
-    />
+<svg {{ $attributes }} fill="none" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <rect class="{{ $rectClassName }}" height="128" rx="6" width="128" />
     <path
         class="{{ $pathClassName }}"
         clip-rule="evenodd"

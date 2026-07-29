@@ -62,22 +62,19 @@ class extends Component
 
 <x-layouts.main>
     <div class="container mx-auto grow">
-        <div class="flex flex-col gap-6 justify-center items-start px-4 md:flex-row">
+        <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
             <x-users.member-center-side-menu />
 
-            <x-card class="flex flex-col gap-6 justify-center w-full md:max-w-2xl">
+            <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
                 <div class="space-y-4">
-                    <h1 class="w-full text-2xl text-center dark:text-zinc-50">修改密碼</h1>
-                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                    <h1 class="w-full text-center text-2xl dark:text-zinc-50">修改密碼</h1>
+                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700" />
                 </div>
 
                 {{-- 驗證錯誤訊息 --}}
                 <x-auth-validation-errors :errors="$errors" />
 
-                <form
-                    class="space-y-6 w-full"
-                    wire:submit="update({{ $user->id }})"
-                >
+                <form class="w-full space-y-6" wire:submit="update({{ $user->id }})">
                     {{-- 舊密碼 --}}
                     <x-floating-label-input
                         id="current_password"
@@ -105,7 +102,7 @@ class extends Component
                         required
                     />
 
-                    <div class="flex justify-end items-center">
+                    <div class="flex items-center justify-end">
                         {{-- 儲存按鈕 --}}
                         <x-button>
                             <x-icons.save class="w-5" />

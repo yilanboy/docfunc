@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Livewire\Actions\Logout;
 use App\Models\Category;
-use App\Models\User;
 use App\Services\SettingService;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
@@ -41,55 +40,38 @@ new class extends Component
 ?>
 
 @script
-<script>
-    Alpine.data('layoutsHeaderPart', () => ({
-        html: document.documentElement,
-        // the dropdown only shows in mobile
-        dropdownMenuIsOpen: false,
-        profileMenuIsOpen: false,
-        switchTheme() {
-            if (this.html.getAttribute('data-theme') === 'light') {
-                this.html.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                this.html.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-    }));
-</script>
+    <script>
+        Alpine.data('layoutsHeaderPart', () => ({
+            html: document.documentElement,
+            // the dropdown only shows in mobile
+            dropdownMenuIsOpen: false,
+            profileMenuIsOpen: false,
+            switchTheme() {
+                if (this.html.getAttribute('data-theme') === 'light') {
+                    this.html.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    this.html.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            },
+        }));
+    </script>
 @endscript
-
 
 @php
     $hasUnreadNotifications = auth()->check() && auth()->user()->unreadNotifications()->exists();
 @endphp
 
-<header
-    class="z-20 mb-6"
-    id="header"
-    x-data="layoutsHeaderPart"
->
+<header class="z-20 mb-6" id="header" x-data="layoutsHeaderPart">
     <div
-        class="hidden relative justify-center items-center w-full transition-all duration-300 lg:flex h-18 bg-zinc-50 dark:bg-zinc-800"
+        class="relative hidden h-18 w-full items-center justify-center bg-zinc-50 transition-all duration-300 lg:flex dark:bg-zinc-800"
         id="desktop-header"
     >
         {{-- logo --}}
-        <a
-            class="flex absolute left-4 inset-y-1/2 items-center"
-            href="{{ route('root') }}"
-            wire:navigate
-        >
-            <img
-                class="block dark:hidden size-8"
-                src="{{ asset('images/icon/logo.svg') }}"
-                alt="logo"
-            >
-            <img
-                class="hidden dark:block size-8"
-                src="{{ asset('images/icon/dark-logo.svg') }}"
-                alt="logo"
-            >
+        <a class="absolute inset-y-1/2 left-4 flex items-center" href="{{ route('root') }}" wire:navigate>
+            <img class="block size-8 dark:hidden" src="{{ asset('images/icon/logo.svg') }}" alt="logo" />
+            <img class="hidden size-8 dark:block" src="{{ asset('images/icon/dark-logo.svg') }}" alt="logo" />
             <span class="ml-3 font-mono text-2xl font-bold dark:text-zinc-50">{{ config('app.name') }}</span>
         </a>
 
@@ -114,31 +96,26 @@ new class extends Component
             @endforeach
         </nav>
 
-        <div class="flex absolute right-6 inset-y-1/2 items-center space-x-5">
-
+        <div class="absolute inset-y-1/2 right-6 flex items-center space-x-5">
             {{-- search --}}
             <livewire:search />
 
             {{-- light / dark mode toggle --}}
             <button
-                class="flex overflow-hidden relative justify-center items-center cursor-pointer group size-12"
+                class="group relative flex size-12 cursor-pointer items-center justify-center overflow-hidden"
                 type="button"
                 aria-label="Toggle Dark Mode"
                 x-on:click="switchTheme"
             >
-                <x-icons.sun
-                    class="absolute top-3 inset-x-auto text-amber-400 transition-all duration-500 dark:top-full group-hover:text-amber-500 size-6"
-                />
+                <x-icons.sun class="absolute inset-x-auto top-3 size-6 text-amber-400 transition-all duration-500 group-hover:text-amber-500 dark:top-full" />
 
-                <x-icons.moon-stars
-                    class="absolute inset-x-auto -top-full transition-all duration-500 dark:top-3 size-6 text-[#f6f1d5] group-hover:text-[#ddd8bf]"
-                />
+                <x-icons.moon-stars class="absolute inset-x-auto -top-full size-6 text-[#f6f1d5] transition-all duration-500 group-hover:text-[#ddd8bf] dark:top-3" />
             </button>
 
             @guest
                 @if ($showRegisterButton)
                     <a
-                        class="flex justify-center items-center px-3 h-10 text-gray-600 bg-transparent rounded-lg border-2 border-gray-600 transition duration-150 hover:bg-gray-600 hover:border-transparent hover:text-zinc-50"
+                        class="flex h-10 items-center justify-center rounded-lg border-2 border-gray-600 bg-transparent px-3 text-gray-600 transition duration-150 hover:border-transparent hover:bg-gray-600 hover:text-zinc-50"
                         href="{{ route('register') }}"
                         wire:navigate
                     >
@@ -147,7 +124,7 @@ new class extends Component
                 @endif
 
                 <a
-                    class="flex justify-center items-center px-3 h-10 text-emerald-600 bg-transparent rounded-lg border-2 border-emerald-600 transition duration-150 hover:bg-emerald-600 hover:border-transparent hover:text-zinc-50"
+                    class="flex h-10 items-center justify-center rounded-lg border-2 border-emerald-600 bg-transparent px-3 text-emerald-600 transition duration-150 hover:border-transparent hover:bg-emerald-600 hover:text-zinc-50"
                     href="{{ route('login') }}"
                     wire:navigate
                 >
@@ -158,46 +135,42 @@ new class extends Component
 
             @auth
                 {{-- notification --}}
-                <span class="inline-flex relative rounded-md">
-          <a
-              class="flex justify-center items-center text-xl rounded-lg transition duration-150 size-12 text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
-              href="{{ route('notifications.index') }}"
-              aria-label="Notifications"
-              wire:navigate
-          >
-            <x-icons.bell class="size-6" />
-          </a>
+                <span class="relative inline-flex rounded-md">
+                    <a
+                        class="flex size-12 items-center justify-center rounded-lg text-xl text-zinc-500 transition duration-150 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+                        href="{{ route('notifications.index') }}"
+                        aria-label="Notifications"
+                        wire:navigate
+                    >
+                        <x-icons.bell class="size-6" />
+                    </a>
 
-          @if ($hasUnreadNotifications)
-                        <span class="flex absolute top-2 right-2 -mt-1 -mr-1 w-3 h-3">
-              <span class="inline-flex absolute w-full h-full bg-red-400 rounded-full opacity-75 animate-ping"></span>
-              <span class="inline-flex relative w-3 h-3 bg-red-500 rounded-full"></span>
-            </span>
+                    @if ($hasUnreadNotifications)
+                        <span class="absolute top-2 right-2 -mt-1 -mr-1 flex h-3 w-3">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
+                        </span>
                     @endif
-        </span>
+                </span>
 
-                <div class="flex relative justify-center items-center">
+                <div class="relative flex items-center justify-center">
                     {{-- headshot --}}
                     <div>
                         <button
-                            class="flex text-sm rounded-full cursor-pointer focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400 bg-zinc-800 focus:outline-hidden"
+                            class="flex cursor-pointer rounded-full bg-zinc-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400 focus:outline-hidden"
                             id="desktop-user-menu-button"
                             type="button"
-                            x-on:click="profileMenuIsOpen = !profileMenuIsOpen"
+                            x-on:click="profileMenuIsOpen = ! profileMenuIsOpen"
                             x-on:keydown.escape.window="profileMenuIsOpen = false"
                         >
                             <span class="sr-only">Open user menu</span>
-                            <img
-                                class="rounded-full size-12"
-                                src="{{ auth()->user()->gravatar_url }}"
-                                alt=""
-                            >
+                            <img class="size-12 rounded-full" src="{{ auth()->user()->gravatar_url }}" alt="" />
                         </button>
                     </div>
 
                     {{-- profile menu --}}
                     <x-dropdown.menu
-                        class="absolute right-0 top-16"
+                        class="absolute top-16 right-0"
                         x-cloak=""
                         x-show="profileMenuIsOpen"
                         x-on:click.outside="profileMenuIsOpen = false"
@@ -218,10 +191,7 @@ new class extends Component
                             <span class="ml-2">設定</span>
                         </x-dropdown.link>
 
-                        <x-dropdown.button
-                            wire:confirm="你確定要登出嗎？"
-                            wire:click="logout"
-                        >
+                        <x-dropdown.button wire:confirm="你確定要登出嗎？" wire:click="logout">
                             <x-icons.box-arrow-left class="w-4" />
                             <span class="ml-2">登出</span>
                         </x-dropdown.button>
@@ -231,33 +201,30 @@ new class extends Component
         </div>
     </div>
 
-    <div
-        class="lg:hidden bg-zinc-50 dark:bg-zinc-800"
-        id="mobile-header"
-    >
-        <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex relative justify-between items-center h-18">
-                <div class="flex absolute inset-y-0 left-0 items-center">
+    <div class="bg-zinc-50 lg:hidden dark:bg-zinc-800" id="mobile-header">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-18 items-center justify-between">
+                <div class="absolute inset-y-0 left-0 flex items-center">
                     {{-- category dropdown menu toggle --}}
                     <button
-                        class="inline-flex justify-center items-center p-2 rounded-md text-zinc-700"
+                        class="inline-flex items-center justify-center rounded-md p-2 text-zinc-700"
                         type="button"
                         aria-controls="mobile-menu"
                         aria-expanded="false"
-                        x-on:click="dropdownMenuIsOpen = !dropdownMenuIsOpen"
+                        x-on:click="dropdownMenuIsOpen = ! dropdownMenuIsOpen"
                     >
                         <span class="sr-only">Open main menu</span>
                         {{-- close category dropdown menu icon --}}
                         <div
-                            class="text-3xl text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                            class="text-3xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                             x-cloak
-                            x-show="!dropdownMenuIsOpen"
+                            x-show="! dropdownMenuIsOpen"
                         >
                             <x-icons.list class="w-7" />
                         </div>
                         {{-- open category dropdown menu icon --}}
                         <div
-                            class="text-xl text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                            class="text-xl text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                             x-cloak
                             x-show="dropdownMenuIsOpen"
                         >
@@ -266,38 +233,24 @@ new class extends Component
                     </button>
                 </div>
 
-                <div class="hidden items-center mx-auto md:flex">
-                    <img
-                        class="block dark:hidden size-10"
-                        src="{{ asset('images/icon/logo.svg') }}"
-                        alt="logo"
-                    >
-                    <img
-                        class="hidden dark:block size-10"
-                        src="{{ asset('images/icon/dark-logo.svg') }}"
-                        alt="logo"
-                    >
-                    <span class="ml-3 font-mono text-xl font-bold dark:text-zinc-50">
-            {{ config('app.name') }}
-          </span>
+                <div class="mx-auto hidden items-center md:flex">
+                    <img class="block size-10 dark:hidden" src="{{ asset('images/icon/logo.svg') }}" alt="logo" />
+                    <img class="hidden size-10 dark:block" src="{{ asset('images/icon/dark-logo.svg') }}" alt="logo" />
+                    <span class="ml-3 font-mono text-xl font-bold dark:text-zinc-50"> {{ config('app.name') }} </span>
                 </div>
 
-                <div class="flex absolute inset-y-0 right-0 items-center space-x-8">
+                <div class="absolute inset-y-0 right-0 flex items-center space-x-8">
                     {{-- light / dark mode toggle --}}
-                    <button
-                        type="button"
-                        aria-label="Toggle Dark Mode"
-                        x-on:click="switchTheme"
-                    >
-                        <x-icons.sun class="w-5 text-amber-400 dark:hidden hover:text-amber-500" />
+                    <button type="button" aria-label="Toggle Dark Mode" x-on:click="switchTheme">
+                        <x-icons.sun class="w-5 text-amber-400 hover:text-amber-500 dark:hidden" />
 
-                        <x-icons.moon-stars class="hidden w-5 dark:block text-[#f6f1d5] hover:text-[#ddd8bf]" />
+                        <x-icons.moon-stars class="hidden w-5 text-[#f6f1d5] hover:text-[#ddd8bf] dark:block" />
                     </button>
 
                     @guest
                         @if ($showRegisterButton)
                             <a
-                                class="py-2 px-4 text-gray-400 bg-transparent rounded-md border-2 border-gray-400 hover:bg-gray-400 hover:border-transparent hover:text-zinc-50"
+                                class="rounded-md border-2 border-gray-400 bg-transparent px-4 py-2 text-gray-400 hover:border-transparent hover:bg-gray-400 hover:text-zinc-50"
                                 href="{{ route('register') }}"
                                 wire:navigate
                             >
@@ -306,7 +259,7 @@ new class extends Component
                         @endif
 
                         <a
-                            class="py-2 px-4 text-emerald-600 bg-transparent rounded-md border-2 border-emerald-600 hover:bg-emerald-600 hover:border-transparent hover:text-zinc-50"
+                            class="rounded-md border-2 border-emerald-600 bg-transparent px-4 py-2 text-emerald-600 hover:border-transparent hover:bg-emerald-600 hover:text-zinc-50"
                             href="{{ route('login') }}"
                             wire:navigate
                         >
@@ -316,9 +269,9 @@ new class extends Component
 
                     @auth
                         {{-- notification --}}
-                        <div class="inline-flex relative rounded-md">
+                        <div class="relative inline-flex rounded-md">
                             <a
-                                class="rounded-full text-zinc-500 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-900"
+                                class="rounded-full text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
                                 href="{{ route('notifications.index') }}"
                                 wire:navigate
                             >
@@ -326,11 +279,10 @@ new class extends Component
                             </a>
 
                             @if ($hasUnreadNotifications)
-                                <span class="flex absolute top-2 right-2 -mt-1 -mr-1 w-3 h-3">
-                  <span
-                      class="inline-flex absolute w-full h-full bg-red-400 rounded-full opacity-75 animate-ping"></span>
-                  <span class="inline-flex relative w-3 h-3 bg-red-500 rounded-full"></span>
-                </span>
+                                <span class="absolute top-2 right-2 -mt-1 -mr-1 flex h-3 w-3">
+                                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                                    <span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
+                                </span>
                             @endif
                         </div>
 
@@ -338,26 +290,22 @@ new class extends Component
                             {{-- headshot --}}
                             <div>
                                 <button
-                                    class="flex text-sm rounded-full focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400 bg-zinc-800 focus:outline-hidden"
+                                    class="flex rounded-full bg-zinc-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-400 focus:outline-hidden"
                                     id="mobile-user-menu-button"
                                     type="button"
                                     aria-expanded="false"
                                     aria-haspopup="true"
-                                    x-on:click="profileMenuIsOpen = !profileMenuIsOpen"
+                                    x-on:click="profileMenuIsOpen = ! profileMenuIsOpen"
                                     x-on:keydown.escape.window="profileMenuIsOpen = false"
                                 >
                                     <span class="sr-only">Open user menu</span>
-                                    <img
-                                        class="rounded-full size-10"
-                                        src="{{ auth()->user()->gravatar_url }}"
-                                        alt=""
-                                    >
+                                    <img class="size-10 rounded-full" src="{{ auth()->user()->gravatar_url }}" alt="" />
                                 </button>
                             </div>
 
                             {{-- profile menu --}}
                             <x-dropdown.menu
-                                class="absolute right-0 top-12"
+                                class="absolute top-12 right-0"
                                 x-cloak=""
                                 x-show="profileMenuIsOpen"
                                 x-on:click.outside="profileMenuIsOpen = false"
@@ -373,16 +321,12 @@ new class extends Component
                                     <span class="ml-2">個人資訊</span>
                                 </x-dropdown.link>
 
-                                <x-dropdown.link
-                                    href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
+                                <x-dropdown.link href="{{ route('settings.users.edit', ['id' => auth()->id()]) }}">
                                     <x-icons.geer-fill class="w-4" />
                                     <span class="ml-2">設定</span>
                                 </x-dropdown.link>
 
-                                <x-dropdown.button
-                                    wire:confirm="你確定要登出嗎？"
-                                    wire:click="logout"
-                                >
+                                <x-dropdown.button wire:confirm="你確定要登出嗎？" wire:click="logout">
                                     <x-icons.box-arrow-left class="w-4" />
                                     <span class="ml-2">登出</span>
                                 </x-dropdown.button>
@@ -394,13 +338,7 @@ new class extends Component
         </div>
 
         {{-- category dropdown menu --}}
-        <nav
-            class="px-2 pt-2 pb-3 space-y-1 lg:hidden"
-            x-cloak
-            x-show="dropdownMenuIsOpen"
-            x-collapse
-        >
-
+        <nav class="space-y-1 px-2 pt-2 pb-3 lg:hidden" x-cloak x-show="dropdownMenuIsOpen" x-collapse>
             @php
                 $inIndexPage = urldecode(request()->url()) === urldecode(route('posts.index'));
             @endphp
@@ -411,7 +349,7 @@ new class extends Component
                 @class([
                     'flex items-center px-3 py-2 rounded-md font-medium',
                     'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inIndexPage,
-                    'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inIndexPage,
+                    'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => ! $inIndexPage,
                 ])
                 wire:navigate
             >
@@ -429,7 +367,7 @@ new class extends Component
                     @class([
                         'block px-3 py-2 rounded-md font-medium flex items-center',
                         'bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50' => $inCategoryPage,
-                        'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => !$inCategoryPage,
+                        'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-50' => ! $inCategoryPage,
                     ])
                     wire:navigate
                 >

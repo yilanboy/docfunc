@@ -37,7 +37,7 @@ new class extends Component
     {
         $this->validate(
             rules: [
-                'captchaToken' => ['required', new Captcha()],
+                'captchaToken' => ['required', new Captcha],
             ],
             messages: [
                 'captchaToken.required' => '未完成驗證',
@@ -95,57 +95,56 @@ new class extends Component
 ?>
 
 @assets
-@vite('resources/ts/markdown-helper.ts')
+    @vite('resources/ts/markdown-helper.ts')
 @endassets
 
 @script
-<script>
-    Alpine.data('commentsCreateModalPart', () => ({
-        modal: {
-            isOpen: false,
-            isSubmitEnabled: false,
-            replyTo: ''
-        },
-        captcha: {
-            siteKey: @js(config('services.captcha.site_key')),
-        },
-        openModal(event) {
-            this.$wire.$set('form.parent_id', event.detail.parentId);
+    <script>
+        Alpine.data('commentsCreateModalPart', () => ({
+            modal: {
+                isOpen: false,
+                isSubmitEnabled: false,
+                replyTo: '',
+            },
+            captcha: {
+                siteKey: @js(config('services.captcha.site_key')),
+            },
+            openModal(event) {
+                this.$wire.$set('form.parent_id', event.detail.parentId);
 
-            this.modal.replyTo = event.detail.replyTo;
-            this.modal.isOpen = true;
+                this.modal.replyTo = event.detail.replyTo;
+                this.modal.isOpen = true;
 
-            this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
-        },
-        tabToFourSpaces,
-        replyToLabel() {
-            return `回覆 ${this.modal.replyTo} 的留言`;
-        },
-        submit() {
-            this.$wire.save()
-                .then(() => {
+                this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
+            },
+            tabToFourSpaces,
+            replyToLabel() {
+                return `回覆 ${this.modal.replyTo} 的留言`;
+            },
+            submit() {
+                this.$wire.save().then(() => {
                     if (this.$wire.$errors.isEmpty()) {
                         this.modal.isOpen = false;
                     }
                 });
-        },
-        init() {
-            turnstile.ready(() => {
-                turnstile.render(this.$refs.turnstileBlock, {
-                    sitekey: this.captcha.siteKey,
-                    callback: (token) => {
-                        this.$wire.captchaToken = token;
-                        this.modal.isSubmitEnabled = true;
-                    }
+            },
+            init() {
+                turnstile.ready(() => {
+                    turnstile.render(this.$refs.turnstileBlock, {
+                        sitekey: this.captcha.siteKey,
+                        callback: (token) => {
+                            this.$wire.captchaToken = token;
+                            this.modal.isSubmitEnabled = true;
+                        },
+                    });
                 });
-            });
-        }
-    }));
-</script>
+            },
+        }));
+    </script>
 @endscript
 
 <div
-    class="flex fixed inset-0 z-30 justify-center items-end min-h-screen"
+    class="fixed inset-0 z-30 flex min-h-screen items-end justify-center"
     x-data="commentsCreateModalPart"
     x-cloak
     x-show="modal.isOpen"
@@ -153,22 +152,18 @@ new class extends Component
     x-on:keydown.escape.window="modal.isOpen = false"
 >
     {{-- gray background --}}
-    <div
-        class="fixed inset-0 transition-opacity bg-zinc-500/75"
-        x-show="modal.isOpen"
-        x-transition.opacity
-    ></div>
+    <div class="fixed inset-0 bg-zinc-500/75 transition-opacity" x-show="modal.isOpen" x-transition.opacity></div>
 
     {{--  modal  --}}
     <div
-        class="overflow-auto relative p-5 mx-2 w-full rounded-tl-xl rounded-tr-xl transition-all transform md:max-w-2xl bg-zinc-50 dark:bg-zinc-800"
+        class="relative mx-2 w-full transform overflow-auto rounded-tl-xl rounded-tr-xl bg-zinc-50 p-5 transition-all md:max-w-2xl dark:bg-zinc-800"
         x-show="modal.isOpen"
         x-transition.origin.bottom.duration.300ms
     >
         {{-- close modal button --}}
         <div class="absolute top-5 right-5">
             <button
-                class="cursor-pointer text-zinc-400 dark:hover:text-zinc-300 hover:text-zinc-500"
+                class="cursor-pointer text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300"
                 type="button"
                 x-on:click="modal.isOpen = false"
             >
@@ -177,38 +172,30 @@ new class extends Component
         </div>
 
         <div class="flex flex-col gap-5">
-            <div class="flex justify-center items-center space-x-2 text-2xl text-zinc-900 dark:text-zinc-50">
+            <div class="flex items-center justify-center space-x-2 text-2xl text-zinc-900 dark:text-zinc-50">
                 <x-icons.chat-dots class="w-8" />
                 <span>新增留言</span>
             </div>
 
             <div
-                class="py-2 px-4 w-full rounded-lg bg-zinc-200/60 dark:bg-zinc-700/60 dark:text-zinc-50"
+                class="w-full rounded-lg bg-zinc-200/60 px-4 py-2 dark:bg-zinc-700/60 dark:text-zinc-50"
                 x-cloak
                 x-show="modal.replyTo !== ''"
                 x-text="replyToLabel"
             ></div>
 
-            <form
-                class="space-y-6"
-                x-on:submit.prevent="submit"
-            >
+            <form class="space-y-6" x-on:submit.prevent="submit">
                 <x-auth-validation-errors :errors="$errors" />
 
-                <div
-                    class="space-y-2"
-                    wire:show="previewIsEnable"
-                >
+                <div class="space-y-2" wire:show="previewIsEnable">
                     <div class="relative space-x-4">
                         <span class="font-semibold dark:text-zinc-50">
-                           {{ auth()->check() ? auth()->user()->name : '訪客' }}
+                            {{ auth()->check() ? auth()->user()->name : '訪客' }}
                         </span>
                         <span class="text-zinc-400">{{ now()->format('Y 年 m 月 d 日') }}</span>
                     </div>
 
-                    <div class="overflow-auto h-80 rich-text">
-                        {!! $this->convertToHtml($this->form->body) !!}
-                    </div>
+                    <div class="rich-text h-80 overflow-auto">{!! $this->convertToHtml($this->form->body) !!}</div>
 
                     <x-icons.animate-spin
                         class="absolute top-1/2 left-1/2 w-10 -translate-x-1/2 -translate-y-1/2 dark:text-zinc-50"
@@ -231,13 +218,9 @@ new class extends Component
                     />
                 </div>
 
-                <div
-                    class="hidden"
-                    x-ref="turnstileBlock"
-                    wire:ignore
-                ></div>
+                <div class="hidden" x-ref="turnstileBlock" wire:ignore></div>
 
-                <div class="flex justify-between items-center space-x-3">
+                <div class="flex items-center justify-between space-x-3">
                     <x-toggle-switch
                         id="create-comment-modal-preview"
                         wire:model.live="previewIsEnable"
@@ -246,17 +229,10 @@ new class extends Component
                         預覽
                     </x-toggle-switch>
 
-                    <x-button
-                        id="create-comment-submit-button"
-                        x-bind:disabled="modal.isSubmitEnabled === false"
-                    >
-                        <x-icons.reply-fill
-                            class="mr-2 w-5"
-                            x-cloak
-                            x-show="modal.isSubmitEnabled"
-                        />
+                    <x-button id="create-comment-submit-button" x-bind:disabled="modal.isSubmitEnabled === false">
+                        <x-icons.reply-fill class="mr-2 w-5" x-cloak x-show="modal.isSubmitEnabled" />
                         <x-icons.animate-spin
-                            class="mr-2 w-5 h-5 text-zinc-50"
+                            class="mr-2 h-5 w-5 text-zinc-50"
                             x-cloak
                             x-show="modal.isSubmitEnabled === false"
                         />

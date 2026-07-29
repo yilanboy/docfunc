@@ -54,7 +54,7 @@ new class extends Component
         $comments = Comment::query()
             ->select([
                 'comments.id', 'comments.user_id', 'comments.body', 'comments.created_at', 'comments.updated_at',
-                'users.name as user_name', 'users.email as user_email'
+                'users.name as user_name', 'users.email as user_email',
             ])
             // this line must be after the select method
             ->join('users', 'comments.user_id', '=', 'users.id', 'left')
@@ -131,26 +131,20 @@ new class extends Component
 ?>
 
 <div
-    class="relative pl-4 md:pl-8 before:absolute before:bottom-0 before:left-0 before:top-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none dark:before:bg-indigo-500/20"
+    class="relative pl-4 before:absolute before:top-0 before:bottom-0 before:left-0 before:w-1 before:rounded-full before:bg-emerald-400/20 before:contain-none md:pl-8 dark:before:bg-indigo-500/20"
     data-test-id="comments.children-list"
 >
     @foreach ($comments as $comment)
-        <x-dashed-card
-            class="mt-6"
-            wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
-        >
+        <x-dashed-card class="mt-6" wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}">
             <div class="flex flex-col">
                 <div class="flex items-center space-x-4 text-base">
                     @if ($comment['user_id'] !== null)
-                        <a
-                            href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
-                            wire:navigate
-                        >
+                        <a href="{{ route('users.show', ['id' => $comment['user_id']]) }}" wire:navigate>
                             <img
-                                class="rounded-full hover:ring-2 hover:ring-blue-400 size-10"
+                                class="size-10 rounded-full hover:ring-2 hover:ring-blue-400"
                                 src="{{ $comment['user_gravatar_url'] }}"
                                 alt="{{ $comment['user_name'] }}"
-                            >
+                            />
                         </a>
 
                         <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
@@ -161,7 +155,7 @@ new class extends Component
                     @endif
 
                     <time
-                        class="hidden md:block text-zinc-400"
+                        class="hidden text-zinc-400 md:block"
                         datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
                     >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
 
@@ -170,19 +164,17 @@ new class extends Component
                     @endif
                 </div>
 
-                <div class="rich-text">
-                    {!! $this->convertToHtml($comment['body']) !!}
-                </div>
+                <div class="rich-text">{!! $this->convertToHtml($comment['body']) !!}</div>
 
-                <div class="flex gap-6 justify-end items-center text-base text-zinc-400">
+                <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
                     @auth
                         @if (auth()->id() === $comment['user_id'])
                             <button
-                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                                 data-test-id="comments.card.edit"
                                 type="button"
                                 x-on:click="$dispatch('open-edit-comment-modal', {
-                                    listName: @js('comment-' . $parentId . '-children-list'),
+                                    listName: @js('comment-'.$parentId.'-children-list'),
                                     id: @js($comment['id']),
                                     body: @js($comment['body'])
                                 })"
@@ -194,7 +186,7 @@ new class extends Component
 
                         @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
                             <button
-                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                                 data-test-id="comments.card.delete"
                                 type="button"
                                 wire:click="destroyComment({{ $comment['id'] }})"
@@ -211,14 +203,14 @@ new class extends Component
     @endforeach
 
     <button
-        class="flex gap-2 items-center py-2 px-4 mt-6 text-base rounded-full cursor-pointer dark:hover:bg-zinc dark:text-zinc-50 dark:hover:bg-zinc-800 hover:bg-zinc-300/80"
+        class="dark:hover:bg-zinc mt-6 flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-base hover:bg-zinc-300/80 dark:text-zinc-50 dark:hover:bg-zinc-800"
         data-test-id="comments.children.load-more"
         wire:show="loadMoreButton['is_active']"
         wire:click="loadMoreChildren"
     >
         <span wire:text="loadMoreButton['label']"></span>
 
-        <x-icons.caret-down-fill class="in-data-loading:hidden size-4" />
-        <x-icons.animate-spin class="hidden in-data-loading:inline-block size-5" />
+        <x-icons.caret-down-fill class="size-4 in-data-loading:hidden" />
+        <x-icons.animate-spin class="hidden size-5 in-data-loading:inline-block" />
     </button>
 </div>

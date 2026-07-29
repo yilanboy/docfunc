@@ -40,7 +40,7 @@ class extends Component
         $this->validate([
             'token'    => 'required',
             'email'    => ['required', 'email'],
-            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful, we
@@ -75,14 +75,14 @@ class extends Component
 
 <x-layouts.auth>
     <div class="container mx-auto">
-        <div class="flex flex-col justify-center items-center px-4 min-h-screen">
+        <div class="flex min-h-screen flex-col items-center justify-center px-4">
             {{-- 頁面標題 --}}
-            <div class="flex items-center text-2xl fill-current text-zinc-700 dark:text-zinc-50">
+            <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
                 <x-icons.question-circle class="w-6" />
                 <span class="ml-4">重設密碼</span>
             </div>
 
-            <x-card class="overflow-hidden mt-4 space-y-6 w-full sm:max-w-md">
+            <x-card class="mt-4 w-full space-y-6 overflow-hidden sm:max-w-md">
                 {{-- 驗證錯誤訊息 --}}
                 <x-auth-validation-errors :errors="$errors" />
 
@@ -118,10 +118,8 @@ class extends Component
                         wire:model="password_confirmation"
                     />
 
-                    <div class="flex justify-end items-center mt-6">
-                        <x-button>
-                            {{ __('Reset Password') }}
-                        </x-button>
+                    <div class="mt-6 flex items-center justify-end">
+                        <x-button> {{ __('Reset Password') }} </x-button>
                     </div>
                 </form>
             </x-card>

@@ -38,7 +38,7 @@ class extends Component
 <x-layouts.auth>
     <div class="fixed top-5 left-5">
         <a
-            class="flex items-center text-2xl transition duration-150 ease-in text-zinc-400 dark:text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-600"
+            class="flex items-center text-2xl text-zinc-400 transition duration-150 ease-in hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-50"
             href="{{ route('root') }}"
             wire:navigate
         >
@@ -48,14 +48,14 @@ class extends Component
     </div>
 
     <div class="container mx-auto">
-        <div class="flex flex-col justify-center items-center px-4 min-h-screen">
+        <div class="flex min-h-screen flex-col items-center justify-center px-4">
             {{-- 頁面標題 --}}
-            <div class="flex items-center text-2xl fill-current text-zinc-700 dark:text-zinc-50">
+            <div class="flex items-center fill-current text-2xl text-zinc-700 dark:text-zinc-50">
                 <x-icons.person-check class="w-6" />
                 <span class="ml-4">驗證 Email</span>
             </div>
 
-            <x-card class="overflow-hidden mt-4 w-full sm:max-w-md">
+            <x-card class="mt-4 w-full overflow-hidden sm:max-w-md">
                 <div class="mb-4 text-zinc-600 dark:text-zinc-50">
                     {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
                 </div>
@@ -66,17 +66,13 @@ class extends Component
                     </div>
                 @endif
 
-                <div class="flex justify-between items-center mt-4">
-
-                    <x-button
-                        type="button"
-                        wire:click="sendVerification"
-                    >
+                <div class="mt-4 flex items-center justify-between">
+                    <x-button type="button" wire:click="sendVerification">
                         {{ __('Resend Verification Email') }}
                     </x-button>
 
                     <button
-                        class="text-zinc-400 dark:hover:text-zinc-50 hover:text-zinc-700"
+                        class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-50"
                         type="button"
                         wire:click="$dispatch('logout')"
                     >
@@ -85,6 +81,5 @@ class extends Component
                 </div>
             </x-card>
         </div>
-
     </div>
 </x-layouts.auth>

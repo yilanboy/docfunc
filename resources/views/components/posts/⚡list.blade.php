@@ -56,43 +56,37 @@ new class extends Component
 ?>
 
 @script
-<script>
-    Alpine.data('postsListPart', () => ({
-        order: '',
-        tabButtonClicked(tabButton) {
-            this.tabRepositionMarker(tabButton);
-            this.order = tabButton.id.replace('-tab-button', '');
+    <script>
+        Alpine.data('postsListPart', () => ({
+            order: '',
+            tabButtonClicked(tabButton) {
+                this.tabRepositionMarker(tabButton);
+                this.order = tabButton.id.replace('-tab-button', '');
 
-            this.$wire.changeOrder(this.order);
-        },
-        tabRepositionMarker(tabButton) {
-            this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
-            this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
-            this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
-        },
-        init() {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
+                this.$wire.changeOrder(this.order);
+            },
+            tabRepositionMarker(tabButton) {
+                this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
+                this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
+                this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
+            },
+            init() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
 
-            this.order = urlParams.get('order') ?? 'latest';
+                this.order = urlParams.get('order') ?? 'latest';
 
-            const tabSelectedButtons = document.getElementById(this.order + '-tab-button');
-            this.tabRepositionMarker(tabSelectedButtons);
-        }
-    }));
-</script>
+                const tabSelectedButtons = document.getElementById(this.order + '-tab-button');
+                this.tabRepositionMarker(tabSelectedButtons);
+            },
+        }));
+    </script>
 @endscript
 
-<div
-    class="space-y-6"
-    x-data="postsListPart"
->
+<div class="space-y-6" x-data="postsListPart">
     {{-- Sort --}}
     <div class="flex w-full text-sm md:flex-row md:justify-between">
-        <x-tabs.nav
-            class="md:w-fit"
-            wire:ignore
-        >
+        <x-tabs.nav class="md:w-fit" wire:ignore>
             @foreach (PostOrderOptions::cases() as $postOrder)
                 <x-tabs.button
                     id="{{ $postOrder->value . '-tab-button' }}"
@@ -115,25 +109,20 @@ new class extends Component
                 </x-tabs.button>
             @endforeach
 
-            <x-tabs.tab-marker
-                x-ref="tabMarker"
-                x-cloak
-            />
+            <x-tabs.tab-marker x-ref="tabMarker" x-cloak />
         </x-tabs.nav>
 
         {{-- Class badge --}}
-        <div
-            class="hidden justify-center items-center py-1.5 px-3 rounded-xl md:flex bg-zinc-50 dark:bg-zinc-800 dark:text-zinc-50"
-        >{{ $badge }}</div>
+        <div class="hidden items-center justify-center rounded-xl bg-zinc-50 px-3 py-1.5 md:flex dark:bg-zinc-800 dark:text-zinc-50">
+            {{ $badge }}
+        </div>
     </div>
 
     {{-- Post List --}}
-    @forelse($posts as $post)
-        <x-card class="grid overflow-hidden relative grid-cols-1 gap-4 cursor-pointer group isolate">
+    @forelse ($posts as $post)
+        <x-card class="group relative isolate grid cursor-pointer grid-cols-1 gap-4 overflow-hidden">
             {{-- Category icon in background --}}
-            <div
-                class="absolute -right-4 -bottom-16 z-0 transition-all duration-300 rotate-12 group-hover:-right-0 group-hover:-bottom-4 size-56 text-zinc-200/60 dark:text-zinc-700/60"
-            >
+            <div class="absolute -right-4 -bottom-16 z-0 size-56 rotate-12 text-zinc-200/60 transition-all duration-300 group-hover:-right-0 group-hover:-bottom-4 dark:text-zinc-700/60">
                 {!! $post->category->icon !!}
             </div>
 
@@ -147,30 +136,26 @@ new class extends Component
 
             {{-- Title --}}
             <div class="z-10">
-                <h1 class="inline text-xl font-semibold group-gradient-underline-grow dark:text-zinc-50">
+                <h1 class="group-gradient-underline-grow inline text-xl font-semibold dark:text-zinc-50">
                     {{ $post->title }}
                 </h1>
             </div>
 
             {{-- Excerpt --}}
-            <div class="z-10 text-base leading-relaxed text-zinc-500">
-                {{ $post->excerpt }}
-            </div>
+            <div class="z-10 text-base leading-relaxed text-zinc-500">{{ $post->excerpt }}</div>
 
             {{-- Tags --}}
             @if ($post->tags_count > 0)
-                <div class="flex z-20 flex-wrap items-center text-base w-fit">
-                    <x-icons.tags class="mr-1 w-4 text-emerald-200 dark:text-lividus-700" />
+                <div class="z-20 flex w-fit flex-wrap items-center text-base">
+                    <x-icons.tags class="dark:text-lividus-700 mr-1 w-4 text-emerald-200" />
 
                     @foreach ($post->tags as $tag)
-                        <x-tag :href="route('tags.show', ['id' => $tag->id])">
-                            {{ $tag->name }}
-                        </x-tag>
+                        <x-tag :href="route('tags.show', ['id' => $tag->id])"> {{ $tag->name }} </x-tag>
                     @endforeach
                 </div>
             @endif
 
-            <div class="hidden z-10 space-x-2 text-base md:flex md:items-center text-neutral-500">
+            <div class="z-10 hidden space-x-2 text-base text-neutral-500 md:flex md:items-center">
                 {{-- Category --}}
                 <div class="flex items-center">
                     <div class="w-4">{!! $post->category->icon !!}</div>
@@ -208,9 +193,7 @@ new class extends Component
         </x-card>
 
     @empty
-        <x-card
-            class="flex justify-center items-center w-full h-36 transition duration-150 ease-in hover:-translate-x-2 dark:text-zinc-50"
-        >
+        <x-card class="flex h-36 w-full items-center justify-center transition duration-150 ease-in hover:-translate-x-2 dark:text-zinc-50">
             <span>Whoops！此分類底下還沒有文章，趕緊寫一篇吧！</span>
         </x-card>
     @endforelse

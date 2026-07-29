@@ -37,13 +37,13 @@ class extends Component
 
 <x-layouts.main>
     <div class="container mx-auto grow">
-        <div class="flex flex-col gap-6 justify-center items-start px-4 md:flex-row">
+        <div class="flex flex-col items-start justify-center gap-6 px-4 md:flex-row">
             <x-users.member-center-side-menu />
 
-            <x-card class="flex flex-col gap-6 justify-center w-full md:max-w-2xl">
+            <x-card class="flex w-full flex-col justify-center gap-6 md:max-w-2xl">
                 <div class="space-y-4">
-                    <h1 class="w-full text-2xl text-center dark:text-zinc-50">刪除帳號</h1>
-                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700">
+                    <h1 class="w-full text-center text-2xl dark:text-zinc-50">刪除帳號</h1>
+                    <hr class="h-0.5 border-0 bg-zinc-300 dark:bg-zinc-700" />
                 </div>
 
                 <x-quotes.danger class="flex">
@@ -52,7 +52,7 @@ class extends Component
                 </x-quotes.danger>
 
                 {{-- 說明 --}}
-                <div class="flex flex-col justify-center items-start">
+                <div class="flex flex-col items-start justify-center">
                     <span class="dark:text-zinc-50">很遺憾您要離開...</span>
                     <span class="dark:text-zinc-50">如果您確定要刪除帳號，請點選下方的按鈕並收取信件</span>
                 </div>
@@ -60,7 +60,7 @@ class extends Component
                 {{-- 寄出刪除帳號信件 --}}
                 <div class="w-full">
                     <button
-                        class="inline-flex justify-center items-center py-2 px-4 tracking-widest uppercase bg-red-600 rounded-md border border-transparent ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 active:bg-red-900 disabled:opacity-25 text-zinc-50 focus:outline-hidden focus:ring-3"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 tracking-widest text-zinc-50 uppercase ring-red-300 transition duration-150 ease-in-out hover:bg-red-700 focus:border-red-900 focus:ring-3 focus:outline-hidden active:bg-red-900 disabled:opacity-25"
                         type="button"
                         wire:confirm="您確定要寄出刪除帳號信件嗎？"
                         wire:click="sendDestroyEmail({{ $user->id }})"

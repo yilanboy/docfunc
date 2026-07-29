@@ -8,8 +8,6 @@ use App\Traits\MarkdownConverter;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Renderless;
-use Livewire\Attributes\Transition;
 use Livewire\Component;
 
 new class extends Component
@@ -57,7 +55,7 @@ new class extends Component
         $comments = Comment::query()
             ->select([
                 'comments.id', 'comments.user_id', 'comments.body', 'comments.created_at', 'comments.updated_at',
-                'users.name as user_name', 'users.email as user_email'
+                'users.name as user_name', 'users.email as user_email',
             ])
             // Use a sub query to generate a children_count column,
             // this line must be after the select method
@@ -146,49 +144,41 @@ new class extends Component
 ?>
 
 @script
-<script>
-    Alpine.data('rootCommentList', () => ({
-        loadMoreComments() {
-            let y = window.scrollY;
+    <script>
+        Alpine.data('rootCommentList', () => ({
+            loadMoreComments() {
+                let y = window.scrollY;
 
-            this.$wire.loadMoreComments().then(() => {
-                this.$nextTick(() => {
-                    window.scrollTo({
-                        top: y,
-                        behavior: 'instant'
+                this.$wire.loadMoreComments().then(() => {
+                    this.$nextTick(() => {
+                        window.scrollTo({
+                            top: y,
+                            behavior: 'instant',
+                        });
                     });
                 });
-            });
-        }
-    }));
-</script>
+            },
+        }));
+    </script>
 @endscript
 
 {{-- 留言列表 --}}
-<div
-    class="w-full"
-    id="root-comment-list"
-    data-test-id="comments.root-list"
-    x-data="rootCommentList"
->
+<div class="w-full" id="root-comment-list" data-test-id="comments.root-list" x-data="rootCommentList">
     @foreach ($comments as $comment)
         <x-dashed-card
-            class="mt-6 comment-card"
+            class="comment-card mt-6"
             data-test-id="comments.card"
             wire:key="comment-card-{{ $comment['id'] }}-{{ $comment['updated_at'] }}"
         >
             <div class="flex flex-col">
                 <div class="flex items-center space-x-4 text-base">
                     @if ($comment['user_id'] !== null)
-                        <a
-                            href="{{ route('users.show', ['id' => $comment['user_id']]) }}"
-                            wire:navigate
-                        >
+                        <a href="{{ route('users.show', ['id' => $comment['user_id']]) }}" wire:navigate>
                             <img
-                                class="rounded-full hover:ring-2 hover:ring-blue-400 size-10"
+                                class="size-10 rounded-full hover:ring-2 hover:ring-blue-400"
                                 src="{{ $comment['user_gravatar_url'] }}"
                                 alt="{{ $comment['user_name'] }}"
-                            >
+                            />
                         </a>
 
                         <span class="dark:text-zinc-50">{{ $comment['user_name'] }}</span>
@@ -199,7 +189,7 @@ new class extends Component
                     @endif
 
                     <time
-                        class="hidden md:block text-zinc-400"
+                        class="hidden text-zinc-400 md:block"
                         datetime="{{ date('d-m-Y', strtotime($comment['created_at'])) }}"
                     >{{ date('Y 年 m 月 d 日', strtotime($comment['created_at'])) }}</time>
 
@@ -208,15 +198,13 @@ new class extends Component
                     @endif
                 </div>
 
-                <div class="rich-text">
-                    {!! $this->convertToHtml($comment['body']) !!}
-                </div>
+                <div class="rich-text">{!! $this->convertToHtml($comment['body']) !!}</div>
 
-                <div class="flex gap-6 justify-end items-center text-base text-zinc-400">
+                <div class="flex items-center justify-end gap-6 text-base text-zinc-400">
                     @auth
                         @if (auth()->id() === $comment['user_id'])
                             <button
-                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                                 data-test-id="comments.card.edit"
                                 type="button"
                                 x-on:click="$dispatch('open-edit-comment-modal', {
@@ -232,7 +220,7 @@ new class extends Component
 
                         @if (in_array(auth()->id(), [$comment['user_id'], $postUserId]))
                             <button
-                                class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                                class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                                 data-test-id="comments.card.delete"
                                 type="button"
                                 wire:click="destroyComment({{ $comment['id'] }})"
@@ -245,7 +233,7 @@ new class extends Component
                     @endauth
 
                     <button
-                        class="flex items-center cursor-pointer dark:hover:text-zinc-300 hover:text-zinc-500"
+                        class="flex cursor-pointer items-center hover:text-zinc-500 dark:hover:text-zinc-300"
                         data-test-id="comments.card.reply"
                         type="button"
                         x-on:click="$dispatch('open-create-comment-modal', {
@@ -264,21 +252,18 @@ new class extends Component
             :parent-id="$comment['id']"
             :post-user-id="$postUserId"
             :children-count="$comment['children_count']"
-            :key="$comment['id'] . '-comment-children'"
+            :key="$comment['id'].'-comment-children'"
         />
     @endforeach
 
-    <div
-        class="flex justify-center items-center mt-6 w-full"
-        wire:show="loadingLabel['is_visible']"
-    >
-    <span
-        class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
-        type="button"
-        x-intersect="loadMoreComments"
-    >
-      <x-icons.animate-spin class="size-5" />
-      <span>顯示更多留言</span>
-    </span>
+    <div class="mt-6 flex w-full items-center justify-center" wire:show="loadingLabel['is_visible']">
+        <span
+            class="flex gap-2 text-sm text-emerald-600 dark:text-zinc-50"
+            type="button"
+            x-intersect="loadMoreComments"
+        >
+            <x-icons.animate-spin class="size-5" />
+            <span>顯示更多留言</span>
+        </span>
     </div>
 </div>
