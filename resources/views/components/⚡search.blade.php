@@ -20,51 +20,51 @@ new class extends Component
 ?>
 
 @script
-    <script>
-        Alpine.data('globalSearch', () => ({
-            searchBox: {
-                isOpen: false,
-                query: '',
-                isLoading: false,
-            },
-            posts: [],
-            openSearchBox() {
-                this.searchBox.isOpen = true;
-                this.$nextTick(() => {
-                    this.$refs.searchBox.focus();
-                });
-            },
-            onSearchBoxInput() {
-                if (this.searchBox.query.length < 2) {
-                    this.posts = [];
+<script>
+    Alpine.data('globalSearch', () => ({
+        searchBox: {
+            isOpen: false,
+            query: '',
+            isLoading: false
+        },
+        posts: [],
+        openSearchBox() {
+            this.searchBox.isOpen = true;
+            this.$nextTick(() => {
+                this.$refs.searchBox.focus();
+            });
+        },
+        onSearchBoxInput() {
+            if (this.searchBox.query.length < 2) {
+                this.posts = [];
 
-                    return;
-                }
+                return;
+            }
 
-                this.$wire.search(this.searchBox.query).then((data) => {
-                    this.posts = data;
-                    this.searchBox.isLoading = false;
-                });
-            },
-            setShortcutKeyDisplayByOS() {
-                let userAgentInfo = navigator.userAgent.toLowerCase();
+            this.$wire.search(this.searchBox.query).then((data) => {
+                this.posts = data;
+                this.searchBox.isLoading = false;
+            });
+        },
+        setShortcutKeyDisplayByOS() {
+            let userAgentInfo = navigator.userAgent.toLowerCase();
 
-                if (userAgentInfo.includes('mac')) {
-                    this.$refs.searchShortcut.textContent = '⌘ K';
-                } else {
-                    this.$refs.searchShortcut.textContent = 'Ctrl K';
-                }
-            },
-            init() {
-                this.setShortcutKeyDisplayByOS();
+            if (userAgentInfo.includes('mac')) {
+                this.$refs.searchShortcut.textContent = '⌘ K';
+            } else {
+                this.$refs.searchShortcut.textContent = 'Ctrl K';
+            }
+        },
+        init() {
+            this.setShortcutKeyDisplayByOS();
 
-                // when the query is changed, into the loading state immediately
-                this.$watch('searchBox.query', () => {
-                    this.searchBox.isLoading = true;
-                });
-            },
-        }));
-    </script>
+            // when the query is changed, into the loading state immediately
+            this.$watch('searchBox.query', () => {
+                this.searchBox.isLoading = true;
+            });
+        }
+    }));
+</script>
 @endscript
 
 <search x-data="globalSearch">
@@ -79,7 +79,8 @@ new class extends Component
         x-on:keydown.window.prevent.ctrl.k="openSearchBox"
         x-on:keydown.window.escape="searchBox.isOpen = false"
     >
-        <x-icons.search class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
+        <x-icons.search
+            class="size-4 transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50" />
 
         <span class="transition duration-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-50">搜尋</span>
 
@@ -158,7 +159,7 @@ new class extends Component
                             id="search-result"
                             x-cloak
                             x-show="searchBox.query.length >= 2 && searchBox.isLoading === false"
-                            class="mt-4 w-full rounded-xl bg-zinc-50 p-2 dark:bg-zinc-800 dark:text-zinc-50"
+                            class="mt-4 w-full rounded-xl bg-zinc-50 p-2 dark:bg-zinc-800 dark:text-zinc-50 max-h-120 overflow-scroll"
                         >
                             <div x-cloak x-show="posts.length > 0">
                                 <div class="flex items-center justify-center">搜尋結果</div>
