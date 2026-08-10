@@ -60,41 +60,45 @@ new class extends Component
 ?>
 
 @assets
-    @vite('resources/ts/shiki.ts')
+@vite('resources/ts/shiki.ts')
+@vite('resources/ts/reader-helpers/code-block-helper.ts')
 @endassets
 
 @script
-    <script>
-        Alpine.data('commentsShowPage', () => ({
-            observers: [],
-            openEditCommentModal() {
-                this.$dispatch('open-edit-comment-modal', {
-                    comment: {
-                        groupName: this.$el.dataset.commentGroupName,
-                        id: this.$el.dataset.commentId,
-                        body: this.$el.dataset.commentBody,
-                    },
-                });
-            },
-            openCreateCommentModal() {
-                this.$dispatch('open-create-comment-modal', {
-                    parentId: this.$el.dataset.commentId,
-                    replyTo: this.$el.dataset.commentUserName,
-                });
-            },
-            async init() {
-                await highlightAllInElement(this.$root);
+<script>
+    Alpine.data('commentsShowPage', () => ({
+        observers: [],
+        openEditCommentModal() {
+            this.$dispatch('open-edit-comment-modal', {
+                comment: {
+                    groupName: this.$el.dataset.commentGroupName,
+                    id: this.$el.dataset.commentId,
+                    body: this.$el.dataset.commentBody
+                }
+            });
+        },
+        openCreateCommentModal() {
+            this.$dispatch('open-create-comment-modal', {
+                parentId: this.$el.dataset.commentId,
+                replyTo: this.$el.dataset.commentUserName
+            });
+        },
+        async init() {
+            await highlightAllInElement(this.$root);
+            codeBlockHelper(this.$root);
 
-                let commentsObserver = await highlightObserver(this.$root);
-                this.observers.push(commentsObserver);
-            },
-            destroy() {
-                this.observers.forEach((observer) => {
-                    observer.disconnect();
-                });
-            },
-        }));
-    </script>
+            let highlightCommentObserver = await highlightObserver(this.$root);
+            let codeBlockObserver = codeBlockHelperObserver(this.$root);
+            this.observers.push(highlightCommentObserver);
+            this.observers.push(codeBlockObserver);
+        },
+        destroy() {
+            this.observers.forEach((observer) => {
+                observer.disconnect();
+            });
+        }
+    }));
+</script>
 @endscript
 
 {{-- 文章列表 --}}

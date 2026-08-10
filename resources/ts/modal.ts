@@ -9,19 +9,19 @@ const X_CIRCLE_FILL_ICON_SVG: string = `
 const SHOW_BACKGROUND_BACKDROP_CLASS_NAME: string[] = [
     'ease-out',
     'duration-300',
-    'opacity-100',
+    'opacity-100'
 ];
 const HIDE_BACKGROUND_BACKDROP_CLASS_NAME: string[] = [
     'ease-in',
     'duration-200',
-    'opacity-0',
+    'opacity-0'
 ];
 const SHOW_MODAL_PANEL_CLASS_NAME: string[] = [
     'ease-out',
     'duration-300',
     'opacity-100',
     'translate-y-0',
-    'sm:scale-100',
+    'sm:scale-100'
 ];
 const HIDE_MODAL_PANEL_CLASS_NAME: string[] = [
     'ease-in',
@@ -29,7 +29,7 @@ const HIDE_MODAL_PANEL_CLASS_NAME: string[] = [
     'opacity-0',
     'translate-y-4',
     'sm:translate-y-0',
-    'sm:scale-95',
+    'sm:scale-95'
 ];
 
 export class Modal {
@@ -43,29 +43,33 @@ export class Modal {
     public constructor(
         id: string,
         innerHtml: string,
-        customClassName: string[] = [],
+        customClassName: string[] = []
     ) {
-        this.element = document.createElement('div');
+        const element = document.getElementById(id);
+        if (element) {
+            this.element = element as HTMLDivElement;
+        } else {
+            this.element = document.createElement('div');
+            this.element.id = id;
+            this.element.style.display = 'none';
+            this.element.innerHTML = this.innerHtmlTemplate(
+                innerHtml,
+                customClassName
+            );
 
-        this.element.id = id;
-        this.element.style.display = 'none';
-        this.element.innerHTML = this.innerHtmlTemplate(
-            innerHtml,
-            customClassName,
-        );
-
-        document.body.appendChild(this.element);
+            document.body.appendChild(this.element);
+        }
 
         this.backgroundBackdrop = this.element.getElementsByClassName(
-            BACKGROUND_BACKDROP_CLASS_NAME,
+            BACKGROUND_BACKDROP_CLASS_NAME
         )[0] as HTMLDivElement;
 
         this.modalPanel = this.element.getElementsByClassName(
-            MODAL_PANEL_CLASS_NAME,
+            MODAL_PANEL_CLASS_NAME
         )[0] as HTMLDivElement;
 
         this.closeButton = this.element.getElementsByClassName(
-            CLOSE_MODAL_BUTTON_CLASS_NAME,
+            CLOSE_MODAL_BUTTON_CLASS_NAME
         )[0] as HTMLButtonElement;
 
         this.scrollbarWidth = window.innerWidth - document.body.clientWidth;
@@ -75,7 +79,7 @@ export class Modal {
 
     private innerHtmlTemplate(
         innerHtml: string,
-        customClassName: string[],
+        customClassName: string[]
     ): string {
         return `<div class="relative z-30 ${customClassName.join(' ')}">
             <!-- Background backdrop, show/hide based on modal state -->
@@ -117,10 +121,10 @@ export class Modal {
         this.triggerReflow();
 
         this.backgroundBackdrop.classList.remove(
-            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME,
+            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME
         );
         this.backgroundBackdrop.classList.add(
-            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME,
+            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME
         );
         this.modalPanel.classList.remove(...HIDE_MODAL_PANEL_CLASS_NAME);
         this.modalPanel.classList.add(...SHOW_MODAL_PANEL_CLASS_NAME);
@@ -133,7 +137,7 @@ export class Modal {
     private setupCloseHandlers() {
         // Close by clicking the backdrop
         this.element.addEventListener('click', () => this.close(), {
-            signal: this.abortController.signal,
+            signal: this.abortController.signal
         });
 
         // Prevent closing when clicking modal content
@@ -142,7 +146,7 @@ export class Modal {
             (event: Event) => {
                 event.stopPropagation();
             },
-            { signal: this.abortController.signal },
+            { signal: this.abortController.signal }
         );
 
         // Close by escape key
@@ -153,7 +157,7 @@ export class Modal {
                     this.close();
                 }
             },
-            { signal: this.abortController.signal },
+            { signal: this.abortController.signal }
         );
     }
 
@@ -172,14 +176,14 @@ export class Modal {
                     document.documentElement.style.paddingRight = '';
                 }
             },
-            { once: true },
+            { once: true }
         );
 
         this.backgroundBackdrop.classList.remove(
-            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME,
+            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME
         );
         this.backgroundBackdrop.classList.add(
-            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME,
+            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME
         );
         this.modalPanel.classList.remove(...SHOW_MODAL_PANEL_CLASS_NAME);
         this.modalPanel.classList.add(...HIDE_MODAL_PANEL_CLASS_NAME);

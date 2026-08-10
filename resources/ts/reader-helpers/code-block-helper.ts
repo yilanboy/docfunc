@@ -4,6 +4,7 @@ import { button, icon, label, languageSettings } from '../config.js';
 declare global {
     interface Window {
         codeBlockHelper: (element: HTMLElement) => void;
+        codeBlockHelperObserver: (element: HTMLElement) => void;
     }
 }
 
@@ -11,6 +12,8 @@ const ZOOM_IN_PRE_MODAL_ID = 'zoom-in-pre-modal';
 const ZOOM_IN_PRE_ID = 'zoom-in-pre';
 const SCROLL_INDICATOR_LEFT_CLASS = 'scroll-indicator-left';
 const SCROLL_INDICATOR_RIGHT_CLASS = 'scroll-indicator-right';
+
+let zoomInModal: Modal | null = null;
 
 function createCopyCodeButton(code: string): HTMLButtonElement {
     // create a copy button
@@ -127,19 +130,24 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         return;
     }
 
-    const zoomInCode: HTMLDivElement = document.createElement('div');
-    zoomInCode.classList.add('lg:min-w-3xl');
-    zoomInCode.id = ZOOM_IN_PRE_ID;
+    if (!zoomInModal) {
+        const zoomInCode: HTMLDivElement = document.createElement('div');
+        zoomInCode.classList.add('lg:min-w-3xl');
+        zoomInCode.id = ZOOM_IN_PRE_ID;
 
-    const modal = new Modal(ZOOM_IN_PRE_MODAL_ID, zoomInCode.outerHTML);
+        zoomInModal = new Modal(ZOOM_IN_PRE_MODAL_ID, zoomInCode.outerHTML);
 
-    document.addEventListener(
-        'livewire:navigating',
-        () => {
-            modal.remove();
-        },
-        { once: true }
-    );
+        document.addEventListener(
+            'livewire:navigating',
+            () => {
+                zoomInModal?.remove();
+                zoomInModal = null;
+            },
+            { once: true }
+        );
+    }
+
+    const modal = zoomInModal;
 
     const marker = 'code-block-helper-added';
 
@@ -245,4 +253,25 @@ window.codeBlockHelper = function(element: HTMLElement): void {
             { once: true }
         );
     }
+};
+
+window.codeBlockHelperObserver = function(element: HTMLElement): MutationObserver {
+    let observer = new MutationObserver((records) => {
+        for (const record of records) {
+            for (const node of record.addedNodes) {
+                if (node instanceof HTMLElement) {
+                    window.codeBlockHelper(node);
+                }
+            }
+        }
+    });
+
+    observer.observe(element, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: false
+    });
+
+    return observer;
 };

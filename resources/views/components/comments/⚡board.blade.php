@@ -28,27 +28,30 @@ new class extends Component
 ?>
 
 @script
-    <script>
-        Alpine.data('commentsBoardPart', () => ({
-            observers: [],
-            orderDropdownIsOpen: false,
-            changeOrder() {
-                this.$wire.changeOrder(this.$el.dataset.orderValue);
-                this.orderDropdownIsOpen = false;
-            },
-            async init() {
-                let highlightCommentObserver = await highlightObserver(this.$root);
-                this.observers.push(highlightCommentObserver);
+<script>
+    Alpine.data('commentsBoardPart', () => ({
+        observers: [],
+        orderDropdownIsOpen: false,
+        changeOrder() {
+            this.$wire.changeOrder(this.$el.dataset.orderValue);
+            this.orderDropdownIsOpen = false;
+        },
+        async init() {
+            await highlightAllInElement(this.$root);
+            codeBlockHelper(this.$root);
 
-                highlightAllInElement(this.$root);
-            },
-            destroy() {
-                this.observers.forEach((observer) => {
-                    observer.disconnect();
-                });
-            },
-        }));
-    </script>
+            let highlightCommentObserver = await highlightObserver(this.$root);
+            let codeBlockObserver = codeBlockHelperObserver(this.$root);
+            this.observers.push(highlightCommentObserver);
+            this.observers.push(codeBlockObserver);
+        },
+        destroy() {
+            this.observers.forEach((observer) => {
+                observer.disconnect();
+            });
+        }
+    }));
+</script>
 @endscript
 
 <div class="w-full" x-data="commentsBoardPart">
