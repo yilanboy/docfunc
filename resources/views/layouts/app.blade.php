@@ -7,12 +7,7 @@
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>{{ $title ?? config('app.name') }}</title>
-
-    {{-- Primary Meta Tags --}}
-    <meta name="title" content="{{ $title ?? config('app.name') }}" />
-    <meta name="description" content="@yield('description', config('app.name'))" />
-    <x-layouts.sharing-meta-tags :title="$title ?? config('app.name')" />
+    @head
 
     {{-- Ｗeb Feed --}}
     @include('feed::links')

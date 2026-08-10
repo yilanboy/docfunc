@@ -4,15 +4,7 @@ declare(strict_types=1);
 
 use Livewire\Component;
 
-new class extends Component
-{
-    public function render()
-    {
-        $title = Route::currentRouteName() === 'root' ? config('app.name') : '所有文章';
-
-        return $this->view()->title($title);
-    }
-};
+new class extends Component {};
 ?>
 
 <x-layouts.main>

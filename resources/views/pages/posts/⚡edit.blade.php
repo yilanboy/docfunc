@@ -6,12 +6,10 @@ use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-new #[Title('編輯文章')]
-class extends Component
+new class extends Component
 {
     use WithFileUploads;
 

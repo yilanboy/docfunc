@@ -9,11 +9,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('註冊')]
-class extends Component
+new class extends Component
 {
     public string $name = '';
 

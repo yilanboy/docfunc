@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Comment;
 use App\Traits\MarkdownConverter;
+use Laravel\Head\Facades\Head;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -54,7 +55,9 @@ new class extends Component
     {
         $user = $this->comment->user_id ? $this->comment->user->name : '訪客';
 
-        return $this->view()->title($user.'的留言');
+        Head::title($user.'的留言');
+
+        return $this->view();
     }
 };
 ?>

@@ -19,7 +19,7 @@ new class extends Component
 
         return $this->view([
             'notifications' => $user->notifications()->paginate(20),
-        ])->title('我的通知');
+        ]);
     }
 };
 ?>

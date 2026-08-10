@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('重設密碼')]
-class extends Component
+new class extends Component
 {
     // token will be passed in the URL,
     // and auto binding will take care of it

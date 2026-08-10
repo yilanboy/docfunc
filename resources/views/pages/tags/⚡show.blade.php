@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Tag;
+use Laravel\Head\Facades\Head;
 use Livewire\Component;
 
 new class extends Component
@@ -16,7 +17,9 @@ new class extends Component
 
     public function render()
     {
-        return $this->view()->title($this->tag->name);
+        Head::title($this->tag->name);
+
+        return $this->view();
     }
 };
 ?>

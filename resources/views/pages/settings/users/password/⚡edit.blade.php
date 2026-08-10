@@ -5,11 +5,9 @@ declare(strict_types=1);
 use App\Models\User;
 use App\Rules\MatchOldPassword;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('會員中心 - 更改密碼')]
-class extends Component
+new class extends Component
 {
     public User $user;
 

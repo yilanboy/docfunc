@@ -3,11 +3,9 @@
 declare(strict_types=1);
 
 use App\Models\User;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('會員中心 - 編輯個人資料')]
-class extends Component
+new class extends Component
 {
     public string $name;
 

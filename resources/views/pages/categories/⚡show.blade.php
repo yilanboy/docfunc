@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Category;
+use Laravel\Head\Facades\Head;
 use Livewire\Component;
 
 new class extends Component
@@ -21,7 +22,9 @@ new class extends Component
             redirect()->to($this->category->link_with_name);
         }
 
-        return $this->view()->title($this->category->name);
+        Head::title($this->category->name);
+
+        return $this->view();
     }
 };
 ?>

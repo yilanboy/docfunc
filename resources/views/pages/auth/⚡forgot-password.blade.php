@@ -3,11 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Password;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('忘記密碼')]
-class extends Component
+new class extends Component
 {
     public string $email = '';
 

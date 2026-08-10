@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('驗證電子郵件')]
-class extends Component
+new class extends Component
 {
     public function mount(): void
     {

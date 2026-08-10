@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use Laravel\Head\Facades\Head;
 use Livewire\Component;
 use App\Enums\UserInfoOptions;
 
@@ -17,7 +18,9 @@ new class extends Component
 
     public function render()
     {
-        return $this->view()->title($this->user->name.' 的個人資訊');
+        Head::title($this->user->name.' 的個人資訊');
+
+        return $this->view();
     }
 };
 ?>

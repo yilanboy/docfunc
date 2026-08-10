@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Post;
 use App\Services\ContentService;
+use Laravel\Head\Facades\Head;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -44,18 +45,17 @@ new class extends Component
 
     public function render()
     {
-        return $this->view()->title($this->post->title);
+        Head::title($this->post->title)
+            ->description($this->post->excerpt);
+
+        if (! empty($this->post->cover_image_url)) {
+            Head::ogImage($this->post->cover_image_url);
+        }
+
+        return $this->view();
     }
 };
 ?>
-
-@section('description', $post->excerpt)
-
-@if (! empty($post->cover_image_url))
-    @section('social_image', $post->cover_image_url)
-@else
-    @section('social_image', route('posts.preview.webp', ['post' => $post->id]))
-@endif
 
 @assets
     {{-- highlight code block --}}

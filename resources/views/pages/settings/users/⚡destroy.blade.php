@@ -6,11 +6,9 @@ use App\Mail\DestroyUserMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('會員中心 - 刪除帳號')]
-class extends Component
+new class extends Component
 {
     public User $user;
 

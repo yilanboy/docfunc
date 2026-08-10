@@ -18,6 +18,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^4.0",
         "laravel/framework": "^13.0",
+        "laravel/head": "^0.1.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.8",
@@ -27,8 +28,7 @@
         "livewire/livewire": "^v4.0",
         "spatie/laravel-feed": "^4.1",
         "symfony/html-sanitizer": "^8.0",
-        "web-auth/webauthn-lib": "^5.2",
-        "yilanboy/preview": "^2.0"
+        "web-auth/webauthn-lib": "^5.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
@@ -43,10 +43,10 @@
         "laravel/pint": "^1.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "pestphp/pest": "^4.0",
-        "pestphp/pest-plugin-browser": "^4.0",
-        "pestphp/pest-plugin-faker": "^4.0",
-        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest": "^5.0",
+        "pestphp/pest-plugin-browser": "^5.0",
+        "pestphp/pest-plugin-faker": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
