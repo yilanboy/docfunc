@@ -281,3 +281,22 @@ div.twitter-tweet.twitter-tweet-rendered {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* background */
+.hero {
+    position: fixed;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--color-zinc-300) 1.4px, transparent 1.4px);
+    background-size: 10px 10px; /* 圓點間距，越小越密 */
+    mask-image: linear-gradient(to bottom, black, transparent 60%);
+}
+
+html[data-theme="dark"] .hero::before {
+    background-image: radial-gradient(circle, var(--color-zinc-700) 1.4px, transparent 1.4px);
+}
