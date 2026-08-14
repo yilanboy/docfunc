@@ -1,4 +1,4 @@
-<div class="pointer-events-none top-0 right-1/2 -z-10 h-screen w-full max-w-480 translate-x-1/2 select-none hero">
+<div class="pointer-events-none top-0 right-1/2 -z-10 h-screen w-full translate-x-1/2 select-none hero">
     <div
         aria-hidden="true"
         class="font-jetbrains-mono absolute bottom-12 left-[3%] hidden flex-col gap-4 text-sm leading-none text-zinc-500/60 lg:flex dark:text-zinc-500/60"
