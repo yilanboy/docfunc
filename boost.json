@@ -1,0 +1,25 @@
+{
+    "agents": [
+        "junie"
+    ],
+    "cloud": false,
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch": false,
+    "packages": [
+        "livewire/blaze",
+        "fruitcake/laravel-debugbar"
+    ],
+    "sail": false,
+    "skills": [
+        "infer-conventions",
+        "laravel-best-practices",
+        "octane-development",
+        "scout-development",
+        "livewire-development",
+        "pest-testing",
+        "tailwindcss-development",
+        "blaze-optimize",
+        "debug-using-debugbar"
+    ]
+}
