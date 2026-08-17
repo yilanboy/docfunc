@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Services\Serializer;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\DevCommands;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Head\Enums\OgType;
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Serializer::class, function () {
             return Serializer::make();
         });
+
+        DevCommands::except('server');
     }
 
     /**
