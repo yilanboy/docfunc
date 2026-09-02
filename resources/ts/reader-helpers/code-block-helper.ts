@@ -157,6 +157,18 @@ window.codeBlockHelper = function(element: HTMLElement): void {
             continue;
         }
 
+        const codes = preTag.getElementsByTagName('code');
+
+        if (codes.length === 0) {
+            continue;
+        }
+
+        const code: HTMLElement = codes[0];
+
+        if (code.classList.contains('language-mermaid')) {
+            continue;
+        }
+
         // to make the copy button fixed in the container, we wrap it in the container
         let wrapper: HTMLDivElement = document.createElement('div');
         // add 'relative' to make this element to become an anchor
@@ -172,14 +184,6 @@ window.codeBlockHelper = function(element: HTMLElement): void {
         // to get language from code class name, the class name is like "language-JavaScript"
         // we need to get the last part of the class name
         const language = getProgramLanguage(preTag);
-
-        const codes = preTag.getElementsByTagName('code');
-
-        if (codes.length === 0) {
-            continue;
-        }
-
-        const code: HTMLElement = codes[0];
 
         const languageLabelElement: HTMLSpanElement =
             createLanguageLabel(language);

@@ -300,3 +300,9 @@ div.twitter-tweet.twitter-tweet-rendered {
 html[data-theme="dark"] .hero::before {
     background-image: radial-gradient(circle, var(--color-zinc-700) 1.4px, transparent 1.4px);
 }
+
+.mermaid-svg-wrapper svg,
+.mermaid-modal-content svg {
+    max-width: 100%;
+    height: auto;
+}

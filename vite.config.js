@@ -22,6 +22,7 @@ export default defineConfig({
                 'resources/ts/post-outline.ts',
                 'resources/ts/webauthn.ts',
                 'resources/ts/markdown-helper.ts',
+                'resources/ts/mermaid.ts',
                 // css
                 'resources/css/app.css',
             ],

@@ -110,6 +110,11 @@ export const languageSettings: { [Name: string]: LanguagesSetting } = {
         backgroundColor: '#b125ea',
         color: 'white'
     },
+    mermaid: {
+        label: 'Mermaid',
+        backgroundColor: '#ff3670',
+        color: 'white'
+    },
     nginx: {
         label: 'Nginx',
         backgroundColor: '#009900',

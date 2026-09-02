@@ -60,6 +60,8 @@ new class extends Component
 @assets
     {{-- highlight code block --}}
     @vite('resources/ts/shiki.ts')
+    {{-- mermaid diagram --}}
+    @vite('resources/ts/mermaid.ts')
     {{-- code block copy button --}}
     @vite('resources/ts/reader-helpers/code-block-helper.ts')
     @vite('resources/ts/reader-helpers/image-block-helper.ts')
@@ -84,6 +86,7 @@ new class extends Component
             async init() {
                 setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
                 await highlightAllInElement(this.$refs.postBody);
+                await renderMermaidDiagrams(this.$refs.postBody);
                 this.isReady = true;
                 codeBlockHelper(this.$refs.postBody);
                 imageBlockHelper(this.$refs.postBody);

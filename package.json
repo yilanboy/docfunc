@@ -36,5 +36,8 @@
         "node": ">=26",
         "pnpm": ">=11"
     },
-    "packageManager": "pnpm@11.24.0"
+    "packageManager": "pnpm@11.24.0",
+    "dependencies": {
+        "mermaid": "^11.17.2"
+    }
 }

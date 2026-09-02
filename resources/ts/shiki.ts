@@ -19,7 +19,7 @@ let template: HTMLTemplateElement | null = null;
 async function getHighlighter(): Promise<Highlighter> {
     if (!highlighter) {
         highlighter = await createHighlighter({
-            langs: Object.keys(languageSettings),
+            langs: Object.keys(languageSettings).filter((lang) => lang !== 'mermaid'),
             themes: ['one-light', 'one-dark-pro']
         });
     }
@@ -45,6 +45,11 @@ async function highlightElement(
         c.startsWith('language-')
     );
     const lang = langClass ? langClass.replace('language-', '') : 'text';
+
+    if (lang === 'mermaid') {
+        return;
+    }
+
     const code = codeElement.innerText;
 
     try {

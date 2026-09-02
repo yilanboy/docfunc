@@ -183,3 +183,68 @@ test('reading progress bar starts at 0 and advances as user scrolls', function (
 
     expect($progress)->toBeGreaterThan(0);
 });
+
+test('it renders mermaid svg diagram, provides zoom button, and opens zoom modal', function () {
+    $body = <<<'HTML'
+    <p>Diagram below:</p>
+    <pre><code class="language-mermaid">graph TD;
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;</code></pre>
+    HTML;
+
+    $post = Post::factory()->create(['body' => $body]);
+
+    $page = $this->visit($post->link_with_slug);
+
+    $page->assertNoJavascriptErrors()
+        ->assertSee($post->title)
+        ->assertPresent('.mermaid-diagram-container svg')
+        ->assertPresent('.mermaid-diagram-container button[aria-label="Zoom diagram"]')
+        ->assertNotPresent('pre > code.language-mermaid');
+
+    $page->click('.mermaid-diagram-container button[aria-label="Zoom diagram"]');
+
+    $page->assertPresent('#zoom-in-mermaid-modal')
+        ->assertPresent('#zoom-in-mermaid svg');
+});
+
+test('it re-renders mermaid diagram when theme changes', function () {
+    $body = <<<'HTML'
+    <pre><code class="language-mermaid">graph TD;
+        A-->B;</code></pre>
+    HTML;
+
+    $post = Post::factory()->create(['body' => $body]);
+
+    $page = $this->visit($post->link_with_slug);
+
+    $page->assertSee($post->title)
+        ->assertPresent('.mermaid-diagram-container svg');
+
+    // Switch theme to dark
+    $page->script(<<<'JS'
+        document.documentElement.setAttribute('data-theme', 'dark');
+    JS);
+
+    $page->wait(1);
+
+    $page->assertPresent('.mermaid-diagram-container svg');
+});
+
+test('it renders friendly error message when mermaid syntax is invalid', function () {
+    $body = <<<'HTML'
+    <pre><code class="language-mermaid">invalid_syntax_definitely_not_mermaid</code></pre>
+    HTML;
+
+    $post = Post::factory()->create(['body' => $body]);
+
+    $page = $this->visit($post->link_with_slug);
+
+    $page->assertSee($post->title)
+        ->assertPresent('.mermaid-error')
+        ->assertSee('Error rendering diagram:');
+});
+
+
