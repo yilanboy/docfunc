@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
+import laravel from 'laravel-vite-plugin';
+import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
-    plugins: [
+    plugins: lazyPlugins(() => [
         laravel({
             input: [
                 // typescript
@@ -28,5 +28,18 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-    ],
+    ]),
+    server: {
+        cors: true,
+        watch: {
+            ignored: [
+                '**/.agents/**',
+                '**/.claude/**',
+                '**/.cursor/**',
+                '**/.junie/**',
+                '**/storage/framework/views/**',
+                '**/vendor/**',
+            ],
+        },
+    },
 });

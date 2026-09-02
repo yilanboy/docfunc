@@ -70,7 +70,9 @@ new class extends Component
 
                 this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
             },
-            tabToFourSpaces,
+            tabToFourSpaces(event) {
+                window.tabToFourSpaces?.(event);
+            },
             submit() {
                 this.$wire.save().then(() => {
                     if (this.$wire.$errors.isEmpty()) {

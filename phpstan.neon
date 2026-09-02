@@ -3,11 +3,11 @@ includes:
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
-
     paths:
         - app/
+        - bootstrap/app.php
+        - config/
+        - database/
+        - routes/
 
-    excludePaths:
-        - app/Traits/
-
-    level: 5
+    level: 7

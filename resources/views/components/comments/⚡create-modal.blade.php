@@ -117,7 +117,9 @@ new class extends Component
 
                 this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
             },
-            tabToFourSpaces,
+            tabToFourSpaces(event) {
+                window.tabToFourSpaces?.(event);
+            },
             replyToLabel() {
                 return `回覆 ${this.modal.replyTo} 的留言`;
             },
