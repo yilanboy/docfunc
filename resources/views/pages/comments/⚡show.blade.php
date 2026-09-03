@@ -64,7 +64,6 @@ new class extends Component
 
 @assets
     @vite('resources/ts/shiki.ts')
-    @vite('resources/ts/reader-helpers/code-block-helper.ts')
 @endassets
 
 @script
@@ -88,12 +87,9 @@ new class extends Component
             },
             async init() {
                 await highlightAllInElement(this.$root);
-                codeBlockHelper(this.$root);
 
                 let highlightCommentObserver = await highlightObserver(this.$root);
-                let codeBlockObserver = codeBlockHelperObserver(this.$root);
                 this.observers.push(highlightCommentObserver);
-                this.observers.push(codeBlockObserver);
             },
             destroy() {
                 this.observers.forEach((observer) => {

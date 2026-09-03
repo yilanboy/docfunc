@@ -38,12 +38,9 @@ new class extends Component
             },
             async init() {
                 await highlightAllInElement(this.$root);
-                codeBlockHelper(this.$root);
 
                 let highlightCommentObserver = await highlightObserver(this.$root);
-                let codeBlockObserver = codeBlockHelperObserver(this.$root);
                 this.observers.push(highlightCommentObserver);
-                this.observers.push(codeBlockObserver);
             },
             destroy() {
                 this.observers.forEach((observer) => {
