@@ -62,6 +62,7 @@ window.imageBlockHelper = function (element: HTMLElement): void {
     }
 
     const modal = zoomInImageModal;
+    const cleanups: Array<() => void> = [];
 
     for (const figureTag of figureTags) {
         if (figureTag.classList.contains('image-block-helper-added')) {
@@ -95,15 +96,23 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
         figureTag.appendChild(expandImageButton);
 
+        cleanups.push(() => {
+            expandImageButton.remove();
+            figureTag.classList.remove(
+                'image-block-helper-added',
+                'group',
+                'relative',
+            );
+        });
+    }
+
+    if (cleanups.length > 0) {
         document.addEventListener(
             'livewire:navigating',
             () => {
-                expandImageButton.remove();
-                figureTag.classList.remove(
-                    'image-block-helper-added',
-                    'group',
-                    'relative',
-                );
+                for (const cleanup of cleanups) {
+                    cleanup();
+                }
             },
             { once: true },
         );

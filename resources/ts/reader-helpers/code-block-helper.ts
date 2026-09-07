@@ -14,7 +14,30 @@ const SCROLL_INDICATOR_RIGHT_CLASS = "scroll-indicator-right";
 
 let zoomInModal: Modal | null = null;
 
-function createCopyCodeButton(code: string): HTMLButtonElement {
+const indicatorMap = new WeakMap<
+    HTMLPreElement,
+    { left: HTMLDivElement; right: HTMLDivElement }
+>();
+
+let sharedResizeObserver: ResizeObserver | null = null;
+
+function getSharedResizeObserver(): ResizeObserver {
+    if (!sharedResizeObserver) {
+        sharedResizeObserver = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                const preTag = entry.target as HTMLPreElement;
+                const indicators = indicatorMap.get(preTag);
+                if (indicators) {
+                    updateScrollIndicators(preTag, indicators.left, indicators.right);
+                }
+            }
+        });
+    }
+
+    return sharedResizeObserver;
+}
+
+function createCopyCodeButton(codeElement: HTMLElement): HTMLButtonElement {
     // create a copy button
     const copyButton: HTMLButtonElement = document.createElement("button");
     // set button position
@@ -29,6 +52,8 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
             console.warn("Clipboard API not supported in current environment");
             return;
         }
+
+        const code = codeElement.innerText;
 
         // copy code to clipboard
         navigator.clipboard.writeText(code).then(
@@ -51,7 +76,7 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     return copyButton;
 }
 
-function createExpandCodeButton(modal: Modal, preOuterHTML: string): HTMLButtonElement {
+function createExpandCodeButton(modal: Modal, getPreOuterHTML: () => string): HTMLButtonElement {
     const expandCodeButton: HTMLButtonElement = document.createElement("button");
     expandCodeButton.classList.add(...button.BASE_CLASS_NAME);
     expandCodeButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
@@ -59,7 +84,7 @@ function createExpandCodeButton(modal: Modal, preOuterHTML: string): HTMLButtonE
     const zoomInCode = document.getElementById(ZOOM_IN_PRE_ID) as HTMLDivElement;
 
     expandCodeButton.addEventListener("click", function (this: HTMLButtonElement) {
-        zoomInCode.innerHTML = preOuterHTML;
+        zoomInCode.innerHTML = getPreOuterHTML();
         modal.open();
     });
 
@@ -148,8 +173,9 @@ window.codeBlockHelper = function (element: HTMLElement): void {
     }
 
     const modal = zoomInModal;
-
     const marker = "code-block-helper-added";
+    const observer = getSharedResizeObserver();
+    const cleanups: Array<() => void> = [];
 
     // add a code block helper to all pre-tags
     for (const preTag of preTags) {
@@ -188,9 +214,9 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         const languageLabelElement: HTMLSpanElement = createLanguageLabel(language);
 
         // start to create the copy button...
-        const copyButton: HTMLButtonElement = createCopyCodeButton(code.innerText);
+        const copyButton: HTMLButtonElement = createCopyCodeButton(code);
 
-        const expandCodeButton = createExpandCodeButton(modal, preTag.outerHTML);
+        const expandCodeButton = createExpandCodeButton(modal, () => preTag.outerHTML);
 
         wrapper.style.setProperty("--pre-light-bg", preTag.style.backgroundColor);
         wrapper.style.setProperty(
@@ -204,14 +230,17 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         wrapper.appendChild(leftScrollIndicator);
         wrapper.appendChild(rightScrollIndicator);
 
-        const sizeObserver = new ResizeObserver(() => {
-            updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
+        indicatorMap.set(preTag, {
+            left: leftScrollIndicator,
+            right: rightScrollIndicator,
         });
-        sizeObserver.observe(code);
+        observer.observe(preTag);
+
+        updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
 
         const onScroll = () =>
             updateScrollIndicators(preTag, leftScrollIndicator, rightScrollIndicator);
-        preTag.addEventListener("scroll", onScroll);
+        preTag.addEventListener("scroll", onScroll, { passive: true });
 
         const codeHelperGroup: HTMLDivElement = document.createElement("div");
         codeHelperGroup.classList.add(
@@ -235,21 +264,23 @@ window.codeBlockHelper = function (element: HTMLElement): void {
         codeHelperGroup.appendChild(copyButton);
         codeHelperGroup.appendChild(expandCodeButton);
 
-        // remove these new element that create in this script
-        // when the user wants to navigate to the next page...
+        cleanups.push(() => {
+            observer.unobserve(preTag);
+            preTag.removeEventListener("scroll", onScroll);
+            wrapper.replaceWith(preTag);
+            preTag.classList.remove(marker);
+        });
+    }
+
+    if (cleanups.length > 0) {
         document.addEventListener(
             "livewire:navigating",
             () => {
-                sizeObserver.disconnect();
-                preTag.removeEventListener("scroll", onScroll);
-                leftScrollIndicator.remove();
-                rightScrollIndicator.remove();
-                languageLabelElement.remove();
-                copyButton.remove();
-                expandCodeButton.remove();
-                codeHelperGroup.remove();
-                wrapper.replaceWith(preTag);
-                preTag.classList.remove(marker);
+                sharedResizeObserver?.disconnect();
+                sharedResizeObserver = null;
+                for (const cleanup of cleanups) {
+                    cleanup();
+                }
             },
             { once: true },
         );
