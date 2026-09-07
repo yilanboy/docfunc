@@ -21,21 +21,30 @@ function createCopyCodeButton(code: string): HTMLButtonElement {
     copyButton.classList.add(...button.BASE_CLASS_NAME);
     copyButton.innerHTML = icon.CLIPBOARD;
 
+    let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
     // when the copy button is clicked, copy code to the clipboard
     copyButton.addEventListener("click", function (this: HTMLButtonElement) {
+        if (!navigator.clipboard) {
+            console.warn("Clipboard API not supported in current environment");
+            return;
+        }
+
         // copy code to clipboard
         navigator.clipboard.writeText(code).then(
-            () => console.log("Copied to clipboard"),
-            () => console.log("Failed to copy to clipboard"),
-        );
+            () => {
+                if (resetTimer !== null) {
+                    clearTimeout(resetTimer);
+                }
 
-        // change the button icon to "Copied!" for 2 seconds
-        this.innerHTML = icon.CHECK;
-        setTimeout(
-            function (this: HTMLButtonElement) {
-                this.innerHTML = icon.CLIPBOARD;
-            }.bind(this),
-            2000,
+                // change the button icon to "Copied!" for 2 seconds
+                this.innerHTML = icon.CHECK;
+                resetTimer = setTimeout(() => {
+                    this.innerHTML = icon.CLIPBOARD;
+                    resetTimer = null;
+                }, 2000);
+            },
+            (err) => console.error("Failed to copy to clipboard", err),
         );
     });
 
@@ -47,7 +56,7 @@ function createExpandCodeButton(modal: Modal, preOuterHTML: string): HTMLButtonE
     expandCodeButton.classList.add(...button.BASE_CLASS_NAME);
     expandCodeButton.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-    const zoomInCode = document.getElementById(ZOOM_IN_PRE_ID) as HTMLImageElement;
+    const zoomInCode = document.getElementById(ZOOM_IN_PRE_ID) as HTMLDivElement;
 
     expandCodeButton.addEventListener("click", function (this: HTMLButtonElement) {
         zoomInCode.innerHTML = preOuterHTML;

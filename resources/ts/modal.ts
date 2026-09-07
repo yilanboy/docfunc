@@ -39,6 +39,7 @@ export class Modal {
     private closeButton: HTMLButtonElement;
     private abortController: AbortController;
     private readonly scrollbarWidth: number;
+    private isOpen: boolean = false;
 
     public constructor(
         id: string,
@@ -114,6 +115,11 @@ export class Modal {
     }
 
     public open() {
+        if (this.isOpen) {
+            return;
+        }
+        this.isOpen = true;
+
         this.element.style.display = 'block';
         document.documentElement.style.overflow = 'hidden';
         document.documentElement.style.paddingRight = `${this.scrollbarWidth}px`;
@@ -162,6 +168,11 @@ export class Modal {
     }
 
     private close() {
+        if (!this.isOpen) {
+            return;
+        }
+        this.isOpen = false;
+
         // Abort all event listeners
         this.abortController.abort();
         // Create a new controller for next time
@@ -192,6 +203,10 @@ export class Modal {
     }
 
     public remove() {
+        this.isOpen = false;
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.paddingRight = '';
+        this.abortController.abort();
         this.element.remove();
     }
 }

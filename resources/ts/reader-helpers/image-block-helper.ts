@@ -10,7 +10,9 @@ declare global {
 const ZOOM_IN_IMAGE_MODAL_ID = 'zoom-in-image-modal';
 const ZOOM_IN_IMAGE_ID = 'zoom-in-image';
 
-function createExpandImageButton(modal: Modal, src: string): HTMLButtonElement {
+let zoomInImageModal: Modal | null = null;
+
+function createExpandImageButton(modal: Modal, src: string, alt: string): HTMLButtonElement {
     const expandImageButton: HTMLButtonElement =
         document.createElement('button');
     expandImageButton.classList.add(
@@ -27,6 +29,7 @@ function createExpandImageButton(modal: Modal, src: string): HTMLButtonElement {
 
     expandImageButton.addEventListener('click', () => {
         zoomInImage.src = src;
+        zoomInImage.alt = alt;
         modal.open();
     });
 
@@ -41,23 +44,28 @@ window.imageBlockHelper = function (element: HTMLElement): void {
         return;
     }
 
-    const zoomInImage: HTMLImageElement = document.createElement('img');
-    zoomInImage.classList.add('lg:min-w-3xl');
-    zoomInImage.id = ZOOM_IN_IMAGE_ID;
+    if (!zoomInImageModal) {
+        const zoomInImage: HTMLImageElement = document.createElement('img');
+        zoomInImage.classList.add('lg:min-w-3xl');
+        zoomInImage.id = ZOOM_IN_IMAGE_ID;
 
-    const modal = new Modal(ZOOM_IN_IMAGE_MODAL_ID, zoomInImage.outerHTML);
+        zoomInImageModal = new Modal(ZOOM_IN_IMAGE_MODAL_ID, zoomInImage.outerHTML);
 
-    document.addEventListener(
-        'livewire:navigating',
-        () => {
-            modal.remove();
-        },
-        { once: true },
-    );
+        document.addEventListener(
+            'livewire:navigating',
+            () => {
+                zoomInImageModal?.remove();
+                zoomInImageModal = null;
+            },
+            { once: true },
+        );
+    }
+
+    const modal = zoomInImageModal;
 
     for (const figureTag of figureTags) {
         if (figureTag.classList.contains('image-block-helper-added')) {
-            return;
+            continue;
         }
 
         const images = figureTag.getElementsByTagName('img');
@@ -74,12 +82,11 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
         const image: HTMLImageElement = images[0];
 
-        const expandImageButton = createExpandImageButton(modal, image.src);
+        const expandImageButton = createExpandImageButton(modal, image.src, image.alt || '');
         expandImageButton.classList.remove('flex');
         expandImageButton.classList.add(
             'hidden',
             'lg:flex',
-            'group-hover:opacity-100',
             'opacity-0',
             'group-hover:opacity-100',
             'transition-opacity',
