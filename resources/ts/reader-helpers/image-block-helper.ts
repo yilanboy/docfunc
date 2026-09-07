@@ -15,6 +15,9 @@ let zoomInImageModal: Modal | null = null;
 function createExpandImageButton(modal: Modal, src: string, alt: string): HTMLButtonElement {
     const expandImageButton: HTMLButtonElement =
         document.createElement('button');
+    expandImageButton.type = 'button';
+    expandImageButton.setAttribute('aria-label', '放大檢視圖片');
+    expandImageButton.title = '放大檢視';
     expandImageButton.classList.add(
         'absolute',
         'top-2',
@@ -46,8 +49,17 @@ window.imageBlockHelper = function (element: HTMLElement): void {
 
     if (!zoomInImageModal) {
         const zoomInImage: HTMLImageElement = document.createElement('img');
-        zoomInImage.classList.add('lg:min-w-3xl');
         zoomInImage.id = ZOOM_IN_IMAGE_ID;
+        zoomInImage.classList.add(
+            'max-h-[85vh]',
+            'max-w-[90vw]',
+            'w-auto',
+            'h-auto',
+            'object-contain',
+            'rounded-xl',
+            'shadow-2xl',
+            'mx-auto',
+        );
 
         zoomInImageModal = new Modal(ZOOM_IN_IMAGE_MODAL_ID, zoomInImage.outerHTML);
 
@@ -90,6 +102,7 @@ window.imageBlockHelper = function (element: HTMLElement): void {
             'lg:flex',
             'opacity-0',
             'group-hover:opacity-100',
+            'focus-within:opacity-100',
             'transition-opacity',
             'duration-200',
         );

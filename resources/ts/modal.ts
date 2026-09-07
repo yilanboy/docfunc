@@ -82,7 +82,7 @@ export class Modal {
         innerHtml: string,
         customClassName: string[]
     ): string {
-        return `<div class="relative z-30 ${customClassName.join(' ')}">
+        return `<div class="relative z-30 ${customClassName.join(' ')}" role="dialog" aria-modal="true">
             <!-- Background backdrop, show/hide based on modal state -->
             <div
                 class="${BACKGROUND_BACKDROP_CLASS_NAME} fixed inset-0 bg-zinc-500/75 backdrop-blur-md transition-opacity ${HIDE_BACKGROUND_BACKDROP_CLASS_NAME.join(' ')}"
@@ -103,6 +103,8 @@ export class Modal {
                 <button
                     type="button"
                     class="${CLOSE_MODAL_BUTTON_CLASS_NAME} text-zinc-200 transition duration-300 hover:text-zinc-50 cursor-pointer"
+                    aria-label="關閉"
+                    title="關閉"
                 >
                    ${X_CIRCLE_FILL_ICON_SVG}
                 </button>
