@@ -120,7 +120,7 @@ async function highlightObserver(
     observer.observe(htmlElement, {
         childList: true,
         subtree: true,
-        attributes: true,
+        attributes: false,
         characterData: false
     });
 

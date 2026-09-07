@@ -134,7 +134,10 @@ export function setupThemeObserver(): void {
         }
     });
 
-    observer.observe(document.documentElement, { attributes: true });
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme', 'class'],
+    });
     isObserverInitialized = true;
 }
 
