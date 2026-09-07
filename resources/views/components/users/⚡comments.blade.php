@@ -43,24 +43,22 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('usersCommentsPart', () => ({
-            observers: [],
-            async init() {
-                await highlightAllInElement(this.$root);
+<script>
+    Alpine.data('usersCommentsPart', () => ({
+        observers: [],
+        async init() {
+            await highlightAllInElement(this.$root);
 
-                let userCommentsObserver = await highlightObserver(this.$root);
-                this.observers.push(userCommentsObserver);
-            },
-            destroy() {
-                this.observers.forEach((observer) => {
-                    observer.disconnect();
-                });
-            },
-        }));
-    </script>
-@endscript
+            let userCommentsObserver = await highlightObserver(this.$root);
+            this.observers.push(userCommentsObserver);
+        },
+        destroy() {
+            this.observers.forEach((observer) => {
+                observer.disconnect();
+            });
+        },
+    }));
+</script>
 
 {{-- 會員留言 --}}
 <div class="w-full space-y-6" x-data="usersCommentsPart" x-ref="userComments">

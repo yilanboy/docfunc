@@ -27,29 +27,27 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('commentsBoardPart', () => ({
-            observers: [],
-            orderDropdownIsOpen: false,
-            changeOrder() {
-                this.$wire.changeOrder(this.$el.dataset.orderValue);
-                this.orderDropdownIsOpen = false;
-            },
-            async init() {
-                await highlightAllInElement(this.$root);
+<script>
+    Alpine.data('commentsBoardPart', () => ({
+        observers: [],
+        orderDropdownIsOpen: false,
+        changeOrder() {
+            this.$wire.changeOrder(this.$el.dataset.orderValue);
+            this.orderDropdownIsOpen = false;
+        },
+        async init() {
+            await highlightAllInElement(this.$root);
 
-                let highlightCommentObserver = await highlightObserver(this.$root);
-                this.observers.push(highlightCommentObserver);
-            },
-            destroy() {
-                this.observers.forEach((observer) => {
-                    observer.disconnect();
-                });
-            },
-        }));
-    </script>
-@endscript
+            let highlightCommentObserver = await highlightObserver(this.$root);
+            this.observers.push(highlightCommentObserver);
+        },
+        destroy() {
+            this.observers.forEach((observer) => {
+                observer.disconnect();
+            });
+        },
+    }));
+</script>
 
 <div class="w-full" x-data="commentsBoardPart">
     <div class="mt-6 w-full">

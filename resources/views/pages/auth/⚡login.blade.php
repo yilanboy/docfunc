@@ -177,46 +177,44 @@ new class extends Component
     @vite('resources/ts/webauthn.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('authLoginPage', () => ({
-            passkey: {
-                optionEndpoint: $wire.optionEndpoint,
-            },
-            browserSupportsWebAuthn,
-            async loginWithPasskey() {
-                if (!this.browserSupportsWebAuthn()) {
-                    this.$wire.$dispatch('toast', {
-                        status: 'danger',
-                        message: '不支援 WebAuthn',
-                    });
+<script>
+    Alpine.data('authLoginPage', () => ({
+        passkey: {
+            optionEndpoint: $wire.optionEndpoint,
+        },
+        browserSupportsWebAuthn,
+        async loginWithPasskey() {
+            if (!this.browserSupportsWebAuthn()) {
+                this.$wire.$dispatch('toast', {
+                    status: 'danger',
+                    message: '不支援 WebAuthn',
+                });
 
-                    return;
-                }
+                return;
+            }
 
-                const response = await fetch(this.passkey.optionEndpoint);
-                const optionsJSON = await response.json();
+            const response = await fetch(this.passkey.optionEndpoint);
+            const optionsJSON = await response.json();
 
-                try {
-                    this.$wire.answer = JSON.stringify(
-                        await startAuthentication({
-                            optionsJSON,
-                        }),
-                    );
-                } catch (error) {
-                    this.$wire.$dispatch('toast', {
-                        status: 'danger',
-                        message: '登入失敗，請稍後再試',
-                    });
+            try {
+                this.$wire.answer = JSON.stringify(
+                    await startAuthentication({
+                        optionsJSON,
+                    }),
+                );
+            } catch (error) {
+                this.$wire.$dispatch('toast', {
+                    status: 'danger',
+                    message: '登入失敗，請稍後再試',
+                });
 
-                    return;
-                }
+                return;
+            }
 
-                this.$wire.loginWithPasskey();
-            },
-        }));
-    </script>
-@endscript
+            this.$wire.loginWithPasskey();
+        },
+    }));
+</script>
 
 <x-layouts.auth x-data="authLoginPage">
     <div class="fixed top-5 left-5">

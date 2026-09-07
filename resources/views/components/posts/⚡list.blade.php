@@ -55,33 +55,31 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('postsListPart', () => ({
-            order: '',
-            tabButtonClicked(tabButton) {
-                this.tabRepositionMarker(tabButton);
-                this.order = tabButton.id.replace('-tab-button', '');
+<script>
+    Alpine.data('postsListPart', () => ({
+        order: '',
+        tabButtonClicked(tabButton) {
+            this.tabRepositionMarker(tabButton);
+            this.order = tabButton.id.replace('-tab-button', '');
 
-                this.$wire.changeOrder(this.order);
-            },
-            tabRepositionMarker(tabButton) {
-                this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
-                this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
-                this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
-            },
-            init() {
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
+            this.$wire.changeOrder(this.order);
+        },
+        tabRepositionMarker(tabButton) {
+            this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
+            this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
+            this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
+        },
+        init() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
 
-                this.order = urlParams.get('order') ?? 'latest';
+            this.order = urlParams.get('order') ?? 'latest';
 
-                const tabSelectedButtons = document.getElementById(this.order + '-tab-button');
-                this.tabRepositionMarker(tabSelectedButtons);
-            },
-        }));
-    </script>
-@endscript
+            const tabSelectedButtons = document.getElementById(this.order + '-tab-button');
+            this.tabRepositionMarker(tabSelectedButtons);
+        },
+    }));
+</script>
 
 <div class="space-y-6" x-data="postsListPart">
     {{-- Sort --}}

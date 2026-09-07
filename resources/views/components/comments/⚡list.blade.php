@@ -143,24 +143,22 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('rootCommentList', () => ({
-            loadMoreComments() {
-                let y = window.scrollY;
+<script>
+    Alpine.data('rootCommentList', () => ({
+        loadMoreComments() {
+            let y = window.scrollY;
 
-                this.$wire.loadMoreComments().then(() => {
-                    this.$nextTick(() => {
-                        window.scrollTo({
-                            top: y,
-                            behavior: 'instant',
-                        });
+            this.$wire.loadMoreComments().then(() => {
+                this.$nextTick(() => {
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'instant',
                     });
                 });
-            },
-        }));
-    </script>
-@endscript
+            });
+        },
+    }));
+</script>
 
 {{-- 留言列表 --}}
 <div class="w-full" id="root-comment-list" data-test-id="comments.root-list" x-data="rootCommentList">

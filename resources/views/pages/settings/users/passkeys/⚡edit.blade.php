@@ -112,62 +112,60 @@ new class extends Component
     @vite('resources/ts/webauthn.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('settingsUsersPasskeysEditPage', () => ({
-            passkey: {
-                optionEndpoint: $wire.optionEndpoint,
-            },
-            name: '',
-            browserSupportsWebAuthn,
-            async register() {
-                if (!this.browserSupportsWebAuthn()) {
-                    this.$wire.$dispatch('toast', {
-                        status: 'danger',
-                        message: '不支援 WebAuthn',
-                    });
-
-                    return;
-                }
-
-                if (this.name === '') {
-                    this.$wire.$dispatch('toast', {
-                        status: 'danger',
-                        message: '請輸入密碼金鑰名稱',
-                    });
-
-                    return;
-                }
-
-                const response = await fetch(this.passkey.optionEndpoint);
-                const optionsJSON = await response.json();
-
-                try {
-                    this.$wire.passkey = JSON.stringify(
-                        await startRegistration({
-                            optionsJSON,
-                        }),
-                    );
-                } catch (e) {
-                    this.$wire.$dispatch('toast', {
-                        status: 'danger',
-                        message: '註冊失敗，請重新註冊',
-                    });
-
-                    return;
-                }
-
-                this.$wire.name = this.name;
-                this.$wire.store();
-            },
-            init() {
-                this.$wire.$on('reset-passkey-name', () => {
-                    this.name = '';
+<script>
+    Alpine.data('settingsUsersPasskeysEditPage', () => ({
+        passkey: {
+            optionEndpoint: $wire.optionEndpoint,
+        },
+        name: '',
+        browserSupportsWebAuthn,
+        async register() {
+            if (!this.browserSupportsWebAuthn()) {
+                this.$wire.$dispatch('toast', {
+                    status: 'danger',
+                    message: '不支援 WebAuthn',
                 });
-            },
-        }));
-    </script>
-@endscript
+
+                return;
+            }
+
+            if (this.name === '') {
+                this.$wire.$dispatch('toast', {
+                    status: 'danger',
+                    message: '請輸入密碼金鑰名稱',
+                });
+
+                return;
+            }
+
+            const response = await fetch(this.passkey.optionEndpoint);
+            const optionsJSON = await response.json();
+
+            try {
+                this.$wire.passkey = JSON.stringify(
+                    await startRegistration({
+                        optionsJSON,
+                    }),
+                );
+            } catch (e) {
+                this.$wire.$dispatch('toast', {
+                    status: 'danger',
+                    message: '註冊失敗，請重新註冊',
+                });
+
+                return;
+            }
+
+            this.$wire.name = this.name;
+            this.$wire.store();
+        },
+        init() {
+            this.$wire.$on('reset-passkey-name', () => {
+                this.name = '';
+            });
+        },
+    }));
+</script>
 
 <x-layouts.main x-data="settingsUsersPasskeysEditPage">
     <div class="container mx-auto grow">

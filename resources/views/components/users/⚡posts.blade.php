@@ -67,24 +67,22 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('usersPostsPart', () => ({
-            currentYear: $wire.entangle('currentPostsYear').live,
-            dropdownIsOpen: false,
-            showCurrentYearText() {
-                return `${this.currentYear} 年的文章`;
-            },
-            switchPostsByYear() {
-                this.currentYear = this.$el.getAttribute('data-year');
-                this.dropdownIsOpen = false;
-            },
-            showPostsByYear() {
-                return this.currentYear === this.$el.getAttribute('data-year');
-            },
-        }));
-    </script>
-@endscript
+<script>
+    Alpine.data('usersPostsPart', () => ({
+        currentYear: $wire.entangle('currentPostsYear').live,
+        dropdownIsOpen: false,
+        showCurrentYearText() {
+            return `${this.currentYear} 年的文章`;
+        },
+        switchPostsByYear() {
+            this.currentYear = this.$el.getAttribute('data-year');
+            this.dropdownIsOpen = false;
+        },
+        showPostsByYear() {
+            return this.currentYear === this.$el.getAttribute('data-year');
+        },
+    }));
+</script>
 
 <div x-data="usersPostsPart">
     @if (! empty($this->groupPostsByYear))

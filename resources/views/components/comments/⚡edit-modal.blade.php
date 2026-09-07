@@ -55,34 +55,32 @@ new class extends Component
     @vite('resources/ts/markdown-helper.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('commentsEditModalPart', () => ({
-            modal: {
-                isOpen: false,
-            },
-            openModal(event) {
-                this.$wire.$set('comment.list_name', event.detail.listName);
-                this.$wire.$set('comment.id', event.detail.id);
-                this.$wire.$set('form.body', event.detail.body);
+<script>
+    Alpine.data('commentsEditModalPart', () => ({
+        modal: {
+            isOpen: false,
+        },
+        openModal(event) {
+            this.$wire.$set('comment.list_name', event.detail.listName);
+            this.$wire.$set('comment.id', event.detail.id);
+            this.$wire.$set('form.body', event.detail.body);
 
-                this.modal.isOpen = true;
+            this.modal.isOpen = true;
 
-                this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
-            },
-            tabToFourSpaces(event) {
-                window.tabToFourSpaces?.(event);
-            },
-            submit() {
-                this.$wire.save().then(() => {
-                    if (this.$wire.$errors.isEmpty()) {
-                        this.modal.isOpen = false;
-                    }
-                });
-            },
-        }));
-    </script>
-@endscript
+            this.$nextTick(() => this.$refs.editCommentTextarea?.focus());
+        },
+        tabToFourSpaces(event) {
+            window.tabToFourSpaces?.(event);
+        },
+        submit() {
+            this.$wire.save().then(() => {
+                if (this.$wire.$errors.isEmpty()) {
+                    this.modal.isOpen = false;
+                }
+            });
+        },
+    }));
+</script>
 
 <div
     class="fixed inset-0 z-30 flex min-h-screen items-end justify-center"

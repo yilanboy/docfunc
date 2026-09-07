@@ -28,21 +28,19 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('postsHomeSidebarPart', () => ({
-            rssLinkLabel: '訂閱 RSS',
-            copyWebFeedUrl() {
-                navigator.clipboard.writeText(this.$el.getAttribute('href')).then(
-                    () => (this.rssLinkLabel = '複製成功'),
-                    () => (this.rssLinkLabel = '複製失敗'),
-                );
+<script>
+    Alpine.data('postsHomeSidebarPart', () => ({
+        rssLinkLabel: '訂閱 RSS',
+        copyWebFeedUrl() {
+            navigator.clipboard.writeText(this.$el.getAttribute('href')).then(
+                () => (this.rssLinkLabel = '複製成功'),
+                () => (this.rssLinkLabel = '複製失敗'),
+            );
 
-                setTimeout(() => (this.rssLinkLabel = '複製 RSS 網址'), 2000);
-            },
-        }));
-    </script>
-@endscript
+            setTimeout(() => (this.rssLinkLabel = '複製 RSS 網址'), 2000);
+        },
+    }));
+</script>
 
 <div class="space-y-6" x-data="postsHomeSidebarPart">
     {{-- 介紹 --}}

@@ -19,53 +19,51 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('globalSearch', () => ({
-            searchBox: {
-                isOpen: false,
-                query: '',
-                isLoading: false,
-            },
-            posts: [],
-            openSearchBox() {
-                this.searchBox.isOpen = true;
-                this.$nextTick(() => {
-                    this.$refs.searchBox.focus();
-                });
-            },
-            onSearchBoxInput() {
-                if (this.searchBox.query.length < 2) {
-                    this.posts = [];
+<script>
+    Alpine.data('globalSearch', () => ({
+        searchBox: {
+            isOpen: false,
+            query: '',
+            isLoading: false,
+        },
+        posts: [],
+        openSearchBox() {
+            this.searchBox.isOpen = true;
+            this.$nextTick(() => {
+                this.$refs.searchBox.focus();
+            });
+        },
+        onSearchBoxInput() {
+            if (this.searchBox.query.length < 2) {
+                this.posts = [];
 
-                    return;
-                }
+                return;
+            }
 
-                this.$wire.search(this.searchBox.query).then((data) => {
-                    this.posts = data;
-                    this.searchBox.isLoading = false;
-                });
-            },
-            setShortcutKeyDisplayByOS() {
-                let userAgentInfo = navigator.userAgent.toLowerCase();
+            this.$wire.search(this.searchBox.query).then((data) => {
+                this.posts = data;
+                this.searchBox.isLoading = false;
+            });
+        },
+        setShortcutKeyDisplayByOS() {
+            let userAgentInfo = navigator.userAgent.toLowerCase();
 
-                if (userAgentInfo.includes('mac')) {
-                    this.$refs.searchShortcut.textContent = '⌘ K';
-                } else {
-                    this.$refs.searchShortcut.textContent = 'Ctrl K';
-                }
-            },
-            init() {
-                this.setShortcutKeyDisplayByOS();
+            if (userAgentInfo.includes('mac')) {
+                this.$refs.searchShortcut.textContent = '⌘ K';
+            } else {
+                this.$refs.searchShortcut.textContent = 'Ctrl K';
+            }
+        },
+        init() {
+            this.setShortcutKeyDisplayByOS();
 
-                // when the query is changed, into the loading state immediately
-                this.$watch('searchBox.query', () => {
-                    this.searchBox.isLoading = true;
-                });
-            },
-        }));
-    </script>
-@endscript
+            // when the query is changed, into the loading state immediately
+            this.$watch('searchBox.query', () => {
+                this.searchBox.isLoading = true;
+            });
+        },
+    }));
+</script>
 
 <search x-data="globalSearch">
     {{-- 搜尋按鈕 --}}

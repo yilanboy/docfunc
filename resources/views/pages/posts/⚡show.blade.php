@@ -79,27 +79,25 @@ new class extends Component
     @vite('resources/ts/post-outline.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('postsShowPage', () => ({
-            isReady: false,
-            async init() {
-                setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
-                await highlightAllInElement(this.$refs.postBody);
-                await renderMermaidDiagrams(this.$refs.postBody);
-                this.isReady = true;
-                codeBlockHelper(this.$refs.postBody);
-                imageBlockHelper(this.$refs.postBody);
-                processYoutubeOembeds();
-                processTwitterOembeds(this.$refs.postBody);
-                setupProgressBar(this.$refs.postCard, this.$refs.progressBar);
-                setupScrollToTopButton(this.$refs.scrollToTopBtn);
-                setupSharer();
-                scrollToAnchor();
-            },
-        }));
-    </script>
-@endscript
+<script>
+    Alpine.data('postsShowPage', () => ({
+        isReady: false,
+        async init() {
+            setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
+            await highlightAllInElement(this.$refs.postBody);
+            await renderMermaidDiagrams(this.$refs.postBody);
+            this.isReady = true;
+            codeBlockHelper(this.$refs.postBody);
+            imageBlockHelper(this.$refs.postBody);
+            processYoutubeOembeds();
+            processTwitterOembeds(this.$refs.postBody);
+            setupProgressBar(this.$refs.postCard, this.$refs.progressBar);
+            setupScrollToTopButton(this.$refs.scrollToTopBtn);
+            setupSharer();
+            scrollToAnchor();
+        },
+    }));
+</script>
 
 <x-layouts.main>
     <div class="relative grow" x-data="postsShowPage">

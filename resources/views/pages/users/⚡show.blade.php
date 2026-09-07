@@ -29,41 +29,39 @@ new class extends Component
     @vite('resources/ts/shiki.ts')
 @endassets
 
-@script
-    <script>
-        // tab can only be 'information', 'posts', 'comments'
-        Alpine.data('usersShowPage', () => ({
-            tab: '',
-            contentIsActive(content) {
-                return this.tab === content.id.replace('-content', '');
-            },
-            tabButtonClicked(tabButton) {
-                this.tabRepositionMarker(tabButton);
-                this.tab = tabButton.id.replace('-tab-button', '');
+<script>
+    // tab can only be 'information', 'posts', 'comments'
+    Alpine.data('usersShowPage', () => ({
+        tab: '',
+        contentIsActive(content) {
+            return this.tab === content.id.replace('-content', '');
+        },
+        tabButtonClicked(tabButton) {
+            this.tabRepositionMarker(tabButton);
+            this.tab = tabButton.id.replace('-tab-button', '');
 
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                urlParams.set('tab', this.tab);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            urlParams.set('tab', this.tab);
 
-                window.history.replaceState(null, null, '?' + urlParams.toString());
-            },
-            tabRepositionMarker(tabButton) {
-                this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
-                this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
-                this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
-            },
-            init() {
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
+            window.history.replaceState(null, null, '?' + urlParams.toString());
+        },
+        tabRepositionMarker(tabButton) {
+            this.$refs.tabMarker.style.width = tabButton.offsetWidth + 'px';
+            this.$refs.tabMarker.style.height = tabButton.offsetHeight + 'px';
+            this.$refs.tabMarker.style.left = tabButton.offsetLeft + 'px';
+        },
+        init() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
 
-                this.tab = urlParams.get('tab') ?? 'information';
+            this.tab = urlParams.get('tab') ?? 'information';
 
-                const tabSelectedButtons = document.getElementById(this.tab + '-tab-button');
-                this.tabRepositionMarker(tabSelectedButtons);
-            },
-        }));
-    </script>
-@endscript
+            const tabSelectedButtons = document.getElementById(this.tab + '-tab-button');
+            this.tabRepositionMarker(tabSelectedButtons);
+        },
+    }));
+</script>
 
 {{-- user information page --}}
 <x-layouts.main>

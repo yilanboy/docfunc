@@ -39,25 +39,23 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('layoutsHeaderPart', () => ({
-            html: document.documentElement,
-            // the dropdown only shows in mobile
-            dropdownMenuIsOpen: false,
-            profileMenuIsOpen: false,
-            switchTheme() {
-                if (this.html.getAttribute('data-theme') === 'light') {
-                    this.html.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    this.html.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                }
-            },
-        }));
-    </script>
-@endscript
+<script>
+    Alpine.data('layoutsHeaderPart', () => ({
+        html: document.documentElement,
+        // the dropdown only shows in mobile
+        dropdownMenuIsOpen: false,
+        profileMenuIsOpen: false,
+        switchTheme() {
+            if (this.html.getAttribute('data-theme') === 'light') {
+                this.html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                this.html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        },
+    }));
+</script>
 
 @php
     $hasUnreadNotifications = auth()->check() && auth()->user()->unreadNotifications()->exists();
