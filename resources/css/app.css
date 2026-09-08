@@ -160,6 +160,10 @@ html[data-theme='dark'] pre.shiki span {
     background-color: var(--shiki-dark-bg) !important;
 }
 
+.comment-card pre.shiki {
+    @apply -mx-4;
+}
+
 pre.shiki {
     padding: 0 !important;
     overflow-x: auto !important;

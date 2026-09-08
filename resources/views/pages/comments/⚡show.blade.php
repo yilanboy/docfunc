@@ -112,7 +112,7 @@ new class extends Component
                     </div>
                 </div>
 
-                <x-dashed-card class="mt-6 w-full">
+                <x-dashed-card class="comment-card mt-6 w-full">
                     <div class="flex flex-col">
                         <div class="flex items-center space-x-4 text-base">
                             @if ($comment->user_id !== null)

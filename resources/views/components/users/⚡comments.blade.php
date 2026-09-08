@@ -63,7 +63,7 @@ new class extends Component
 {{-- 會員留言 --}}
 <div class="w-full space-y-6" x-data="usersCommentsPart" x-ref="userComments">
     @forelse ($comments as $comment)
-        <x-dashed-card class="group relative" wire:key="comment-{{ $comment->id }}">
+        <x-dashed-card class="comment-card group relative" wire:key="comment-{{ $comment->id }}">
             <a
                 class="absolute top-0 right-0 z-10 block h-full w-full bg-transparent"
                 href="{{ route('comments.show', ['id' => $comment->id]) }}"
