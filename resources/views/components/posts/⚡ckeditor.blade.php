@@ -21,46 +21,49 @@ new class extends Component
     @vite('resources/ts/ckeditor/ckeditor.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('ckeditorComponent', () => ({
-            csrfToken: @js(csrf_token()),
-            imageUploadUrl: @js(route('images.store')),
-            async init() {
-                const ckeditor = await window.createClassicEditor(
-                    this.$refs.editor,
-                    this.$wire.content,
-                    this.$wire.maxCharacters,
-                    this.imageUploadUrl,
-                    this.csrfToken,
-                );
+<script>
+    Alpine.data('ckeditorComponent', () => ({
+        async init() {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            const imageUploadUrl = this.$el.dataset.imageUploadUrl;
 
-                const updateContent = window.debounce(() => {
-                    this.$wire.content = ckeditor.getData();
-                }, 1000);
+            const ckeditor = await window.createClassicEditor(
+                this.$refs.editor,
+                this.$wire.content,
+                this.$wire.maxCharacters,
+                imageUploadUrl,
+                csrfToken,
+            );
 
-                // binding the value of the ckeditor to the livewire property
-                ckeditor.model.document.on('change:data', () => {
-                    updateContent();
-                });
+            const updateContent = window.debounce(() => {
+                this.$wire.content = ckeditor.getData();
+            }, 1000);
 
-                // override editable block style
-                ckeditor.ui.view.editable.element.parentElement.classList.add(...this.$wire.className);
+            // binding the value of the ckeditor to the livewire property
+            ckeditor.model.document.on('change:data', () => {
+                updateContent();
+            });
 
-                document.addEventListener(
-                    'livewire:navigating',
-                    () => {
-                        ckeditor.destroy();
-                    },
-                    { once: true },
-                );
+            // override editable block style
+            ckeditor.ui.view.editable.element.parentElement.classList.add(...this.$wire.className);
 
-                this.$dispatch('ckeditor-ready');
-            },
-        }));
-    </script>
-@endscript
+            document.addEventListener(
+                'livewire:navigating',
+                () => {
+                    ckeditor.destroy();
+                },
+                { once: true },
+            );
 
-<div x-data="ckeditorComponent" wire:ignore>
+            this.$dispatch('ckeditor-ready');
+        },
+    }));
+</script>
+
+<div
+    data-image-upload-url="{{ route('images.store') }}"
+    wire:ignore
+    x-data="ckeditorComponent"
+>
     <div x-ref="editor"></div>
 </div>

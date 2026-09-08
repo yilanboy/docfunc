@@ -12,85 +12,90 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('uploadCoverImage', () => ({
-            imageUrl: $wire.entangle('imageUrl'),
-            uploading: false,
-            errorMessage: null,
-            changeBlockStyleWhenDragEnter() {
-                this.$refs.uploadBlock.classList.remove(
-                    'text-emerald-500',
-                    'dark:text-indigo-400',
-                    'border-emerald-500',
-                    'dark:border-indigo-400',
-                );
-                this.$refs.uploadBlock.classList.add(
-                    'text-emerald-600',
-                    'dark:text-indigo-300',
-                    'border-emerald-600',
-                    'dark:border-indigo-300',
-                );
-            },
-            changeBlockStyleWhenDragLeaveAndDrop() {
-                this.$refs.uploadBlock.classList.add(
-                    'text-emerald-500',
-                    'dark:text-indigo-400',
-                    'border-emerald-500',
-                    'dark:border-indigo-400',
-                );
-                this.$refs.uploadBlock.classList.remove(
-                    'text-emerald-600',
-                    'dark:text-indigo-300',
-                    'border-emerald-600',
-                    'dark:border-indigo-300',
-                );
-            },
-            removeCoverImage() {
-                if (confirm('你確定要刪除封面圖嗎？')) {
-                    this.imageUrl = null;
+<script>
+    Alpine.data('uploadCoverImage', () => ({
+        imageUrl: $wire.entangle('imageUrl'),
+        uploading: false,
+        errorMessage: null,
+        changeBlockStyleWhenDragEnter() {
+            this.$refs.uploadBlock.classList.remove(
+                'text-emerald-500',
+                'dark:text-indigo-400',
+                'border-emerald-500',
+                'dark:border-indigo-400',
+            );
+            this.$refs.uploadBlock.classList.add(
+                'text-emerald-600',
+                'dark:text-indigo-300',
+                'border-emerald-600',
+                'dark:border-indigo-300',
+            );
+        },
+        changeBlockStyleWhenDragLeaveAndDrop() {
+            this.$refs.uploadBlock.classList.add(
+                'text-emerald-500',
+                'dark:text-indigo-400',
+                'border-emerald-500',
+                'dark:border-indigo-400',
+            );
+            this.$refs.uploadBlock.classList.remove(
+                'text-emerald-600',
+                'dark:text-indigo-300',
+                'border-emerald-600',
+                'dark:border-indigo-300',
+            );
+        },
+        removeCoverImage() {
+            if (confirm('你確定要刪除封面圖嗎？')) {
+                this.imageUrl = null;
+            }
+        },
+        async uploadImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            this.uploading = true;
+            this.errorMessage = null;
+
+            const formData = new FormData();
+            formData.append('upload', file);
+
+            try {
+                const uploadUrl = this.$el.dataset.uploadUrl;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+                const response = await fetch(uploadUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        Accept: 'application/json',
+                    },
+                    credentials: 'same-origin',
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    this.imageUrl = result.url;
+                } else {
+                    this.errorMessage = result.error?.message || '上傳失敗，請稍後再試';
                 }
-            },
-            async uploadImage(event) {
-                const file = event.target.files[0];
-                if (!file) return;
+            } catch (error) {
+                this.errorMessage = '上傳過程發生錯誤';
+            } finally {
+                this.uploading = false;
+                event.target.value = '';
+            }
+        },
+    }));
+</script>
 
-                this.uploading = true;
-                this.errorMessage = null;
-
-                const formData = new FormData();
-                formData.append('upload', file);
-
-                try {
-                    const response = await fetch('{{ route('images.store') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            Accept: 'application/json',
-                        },
-                        credentials: 'same-origin',
-                    });
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        this.imageUrl = result.url;
-                    } else {
-                        this.errorMessage = result.error?.message || '上傳失敗，請稍後再試';
-                    }
-                } catch (error) {
-                    this.errorMessage = '上傳過程發生錯誤';
-                } finally {
-                    this.uploading = false;
-                    event.target.value = '';
-                }
-            },
-        }));
-    </script>
-@endscript
-
-<div class="col-span-2 text-base" x-data="uploadCoverImage">
+<div
+    class="col-span-2 text-base"
+    data-upload-url="{{ route('images.store') }}"
+    x-data="uploadCoverImage"
+>
     {{-- image preview --}}
     <div class="relative w-full" x-cloak x-show="imageUrl !== null">
         <img class="rounded-lg" id="image-url" x-bind:src="imageUrl" alt="image url" />

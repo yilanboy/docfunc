@@ -50,31 +50,28 @@ new class extends Component
 };
 ?>
 
-@script
-    <script>
-        Alpine.data('authRegisterPage', () => ({
-            submitIsEnabled: false,
-            captchaSiteKey: @js(config('services.captcha.site_key')),
-            submitIsDisabled() {
-                return this.submitIsEnabled === false;
-            },
-            informationOnSubmitButton() {
-                return this.submitIsEnabled ? '註冊' : '驗證中';
-            },
-            init() {
-                turnstile.ready(() => {
-                    turnstile.render(this.$refs.turnstileBlock, {
-                        sitekey: this.captchaSiteKey,
-                        callback: (token) => {
-                            this.$wire.$set('captchaToken', token);
-                            this.submitIsEnabled = true;
-                        },
-                    });
+<script>
+    Alpine.data('authRegisterPage', () => ({
+        submitIsEnabled: false,
+        submitIsDisabled() {
+            return this.submitIsEnabled === false;
+        },
+        informationOnSubmitButton() {
+            return this.submitIsEnabled ? '註冊' : '驗證中';
+        },
+        init() {
+            turnstile.ready(() => {
+                turnstile.render(this.$refs.turnstileBlock, {
+                    sitekey: this.$refs.turnstileBlock.dataset.siteKey,
+                    callback: (token) => {
+                        this.$wire.$set('captchaToken', token);
+                        this.submitIsEnabled = true;
+                    },
                 });
-            },
-        }));
-    </script>
-@endscript
+            });
+        },
+    }));
+</script>
 
 <x-layouts.auth x-data="authRegisterPage">
     <div class="fixed top-5 left-5">
@@ -143,7 +140,12 @@ new class extends Component
                         wire:model="password_confirmation"
                     />
 
-                    <div class="hidden" wire:ignore x-ref="turnstileBlock"></div>
+                    <div
+                        class="hidden"
+                        data-site-key="{{ config('services.captcha.site_key') }}"
+                        wire:ignore
+                        x-ref="turnstileBlock"
+                    ></div>
 
                     <div class="mt-6 flex items-center justify-end">
                         <a

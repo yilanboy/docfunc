@@ -98,52 +98,47 @@ new class extends Component
     @vite('resources/ts/markdown-helper.ts')
 @endassets
 
-@script
-    <script>
-        Alpine.data('commentsCreateModalPart', () => ({
-            modal: {
-                isOpen: false,
-                isSubmitEnabled: false,
-                replyTo: '',
-            },
-            captcha: {
-                siteKey: @js(config('services.captcha.site_key')),
-            },
-            openModal(event) {
-                this.$wire.$set('form.parent_id', event.detail.parentId);
+<script>
+    Alpine.data('commentsCreateModalPart', () => ({
+        modal: {
+            isOpen: false,
+            isSubmitEnabled: false,
+            replyTo: '',
+        },
+        openModal(event) {
+            this.$wire.$set('form.parent_id', event.detail.parentId);
 
-                this.modal.replyTo = event.detail.replyTo;
-                this.modal.isOpen = true;
+            this.modal.replyTo = event.detail.replyTo;
+            this.modal.isOpen = true;
 
-                this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
-            },
-            tabToFourSpaces(event) {
-                window.tabToFourSpaces?.(event);
-            },
-            replyToLabel() {
-                return `回覆 ${this.modal.replyTo} 的留言`;
-            },
-            submit() {
-                this.$wire.save().then(() => {
-                    if (this.$wire.$errors.isEmpty()) {
-                        this.modal.isOpen = false;
-                    }
+            this.$nextTick(() => this.$refs.createCommentTextarea?.focus());
+        },
+        tabToFourSpaces(event) {
+            window.tabToFourSpaces?.(event);
+        },
+        replyToLabel() {
+            return `回覆 ${this.modal.replyTo} 的留言`;
+        },
+        submit() {
+            this.$wire.save().then(() => {
+                if (this.$wire.$errors.isEmpty()) {
+                    this.modal.isOpen = false;
+                }
+            });
+        },
+        init() {
+            turnstile.ready(() => {
+                turnstile.render(this.$refs.turnstileBlock, {
+                    sitekey: this.$refs.turnstileBlock.dataset.siteKey,
+                    callback: (token) => {
+                        this.$wire.captchaToken = token;
+                        this.modal.isSubmitEnabled = true;
+                    },
                 });
-            },
-            init() {
-                turnstile.ready(() => {
-                    turnstile.render(this.$refs.turnstileBlock, {
-                        sitekey: this.captcha.siteKey,
-                        callback: (token) => {
-                            this.$wire.captchaToken = token;
-                            this.modal.isSubmitEnabled = true;
-                        },
-                    });
-                });
-            },
-        }));
-    </script>
-@endscript
+            });
+        },
+    }));
+</script>
 
 <div
     class="fixed inset-0 z-30 flex min-h-screen items-end justify-center"
@@ -220,7 +215,12 @@ new class extends Component
                     />
                 </div>
 
-                <div class="hidden" x-ref="turnstileBlock" wire:ignore></div>
+                <div
+                    class="hidden"
+                    data-site-key="{{ config('services.captcha.site_key') }}"
+                    wire:ignore
+                    x-ref="turnstileBlock"
+                ></div>
 
                 <div class="flex items-center justify-between space-x-3">
                     <x-toggle-switch
