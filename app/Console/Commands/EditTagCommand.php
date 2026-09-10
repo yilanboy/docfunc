@@ -31,7 +31,7 @@ class EditTagCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $id = search(
             label: 'Search for the tag that should be edited',

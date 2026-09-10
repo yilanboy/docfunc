@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\Cache;
 
 class ShowAllTagsController extends Controller
 {
-    public function __invoke()
+    /**
+     * @return array<mixed>
+     */
+    public function __invoke(): array
     {
-        return Cache::remember(
+        return (array) Cache::remember(
             'inputTags',
             now()->addDay(),
             fn () => TagResource::collection(Tag::all())->resolve()

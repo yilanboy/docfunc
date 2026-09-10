@@ -12,7 +12,7 @@ if (! function_exists('get_gravatar')) {
      * @param  bool  $force_default  Force default image always. By default false.
      * @param  string  $rating  Maximum rating (inclusive) [ g | pg | r | x ]
      * @param  bool  $return_image  True to return a complete IMG tag False for just the URL
-     * @param  array  $html_tag_attributes  Optional, additional key/value attributes to include in the IMG tag
+     * @param  array<string, string>  $html_tag_attributes  Optional, additional key/value attributes to include in the IMG tag
      * @return string containing either just a URL or a complete image tag
      *
      * @source https://gravatar.com/site/implement/images/php/

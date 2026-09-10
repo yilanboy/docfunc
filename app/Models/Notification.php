@@ -12,6 +12,9 @@ class Notification extends Model
 {
     use MassPrunable;
 
+    /**
+     * @return Builder<static>
+     */
     public function prunable(): Builder
     {
         return static::query()

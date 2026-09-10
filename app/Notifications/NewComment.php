@@ -15,12 +15,18 @@ class NewComment extends Notification implements ShouldQueue
 
     public function __construct(protected Comment $comment) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
         // 開啟通知的頻道
         return ['database'];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toDatabase(object $notifiable): array
     {
         $post = $this->comment->post;

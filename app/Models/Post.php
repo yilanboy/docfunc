@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\PostOrderOptions;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -26,12 +27,14 @@ use Spatie\Feed\FeedItem;
  * @property User $user
  * @property Collection<int, Tag> $tags
  *
- * @method int increment(string $column, float|int $amount = 1, array $extra = []) 將該欄位值加 1
- * @method int decrement(string $column, float|int $amount = 1, array $extra = []) 將該欄位值減 1
+ * @method int increment(string $column, float|int $amount = 1, array<string, mixed> $extra = []) 將該欄位值加 1
+ * @method int decrement(string $column, float|int $amount = 1, array<string, mixed> $extra = []) 將該欄位值減 1
  */
 class Post extends Model implements Feedable
 {
+    /** @use HasFactory<PostFactory> */
     use HasFactory;
+
     use MassPrunable;
     use Searchable;
     use SoftDeletes;
@@ -53,21 +56,33 @@ class Post extends Model implements Feedable
 
     protected $appends = ['link_with_slug'];
 
+    /**
+     * @return HasMany<Comment, $this>
+     */
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @return BelongsTo<Category, $this>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsToMany<Tag, $this>
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id');
@@ -75,6 +90,8 @@ class Post extends Model implements Feedable
 
     /**
      * Set the ordering of the post
+     *
+     * @param  Builder<Post>  $query
      */
     #[Scope]
     protected function withOrder(Builder $query, ?string $order): void
@@ -91,6 +108,8 @@ class Post extends Model implements Feedable
 
     /**
      * Set the prune rule of the post-data
+     *
+     * @return Builder<Post>
      */
     public function prunable(): Builder
     {
@@ -99,6 +118,8 @@ class Post extends Model implements Feedable
 
     /**
      * Use laravel mutator to set the slug attribute.
+     *
+     * @return Attribute<string, never>
      */
     protected function linkWithSlug(): Attribute
     {
@@ -110,6 +131,9 @@ class Post extends Model implements Feedable
         );
     }
 
+    /**
+     * @return Attribute<string, never>
+     */
     protected function tagsJson(): Attribute
     {
         // 生成包含 tag ID 與 tag name 的 json 字串
@@ -124,9 +148,9 @@ class Post extends Model implements Feedable
     /**
      * Get the index name for the model.
      */
-    public function searchableAs()
+    public function searchableAs(): string
     {
-        return config('scout.prefix');
+        return (string) config('scout.prefix');
     }
 
     public function toFeedItem(): FeedItem
@@ -140,6 +164,9 @@ class Post extends Model implements Feedable
             ->authorName(config('app.name'));
     }
 
+    /**
+     * @return Collection<int, Post>
+     */
     public static function getFeedItems(): Collection
     {
         return Post::where('is_private', false)

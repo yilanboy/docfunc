@@ -29,7 +29,7 @@ class ChangeRegisterSettingCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $role = select(
             'Allow guests to register?',
@@ -45,5 +45,7 @@ class ChangeRegisterSettingCommand extends Command
         }
 
         Cache::forget('setting:allow_register');
+
+        return self::SUCCESS;
     }
 }

@@ -31,7 +31,7 @@ class EditLinkCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $id = search(
             label: 'Search for the tag that should be edited',
@@ -87,5 +87,7 @@ class EditLinkCommand extends Command
         } else {
             $this->info('Link not updated');
         }
+
+        return self::SUCCESS;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,30 +23,46 @@ use Illuminate\Support\Facades\DB;
  */
 class Comment extends Model
 {
+    /** @use HasFactory<CommentFactory> */
     use HasFactory;
 
     protected $fillable = ['user_id', 'post_id', 'body', 'parent_id'];
 
+    /**
+     * @return BelongsTo<Post, $this>
+     */
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Comment, $this>
+     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Comment::class, 'parent_id', 'id');
     }
 
+    /**
+     * @return HasMany<Comment, $this>
+     */
     public function children(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 
+    /**
+     * @return Attribute<object{level: int, parent_count: int}|null, never>
+     */
     protected function hierarchy(): Attribute
     {
         $query = <<<'SQL'

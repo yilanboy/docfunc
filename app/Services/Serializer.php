@@ -7,8 +7,7 @@ namespace App\Services;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Webauthn\AttestationStatement\AttestationStatementSupportManager;
 use Webauthn\Denormalizer\WebauthnSerializerFactory;
 
@@ -18,6 +17,7 @@ class Serializer
     {
         $attestationStatementSupportManager = AttestationStatementSupportManager::create();
 
+        /** @var SymfonySerializer $serializer */
         $serializer = new WebauthnSerializerFactory($attestationStatementSupportManager)
             ->create();
 
@@ -25,7 +25,7 @@ class Serializer
     }
 
     public function __construct(
-        protected SerializerInterface|NormalizerInterface $serializer,
+        protected SymfonySerializer $serializer,
     ) {}
 
     /**
@@ -44,9 +44,14 @@ class Serializer
     }
 
     /**
+     * @template T of object
+     *
+     * @param  class-string<T>  $desiredClass
+     * @return T
+     *
      * @throws ExceptionInterface
      */
-    public function fromJson(string $value, string $desiredClass)
+    public function fromJson(string $value, string $desiredClass): mixed
     {
         return $this
             ->serializer
@@ -54,10 +59,14 @@ class Serializer
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws ExceptionInterface
      */
     public function toArray(mixed $value): array
     {
-        return $this->serializer->normalize($value, 'json');
+        $normalized = $this->serializer->normalize($value, 'json');
+
+        return is_array($normalized) ? $normalized : (array) $normalized;
     }
 }

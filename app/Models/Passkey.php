@@ -26,6 +26,9 @@ class Passkey extends Model
         'last_used_at' => 'datetime',
     ];
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function owner(): MorphTo
     {
         return $this->morphTo();

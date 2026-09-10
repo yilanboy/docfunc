@@ -60,6 +60,8 @@ class ContentService
 
     /**
      * 取得文章中的圖片連結
+     *
+     * @return list<string>
      */
     public static function getImagesInContent(string $body): array
     {

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Serializer;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ use Webauthn\PublicKeyCredentialRequestOptions;
 
 class GeneratePasskeyAuthenticationOptionsController extends Controller
 {
-    public function __invoke(Serializer $serializer)
+    public function __invoke(Serializer $serializer): JsonResponse|string
     {
         try {
             $options = new PublicKeyCredentialRequestOptions(
