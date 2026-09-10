@@ -1,19 +1,19 @@
-import Tagify from '@yaireo/tagify';
-import '@yaireo/tagify/dist/tagify.css';
-import '../css/custom-tagify.css';
+import Tagify from "@yaireo/tagify";
+import "@yaireo/tagify/dist/tagify.css";
+import "../css/custom-tagify.css";
 
 declare global {
     interface Window {
         createTagify: (
             element: HTMLInputElement,
-            whitelist: Tagify.TagData[]
+            whitelist: Tagify.TagData[],
         ) => Tagify;
     }
 }
 
-window.createTagify = function(
+window.createTagify = function (
     element: HTMLInputElement,
-    whitelist: Tagify.TagData[]
+    whitelist: Tagify.TagData[],
 ) {
     return new Tagify(element, {
         whitelist: whitelist,
@@ -24,10 +24,10 @@ window.createTagify = function(
             enabled: 0,
             maxItems: 5,
             // place the dropdown near the typed text
-            position: 'text',
+            position: "text",
             // keep the dropdown open after selecting a suggestion
             closeOnSelect: false,
-            highlightFirst: true
-        }
+            highlightFirst: true,
+        },
     });
 };
