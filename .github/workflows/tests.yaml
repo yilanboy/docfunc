@@ -47,13 +47,13 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v5
         with:
-          version: latest
+          version: "12.3.4"
 
       - name: Setup node.js
         uses: actions/setup-node@v6
         with:
           node-version: latest
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Get composer cache directory
         id: composer-cache
