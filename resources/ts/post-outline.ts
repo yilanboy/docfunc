@@ -1,17 +1,17 @@
-import debounce from './debounce.js';
+import debounce from "./debounce.js";
 
 declare global {
     interface Window {
         setupPostOutline: (
-            postOutline: HTMLElement,
-            postBody: HTMLElement
+            postOutline: HTMLElement | null,
+            postBody: HTMLElement | null,
         ) => void;
     }
 }
 
-function createPostOutlineLinks(
+function renderPostOutline(
     postOutline: HTMLElement,
-    headings: NodeListOf<HTMLHeadingElement>
+    headings: NodeListOf<HTMLHeadingElement>,
 ): void {
     postOutline.innerHTML = `
         <div class="flex justify-center items-center mb-4 dark:text-zinc-50" role="heading" aria-level="2">目錄</div>
@@ -19,163 +19,174 @@ function createPostOutlineLinks(
     `;
 
     headings.forEach((heading: HTMLHeadingElement, index: number): void => {
-        heading.id = `heading-${index}`;
-        heading.setAttribute('tabindex', '-1');
+        const headingId = heading.id || `heading-${index}`;
+        heading.id = headingId;
+        heading.setAttribute("tabindex", "-1");
 
-        const link: HTMLAnchorElement = document.createElement('a');
-        link.href = `#${heading.id}`;
-        link.id = `${heading.id}-link`;
-        link.classList.add(
-            'mb-1',
-            'flex',
-            'rounded-sm',
-            'p-1',
-            'text-sm',
-            'text-zinc-500',
-            'transition',
-            'duration-150',
-            'hover:bg-zinc-300',
-            'hover:text-zinc-800',
-            'dark:text-zinc-400',
-            'dark:hover:bg-zinc-700',
-            'dark:hover:text-zinc-200'
-        );
-        link.setAttribute('role', 'link');
-        link.setAttribute(
-            'aria-label',
-            'Jump to section: ' + heading.textContent
-        );
-        link.setAttribute('tabindex', '0');
+        const link: HTMLAnchorElement = document.createElement("a");
+        link.href = `#${headingId}`;
+        link.id = `${headingId}-link`;
+        link.className =
+            "mb-1 flex items-center rounded-sm p-1 text-sm text-zinc-500 transition duration-150 " +
+            "hover:bg-zinc-300 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-200";
 
-        link.innerHTML = `
-            <span class="flex justify-center items-center" aria-hidden="true">⏵</span>
-            <span class="ml-2">${heading.textContent}</span>
-        `;
+        const iconSpan = document.createElement("span");
+        iconSpan.className = "flex justify-center items-center";
+        iconSpan.setAttribute("aria-hidden", "true");
+        iconSpan.textContent = "⏵";
 
+        const textSpan = document.createElement("span");
+        textSpan.className = "ml-2 truncate";
+        textSpan.textContent = heading.textContent;
+
+        link.appendChild(iconSpan);
+        link.appendChild(textSpan);
         postOutline.appendChild(link);
     });
 
-    postOutline.setAttribute('aria-label', 'Table of contents');
-    postOutline.setAttribute('role', 'navigation');
+    postOutline.setAttribute("aria-label", "Table of contents");
+    postOutline.setAttribute("role", "navigation");
 }
 
-function addClickEventOnPostLinks(postOutline: HTMLElement) {
-    let outlineLinks: NodeListOf<HTMLAnchorElement> =
-        postOutline.querySelectorAll('a');
+function setupOutlineNavigation(postOutline: HTMLElement): void {
+    const outlineLinks: NodeListOf<HTMLAnchorElement> =
+        postOutline.querySelectorAll("a");
 
-    outlineLinks.forEach((outlineLink: HTMLAnchorElement, index: number) => {
-        let heading: HTMLElement | null = document.getElementById(
-            `heading-${index}`
-        );
+    outlineLinks.forEach((outlineLink: HTMLAnchorElement) => {
+        outlineLink.addEventListener("click", (event: MouseEvent) => {
+            const hash = outlineLink.getAttribute("href");
+            if (!hash?.startsWith("#")) {
+                return;
+            }
 
-        if (!heading) {
-            console.warn(`Heading with id 'heading-${index}' not found`);
+            const target = document.getElementById(hash.slice(1));
+            if (target) {
+                event.preventDefault();
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+                history.replaceState(null, "", hash);
+            }
+        });
+    });
+}
 
+function setupScrollSpy(
+    postOutline: HTMLElement,
+    postBody: HTMLElement,
+    headings: NodeListOf<HTMLHeadingElement>,
+): void {
+    const outlineLinks: NodeListOf<HTMLAnchorElement> =
+        postOutline.querySelectorAll("a");
+
+    const clearActiveLinks = () => {
+        outlineLinks.forEach((link) => {
+            link.classList.remove(
+                "bg-zinc-300",
+                "text-zinc-900",
+                "font-medium",
+                "dark:bg-zinc-600",
+                "dark:text-zinc-100",
+            );
+            link.removeAttribute("aria-current");
+        });
+    };
+
+    const updateActiveSection = () => {
+        const postRect = postBody.getBoundingClientRect();
+
+        // If user hasn't scrolled down to post yet or scrolled past the article
+        if (postRect.top > window.innerHeight * 0.5 || postRect.bottom < 50) {
+            clearActiveLinks();
             return;
         }
 
-        const handleNavigation = (event: Event) => {
-            event.preventDefault();
-            heading.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        };
+        // When scrolled near the bottom of page, highlight the last section
+        const isAtBottom =
+            window.innerHeight + window.scrollY >=
+            document.documentElement.scrollHeight - 50;
 
-        outlineLink.addEventListener('click', handleNavigation);
-    });
-}
+        let activeHeading: HTMLHeadingElement | null = null;
 
-function showWhichSectionIAmIn(
-    postOutline: HTMLElement,
-    postBody: HTMLElement,
-    headings: NodeListOf<HTMLHeadingElement>
-): void {
-    let outlineLinks: NodeListOf<HTMLAnchorElement> =
-        postOutline.querySelectorAll('a');
+        if (isAtBottom) {
+            activeHeading = headings[headings.length - 1];
+        } else {
+            const activationOffset = 120;
+            for (let i = headings.length - 1; i >= 0; i--) {
+                const heading = headings[i];
+                if (heading.getBoundingClientRect().top <= activationOffset) {
+                    activeHeading = heading;
+                    break;
+                }
+            }
 
-    let headingScrollYs: Record<string, number> = {};
+            // If none crossed activationOffset yet but reader is inside article, default to first heading
+            if (!activeHeading && headings.length > 0) {
+                activeHeading = headings[0];
+            }
+        }
 
-    const updateHeadingScrollYs = () => {
-        headings.forEach((heading) => {
-            headingScrollYs[heading.id] = heading.offsetTop;
-        });
-    };
+        clearActiveLinks();
 
-    const resizeObserver = new ResizeObserver(() => {
-        updateHeadingScrollYs();
-    });
-
-    resizeObserver.observe(postBody);
-    updateHeadingScrollYs(); // Initial update
-
-    const clearHighlighting = () => {
-        outlineLinks.forEach((link) => {
-            link.classList.remove('bg-zinc-300', 'dark:bg-zinc-600');
-            link.setAttribute('aria-current', 'false');
-        });
-    };
-
-    const highlightCurrentSection = () => {
-        const currentScrollY = window.scrollY;
-        const headingKeys = Object.keys(headingScrollYs).sort(
-            (a, b) => headingScrollYs[a] - headingScrollYs[b]
-        );
-
-        for (let i = 0; i < headingKeys.length; i++) {
-            const currentKey = headingKeys[i];
-            const nextKey = headingKeys[i + 1];
-
-            if (
-                currentScrollY >= headingScrollYs[currentKey] &&
-                (!nextKey || currentScrollY < headingScrollYs[nextKey]) &&
-                currentScrollY <
-                postBody.getBoundingClientRect().bottom + currentScrollY
-            ) {
-                const outlineLink = document.getElementById(
-                    `${currentKey}-link`
+        if (activeHeading) {
+            const activeLink = document.getElementById(
+                `${activeHeading.id}-link`,
+            );
+            if (activeLink) {
+                activeLink.classList.add(
+                    "bg-zinc-300",
+                    "text-zinc-900",
+                    "font-medium",
+                    "dark:bg-zinc-600",
+                    "dark:text-zinc-100",
                 );
-                outlineLink?.classList.add('bg-zinc-300', 'dark:bg-zinc-600');
-
-                break;
+                activeLink.setAttribute("aria-current", "location");
             }
         }
     };
 
-    const updateSection = debounce(() => {
-        clearHighlighting();
-        highlightCurrentSection();
-    }, 100);
+    const debouncedUpdate = debounce(updateActiveSection, 50);
 
-    document.addEventListener('scroll', updateSection);
+    const resizeObserver = new ResizeObserver(() => {
+        updateActiveSection();
+    });
+
+    resizeObserver.observe(postBody);
+
+    window.addEventListener("scroll", debouncedUpdate, { passive: true });
+    window.addEventListener("resize", debouncedUpdate, { passive: true });
+
+    // Initial check
+    updateActiveSection();
 
     document.addEventListener(
-        'livewire:navigating',
+        "livewire:navigating",
         () => {
             resizeObserver.disconnect();
-            document.removeEventListener('scroll', updateSection);
+            window.removeEventListener("scroll", debouncedUpdate);
+            window.removeEventListener("resize", debouncedUpdate);
         },
-        { once: true }
+        { once: true },
     );
 }
 
-window.setupPostOutline = function(
-    postOutline: HTMLElement,
-    postBody: HTMLElement
+window.setupPostOutline = function (
+    postOutline: HTMLElement | null,
+    postBody: HTMLElement | null,
 ): void {
-    // Cache headings query to avoid repeated DOM queries across functions
-    const headings: NodeListOf<HTMLHeadingElement> =
-        postBody.querySelectorAll('h2');
-
-    if (headings.length === 0) {
-        console.warn('No headings found in post body');
-
+    if (!postOutline || !postBody) {
         return;
     }
 
-    createPostOutlineLinks(postOutline, headings);
+    const headings: NodeListOf<HTMLHeadingElement> =
+        postBody.querySelectorAll("h2");
 
-    addClickEventOnPostLinks(postOutline);
-    // Must be after createSectionInPostBdy
-    showWhichSectionIAmIn(postOutline, postBody, headings);
+    if (headings.length === 0) {
+        return;
+    }
+
+    renderPostOutline(postOutline, headings);
+    setupOutlineNavigation(postOutline);
+    setupScrollSpy(postOutline, postBody, headings);
 };
