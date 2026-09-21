@@ -61,7 +61,7 @@ new class extends Component
             formData.append('upload', file);
 
             try {
-                const uploadUrl = this.$el.dataset.uploadUrl;
+                const uploadUrl = this.$root.dataset.uploadUrl;
                 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
                 const response = await fetch(uploadUrl, {
