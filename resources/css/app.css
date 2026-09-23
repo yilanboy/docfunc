@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+TC:wght@400;500;700&display=swap');
-@import 'tailwindcss';
-@import './custom-ckeditor.css';
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+TC:wght@400;500;700&display=swap");
+@import "tailwindcss";
+@import "./custom-ckeditor.css";
 
 @plugin "@tailwindcss/typography";
 
@@ -25,9 +25,9 @@
     --color-lividus-900: oklch(0.2385 0.0534 262.91);
 
     /* font family */
-    --font-noto-sans: 'Noto Sans TC', 'Roboto';
-    --font-jetbrains-mono: 'JetBrains Mono', 'Noto Sans TC';
-    --font-inter: 'Inter', 'Noto Sans TC', sans-serif;
+    --font-noto-sans: "Noto Sans TC", "Roboto";
+    --font-jetbrains-mono: "JetBrains Mono", "Noto Sans TC";
+    --font-inter: "Inter", "Noto Sans TC", sans-serif;
 
     /* animate */
     --animate-fade-in: fade-in 0.5s ease-in-out;
@@ -114,7 +114,7 @@
         border-radius: 0.3rem;
     }
 
-    html[data-theme='dark'] & :not(pre) > code {
+    html[data-theme="dark"] & :not(pre) > code {
         background-color: color-mix(
             in oklab,
             var(--color-lividus-700) 40%,
@@ -124,11 +124,11 @@
     }
 
     & blockquote p:first-of-type::before {
-        content: '' !important;
+        content: "" !important;
     }
 
     & blockquote p:last-of-type::after {
-        content: '' !important;
+        content: "" !important;
     }
 
     & blockquote {
@@ -138,7 +138,7 @@
         background-repeat: no-repeat;
     }
 
-    html[data-theme='dark'] & blockquote {
+    html[data-theme="dark"] & blockquote {
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%232a547e60" d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M7.194 6.766a1.7 1.7 0 0 0-.227-.272 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 5.734 6C4.776 6 4 6.746 4 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.5 2.5 0 0 0-.227-.4zM11 9.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.5 2.5 0 0 0-.228-.4 1.7 1.7 0 0 0-.227-.273 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 10.07 6c-.957 0-1.734.746-1.734 1.667 0 .92.777 1.666 1.734 1.666.343 0 .662-.095.931-.26z"/></svg>');
     }
 }
@@ -154,8 +154,8 @@
 }
 
 /* shiki */
-html[data-theme='dark'] pre.shiki,
-html[data-theme='dark'] pre.shiki span {
+html[data-theme="dark"] pre.shiki,
+html[data-theme="dark"] pre.shiki span {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
 }
@@ -194,7 +194,9 @@ pre.shiki code span.line::before {
     color: --alpha(var(--color-zinc-500) / 50%);
 }
 
-pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) {
+pre.shiki
+    code
+    :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) {
     display: inline-block !important;
     width: calc(100% + 2rem) !important;
     margin: 0 -1rem !important;
@@ -229,13 +231,16 @@ html[data-theme="dark"] pre.shiki code span.line.diff.add {
     background-color: --alpha(var(--color-green-500) / 10%) !important;
 }
 
-pre.shiki code :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add) span {
+pre.shiki
+    code
+    :is(span.line.highlighted, span.line.diff.remove, span.line.diff.add)
+    span {
     background-color: transparent !important;
 }
 
 pre.shiki code span.line.diff.remove::after {
     position: absolute;
-    content: '-';
+    content: "-";
     inset-block: 0;
     left: 2.75rem;
     color: var(--color-red-500);
@@ -247,7 +252,7 @@ pre.shiki code span.line.diff.remove::after {
 
 pre.shiki code span.line.diff.add::after {
     position: absolute;
-    content: '+';
+    content: "+";
     inset-block: 0;
     left: 2.75rem;
     color: var(--color-green-500);
@@ -266,11 +271,11 @@ pre.shiki code span.line.diff.add::after {
     background: linear-gradient(to right, var(--pre-light-bg), transparent);
 }
 
-html[data-theme='dark'] .scroll-indicator-right {
+html[data-theme="dark"] .scroll-indicator-right {
     background: linear-gradient(to left, var(--pre-dark-bg), transparent);
 }
 
-html[data-theme='dark'] .scroll-indicator-left {
+html[data-theme="dark"] .scroll-indicator-left {
     background: linear-gradient(to right, var(--pre-dark-bg), transparent);
 }
 
@@ -296,17 +301,56 @@ div.twitter-tweet.twitter-tweet-rendered {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, var(--color-zinc-300) 1.4px, transparent 1.4px);
+    background-image: radial-gradient(
+        circle,
+        var(--color-zinc-300) 1.4px,
+        transparent 1.4px
+    );
     background-size: 10px 10px; /* 圓點間距，越小越密 */
     mask-image: linear-gradient(to bottom, black, transparent 60%);
 }
 
 html[data-theme="dark"] .hero::before {
-    background-image: radial-gradient(circle, var(--color-zinc-700) 1.4px, transparent 1.4px);
+    background-image: radial-gradient(
+        circle,
+        var(--color-zinc-700) 1.4px,
+        transparent 1.4px
+    );
 }
 
 .mermaid-svg-wrapper svg,
 .mermaid-modal-content svg {
     max-width: 100%;
     height: auto;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+/* View Transitions for Livewire wire:transition.navigate */
+@keyframes navigate-out {
+    to {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+}
+
+@keyframes navigate-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.5rem);
+    }
+}
+
+::view-transition-group(livewire-navigate) {
+    animation: none;
+}
+
+::view-transition-old(livewire-navigate) {
+    animation: navigate-out 150ms ease-in both;
+}
+
+::view-transition-new(livewire-navigate) {
+    animation: navigate-in 200ms ease-out both;
 }

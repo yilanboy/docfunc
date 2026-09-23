@@ -45,8 +45,7 @@ new class extends Component
 
     public function render()
     {
-        Head::title($this->post->title)
-            ->description($this->post->excerpt);
+        Head::title($this->post->title)->description($this->post->excerpt);
 
         if (! empty($this->post->cover_image_url)) {
             Head::ogImage($this->post->cover_image_url);
@@ -81,12 +80,10 @@ new class extends Component
 
 <script>
     Alpine.data('postsShowPage', () => ({
-        isReady: false,
         async init() {
             setupPostOutline(this.$refs.postOutline, this.$refs.postBody);
             await highlightAllInElement(this.$refs.postBody);
             await renderMermaidDiagrams(this.$refs.postBody);
-            this.isReady = true;
             codeBlockHelper(this.$refs.postBody);
             imageBlockHelper(this.$refs.postBody);
             processYoutubeOembeds();
@@ -106,12 +103,7 @@ new class extends Component
         <x-posts.scroll-to-top-button x-ref="scrollToTopBtn" />
 
         <div class="container mx-auto">
-            {{-- loading spinner --}}
-            <div class="flex items-center justify-center py-20" x-show="! isReady" x-cloak>
-                <x-icons.animate-spin class="dark:text-lividus-500 size-8 text-emerald-500" />
-            </div>
-
-            <div class="animate-fade-in flex items-stretch justify-center lg:space-x-4" x-show="isReady" x-cloak>
+            <div class="flex items-stretch justify-center lg:space-x-4">
                 <div class="hidden xl:block xl:w-1/5">
                     {{-- content menu --}}
                     <div class="sticky top-1/2 flex -translate-y-1/2 flex-col" x-ref="postOutline"></div>
