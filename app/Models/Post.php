@@ -153,6 +153,14 @@ class Post extends Model implements Feedable
         return (string) config('scout.prefix');
     }
 
+    /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return ! $this->is_private;
+    }
+
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create()
@@ -187,4 +195,3 @@ class Post extends Model implements Feedable
             && $this->created_at->toDateString() !== $this->updated_at->toDateString();
     }
 }
-
