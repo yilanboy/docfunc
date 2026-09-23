@@ -138,22 +138,27 @@ new class extends Component
                                     <span class="ml-2">{{ $post->category->name }}</span>
                                 </div>
 
-                                <div class="hidden md:block">&bull;</div>
+                                <div>&bull;</div>
 
                                 {{-- post created time --}}
-                                <div class="hidden items-center md:flex">
+                                <div class="flex items-center">
                                     <x-icons.calendar-week-fill class="w-4" />
                                     <time
                                         class="ml-2"
                                         datetime="{{ $post->created_at->toDateString() }}"
                                     >{{ $post->created_at->toDateString() }}</time>
-
-                                    @if ($post->created_at->toDateString() !== $post->updated_at->toDateString())
-                                        <time datetime="{{ $post->updated_at->toDateString() }}">
-                                            {{ '(最後更新於 ' . $post->updated_at->toDateString() . ')' }}
-                                        </time>
-                                    @endif
                                 </div>
+
+                                @if ($post->isRevised())
+                                    <div class="hidden md:block">&bull;</div>
+
+                                    {{-- post updated time --}}
+                                    <div class="hidden items-center md:flex" title="最後更新時間">
+                                        <x-icons.wrench class="w-4" />
+                                        <time class="ml-2" datetime="{{ $post->updated_at->toDateString() }}"
+                                            >更新於 {{ $post->updated_at->toDateString() }}</time>
+                                    </div>
+                                @endif
 
                                 <div class="hidden md:block">&bull;</div>
 

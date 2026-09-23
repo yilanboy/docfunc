@@ -280,4 +280,26 @@ describe('home page', function () {
             ->assertSee($latestUpdatedPost->title)
             ->assertDontSee($latestPost->title);
     });
+
+    it('shows revised date when post is substantially updated', function () {
+        $post = Post::factory()->create([
+            'created_at' => now()->subDays(5),
+            'updated_at' => now()->subDays(2),
+        ]);
+
+        get($post->link_with_slug)
+            ->assertOk()
+            ->assertSee('更新於 '.$post->updated_at->toDateString());
+    });
+
+    it('does not show revised date when post is not substantially updated', function () {
+        $post = Post::factory()->create([
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        get($post->link_with_slug)
+            ->assertOk()
+            ->assertDontSee('更新於');
+    });
 });
