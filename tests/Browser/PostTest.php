@@ -11,7 +11,6 @@ test('user can see post outline', function () {
     <p>This is post-body 2</p>
     HTML;
 
-
     $post = Post::factory()->create([
         'body' => $body,
     ]);
@@ -206,8 +205,45 @@ test('it renders mermaid svg diagram, provides zoom button, and opens zoom modal
 
     $page->click('.mermaid-diagram-container button[aria-label="Zoom diagram"]');
 
-    $page->assertPresent('#zoom-in-mermaid-modal')
+    $page->assertPresent('#zoom-in-mermaid-modal[open]')
         ->assertPresent('#zoom-in-mermaid svg');
+
+    $isLocked = $page->script("document.documentElement.style.overflow === 'hidden'");
+    expect($isLocked)->toBeTrue();
+
+    // Click close button
+    $page->click('#zoom-in-mermaid-modal .close-modal-button');
+
+    $page->wait(0.5);
+
+    $page->assertNotPresent('#zoom-in-mermaid-modal[open]');
+
+    $isUnlocked = $page->script("document.documentElement.style.overflow === ''");
+    expect($isUnlocked)->toBeTrue();
+
+    // Re-open and close with Escape key
+    $page->click('.mermaid-diagram-container button[aria-label="Zoom diagram"]');
+    $page->assertPresent('#zoom-in-mermaid-modal[open]');
+
+    $page->keys('#zoom-in-mermaid-modal', 'Escape');
+
+    $page->wait(0.5);
+
+    $page->assertNotPresent('#zoom-in-mermaid-modal[open]');
+    $isUnlockedAgain = $page->script("document.documentElement.style.overflow === ''");
+    expect($isUnlockedAgain)->toBeTrue();
+
+    // Re-open and close by clicking backdrop
+    $page->click('.mermaid-diagram-container button[aria-label="Zoom diagram"]');
+    $page->assertPresent('#zoom-in-mermaid-modal[open]');
+
+    $page->script("document.querySelector('#zoom-in-mermaid-modal').click()");
+
+    $page->wait(0.5);
+
+    $page->assertNotPresent('#zoom-in-mermaid-modal[open]');
+    $isUnlockedThird = $page->script("document.documentElement.style.overflow === ''");
+    expect($isUnlockedThird)->toBeTrue();
 });
 
 test('it re-renders mermaid diagram when theme changes', function () {
@@ -247,4 +283,64 @@ test('it renders friendly error message when mermaid syntax is invalid', functio
         ->assertSee('Error rendering diagram:');
 });
 
+test('it opens and closes code block zoom modal', function () {
+    $body = <<<'HTML'
+    <pre><code class="language-php">echo 'Hello World!';</code></pre>
+    HTML;
 
+    $post = Post::factory()->create(['body' => $body]);
+
+    $page = $this->visit($post->link_with_slug);
+
+    $page->assertNoJavascriptErrors()
+        ->assertSee($post->title)
+        ->assertPresent('button[aria-label="放大檢視程式碼"]');
+
+    $page->click('button[aria-label="放大檢視程式碼"]');
+
+    $page->assertPresent('#zoom-in-pre-modal[open]')
+        ->assertPresent('#zoom-in-pre pre');
+
+    $isLocked = $page->script("document.documentElement.style.overflow === 'hidden'");
+    expect($isLocked)->toBeTrue();
+
+    $page->click('#zoom-in-pre-modal .close-modal-button');
+
+    $page->wait(0.5);
+
+    $page->assertNotPresent('#zoom-in-pre-modal[open]');
+
+    $isUnlocked = $page->script("document.documentElement.style.overflow === ''");
+    expect($isUnlocked)->toBeTrue();
+});
+
+test('it opens and closes image zoom modal', function () {
+    $body = <<<'HTML'
+    <figure><img src="/images/icon/icon.png" alt="Test Image"></figure>
+    HTML;
+
+    $post = Post::factory()->create(['body' => $body]);
+
+    $page = $this->visit($post->link_with_slug);
+
+    $page->assertNoJavascriptErrors()
+        ->assertSee($post->title)
+        ->assertPresent('button[aria-label="放大檢視圖片"]');
+
+    $page->click('button[aria-label="放大檢視圖片"]');
+
+    $page->assertPresent('#zoom-in-image-modal[open]')
+        ->assertPresent('#zoom-in-image');
+
+    $isLocked = $page->script("document.documentElement.style.overflow === 'hidden'");
+    expect($isLocked)->toBeTrue();
+
+    $page->click('#zoom-in-image-modal .close-modal-button');
+
+    $page->wait(0.5);
+
+    $page->assertNotPresent('#zoom-in-image-modal[open]');
+
+    $isUnlocked = $page->script("document.documentElement.style.overflow === ''");
+    expect($isUnlocked)->toBeTrue();
+});

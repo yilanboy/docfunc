@@ -1,6 +1,6 @@
-import type Mermaid from 'mermaid';
-import { Modal } from './modal.js';
-import { button, icon } from './config.js';
+import type Mermaid from "mermaid";
+import { Modal } from "./modal.js";
+import { button, icon } from "./config.js";
 
 declare global {
     interface Window {
@@ -11,14 +11,14 @@ declare global {
 let mermaidInstance: typeof Mermaid | null = null;
 let diagramCounter = 0;
 
-const ZOOM_IN_MERMAID_MODAL_ID = 'zoom-in-mermaid-modal';
-const ZOOM_IN_MERMAID_ID = 'zoom-in-mermaid';
+const ZOOM_IN_MERMAID_MODAL_ID = "zoom-in-mermaid-modal";
+const ZOOM_IN_MERMAID_ID = "zoom-in-mermaid";
 
 let zoomInMermaidModal: Modal | null = null;
 
 async function getMermaid(): Promise<typeof Mermaid> {
     if (!mermaidInstance) {
-        const module = await import('mermaid');
+        const module = await import("mermaid");
         mermaidInstance = module.default;
     }
 
@@ -27,19 +27,19 @@ async function getMermaid(): Promise<typeof Mermaid> {
 
 function initializeMermaid(mermaid: typeof Mermaid): void {
     const isDarkMode =
-        document.documentElement.getAttribute('data-theme') === 'dark' ||
-        document.documentElement.classList.contains('dark');
+        document.documentElement.getAttribute("data-theme") === "dark" ||
+        document.documentElement.classList.contains("dark");
 
     mermaid.initialize({
         startOnLoad: false,
-        securityLevel: 'strict',
-        theme: isDarkMode ? 'dark' : 'default',
+        securityLevel: "strict",
+        theme: isDarkMode ? "dark" : "default",
     });
 }
 
 export async function renderMermaidSvg(
     mermaid: typeof Mermaid,
-    code: string
+    code: string,
 ): Promise<string> {
     initializeMermaid(mermaid);
     const id = `mermaid-diagram-${Date.now()}-${++diagramCounter}`;
@@ -50,23 +50,23 @@ export async function renderMermaidSvg(
 
 function getOrCreateZoomModal(): Modal {
     if (!zoomInMermaidModal) {
-        const zoomInContainer = document.createElement('div');
+        const zoomInContainer = document.createElement("div");
         zoomInContainer.id = ZOOM_IN_MERMAID_ID;
         zoomInContainer.className =
-            'mermaid-modal-content flex max-h-[85vh] w-[90vw] max-w-5xl items-center justify-center overflow-auto rounded-xl border border-zinc-200 bg-white p-6 shadow-2xl transition-colors dark:border-zinc-700 dark:bg-zinc-800';
+            "mermaid-modal-content flex max-h-[85vh] w-[90vw] max-w-5xl items-center justify-center overflow-auto rounded-xl border border-zinc-200 bg-white p-6 shadow-2xl transition-colors dark:border-zinc-700 dark:bg-zinc-800";
 
         zoomInMermaidModal = new Modal(
             ZOOM_IN_MERMAID_MODAL_ID,
-            zoomInContainer.outerHTML
+            zoomInContainer.outerHTML,
         );
 
         document.addEventListener(
-            'livewire:navigating',
+            "livewire:navigating",
             () => {
                 zoomInMermaidModal?.remove();
                 zoomInMermaidModal = null;
             },
-            { once: true }
+            { once: true },
         );
     }
 
@@ -75,7 +75,7 @@ function getOrCreateZoomModal(): Modal {
 
 export const updateMermaidThemes = async (): Promise<void> => {
     const diagrams = document.querySelectorAll<HTMLElement>(
-        '.mermaid-diagram-container'
+        ".mermaid-diagram-container",
     );
 
     if (diagrams.length === 0) {
@@ -90,25 +90,28 @@ export const updateMermaidThemes = async (): Promise<void> => {
         if (code) {
             try {
                 const svg = await renderMermaidSvg(mermaid, code);
-                const svgWrapper = diagram.querySelector('.mermaid-svg-wrapper');
+                const svgWrapper = diagram.querySelector(
+                    ".mermaid-svg-wrapper",
+                );
                 if (svgWrapper) {
                     svgWrapper.innerHTML = svg;
                 } else {
                     diagram.innerHTML = svg;
                 }
 
-                const zoomContainer = document.getElementById(ZOOM_IN_MERMAID_ID);
+                const zoomContainer =
+                    document.getElementById(ZOOM_IN_MERMAID_ID);
                 if (
                     zoomContainer &&
                     zoomInMermaidModal &&
-                    zoomInMermaidModal.element.style.display !== 'none'
+                    zoomInMermaidModal.isOpen
                 ) {
                     zoomContainer.innerHTML = svg;
                 }
             } catch (error) {
                 console.error(
-                    'Mermaid re-rendering failed during theme switch:',
-                    error
+                    "Mermaid re-rendering failed during theme switch:",
+                    error,
                 );
             }
         }
@@ -118,15 +121,15 @@ export const updateMermaidThemes = async (): Promise<void> => {
 let isObserverInitialized = false;
 
 export function setupThemeObserver(): void {
-    if (typeof window === 'undefined' || isObserverInitialized) {
+    if (typeof window === "undefined" || isObserverInitialized) {
         return;
     }
 
     const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
             if (
-                mutation.attributeName === 'data-theme' ||
-                mutation.attributeName === 'class'
+                mutation.attributeName === "data-theme" ||
+                mutation.attributeName === "class"
             ) {
                 updateMermaidThemes();
                 break;
@@ -136,16 +139,16 @@ export function setupThemeObserver(): void {
 
     observer.observe(document.documentElement, {
         attributes: true,
-        attributeFilter: ['data-theme', 'class'],
+        attributeFilter: ["data-theme", "class"],
     });
     isObserverInitialized = true;
 }
 
 export async function renderMermaidDiagrams(
-    element: HTMLElement
+    element: HTMLElement,
 ): Promise<void> {
     const mermaidBlocks = element.querySelectorAll<HTMLElement>(
-        'pre code.language-mermaid'
+        "pre code.language-mermaid",
     );
 
     if (mermaidBlocks.length === 0) {
@@ -165,44 +168,43 @@ export async function renderMermaidDiagrams(
         try {
             const svg = await renderMermaidSvg(mermaid, code);
 
-            const diagramContainer = document.createElement('div');
+            const diagramContainer = document.createElement("div");
             diagramContainer.classList.add(
-                'mermaid-diagram-container',
-                'group',
-                'relative',
-                'my-6',
-                'flex',
-                'justify-center',
-                'rounded-xl',
-                'border',
-                'border-zinc-200',
-                'bg-white/80',
-                'p-4',
-                'shadow-2xs',
-                'dark:border-zinc-700',
-                'dark:bg-zinc-800/80'
+                "mermaid-diagram-container",
+                "group",
+                "relative",
+                "my-6",
+                "flex",
+                "justify-center",
+                "rounded-xl",
+                "border",
+                "border-zinc-200",
+                "bg-white/80",
+                "p-4",
+                "shadow-2xs",
+                "dark:border-zinc-700",
+                "dark:bg-zinc-800/80",
             );
             diagramContainer.dataset.mermaidCode = code;
 
-            const toolbar = document.createElement('div');
+            const toolbar = document.createElement("div");
             toolbar.className =
-                'absolute top-2 right-2 z-10 flex opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100';
+                "absolute top-2 right-2 z-10 flex opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100";
 
-            const zoomBtn = document.createElement('button');
-            zoomBtn.type = 'button';
+            const zoomBtn = document.createElement("button");
+            zoomBtn.type = "button";
             zoomBtn.classList.add(...button.BASE_CLASS_NAME);
-            zoomBtn.title = 'Zoom diagram';
-            zoomBtn.setAttribute('aria-label', 'Zoom diagram');
+            zoomBtn.title = "Zoom diagram";
+            zoomBtn.setAttribute("aria-label", "Zoom diagram");
             zoomBtn.innerHTML = icon.ARROWS_ANGLE_EXPAND;
 
-            zoomBtn.addEventListener('click', () => {
+            zoomBtn.addEventListener("click", () => {
                 const modal = getOrCreateZoomModal();
                 const currentSvg =
-                    diagramContainer.querySelector('.mermaid-svg-wrapper')
+                    diagramContainer.querySelector(".mermaid-svg-wrapper")
                         ?.innerHTML ?? svg;
-                const zoomContainer = document.getElementById(
-                    ZOOM_IN_MERMAID_ID
-                );
+                const zoomContainer =
+                    document.getElementById(ZOOM_IN_MERMAID_ID);
                 if (zoomContainer) {
                     zoomContainer.innerHTML = currentSvg;
                 }
@@ -211,9 +213,9 @@ export async function renderMermaidDiagrams(
 
             toolbar.appendChild(zoomBtn);
 
-            const svgWrapper = document.createElement('div');
+            const svgWrapper = document.createElement("div");
             svgWrapper.className =
-                'mermaid-svg-wrapper flex w-full justify-center overflow-x-auto';
+                "mermaid-svg-wrapper flex w-full justify-center overflow-x-auto";
             svgWrapper.innerHTML = svg;
 
             diagramContainer.appendChild(toolbar);
@@ -221,18 +223,18 @@ export async function renderMermaidDiagrams(
 
             preElement.replaceWith(diagramContainer);
         } catch (error) {
-            console.error('Mermaid rendering failed:', error);
-            const errorContainer = document.createElement('div');
+            console.error("Mermaid rendering failed:", error);
+            const errorContainer = document.createElement("div");
             errorContainer.classList.add(
-                'mermaid-error',
-                'text-red-500',
-                'font-mono',
-                'text-sm',
-                'p-4',
-                'my-6',
-                'rounded-xl',
-                'bg-red-100',
-                'dark:bg-red-900/30'
+                "mermaid-error",
+                "text-red-500",
+                "font-mono",
+                "text-sm",
+                "p-4",
+                "my-6",
+                "rounded-xl",
+                "bg-red-100",
+                "dark:bg-red-900/30",
             );
             errorContainer.innerText = `Error rendering diagram:\n${(error as Error).message}`;
             preElement.replaceWith(errorContainer);

@@ -1,98 +1,95 @@
-const BACKGROUND_BACKDROP_CLASS_NAME: string = 'modal-background-backdrop';
-const MODAL_PANEL_CLASS_NAME: string = 'modal-panel';
-const CLOSE_MODAL_BUTTON_CLASS_NAME: string = 'close-modal-button';
+const MODAL_PANEL_CLASS_NAME: string = "modal-panel";
+const CLOSE_MODAL_BUTTON_CLASS_NAME: string = "close-modal-button";
 const X_CIRCLE_FILL_ICON_SVG: string = `
 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="size-10" viewBox="0 0 16 16">
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
 </svg>
 `;
-const SHOW_BACKGROUND_BACKDROP_CLASS_NAME: string[] = [
-    'ease-out',
-    'duration-300',
-    'opacity-100'
+const SHOW_BACKDROP_CLASS_NAME: string[] = [
+    "backdrop:ease-out",
+    "backdrop:duration-300",
+    "backdrop:opacity-100",
 ];
-const HIDE_BACKGROUND_BACKDROP_CLASS_NAME: string[] = [
-    'ease-in',
-    'duration-200',
-    'opacity-0'
+const HIDE_BACKDROP_CLASS_NAME: string[] = [
+    "backdrop:ease-in",
+    "backdrop:duration-200",
+    "backdrop:opacity-0",
 ];
 const SHOW_MODAL_PANEL_CLASS_NAME: string[] = [
-    'ease-out',
-    'duration-300',
-    'opacity-100',
-    'translate-y-0',
-    'sm:scale-100'
+    "ease-out",
+    "duration-300",
+    "opacity-100",
+    "translate-y-0",
+    "sm:scale-100",
 ];
 const HIDE_MODAL_PANEL_CLASS_NAME: string[] = [
-    'ease-in',
-    'duration-200',
-    'opacity-0',
-    'translate-y-4',
-    'sm:translate-y-0',
-    'sm:scale-95'
+    "ease-in",
+    "duration-200",
+    "opacity-0",
+    "translate-y-4",
+    "sm:translate-y-0",
+    "sm:scale-95",
 ];
 
 export class Modal {
-    public element: HTMLDivElement;
-    private backgroundBackdrop: HTMLDivElement;
+    public dialogElement: HTMLDialogElement;
     private modalPanel: HTMLDivElement;
     private closeButton: HTMLButtonElement;
     private abortController: AbortController;
-    private readonly scrollbarWidth: number;
-    private isOpen: boolean = false;
+    private isClosing: boolean = false;
 
-    public constructor(
-        id: string,
-        innerHtml: string,
-        customClassName: string[] = []
-    ) {
+    public get isOpen(): boolean {
+        return this.dialogElement.open && !this.isClosing;
+    }
+
+    public constructor(id: string, innerHtml: string, customClassName: string[] = []) {
         const element = document.getElementById(id);
-        if (element) {
-            this.element = element as HTMLDivElement;
+        if (element instanceof HTMLDialogElement) {
+            this.dialogElement = element;
         } else {
-            this.element = document.createElement('div');
-            this.element.id = id;
-            this.element.style.display = 'none';
-            this.element.innerHTML = this.innerHtmlTemplate(
-                innerHtml,
-                customClassName
-            );
+            this.dialogElement = document.createElement("dialog");
+            this.dialogElement.id = id;
+            this.dialogElement.className = [
+                "fixed",
+                "inset-0",
+                "m-0",
+                "h-screen",
+                "w-screen",
+                "max-h-none",
+                "max-w-none",
+                "border-0",
+                "bg-transparent",
+                "p-0",
+                "outline-none",
+                "backdrop:bg-zinc-500/75",
+                "backdrop:backdrop-blur-md",
+                "backdrop:transition-opacity",
+                ...HIDE_BACKDROP_CLASS_NAME,
+                ...customClassName,
+            ].join(" ");
+            this.dialogElement.innerHTML = this.innerHtmlTemplate(innerHtml);
 
-            document.body.appendChild(this.element);
+            document.body.appendChild(this.dialogElement);
         }
 
-        this.backgroundBackdrop = this.element.getElementsByClassName(
-            BACKGROUND_BACKDROP_CLASS_NAME
+        this.modalPanel = this.dialogElement.getElementsByClassName(
+            MODAL_PANEL_CLASS_NAME,
         )[0] as HTMLDivElement;
 
-        this.modalPanel = this.element.getElementsByClassName(
-            MODAL_PANEL_CLASS_NAME
-        )[0] as HTMLDivElement;
-
-        this.closeButton = this.element.getElementsByClassName(
-            CLOSE_MODAL_BUTTON_CLASS_NAME
+        this.closeButton = this.dialogElement.getElementsByClassName(
+            CLOSE_MODAL_BUTTON_CLASS_NAME,
         )[0] as HTMLButtonElement;
-
-        this.scrollbarWidth = window.innerWidth - document.body.clientWidth;
 
         this.abortController = new AbortController();
     }
 
-    private innerHtmlTemplate(
-        innerHtml: string,
-        customClassName: string[]
-    ): string {
-        return `<div class="relative z-30 ${customClassName.join(' ')}" role="dialog" aria-modal="true">
-            <!-- Background backdrop, show/hide based on modal state -->
-            <div
-                class="${BACKGROUND_BACKDROP_CLASS_NAME} fixed inset-0 bg-zinc-500/75 backdrop-blur-md transition-opacity ${HIDE_BACKGROUND_BACKDROP_CLASS_NAME.join(' ')}"
-            ></div>
-
-            <div class="overflow-y-auto fixed inset-0 z-10 w-screen">
-                <div class="flex justify-center items-center p-4 min-h-full text-center">
+    private innerHtmlTemplate(innerHtml: string): string {
+        return `
+            <div class="fixed inset-0 z-10 overflow-y-auto w-screen">
+                <div class="flex min-h-full items-center justify-center p-4 text-center">
                     <!-- Modal panel, show/hide based on modal state. -->
                     <div
-                        class="${MODAL_PANEL_CLASS_NAME} relative transform overflow-hidden rounded-xl text-left transition-all sm:w-fit sm:max-w-6xl ${HIDE_MODAL_PANEL_CLASS_NAME.join(' ')}"
+                        class="${MODAL_PANEL_CLASS_NAME} relative transform overflow-hidden rounded-xl text-left transition-all sm:w-fit sm:max-w-6xl ${HIDE_MODAL_PANEL_CLASS_NAME.join(" ")}"
                     >
                         ${innerHtml}
                     </div>
@@ -102,113 +99,119 @@ export class Modal {
             <div class="fixed top-10 right-10 z-10">
                 <button
                     type="button"
-                    class="${CLOSE_MODAL_BUTTON_CLASS_NAME} text-zinc-200 transition duration-300 hover:text-zinc-50 cursor-pointer"
+                    class="${CLOSE_MODAL_BUTTON_CLASS_NAME} text-zinc-200 transition duration-300 hover:text-zinc-50 cursor-pointer opacity-0"
                     aria-label="關閉"
                     title="關閉"
                 >
                    ${X_CIRCLE_FILL_ICON_SVG}
                 </button>
             </div>
-        </div>`;
+        `;
     }
 
-    private triggerReflow() {
-        this.element.offsetHeight;
+    private freezeWindowScrollbar() {
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.overflow = "hidden";
+        document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    private unfreezeWindowScrollbar() {
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.paddingRight = "";
     }
 
     public open() {
         if (this.isOpen) {
             return;
         }
-        this.isOpen = true;
 
-        this.element.style.display = 'block';
-        document.documentElement.style.overflow = 'hidden';
-        document.documentElement.style.paddingRight = `${this.scrollbarWidth}px`;
+        this.isClosing = false;
 
-        this.triggerReflow();
+        this.freezeWindowScrollbar();
 
-        this.backgroundBackdrop.classList.remove(
-            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME
-        );
-        this.backgroundBackdrop.classList.add(
-            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME
-        );
+        this.dialogElement.showModal();
+
+        this.dialogElement.classList.remove(...HIDE_BACKDROP_CLASS_NAME);
+        this.dialogElement.classList.add(...SHOW_BACKDROP_CLASS_NAME);
         this.modalPanel.classList.remove(...HIDE_MODAL_PANEL_CLASS_NAME);
         this.modalPanel.classList.add(...SHOW_MODAL_PANEL_CLASS_NAME);
-        this.closeButton.classList.remove('opacity-0');
-        this.closeButton.classList.add('opacity-100');
+        this.closeButton.classList.remove("opacity-0");
+        this.closeButton.classList.add("opacity-100");
 
         this.setupCloseHandlers();
     }
 
     private setupCloseHandlers() {
-        // Close by clicking the backdrop
-        this.element.addEventListener('click', () => this.close(), {
-            signal: this.abortController.signal
+        // Native cancel event (e.g. Escape key)
+        this.dialogElement.addEventListener(
+            "cancel",
+            (event: Event) => {
+                event.preventDefault();
+                this.close();
+            },
+            { signal: this.abortController.signal },
+        );
+
+        // Close by clicking the backdrop area or close button
+        this.dialogElement.addEventListener("click", () => this.close(), {
+            signal: this.abortController.signal,
         });
 
         // Prevent closing when clicking modal content
         this.modalPanel.addEventListener(
-            'click',
+            "click",
             (event: Event) => {
                 event.stopPropagation();
             },
-            { signal: this.abortController.signal }
-        );
-
-        // Close by escape key
-        document.addEventListener(
-            'keydown',
-            (event: KeyboardEvent) => {
-                if (event.key === 'Escape') {
-                    this.close();
-                }
-            },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
     }
 
-    private close() {
-        if (!this.isOpen) {
+    public close() {
+        if (!this.isOpen || this.isClosing) {
             return;
         }
-        this.isOpen = false;
+        this.isClosing = true;
 
         // Abort all event listeners
         this.abortController.abort();
         // Create a new controller for next time
         this.abortController = new AbortController();
 
-        this.backgroundBackdrop.addEventListener(
-            'transitionend',
-            (event: TransitionEvent) => {
-                if (event.propertyName === 'opacity') {
-                    this.element.style.display = 'none';
-                    document.documentElement.style.overflow = '';
-                    document.documentElement.style.paddingRight = '';
-                }
-            },
-            { once: true }
-        );
+        const finishClose = () => {
+            if (this.dialogElement.open) {
+                this.dialogElement.close();
+            }
+            this.isClosing = false;
+            this.unfreezeWindowScrollbar();
+        };
 
-        this.backgroundBackdrop.classList.remove(
-            ...SHOW_BACKGROUND_BACKDROP_CLASS_NAME
-        );
-        this.backgroundBackdrop.classList.add(
-            ...HIDE_BACKGROUND_BACKDROP_CLASS_NAME
-        );
+        this.dialogElement.classList.remove(...SHOW_BACKDROP_CLASS_NAME);
+        this.dialogElement.classList.add(...HIDE_BACKDROP_CLASS_NAME);
         this.modalPanel.classList.remove(...SHOW_MODAL_PANEL_CLASS_NAME);
         this.modalPanel.classList.add(...HIDE_MODAL_PANEL_CLASS_NAME);
-        this.closeButton.classList.remove('opacity-100');
-        this.closeButton.classList.add('opacity-0');
+        this.closeButton.classList.remove("opacity-100");
+        this.closeButton.classList.add("opacity-0");
+
+        const animations = this.modalPanel.getAnimations();
+        if (animations.length === 0) {
+            finishClose();
+        } else {
+            Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+                if (this.isClosing) {
+                    finishClose();
+                }
+            });
+        }
     }
 
     public remove() {
-        this.isOpen = false;
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.paddingRight = '';
+        this.isClosing = false;
+        if (this.dialogElement.open) {
+            this.dialogElement.close();
+        }
+        this.unfreezeWindowScrollbar();
         this.abortController.abort();
-        this.element.remove();
+        this.dialogElement.remove();
     }
 }
