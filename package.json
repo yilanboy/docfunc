@@ -7,13 +7,13 @@
         "dev": "vp dev"
     },
     "devDependencies": {
-        "@shikijs/transformers": "^4.5.0",
+        "@shikijs/transformers": "^4.6.0",
         "@simplewebauthn/browser": "^14.0.0",
         "@tailwindcss/typography": "^0.5.20",
-        "@tailwindcss/vite": "^4.3.3",
+        "@tailwindcss/vite": "^4.3.4",
         "@types/yaireo__tagify": "^4.27.0",
         "@yaireo/tagify": "^4.39.0",
-        "ckeditor5": "^49.0.0",
+        "ckeditor5": "^49.0.1",
         "concurrently": "^10.0.6",
         "laravel-vite-plugin": "^3.2.0",
         "mermaid": "^12.2.0",
@@ -21,8 +21,8 @@
         "prettier": "^3.9.10",
         "prettier-plugin-blade": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.8.1",
-        "shiki": "^4.5.0",
-        "tailwindcss": "^4.3.3",
+        "shiki": "^4.6.0",
+        "tailwindcss": "^4.3.4",
         "typescript": "^7.0.2",
         "vite": "catalog:",
         "vite-plus": "catalog:"
@@ -30,7 +30,7 @@
     "optionalDependencies": {
         "@laravel/multiplex": "^0.4.5",
         "@rollup/rollup-linux-x64-gnu": "4.65.1",
-        "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
+        "@tailwindcss/oxide-linux-x64-gnu": "^4.3.4",
         "lightningcss-linux-x64-gnu": "^1.33.0"
     },
     "engines": {
