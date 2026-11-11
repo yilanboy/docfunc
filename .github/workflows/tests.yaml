@@ -104,11 +104,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      - name: Install Playwright browsers and dependencies (Cache Miss)
+      - name: Install Playwright browsers (Cache Miss)
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Test with pest
         run: vendor/bin/pest --parallel --coverage-clover ./coverage.xml
