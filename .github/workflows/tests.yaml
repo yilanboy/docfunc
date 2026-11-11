@@ -31,10 +31,15 @@ jobs:
       ALGOLIA_SECRET: ${{ secrets.ALGOLIA_SECRET }}
       CAPTCHA_SITE_KEY: 1x00000000000000000000BB
       CAPTCHA_SECRET_KEY: 1x0000000000000000000000000000000AA
+      DEBIAN_FRONTEND: noninteractive
+      NEEDRESTART_MODE: l
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
+      - name: Disable needrestart
+        run: sudo apt-get purge -y needrestart || true
 
       # Docs: https://github.com/shivammathur/setup-php
       - name: Setup php
