@@ -110,12 +110,6 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: npx playwright install --with-deps chromium
 
-      - name: Install Playwright system dependencies (Cache Hit)
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: npx playwright install-deps chromium
-
       - name: Test with pest
         run: vendor/bin/pest --parallel --coverage-clover ./coverage.xml
 
