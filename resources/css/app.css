@@ -143,8 +143,8 @@
             pointer-events: none;
             border-radius: inherit;
             mask-image: url("../svg/quote.svg");
-            mask-size: 30%;
-            mask-position: bottom -1rem right -1rem;
+            mask-size: auto clamp(3rem, 75%, 7rem);
+            mask-position: right 0.5rem bottom 0;
             mask-repeat: no-repeat;
             background-color: var(--color-emerald-300);
             opacity: 0.3;
