@@ -19,7 +19,7 @@
         "guzzlehttp/guzzle": "^8.3",
         "intervention/image": "^4.0",
         "laravel/framework": "^13.0",
-        "laravel/head": "^0.2.2",
+        "laravel/head": "^0.3.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^11.9",
