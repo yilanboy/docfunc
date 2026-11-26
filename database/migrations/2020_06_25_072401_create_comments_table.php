@@ -14,16 +14,12 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->index()->nullable()->constrained()->nullOnDelete();
             $table->foreignId('post_id')->index()->constrained()->onDelete('cascade');
+            $table->foreignId('parent_id')->index()->nullable()->constrained('comments')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['post_id']);
-        });
-
-        Schema::drop('comments');
+        Schema::dropIfExists('comments');
     }
 };

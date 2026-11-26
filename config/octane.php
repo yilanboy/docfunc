@@ -1,5 +1,6 @@
 <?php
 
+use App\Listeners\DisconnectExpiredDsqlConnection;
 use Laravel\Octane\Contracts\OperationTerminated;
 use Laravel\Octane\Events\RequestHandled;
 use Laravel\Octane\Events\RequestReceived;
@@ -104,6 +105,7 @@ return [
         OperationTerminated::class => [
             FlushOnce::class,
             FlushTemporaryContainerInstances::class,
+            DisconnectExpiredDsqlConnection::class,
             // DisconnectFromDatabases::class,
             // CollectGarbage::class,
         ],

@@ -34,13 +34,13 @@ class DeleteLinkCommand extends Command
         $id = search(
             label: 'Search for the tag that should be edited',
             options: fn (string $value) => $value !== ''
-                ? Link::where('title', 'like', "%{$value}%")
-                    ->orWhere('link', 'like', "%{$value}%")
+                ? Link::whereLike('title', "%{$value}%")
+                    ->orWhereLike('url', "%{$value}%")
                     ->pluck('title', 'id')->all()
                 : []
         );
 
-        $link = Link::find($id, ['id', 'title', 'link']);
+        $link = Link::find($id, ['id', 'title', 'url']);
 
         $confirmed = confirm(
             label: 'Do you want to delete the link "'.$link->title.'"?',

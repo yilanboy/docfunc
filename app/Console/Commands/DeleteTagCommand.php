@@ -34,7 +34,7 @@ class DeleteTagCommand extends Command
         $id = search(
             label: 'Search for the tag that should be deleted',
             options: fn (string $value) => $value !== ''
-                ? Tag::where('name', 'like', "%{$value}%")->pluck('name', 'id')->all()
+                ? Tag::whereLike('name', "%{$value}%")->pluck('name', 'id')->all()
                 : []
         );
 

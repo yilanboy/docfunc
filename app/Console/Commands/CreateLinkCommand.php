@@ -69,7 +69,7 @@ class CreateLinkCommand extends Command
         if ($confirmed) {
             Link::create([
                 'title' => $title,
-                'link' => $link,
+                'url' => $link,
             ]);
 
             $this->info('Link created successfully');

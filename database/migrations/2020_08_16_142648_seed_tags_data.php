@@ -138,6 +138,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        DB::table('tags')->truncate();
+        DB::table('tags')->delete();
     }
 };

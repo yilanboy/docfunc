@@ -36,7 +36,7 @@ class EditTagCommand extends Command
         $id = search(
             label: 'Search for the tag that should be edited',
             options: fn (string $value) => $value !== ''
-                ? Tag::where('name', 'like', "%{$value}%")->pluck('name', 'id')->all()
+                ? Tag::whereLike('name', "%{$value}%")->pluck('name', 'id')->all()
                 : []
         );
 

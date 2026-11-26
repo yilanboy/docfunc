@@ -18,6 +18,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        DB::table('settings')->truncate();
+        DB::table('settings')->delete();
     }
 };

@@ -36,8 +36,8 @@ class EditLinkCommand extends Command
         $id = search(
             label: 'Search for the tag that should be edited',
             options: fn (string $value) => $value !== ''
-                ? Link::where('title', 'like', "%{$value}%")
-                    ->orWhere('url', 'like', "%{$value}%")
+                ? Link::whereLike('title', "%{$value}%")
+                    ->orWhereLike('url', "%{$value}%")
                     ->pluck('title', 'id')->all()
                 : []
         );
