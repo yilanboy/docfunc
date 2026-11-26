@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Listeners\DisconnectExpiredDsqlConnection;
 use App\Services\Serializer;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Events\ConnectionEstablished;
 use Illuminate\Foundation\DevCommands;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Head\Enums\OgType;
 use Laravel\Head\Enums\TwitterCard;
@@ -39,8 +36,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::shouldBeStrict();
         Date::use(CarbonImmutable::class);
-
-        Event::listen(ConnectionEstablished::class, [DisconnectExpiredDsqlConnection::class, 'recordConnection']);
 
         Head::defaults(function (HeadBuilder $head) {
             $head

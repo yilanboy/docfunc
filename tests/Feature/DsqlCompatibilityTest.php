@@ -1,13 +1,7 @@
 <?php
 
-use App\Listeners\DisconnectExpiredDsqlConnection;
 use Bref\LaravelDsql\DsqlConnection;
-use Illuminate\Database\Events\ConnectionEstablished;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
-use Laravel\Octane\Events\RequestTerminated;
 
 test('all migrations compile cleanly through DsqlSchemaGrammar without unsupported DDL', function () {
     $dsqlConnection = new DsqlConnection(
@@ -78,37 +72,4 @@ test('whereLike compiles to case-insensitive ilike on DsqlQueryGrammar', functio
         ->toSql();
 
     expect(strtolower($sql))->toContain('ilike');
-});
-
-test('DisconnectExpiredDsqlConnection only disconnects DSQL connections after max age', function () {
-    DisconnectExpiredDsqlConnection::reset();
-
-    $dsqlConnection = new DsqlConnection(
-        new PDO('sqlite::memory:'),
-        'postgres',
-        '',
-        ['driver' => 'dsql', 'name' => 'dsql_octane_test', 'database' => 'postgres', 'prefix' => ''],
-    );
-
-    config(['database.connections.dsql_octane_test' => ['driver' => 'dsql_octane_test']]);
-    DB::extend('dsql_octane_test', fn () => $dsqlConnection);
-    DB::connection('dsql_octane_test');
-
-    $listener = new DisconnectExpiredDsqlConnection;
-    $event = new RequestTerminated(app(), app(), Request::create('/'), new Response);
-
-    try {
-        Event::dispatch(new ConnectionEstablished($dsqlConnection));
-
-        $this->travel(49)->minutes();
-        $listener->handle($event);
-        expect($dsqlConnection->getRawPdo())->toBeInstanceOf(PDO::class);
-
-        $this->travel(1)->minutes();
-        $listener->handle($event);
-        expect($dsqlConnection->getRawPdo())->toBeNull();
-    } finally {
-        DisconnectExpiredDsqlConnection::reset();
-        DB::purge('dsql_octane_test');
-    }
 });
