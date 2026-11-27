@@ -4,40 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\GeneratePasskeyAuthenticationOptionsAction;
 use App\Http\Controllers\Controller;
-use App\Services\Serializer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Illuminate\Support\Uri;
 use Symfony\Component\Serializer\Exception\ExceptionInterface as SerializerExceptionInterface;
 use Webauthn\Exception\InvalidDataException;
-use Webauthn\PublicKeyCredentialRequestOptions;
 
 class GeneratePasskeyAuthenticationOptionsController extends Controller
 {
-    public function __invoke(Serializer $serializer): JsonResponse|string
+    public function __invoke(GeneratePasskeyAuthenticationOptionsAction $generateOptions): JsonResponse|string
     {
         try {
-            $options = new PublicKeyCredentialRequestOptions(
-                challenge: Str::random(),
-                rpId: Uri::of(config('app.url'))->host(),
-                allowCredentials: [],
-            );
-        } catch (InvalidDataException $e) {
-            Log::error('無法建立 Webauthn 認證選項', [
-                'exception' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'error' => '無法建立金鑰認證選項，請稍後再試。',
-            ], 400);
-        }
-
-        try {
-            $optionsJson = $serializer->toJson($options);
-        } catch (SerializerExceptionInterface $e) {
+            $optionsJson = $generateOptions->handle();
+        } catch (InvalidDataException|SerializerExceptionInterface $e) {
             Log::error('Webauthn 認證選項序列化失敗', [
                 'exception' => $e->getMessage(),
             ]);

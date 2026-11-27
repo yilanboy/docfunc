@@ -2,18 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Mail\CreatePasskeyMail;
+use App\Actions\CreatePasskeyAction;
 use App\Models\User;
-use App\Services\Serializer;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Webauthn\AuthenticatorAttestationResponse;
-use Webauthn\AuthenticatorAttestationResponseValidator;
-use Webauthn\CeremonyStep\CeremonyStepManagerFactory;
-use Webauthn\PublicKeyCredential;
-use Webauthn\PublicKeyCredentialCreationOptions;
 
 new class extends Component
 {
@@ -34,62 +27,38 @@ new class extends Component
         $this->authorize('update', $this->user);
     }
 
-    public function store(Serializer $serializer): void
+    public function store(CreatePasskeyAction $createPasskey): void
     {
+        $this->authorize('update', $this->user);
+
         $data = $this->validate([
             'name'    => ['required', 'string', 'min:3', 'max:255'],
             'passkey' => ['required', 'json'],
         ]);
 
-        try {
-            $publicKeyCredential = $serializer->fromJson($data['passkey'], PublicKeyCredential::class);
+        $options = Session::get('passkey-registration-options');
 
-            if (! $publicKeyCredential->response instanceof AuthenticatorAttestationResponse) {
-                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-                return;
-            }
-
-            $options = Session::get('passkey-registration-options');
-
-            if (! $options) {
-                $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
-
-                return;
-            }
-
-            $publicKeyCredentialCreationOptions = $serializer->fromJson($options,
-                PublicKeyCredentialCreationOptions::class);
-
-            $csmFactory = new CeremonyStepManagerFactory;
-            $creationCSM = $csmFactory->creationCeremony();
-
-            $publicKeyCredentialSource = AuthenticatorAttestationResponseValidator::create($creationCSM)
-                ->check(
-                    authenticatorAttestationResponse: $publicKeyCredential->response,
-                    publicKeyCredentialCreationOptions: $publicKeyCredentialCreationOptions,
-                    host: request()->getHost()
-                );
-        } catch (Throwable) {
+        if (! is_string($options) || $options === '') {
             $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
 
             return;
         }
 
-        $publicKeyCredentialSourceArray = $serializer->toArray($publicKeyCredentialSource);
+        $passkey = $createPasskey->handle(
+            $this->user,
+            $data['name'],
+            $data['passkey'],
+            $options,
+            request()->getHost(),
+        );
 
-        request()
-            ->user()
-            ->passkeys()
-            ->create([
-                'name'          => $data['name'],
-                'credential_id' => $publicKeyCredentialSourceArray['publicKeyCredentialId'],
-                'data'          => $publicKeyCredentialSourceArray,
-            ]);
+        if ($passkey === null) {
+            $this->dispatch('toast', status: 'danger', message: '密碼金鑰無效');
+
+            return;
+        }
 
         $this->reset('name', 'passkey');
-
-        Mail::to($this->user)->queue(new CreatePasskeyMail(passkeyName: $data['name']));
 
         $this->dispatch('toast', status: 'success', message: '成功建立密碼金鑰！');
         $this->dispatch('reset-passkey-name');

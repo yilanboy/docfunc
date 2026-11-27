@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use App\Actions\RegisterUserAction;
 use App\Rules\Captcha;
 use App\Services\SettingService;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
@@ -26,7 +25,7 @@ new class extends Component
     /**
      * Handle an incoming registration request.
      */
-    public function register(): void
+    public function register(RegisterUserAction $registerUser): void
     {
         abort_if(! SettingService::isRegisterAllowed(), 503);
 
@@ -37,11 +36,7 @@ new class extends Component
             'captchaToken' => ['required', new Captcha],
         ]);
 
-        $validated['name'] = trim($validated['name']);
-
-        $user = User::create(Arr::only($validated, ['name', 'email', 'password']));
-
-        event(new Registered($user));
+        $user = $registerUser->handle(Arr::only($validated, ['name', 'email', 'password']));
 
         Auth::login($user);
 
