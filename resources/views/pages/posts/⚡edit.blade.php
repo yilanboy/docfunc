@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Actions\UpdatePostAction;
 use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use App\Models\Post;
@@ -53,9 +54,13 @@ new class extends Component
         $this->redirect(route('posts.edit', ['id' => $this->post->id]), navigate: true);
     }
 
-    public function save(Post $post): void
+    public function save(Post $post, UpdatePostAction $updatePost): void
     {
-        $this->form->update($post);
+        $this->authorize('update', $post);
+
+        $this->form->validatePost();
+
+        $post = $updatePost->handle($post, $this->form->toUpdateData());
 
         $this->form->clearAutoSave($this->autoSaveKey);
 

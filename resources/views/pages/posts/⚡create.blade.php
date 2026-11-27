@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Actions\CreatePostAction;
 use App\Livewire\Forms\PostForm;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,9 +36,11 @@ new class extends Component
         $this->form->autoSave($this->autoSaveKey);
     }
 
-    public function save(): void
+    public function save(CreatePostAction $createPost): void
     {
-        $post = $this->form->store();
+        $this->form->validatePost();
+
+        $post = $createPost->handle($this->form->toCreateData());
 
         $this->form->clearAutoSave($this->autoSaveKey);
 

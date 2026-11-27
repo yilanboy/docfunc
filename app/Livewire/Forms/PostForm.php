@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Forms;
 
 use App\Models\Post;
-use App\Services\ContentService;
-use App\Services\FormatTransferService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
@@ -28,10 +26,6 @@ class PostForm extends Form
     public string $tags = '';
 
     public string $body = '';
-
-    public string $slug = '';
-
-    public string $excerpt = '';
 
     public function validatePost(): void
     {
@@ -106,21 +100,6 @@ class PostForm extends Form
         Cache::forget($key);
     }
 
-    public function setSlug(): void
-    {
-        $this->slug = ContentService::getSlug($this->title);
-    }
-
-    public function setBody(): void
-    {
-        $this->body = ContentService::getPurifiedBody($this->body);
-    }
-
-    public function setExcerpt(): void
-    {
-        $this->excerpt = ContentService::getExcerpt($this->body);
-    }
-
     public function setPost(Post $post): void
     {
         $this->category_id = $post->category_id;
@@ -131,41 +110,34 @@ class PostForm extends Form
         $this->body = $post->body;
     }
 
-    public function store(): Post
+    /**
+     * @return array{user_id: int, category_id: int, cover_image_url: ?string, is_private: bool, title: string, tags: string, body: string}
+     */
+    public function toCreateData(): array
     {
-        $this->validatePost();
-
-        $this->setSlug();
-        $this->setBody();
-        $this->setExcerpt();
-
-        $post = Post::create(
-            $this->except('tags')
-        );
-
-        // create new tags relation with post in a database
-        $post->tags()->attach(
-            app(FormatTransferService::class)->tagsJsonToTagIdsArray($this->tags)
-        );
-
-        return $post;
+        return [
+            'user_id'         => $this->user_id,
+            'category_id'     => $this->category_id,
+            'cover_image_url' => $this->cover_image_url,
+            'is_private'      => $this->is_private,
+            'title'           => $this->title,
+            'tags'            => $this->tags,
+            'body'            => $this->body,
+        ];
     }
 
-    public function update(Post $post): void
+    /**
+     * @return array{category_id: int, cover_image_url: ?string, is_private: bool, title: string, tags: string, body: string}
+     */
+    public function toUpdateData(): array
     {
-        $this->validatePost();
-
-        $this->setSlug();
-        $this->setBody();
-        $this->setExcerpt();
-
-        $post->update(
-            $this->except('tags')
-        );
-
-        // update tags relation with post in a database
-        $post->tags()->sync(
-            app(FormatTransferService::class)->tagsJsonToTagIdsArray($this->tags)
-        );
+        return [
+            'category_id'     => $this->category_id,
+            'cover_image_url' => $this->cover_image_url,
+            'is_private'      => $this->is_private,
+            'title'           => $this->title,
+            'tags'            => $this->tags,
+            'body'            => $this->body,
+        ];
     }
 }

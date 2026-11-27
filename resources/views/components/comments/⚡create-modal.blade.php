@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Actions\CreateCommentAction;
 use App\Livewire\Forms\CommentForm;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Notifications\NewComment;
 use App\Rules\Captcha;
 use App\Traits\MarkdownConverter;
 use Illuminate\Container\Attributes\CurrentUser;
@@ -33,7 +33,7 @@ new class extends Component
         $this->form->user_id = $user?->id;
     }
 
-    public function save(#[CurrentUser] ?User $user): void
+    public function save(CreateCommentAction $createComment, #[CurrentUser] ?User $user): void
     {
         $this->validate(
             rules: [
@@ -66,10 +66,11 @@ new class extends Component
             }
         }
 
-        $comment = $this->form->store();
+        $this->form->validate();
 
-        // Notify the article author of new comments.
-        $post->user->notifyNewComment(new NewComment($comment));
+        $comment = $createComment->handle($post, $this->form->toCreateData());
+
+        $this->form->reset('body', 'parent_id');
 
         $listName = $comment->parent_id === null ? 'root-list' : 'comment-'.$comment->parent_id.'-children-list';
 

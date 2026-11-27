@@ -14,7 +14,7 @@ class CommentForm extends Form
     public int $post_id;
 
     #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
-    public ?int $user_id;
+    public ?int $user_id = null;
 
     #[Validate(rule: ['nullable', 'numeric'], onUpdate: false)]
     public ?int $parent_id = null;
@@ -30,15 +30,16 @@ class CommentForm extends Form
     )]
     public string $body = '';
 
-    public function store(): Comment
+    /**
+     * @return array{user_id: ?int, parent_id: ?int, body: string}
+     */
+    public function toCreateData(): array
     {
-        $this->validate();
-
-        $comment = Comment::create($this->all());
-
-        $this->reset('body', 'parent_id');
-
-        return $comment;
+        return [
+            'user_id'   => $this->user_id,
+            'parent_id' => $this->parent_id,
+            'body'      => $this->body,
+        ];
     }
 
     public function update(Comment $comment): void

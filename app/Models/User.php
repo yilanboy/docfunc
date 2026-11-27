@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Notifications\NewComment;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -77,16 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAuthorOf(Post|Comment $model): bool
     {
         return $this->id === $model->user_id;
-    }
-
-    public function notifyNewComment(NewComment $instance): void
-    {
-        // if the author of the comment is the same as the author of the post, don't notify
-        if ($this->id === auth()->id()) {
-            return;
-        }
-
-        $this->notify($instance);
     }
 
     /**
