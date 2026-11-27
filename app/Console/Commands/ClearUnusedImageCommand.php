@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\Post;
-use App\Services\ContentService;
+use App\Actions\ClearUnusedImagesAction;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
 class ClearUnusedImageCommand extends Command
 {
@@ -28,52 +26,27 @@ class ClearUnusedImageCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(ContentService $contentService): int
+    public function handle(ClearUnusedImagesAction $clearUnusedImages): int
     {
-        $imagesInPosts = [];
+        $result = $clearUnusedImages->handle(function (array $unusedImages): bool {
+            $this->warn('This operation will delete unused images on S3');
+            $this->newLine();
 
-        Post::select(['id', 'body', 'cover_image_url'])
-            ->chunkById(200, function ($posts) use (&$imagesInPosts, $contentService) {
-                foreach ($posts as $post) {
-                    array_push($imagesInPosts, ...$contentService->getImagesInContent($post->body));
+            foreach ($unusedImages as $image) {
+                $this->line('- '.$image);
+            }
+            $this->newLine();
 
-                    if (! empty($post->cover_image_url)) {
-                        $imagesInPosts[] = basename($post->cover_image_url);
-                    }
-                }
-            });
+            return (bool) $this->option('force') || $this->confirm('Do you wish to continue?');
+        });
 
-        // add s3 directory prefix to each image
-        // format:
-        // [
-        //     'images/2023_01_01_10_18_21_63b0ed6d06d52.jpg',
-        //     'images/2022_12_30_22_39_21_63aef81999216.jpg',
-        //     ...
-        // ]
-        $imagesInPosts = collect($imagesInPosts)->map(function ($item) {
-            return 'images/'.$item;
-        })->all();
-
-        // find images that do not exist in the posts, but exist on S3
-        $notInUseImages = array_diff(Storage::disk()->files('images'), $imagesInPosts);
-
-        if ($notInUseImages === []) {
+        if ($result['unused'] === []) {
             $this->info('There is not a single image that has not been used');
 
             return self::SUCCESS;
         }
 
-        $this->warn('This operation will delete unused images on S3');
-        $this->newLine();
-
-        foreach ($notInUseImages as $image) {
-            $this->line('- '.$image);
-        }
-        $this->newLine();
-
-        if ($this->option('force') || $this->confirm('Do you wish to continue?')) {
-            Storage::disk()->delete($notInUseImages);
-
+        if ($result['deleted'] !== []) {
             $this->info('Clear operation finish');
 
             return self::SUCCESS;
